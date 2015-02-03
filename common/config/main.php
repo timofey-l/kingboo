@@ -7,9 +7,9 @@ return [
 		],
 		'urlManager' => [
 			'enablePrettyUrl' => true,
-			'showScriptName' => false, 
+			'showScriptName' => false,
+            'class' => 'common\components\LangUrlManager',
 			'rules' => [
-				// your rules go here
 			],
 		]
     ],

@@ -28,6 +28,15 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+
+        'urlManager' => [
+            'rules' => [
+                '/' => 'site/index',
+                '/signup' => 'site/signup',
+                '/logout' => 'site/logout',
+                '<controller:\w+>/<action:\w+>/*' => '<controller>/<action>',
+            ]
+        ]
     ],
     'params' => $params,
 ];
