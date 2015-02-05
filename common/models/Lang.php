@@ -53,7 +53,7 @@ class Lang extends \yii\db\ActiveRecord
      */
     static function getDefaultLang()
     {
-        return Lang::find()->where(' `default` = :default', [':default' => 1])->one();
+        return Lang::find()->where(['default' => 1])->one();
     }
 
     /**
