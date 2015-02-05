@@ -1,16 +1,31 @@
 <?php
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
+    'language'=>'ru-RU',
     'components' => [
         'cache' => [
 			'class' => 'yii\caching\FileCache',
 		],
-		'urlManager' => [
-			'enablePrettyUrl' => true,
-			'showScriptName' => false,
-            'class' => 'common\components\LangUrlManager',
-			'rules' => [
-			],
-		]
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@common/messages',
+                    'sourceLanguage' => 'en',
+                    'fileMap' => [
+                        //'main' => 'main.php',
+                    ],
+                ],
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@common/messages',
+                    'sourceLanguage' => 'en',
+                    'fileMap' => [
+                        //'main' => 'main.php',
+                    ],
+                ],
+            ],
+        ],
+
     ],
 ];

@@ -7,10 +7,10 @@ $params = array_merge(
 );
 
 return [
-    'id' => 'app-frontend',
+    'id' => 'app-partner',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
-    'controllerNamespace' => 'frontend\controllers',
+    'controllerNamespace' => 'partner\controllers',
     'components' => [
         'user' => [
             'identityClass' => 'common\models\User',
@@ -33,18 +33,11 @@ return [
             'showScriptName' => false,
             'class' => 'common\components\LangUrlManager',
             'rules' => [
-                '/' => 'site/index',
-                '/signup' => 'site/signup',
-                '/login' => 'site/login',
-                '/logout' => 'site/logout',
-                // '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
-            ]
+            ],
         ],
         'request' => [
             'class' => 'common\components\LangRequest'
         ],
-
-
     ],
     'params' => $params,
 ];

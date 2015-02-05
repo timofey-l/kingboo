@@ -29,6 +29,16 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'class' => 'common\components\LangUrlManager',
+            'rules' => [
+            ],
+        ],
+        'request' => [
+            'class' => 'common\components\LangRequest'
+        ],
     ],
     'params' => $params,
 ];

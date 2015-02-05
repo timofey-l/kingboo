@@ -2,6 +2,7 @@
 
 namespace common\components;
 
+use yii\helpers\VarDumper;
 use yii\web\UrlManager;
 use common\models\Lang;
 
@@ -26,7 +27,12 @@ class LangUrlManager extends UrlManager {
 
         // получаем url без префикса языка
         $url = parent::createUrl($params);
+        $result = '/' . $lang->url . $url;
 
-        return '/' . $lang->url . $url;
+        if (Lang::getCurrent()->id == Lang::getDefaultLang()->id) {
+            return $url;
+        }
+
+        return $result;
     }
 }

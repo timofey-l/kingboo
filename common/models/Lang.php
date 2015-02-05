@@ -27,7 +27,7 @@ class Lang extends \yii\db\ActiveRecord
     static function getCurrent()
     {
         if (self::$current === null) {
-            self::$current = self::getDefaulLang();
+            self::$current = self::getDefaultLang();
         }
 
         return self::$current;
