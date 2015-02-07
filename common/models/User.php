@@ -19,12 +19,16 @@ use yii\web\IdentityInterface;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $group
  * @property string $password write-only password
  */
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
+
+    const GROUP_CLIENT = 50;
+    const GROUP_ADMIN = 100;
 
     /**
      * @inheritdoc
@@ -50,11 +54,27 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            [['group'], 'integer'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('user', 'ID'),
+            'status' => Yii::t('user', 'Status'),
+            'email' => Yii::t('user', 'E-mail'),
+            'group' => Yii::t('user', 'Group'),
+            'created_at' => Yii::t('user', 'Create date'),
+            'update_at' => Yii::t('user', 'Update date'),
+
+        ];
+    }
     /**
      * @inheritdoc
      */
