@@ -28,6 +28,7 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 10;
 
     const GROUP_CLIENT = 50;
+    const GROUP_PARTNER = 75;
     const GROUP_ADMIN = 100;
 
     /**

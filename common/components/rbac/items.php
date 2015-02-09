@@ -9,6 +9,11 @@ return [
         'description' => 'Registered client',
         'ruleName' => 'userRole',
     ],
+    'partner' => [
+        'type' => 1,
+        'description' => 'Partners group',
+        'ruleName' => 'userRole',
+    ],
     'admin' => [
         'type' => 1,
         'description' => 'Application developers group',

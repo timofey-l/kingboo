@@ -33,6 +33,12 @@ class RbacController extends Controller
         $client->ruleName = $rule->name;
         $auth->add($client);
 
+        // роль партнера
+        $partner = $auth->createRole('partner');
+        $partner->description = "Partners group";
+        $partner->ruleName = $rule->name;
+        $auth->add($partner);
+
         // роль администратора
         $admin = $auth->createRole('admin');
         $admin->description = 'Application developers group';

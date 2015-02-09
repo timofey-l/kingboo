@@ -15,12 +15,16 @@ class UserGroupRule extends Rule
     {
         // получаем объект пользователя из базы
         //$user = ArrayHelper::getValue($params, 'user', User::findOne($user));
-        $group = Yii::$app->user->identity->group;
         if (!Yii::$app->user->isGuest) {
+            $group = Yii::$app->user->identity->group;
             if ($item->name === 'admin') {
                 return $group === User::GROUP_ADMIN;
+            } elseif($item->name === 'partner') {
+                return $group === User::GROUP_ADMIN
+                || $group === User::GROUP_PARTNER;
             } elseif($item->name === 'client') {
                 return $group === User::GROUP_ADMIN
+                    || $group === User::GROUP_PARTNER
                     || $group === User::GROUP_CLIENT;
             }
         }
