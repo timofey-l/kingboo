@@ -17,13 +17,22 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Add value' => 'Добавить значение',
+    'Enter item value' => 'Введите значение элемента',
+    'Lookup Field ID' => '',
+    'Lookup Fields' => '',
+    'Values' => 'Значения',
     'Are you sure you want to delete this item?' => 'Вы действительно хотите удалить эту запись?',
     'Create' => 'Добавить',
     'Create {modelClass}' => 'Добавить {modelClass}',
     'Delete' => 'Удалить',
+    'ID' => 'ID',
+    'Name' => 'Имя',
     'Reset' => 'Сброс',
     'Search' => 'Поиск',
     'Update' => 'Изменить',
     'Update {modelClass}: ' => 'Изменить {modelClass}:',
     'Users' => 'Пользователи',
+    'Value En' => 'Значение En',
+    'Value Ru' => 'Значение Ru',
 ];
