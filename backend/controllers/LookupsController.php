@@ -21,15 +21,15 @@ class LookupsController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['admin']
-                    ]
-                ]
-            ],
+//            'access' => [
+//                'class' => AccessControl::className(),
+//                'rules' => [
+//                    [
+//                        'allow' => true,
+//                        'roles' => ['admin']
+//                    ]
+//                ]
+//            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -74,22 +74,19 @@ class LookupsController extends Controller
     public function actionCreate()
     {
         $model = new LookupField();
-
-        $post_params = Yii::$app->request->post("LookupField");
+        $post_params = Yii::$app->request->post(LookupField::className());
         if (isset($post_params['values'])) {
             $langs = array_keys($post_params['values']);
             if (count($langs) > 0) {
-                foreach($langs[0] as $k => $v) {
+                foreach($post_params['values'][$langs[0]] as $k => $v) {
                     $lookupValue = new LookupValue();
                     foreach ($langs as $lang) {
                         $lookupValue->{'value_'.$lang} = $post_params['values'][$lang][$k];
                     }
-                    $model->values[] = $lookupValue;
+                    $model->link('values', $lookupValue);
                 }
             }
         }
-
-        VarDumper::dump($model->values);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -110,6 +107,19 @@ class LookupsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $post_params = Yii::$app->request->post(LookupField::className());
+        if (isset($post_params['values'])) {
+            $langs = array_keys($post_params['values']);
+            if (count($langs) > 0) {
+                foreach($post_params['values'][$langs[0]] as $k => $v) {
+                    $lookupValue = new LookupValue();
+                    foreach ($langs as $lang) {
+                        $lookupValue->{'value_'.$lang} = $post_params['values'][$lang][$k];
+                    }
+                    $model->link('values', $lookupValue);
+                }
+            }
+        }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {

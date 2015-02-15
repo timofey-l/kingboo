@@ -1,7 +1,7 @@
 <?php
 namespace partner\models;
 
-use common\models\User;
+use partner\models\PartnerUser;
 use yii\base\Model;
 use Yii;
 
@@ -43,7 +43,7 @@ class SignupForm extends Model
     public function signup()
     {
         if ($this->validate()) {
-            $user = new User();
+            $user = new PartnerUser();
             $user->username = $this->username;
             $user->email = $this->email;
             $user->setPassword($this->password);

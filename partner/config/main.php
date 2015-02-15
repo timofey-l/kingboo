@@ -13,7 +13,7 @@ return [
     'controllerNamespace' => 'partner\controllers',
     'components' => [
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'partner\models\PartnerUser',
             'enableAutoLogin' => true,
         ],
         'log' => [
