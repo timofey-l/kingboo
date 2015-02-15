@@ -14,7 +14,7 @@ return [
     'modules' => [],
     'components' => [
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'backend\models\BackendUser',
             'enableAutoLogin' => true,
         ],
         'log' => [

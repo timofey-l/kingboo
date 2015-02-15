@@ -71,6 +71,7 @@ class User extends ActiveRecord implements IdentityInterface
             'status' => Yii::t('user', 'Status'),
             'email' => Yii::t('user', 'E-mail'),
             'group' => Yii::t('user', 'Group'),
+            'password' => Yii::t('user', 'Password'),
             'created_at' => Yii::t('user', 'Create date'),
             'update_at' => Yii::t('user', 'Update date'),
 
@@ -103,6 +104,18 @@ class User extends ActiveRecord implements IdentityInterface
         return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
     }
 
+    /**
+     * Finds user by email
+     *
+     * @param $email
+     * @return static|null
+     */
+    public static function findByEmail($email) {
+        return static::findOne([
+            'email' => $email,
+            'status' => self::STATUS_ACTIVE,
+        ]);
+    }
     /**
      * Finds user by password reset token
      *

@@ -19,15 +19,15 @@ class UserController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['admin']
-                    ]
-                ]
-            ],
+//            'access' => [
+//                'class' => AccessControl::className(),
+//                'rules' => [
+//                    [
+//                        'allow' => true,
+//                        'roles' => ['admin']
+//                    ]
+//                ]
+//            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

@@ -17,11 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Password' => 'Пароль',
-    'Create date' => 'Дата создания',
     'E-mail' => 'E-mail',
-    'Group' => 'Группа',
-    'ID' => 'ID',
-    'Status' => 'Статус',
-    'Update date' => 'Дата изменения',
+    'Password' => 'Пароль',
+    'Remember me' => 'Запомнить меня',
+    'Incorrect email or password.' => 'Не верный адрес электронной почты или пароль.',
 ];
