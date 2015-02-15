@@ -17,11 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Password' => 'Пароль',
-    'Create date' => 'Дата создания',
-    'E-mail' => 'E-mail',
-    'Group' => 'Группа',
-    'ID' => 'ID',
-    'Status' => 'Статус',
-    'Update date' => 'Дата изменения',
+    'If you forgot your password you can ' => 'Если не можете вспомнить пароль, то можете ',
+    'Login' => 'Вход',
+    'Please fill out the following fields to login:' => 'Пожалуйста, заполните следующие поля для входа',
+    'reset it' => 'сбрость его',
 ];

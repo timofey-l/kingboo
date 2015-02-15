@@ -20,12 +20,9 @@ class UserGroupRule extends Rule
             if ($item->name === 'admin') {
                 return $group === User::GROUP_ADMIN;
             } elseif($item->name === 'partner') {
-                return $group === User::GROUP_ADMIN
-                || $group === User::GROUP_PARTNER;
+                return $group === User::GROUP_PARTNER;
             } elseif($item->name === 'client') {
-                return $group === User::GROUP_ADMIN
-                    || $group === User::GROUP_PARTNER
-                    || $group === User::GROUP_CLIENT;
+                return $group === User::GROUP_CLIENT;
             }
         }
 
