@@ -74,21 +74,48 @@ class LookupsController extends Controller
     public function actionCreate()
     {
         $model = new LookupField();
-        $post_params = Yii::$app->request->post(LookupField::className());
-        if (isset($post_params['values'])) {
-            $langs = array_keys($post_params['values']);
-            if (count($langs) > 0) {
-                foreach($post_params['values'][$langs[0]] as $k => $v) {
-                    $lookupValue = new LookupValue();
-                    foreach ($langs as $lang) {
-                        $lookupValue->{'value_'.$lang} = $post_params['values'][$lang][$k];
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            // model saved!
+            $post_params = Yii::$app->request->post('LookupField');
+            if (isset($post_params['values'])) {
+                //$model->clearValues();
+                $new_values_ids = [];
+                $langs = array_keys($post_params['values']);
+                unset($langs[0]);
+                $langs = array_values($langs);
+                if (count($langs) > 0) {
+                    foreach($post_params['values'][$langs[0]] as $k => $v) {
+                        // if value is new
+                        if ($post_params['values']['id'][$k] == 0) {
+                            $lookupValue = new LookupValue();
+                            foreach ($langs as $lang) {
+                                $lookupValue->{'value_'.$lang} = $post_params['values'][$lang][$k];
+                            }
+                            $lookupValue->lookup_field_id = $model->id;
+                            $lookupValue->sort = $k;
+                            $lookupValue->save();
+                            $new_values_ids[] = $lookupValue->id;
+                        } else {
+                            // if value is present already
+                            $lookupValue = LookupValue::findOne((integer)$post_params['values']['id'][$k]);
+                            foreach ($langs as $lang) {
+                                $lookupValue->{'value_'.$lang} = $post_params['values'][$lang][$k];
+                            }
+                            $lookupValue->lookup_field_id = $model->id;
+                            $lookupValue->sort = $k;
+                            $lookupValue->save();
+                            $new_values_ids[] = $lookupValue->id;
+                        }
                     }
-                    $model->link('values', $lookupValue);
+                    // удаляем все которые не обновлены или не созданы
+                    foreach ($model->values as $value) {
+                        if (!in_array($value->id, $new_values_ids)) {
+                            $value->delete();
+                        }
+                    }
+
                 }
             }
-        }
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -107,20 +134,47 @@ class LookupsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $post_params = Yii::$app->request->post(LookupField::className());
-        if (isset($post_params['values'])) {
-            $langs = array_keys($post_params['values']);
-            if (count($langs) > 0) {
-                foreach($post_params['values'][$langs[0]] as $k => $v) {
-                    $lookupValue = new LookupValue();
-                    foreach ($langs as $lang) {
-                        $lookupValue->{'value_'.$lang} = $post_params['values'][$lang][$k];
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $post_params = Yii::$app->request->post('LookupField');
+            if (isset($post_params['values'])) {
+                //$model->clearValues();
+                $new_values_ids = [];
+                $langs = array_keys($post_params['values']);
+                unset($langs[0]);
+                $langs = array_values($langs);
+                if (count($langs) > 0) {
+                    foreach($post_params['values'][$langs[0]] as $k => $v) {
+                        // if value is new
+                        if ($post_params['values']['id'][$k] == 0) {
+                            $lookupValue = new LookupValue();
+                            foreach ($langs as $lang) {
+                                $lookupValue->{'value_'.$lang} = $post_params['values'][$lang][$k];
+                            }
+                            $lookupValue->lookup_field_id = $id;
+                            $lookupValue->sort = $k;
+                            $lookupValue->save();
+                            $new_values_ids[] = $lookupValue->id;
+                        } else {
+                            // if value is present already
+                            $lookupValue = LookupValue::findOne((integer)$post_params['values']['id'][$k]);
+                            foreach ($langs as $lang) {
+                                $lookupValue->{'value_'.$lang} = $post_params['values'][$lang][$k];
+                            }
+                            $lookupValue->lookup_field_id = $id;
+                            $lookupValue->sort = $k;
+                            $lookupValue->save();
+                            $new_values_ids[] = $lookupValue->id;
+                        }
                     }
-                    $model->link('values', $lookupValue);
+                    // удаляем все которые не обновлены или не созданы
+                    foreach ($model->values as $value) {
+                        if (!in_array($value->id, $new_values_ids)) {
+                            $value->delete();
+                        }
+                    }
+
                 }
             }
-        }
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

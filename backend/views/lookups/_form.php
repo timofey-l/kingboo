@@ -11,6 +11,37 @@ JuiAsset::register($this);
 /* @var $form yii\widgets\ActiveForm */
 /* @var $langs Array */
 ?>
+<style>
+    #valuesContainer {
+
+    }
+    #valuesContainer li {
+        display: block;
+        list-style: none;
+        margin: 10px 0;
+        padding: 10px 0;
+        padding-top: 0;
+    }
+
+    #valuesContainer li:not(:last-child):not(.ui-sortable-helper) {
+        border-bottom: 1px solid #ccc;
+    }
+
+    #valuesContainer .dragButton {
+        display: block;
+        float: left;
+        height: 35px;
+        background: #f8f8f8;
+        width: 35px;
+        text-align: center;
+        line-height: 35px;
+        border-radius: 18px;
+    }
+
+    #valuesContainer .dragButton span {
+        line-height: 35px;
+    }
+</style>
 
 <div class="lookup-field-form">
 
@@ -22,13 +53,36 @@ JuiAsset::register($this);
 
     <div class="row">
         <div class="col-lg-2">
-            <button type="button" class="btn btn-success" id="addValueButton" onclick="addValues()"><?= Yii::t('backend_models', 'Add value') ?></button>
+            <button type="button" class="btn btn-success " id="addValueButton" onclick="addValues()">
+                <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+                <?= Yii::t('backend_models', 'Add value') ?>
+            </button>
         </div>
     </div>
 
     <ul class="container" id="valuesContainer">
         <?php if (!$model->isNewRecord): ?>
-
+            <?php foreach ($model->values as $value): ?>
+                <?php $c = floor(10/count($langs)); ?>
+                <li class="row values-row">
+                    <input type="hidden" name="LookupField[values][id][]" value="<?= $value->id ?>">
+                    <div class="dragButton"><span class="glyphicon glyphicon-sort"></span></div>
+                    <?php foreach($langs as $lang): ?>
+                        <div class="col-md-<?= $c ?>">
+                            <div class="input-group">
+                                <span class="input-group-addon" id="val_<?= $lang->url ?>_<?= $value->id ?>"><?= $lang->name ?></span>
+                                <input name="LookupField[values][<?= $lang->url ?>][]"
+                                       type="text"
+                                       class="form-control"
+                                       placeholder="<?= Yii::t('backend_models','Enter item value') ?>"
+                                       aria-describedby="val_<?= $lang->url ?>_<?= $value->id ?>"
+                                       value="<?= $value->{'value_'.$lang->url} ?>">
+                            </div>
+                        </div>
+                    <?php endforeach ?>
+                    <div class="col-md-1"><button type="button" onclick="delValues(this)" class="btn btn-danger"><?= Yii::t('backend_models','Delete') ?></button></div>
+                </li>
+            <?php endforeach ?>
         <?php endif ?>
     </ul>
 
@@ -39,7 +93,7 @@ JuiAsset::register($this);
         }
 
         function addValues() {
-            var row = $('<li class="row values-row" >');
+            var row = $('<li class="row values-row" ><input type="hidden" name="LookupField[values][id][]" value="0">');
             var hash = Math.round(Math.random()*Math.pow(10,15)).toString();
 
             var moveButton = $('<div class="dragButton"><span class="glyphicon glyphicon-sort"></span></div>');
@@ -69,35 +123,4 @@ JuiAsset::register($this);
     </div>
     <?php ActiveForm::end(); ?>
 
-    <style>
-        #valuesContainer {
-
-        }
-        #valuesContainer li {
-            display: block;
-            list-style: none;
-            margin: 10px 0;
-            padding: 10px 0;
-            padding-top: 0;
-        }
-
-        #valuesContainer li:not(:last-child):not(.ui-sortable-helper) {
-            border-bottom: 1px solid #ccc;
-        }
-
-        #valuesContainer .dragButton {
-            display: block;
-            float: left;
-            height: 35px;
-            background: #f8f8f8;
-            width: 35px;
-            text-align: center;
-            line-height: 35px;
-            border-radius: 18px;
-        }
-
-        #valuesContainer .dragButton span {
-            line-height: 35px;
-        }
-    </style>
 </div>

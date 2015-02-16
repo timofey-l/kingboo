@@ -13,7 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="lookup-field-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php var_dump($model->values); ?>
     <p>
         <?= Html::a(Yii::t('backend_models', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('backend_models', 'Delete'), ['delete', 'id' => $model->id], [
@@ -30,6 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
+            [
+                'label' => Yii::t('backend_models', 'Values count'),
+                'value' => count($model->values),
+            ]
         ],
     ]) ?>
 

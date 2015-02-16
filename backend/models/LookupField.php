@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use common\components\LookupBehaviour;
 use Yii;
 
 /**
@@ -12,9 +13,19 @@ use Yii;
  */
 class LookupField extends \yii\db\ActiveRecord
 {
+    public function clearValues()
+    {
+        if (count($this->values) > 0) {
+            foreach ($this->values as $value) {
+                /** @var $value LookupValue */
+                $value->delete();
+            }
+        }
+    }
+
     public function getValues()
     {
-        return $this->hasMany(LookupValue::className(),['lookup_field_id' => 'id']);
+        return $this->hasMany(LookupValue::className(),['lookup_field_id' => 'id'])->orderBy('sort');
     }
     /**
      * @inheritdoc
