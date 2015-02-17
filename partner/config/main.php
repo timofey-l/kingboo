@@ -10,6 +10,7 @@ return [
     'id' => 'app-partner',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'name' => 'BOOBOOKING',
     'controllerNamespace' => 'partner\controllers',
     'components' => [
         'user' => [
