@@ -14,4 +14,8 @@ class PartnerUser extends User{
         return '{{%partner_user}}';
     }
 
+    public static function getHotels() {
+        return static::hasMany('\common\models\Hotels', ['partner_id' => 'id']);
+    }
+
 }

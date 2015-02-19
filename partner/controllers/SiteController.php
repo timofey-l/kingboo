@@ -24,19 +24,19 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-//            'access' => [
-//                'class' => AccessControl::className(),
-//                'rules' => [
-//                    [
-//                        'actions' => ['login', 'error'],
-//                        'allow' => true,
-//                    ],
-//                    [
-//                        'allow' => true,
-//                        'roles' => ['partner'],
-//                    ],
-//                ],
-//            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -164,5 +164,30 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+    public function actionTest()
+    {
+        $hotel = \common\models\Hotels::findOne([
+            'name' => 'Test hotel',
+            'partner_id' => 1,
+        ]);
+
+        if ($hotel === null) {
+            $hotel = new \common\models\Hotels();
+            $hotel->name = 'Test hotel';
+            $hotel->partner_id = 1;
+            $hotel->address = "Test addess street 777";
+            $hotel->lng = 1.4;
+            $hotel->lat = 3.3;
+            $hotel->description = "The best test hotel ever!";
+            $hotel->category = 3;
+            $hotel->timezone = 'Europe/Minsk';
+            $hotel->save();
+        }
+
+        var_dump($hotel->food);
+
+
     }
 }
