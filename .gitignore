@@ -7,6 +7,9 @@
 # netbeans project files
 nbproject
 
+# vagrant
+.vagrant
+
 # zend studio for eclipse project files
 .buildpath
 .project
