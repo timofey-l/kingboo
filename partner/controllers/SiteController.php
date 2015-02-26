@@ -2,7 +2,7 @@
 namespace partner\controllers;
 
 use Yii;
-use common\models\LoginForm;
+use partner\models\LoginForm;
 use partner\models\PasswordResetRequestForm;
 use partner\models\ResetPasswordForm;
 use partner\models\SignupForm;
