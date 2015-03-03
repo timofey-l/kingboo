@@ -10,7 +10,7 @@ vagrantfile-local:
         network:
             private_network: 192.168.10.10
             forwarded_port:
-                073e0Wgpdjzv:
+                zrLQUjlmu1Gt:
                     host: '6810'
                     guest: '22'
         post_up_message: ''
@@ -32,7 +32,7 @@ vagrantfile-local:
                     - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
                     - '--parser future'
         synced_folder:
-            DmeQN9UhjY1B:
+            xJIlFuCSzKLg:
                 owner: www-data
                 group: www-data
                 source: ./
@@ -44,7 +44,7 @@ vagrantfile-local:
                         - '--archive'
                         - '-z'
                     exclude:
-                        - .vagrant/
+                        - ~.vagrant/
                     auto: 'false'
         usable_port_range:
             start: 10200
@@ -75,9 +75,9 @@ cron:
     jobs: {  }
 firewall:
     install: '1'
-    rules: null
+    rules: {  }
 apache:
-    install: 0
+    install: '0'
     settings:
         user: www-data
         group: www-data
@@ -88,7 +88,7 @@ apache:
     modules:
         - rewrite
     vhosts:
-        8dwzizmwjsi8:
+        jd9afyi2wifp:
             servername: awesome.dev
             serveraliases:
                 - www.awesome.dev
@@ -97,7 +97,7 @@ apache:
             setenv:
                 - 'APP_ENV dev'
             directories:
-                oxm7pquoqvnv:
+                vc7zzykibltr:
                     provider: directory
                     path: /var/www/awesome
                     options:
@@ -125,10 +125,10 @@ nginx:
         proxy_buffers: '4 256k'
     upstreams: {  }
     vhosts:
-        mq03ttz0ahpn:
+        ddfxhmlmburl:
             proxy: ''
             server_name: booking.local
-            www_root: /app/frontend/web
+            www_root: /vagrant/frontend/web
             listen_port: '80'
             location: \.php$
             index_files:
@@ -141,10 +141,10 @@ nginx:
             client_max_body_size: 1m
             ssl_cert: ''
             ssl_key: ''
-        gpsvfcg3w2kt:
+        3nnjhodwel1f:
             proxy: ''
             server_name: backend.booking.local
-            www_root: /app/backend/web
+            www_root: /vagrant/backend/web
             listen_port: '80'
             location: \.php$
             index_files:
@@ -155,10 +155,10 @@ nginx:
             client_max_body_size: 1m
             ssl_cert: ''
             ssl_key: ''
-        jzbz0r6wz1yq:
+        g35ku4qkn1w9:
             proxy: ''
             server_name: partner.booking.local
-            www_root: /app/partner/web
+            www_root: /vagrant/partner/web
             listen_port: '80'
             location: \.php$
             index_files:
@@ -181,6 +181,11 @@ php:
             - mcrypt
             - mysql
             - sqlite
+            - gd
+            - memcached
+            - imagick
+            - curl
+            - readline
         pear: {  }
         pecl:
             - pecl_http
@@ -206,11 +211,13 @@ xdebug:
     install: '1'
     settings:
         xdebug.default_enable: '1'
-        xdebug.remote_autostart: '0'
         xdebug.remote_connect_back: '1'
         xdebug.remote_enable: '1'
         xdebug.remote_handler: dbgp
-        xdebug.remote_port: '9000'
+        xdebug.idekey: PHPSTORM
+        xdebug.remote_port: '9001'
+        xdebug.cli_color: '1'
+        xdebug.remote_autostart: '1'
 xhprof:
     install: '0'
 wpcli:
@@ -222,7 +229,7 @@ drush:
 ruby:
     install: '1'
     versions:
-        IGWSVKjvltCs:
+        Ql1WYtUIsbon:
             version: ''
 nodejs:
     install: '0'
@@ -231,7 +238,7 @@ python:
     install: '1'
     packages: {  }
     versions:
-        hnWm4dfvWC9H:
+        WXEqeL9SDTPt:
             version: ''
 mysql:
     install: '1'
@@ -239,7 +246,7 @@ mysql:
     root_password: root
     adminer: '1'
     databases:
-        A2kZ5p3lpcty:
+        KJZmTvW5JErp:
             grant:
                 - ALL
             name: booking
