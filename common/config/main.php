@@ -6,13 +6,13 @@ return [
         'cache' => [
 			'class' => 'yii\caching\FileCache',
 		],
-        'authManager' => [
-            'class' => 'yii\rbac\PhpManager',
-            'defaultRoles' => ['client', 'admin'],
-            'itemFile' => '@common/components/rbac/items.php',
-            'assignmentFile' => '@common/components/rbac/assignments.php',
-            'ruleFile' => '@common/components/rbac/rules.php'
-        ],
+//        'authManager' => [
+//            'class' => 'yii\rbac\PhpManager',
+//            'defaultRoles' => ['client', 'admin'],
+//            'itemFile' => '@common/components/rbac/items.php',
+//            'assignmentFile' => '@common/components/rbac/assignments.php',
+//            'ruleFile' => '@common/components/rbac/rules.php'
+//        ],
         'i18n' => [
             'translations' => [
                 '*' => [
