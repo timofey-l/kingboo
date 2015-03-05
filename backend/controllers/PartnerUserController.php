@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\CreatePartnerForm;
 use Yii;
 use partner\models\PartnerUser;
 use backend\models\PartnerUserSearch;
@@ -60,15 +61,19 @@ class PartnerUserController extends Controller
      */
     public function actionCreate()
     {
-        $model = new PartnerUser();
+        $model = new CreatePartnerForm();
+        $model->scenario = 'create';
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($partner = $model->createPartner()) {
+                return $this->redirect(['view', 'id' => $partner->id]);
+            }
         }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+
     }
 
     /**
@@ -79,11 +84,22 @@ class PartnerUserController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = new CreatePartnerForm();
+        $model->scenario = 'update';
+        $partner = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $partner->username = $model->username;
+            $partner->email = $model->email;
+            if ($model->password != '') {
+                $partner->setPassword($model->password);
+            }
+            if ($partner->validate() && $partner->save()) {
+                return $this->redirect(['view', 'id' => $id]);
+            }
         } else {
+            $model->email = $partner->email;
+            $model->username = $partner->username;
             return $this->render('update', [
                 'model' => $model,
             ]);

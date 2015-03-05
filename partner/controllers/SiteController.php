@@ -1,6 +1,7 @@
 <?php
 namespace partner\controllers;
 
+use partner\models\PartnerUser;
 use Yii;
 use partner\models\LoginForm;
 use partner\models\PasswordResetRequestForm;
