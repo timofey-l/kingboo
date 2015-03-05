@@ -12,6 +12,7 @@ $this->title = 'BooBooking';
             <div class="col-md-12">
                 <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Manage clients'), ['/user/index'],['class'=>'btn btn-default']) ?>
                 <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Manage partners'), ['/partner-user/index'],['class'=>'btn btn-default']) ?>
+                <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Manage types of food '), ['/food-type/index'],['class'=>'btn btn-default']) ?>
             </div>
 
         </div>
