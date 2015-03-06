@@ -14,7 +14,7 @@ $this->title = 'BooBooking';
                 <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Manage partners'), ['/partner-user/index'],['class'=>'btn btn-default']) ?>
                 <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Manage types of food '), ['/food-type/index'],['class'=>'btn btn-default']) ?>
                 <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Manage countries '), ['/country/index'],['class'=>'btn btn-default']) ?>
-                <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Manage countries '), ['/currency/index'],['class'=>'btn btn-default']) ?>
+                <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Manage currencies '), ['/currency/index'],['class'=>'btn btn-default']) ?>
             </div>
 
         </div>
