@@ -19,10 +19,17 @@ class m150401_182613_rooms_and_roomPrices extends Migration
             'title_en' => Schema::TYPE_STRING . '(255) NOT NULL',
             'description_ru' => Schema::TYPE_TEXT . ' NOT NULL',
             'description_en' => Schema::TYPE_TEXT . ' NOT NULL',
-            'adults' => Schema::TYPE_INTEGER . 'NOT NULL DEFAULT 0',
-            'children' => Schema::TYPE_INTEGER . 'NOT NULL DEFAULT 0',
-            'total' => Schema::TYPE_INTEGER . 'NOT NULL DEFAULT 0',
-            'active' => Schema::TYPE_BOOLEAN . 'NOT NULL DEFAULT 1',
+            'adults' => Schema::TYPE_INTEGER . ' NOT NULL DEFAULT 0',
+            'children' => Schema::TYPE_INTEGER . ' NOT NULL DEFAULT 0',
+            'total' => Schema::TYPE_INTEGER . ' NOT NULL DEFAULT 0',
+            'active' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT 1',
+        ], $tableOptions);
+
+        $this->createTable('{{%room_price}}', [
+            'id' => Schema::TYPE_PK,
+            'date' => Schema::TYPE_DATE . ' NOT NULL',
+            'price' => Schema::TYPE_DECIMAL . '(12,2) NOT NULL',
+            'price_currency' => Schema::TYPE_INTEGER . ' NOT NULL',
         ], $tableOptions);
     }
 
