@@ -17,13 +17,19 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Address' => '',
-    'Category' => '',
-    'Description' => '',
-    'ID' => '',
-    'Lat' => '',
-    'Lng' => '',
-    'Name' => '',
-    'Partner ID' => '',
-    'Timezone' => '',
+    'Hotels' => 'Отели',
+    'Address' => 'Адрес',
+    'Category' => 'Категория',
+    'Description' => 'Описание',
+    'ID' => 'ID',
+    'Lat' => 'Широта',
+    'Lng' => 'Долгота',
+    'Name' => 'Название',
+    'Partner ID' => 'ID партнера',
+    'Timezone' => 'Временная зона',
+    'Common information' => 'Общая информация',
+    'Title' => 'Название',
+    'Description' => 'Описание',
+    'Geo coordinates' => 'Координаты',
+    'Other information' => 'Прочая информация'
 ];
