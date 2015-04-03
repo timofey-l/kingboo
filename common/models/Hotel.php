@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-use backend\models\LookupValue;
 use Yii;
 
 /**
@@ -12,15 +11,17 @@ use Yii;
  * @property integer $partner_id
  * @property string $name
  * @property string $address
- * @property double $lng
- * @property double $lat
- * @property string $description
+ * @property string $lng
+ * @property string $lat
+ * @property string $description_ru
  * @property integer $category
  * @property string $timezone
+ * @property string $description_en
+ * @property string $title_ru
+ * @property string $title_en
  */
-class Hotels extends \yii\db\ActiveRecord
+class Hotel extends \yii\db\ActiveRecord
 {
-
     /**
      * @inheritdoc
      */
@@ -29,21 +30,17 @@ class Hotels extends \yii\db\ActiveRecord
         return '{{%hotel}}';
     }
 
-    public static function getPartner() {
-        return static::hasOne('\partner\models\PartnerUser',['id' => 'partner_id']);
-    }
-
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['partner_id', 'name', 'address', 'lng', 'lat'], 'required'],
+            [['partner_id', 'name', 'address', 'lng', 'lat', 'title_ru', 'title_en'], 'required'],
             [['partner_id', 'category'], 'integer'],
             [['lng', 'lat'], 'number'],
-            [['description'], 'string'],
-            [['name', 'address', 'timezone'], 'string', 'max' => 255]
+            [['description_ru', 'description_en'], 'string'],
+            [['name', 'address', 'timezone', 'title_ru', 'title_en'], 'string', 'max' => 255]
         ];
     }
 
@@ -59,9 +56,12 @@ class Hotels extends \yii\db\ActiveRecord
             'address' => Yii::t('hotels', 'Address'),
             'lng' => Yii::t('hotels', 'Lng'),
             'lat' => Yii::t('hotels', 'Lat'),
-            'description' => Yii::t('hotels', 'Description'),
+            'description_ru' => Yii::t('hotels', 'Description Ru'),
             'category' => Yii::t('hotels', 'Category'),
             'timezone' => Yii::t('hotels', 'Timezone'),
+            'description_en' => Yii::t('hotels', 'Description En'),
+            'title_ru' => Yii::t('hotels', 'Title Ru'),
+            'title_en' => Yii::t('hotels', 'Title En'),
         ];
     }
 }
