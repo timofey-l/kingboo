@@ -35,10 +35,10 @@ Booking application
 Подключение к виртуальной машине по ssh и переход в рабочий каталог
 
     vagrant ssh
-    cd /app
+    cd /vagrant
 
 
-Установка плагина для composer, нербходимого для yii
+Установка плагина для composer, необходимого для yii
 
     composer global require "fxp/composer-asset-plugin:1.0.0
 
@@ -48,7 +48,7 @@ Booking application
     composer update
 
 
-Инициализация фреймворка yii
+Инициализация приложения
     
     php init
     
