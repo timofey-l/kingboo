@@ -36,5 +36,6 @@ class m150401_182613_rooms_and_roomPrices extends Migration
     public function down()
     {
         $this->dropTable('{{%room}}');
+        $this->dropTable('{{%room_price}}');
     }
 }
