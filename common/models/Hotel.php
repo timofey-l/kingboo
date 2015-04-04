@@ -40,7 +40,8 @@ class Hotel extends \yii\db\ActiveRecord
             [['partner_id', 'category'], 'integer'],
             [['lng', 'lat'], 'number'],
             [['description_ru', 'description_en'], 'string'],
-            [['name', 'address', 'timezone', 'title_ru', 'title_en'], 'string', 'max' => 255]
+            [['name', 'address', 'timezone', 'title_ru', 'title_en'], 'string', 'max' => 255],
+            [['lng','lat'], 'default', 'value' => 0],
         ];
     }
 

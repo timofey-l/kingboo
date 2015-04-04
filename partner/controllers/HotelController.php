@@ -61,6 +61,7 @@ class HotelController extends Controller
     public function actionCreate()
     {
         $model = new Hotel();
+        $model->partner_id = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
