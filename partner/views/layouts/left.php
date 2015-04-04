@@ -1,6 +1,5 @@
 <?php
 use yii\bootstrap\Nav;
-
 ?>
 <aside class="left-side sidebar-offcanvas">
 
@@ -35,14 +34,13 @@ use yii\bootstrap\Nav;
             [
                 'encodeLabels' => false,
                 'options' => ['class' => 'sidebar-menu'],
-                'items' => [
+                'items' => array_merge(
                     [
-                        'label' => '<span class="fa fa-angle-down"></span><span class="text-info">Menu Yii2</span>',
-                        'url' => '#'
-                    ],
-                    ['label' => '<span class="fa fa-file-code-o"></span> Gii', 'url' => ['/gii']],
-                    ['label' => '<span class="fa fa-dashboard"></span> Debug', 'url' => ['/debug']],
-                ],
+                        'label' => '<span class="fa fa-angle-down"></span><span class="text-info">' . Yii::t('left_menu', 'Hotels list') . '</span>',
+                        'url' => ''
+                    ], array_map(function($hotel){
+                    return ['label' => $hotel->{'title_' . \common\models\Lang::$current->url}, 'url' => ['hotel/view', 'id' => $hotel->id]];
+                    }, Yii::$app->user->identity->hotels)),
             ]
         );
         ?>

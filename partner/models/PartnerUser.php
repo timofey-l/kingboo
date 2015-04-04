@@ -6,6 +6,15 @@ use common\models\User;
 
 class PartnerUser extends User{
 
+    public function beforeDelete() {
+        if (parent::beforeDelete()) {
+            foreach ($this->hotels as $hotel) {
+                $hotel->delete();
+            };
+        }
+        return true;
+    }
+
     /**
      * @inheritdoc
      */
@@ -23,8 +32,8 @@ class PartnerUser extends User{
         return $this->_user;
     }
 
-    public static function getHotels() {
-        return static::hasMany('\common\models\Hotels', ['partner_id' => 'id']);
+    public function getHotels() {
+        return $this->hasMany('\common\models\Hotel', ['partner_id' => 'id']);
     }
 
     public static function findByEmail($email) {
