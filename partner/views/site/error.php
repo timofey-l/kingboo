@@ -25,8 +25,8 @@ $this->title = $name;
                     </p>
 
                     <p>
-                        The above error occurred while the Web server was processing your request.
-                        Please contact us if you think this is a server error. Thank you.
+                        <?= Yii::t('errors', 'The above error occurred while the Web server was processing your request.
+                        Please contact us if you think this is a server error. Thank you.') ?>
                     </p>
                 </div>
             </div>
