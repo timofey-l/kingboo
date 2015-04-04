@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\bootstrap\Button;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Hotel */
@@ -41,6 +42,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'title_ru',
             'title_en',
         ],
+    ]) ?>
+    
+    <?= Button::widget([
+        'label' => Yii::t('hotels','Create room'),
+        'options' => ['class' => 'btn-lg'],
     ]) ?>
 
 </div>

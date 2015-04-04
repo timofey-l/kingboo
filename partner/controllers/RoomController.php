@@ -3,16 +3,16 @@
 namespace partner\controllers;
 
 use Yii;
-use common\models\Hotel;
-use partner\models\PartnerSearch;
+use common\models\Room;
+use partner\models\RoomSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * HotelController implements the CRUD actions for Hotel model.
+ * RoomController implements the CRUD actions for Room model.
  */
-class HotelController extends Controller
+class RoomController extends Controller
 {
     public function behaviors()
     {
@@ -27,13 +27,12 @@ class HotelController extends Controller
     }
 
     /**
-     * Lists all Hotel models.
+     * Lists all Room models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new PartnerSearch();
-        $searchModel->partner_id = Yii::$app->user->id; //Нормально ли это с точки зрения безопасности???
+        $searchModel = new RoomSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -43,7 +42,7 @@ class HotelController extends Controller
     }
 
     /**
-     * Displays a single Hotel model.
+     * Displays a single Room model.
      * @param integer $id
      * @return mixed
      */
@@ -55,15 +54,14 @@ class HotelController extends Controller
     }
 
     /**
-     * Creates a new Hotel model.
+     * Creates a new Room model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Hotel();
-        $model->partner_id = Yii::$app->user->id;    
-        
+        $model = new Room();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -74,7 +72,7 @@ class HotelController extends Controller
     }
 
     /**
-     * Updates an existing Hotel model.
+     * Updates an existing Room model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -93,7 +91,7 @@ class HotelController extends Controller
     }
 
     /**
-     * Deletes an existing Hotel model.
+     * Deletes an existing Room model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -106,15 +104,15 @@ class HotelController extends Controller
     }
 
     /**
-     * Finds the Hotel model based on its primary key value.
+     * Finds the Room model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Hotel the loaded model
+     * @return Room the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Hotel::findOne($id)) !== null) {
+        if (($model = Room::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
