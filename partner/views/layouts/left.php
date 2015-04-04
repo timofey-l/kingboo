@@ -29,18 +29,26 @@ use yii\bootstrap\Nav;
             </div>
         </form>
 
-        <?=
+        <?php 
+            $h = Yii::$app->user->identity->hotels;
+            $items = [];
+            $items[] = [
+                        'label' => '<span class="fa fa-angle-down"></span><span class="text-info">' . Yii::t('left_menu', 'Hotels list') . '</span>',
+                        'url' => '/hotel/index'
+                        ];
+            if ($h) {
+                $map = array_map(function($hotel){
+                    return ['label' => $hotel->{'title_' . \common\models\Lang::$current->url}, 'url' => ['hotel/view', 'id' => $hotel->id]];
+                }, $h);
+                $items = array_merge($items, $map);
+            }
+        ?>
+        <?=   
         Nav::widget(
             [
                 'encodeLabels' => false,
                 'options' => ['class' => 'sidebar-menu'],
-                'items' => array_merge(
-                    [
-                        'label' => '<span class="fa fa-angle-down"></span><span class="text-info">' . Yii::t('left_menu', 'Hotels list') . '</span>',
-                        'url' => ''
-                    ], array_map(function($hotel){
-                    return ['label' => $hotel->{'title_' . \common\models\Lang::$current->url}, 'url' => ['hotel/view', 'id' => $hotel->id]];
-                    }, Yii::$app->user->identity->hotels)),
+                'items' => $items,
             ]
         );
         ?>
