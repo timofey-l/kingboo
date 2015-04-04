@@ -36,7 +36,7 @@ class Hotel extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['partner_id', 'name', 'address', 'lng', 'lat', 'title_ru', 'title_en'], 'required'],
+            [['partner_id', 'name', 'address', 'title_ru', 'title_en'], 'required'],
             [['partner_id', 'category'], 'integer'],
             [['lng', 'lat'], 'number'],
             [['description_ru', 'description_en'], 'string'],
@@ -65,4 +65,9 @@ class Hotel extends \yii\db\ActiveRecord
             'title_en' => Yii::t('hotels', 'Title En'),
         ];
     }
+    
+    public function getRooms() {
+        return $this->hasMany('\common\models\Room', ['hotel_id' => 'id']);
+    }
+
 }
