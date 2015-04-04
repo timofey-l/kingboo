@@ -3,7 +3,7 @@ use yii\helpers\Html;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
-if (in_array(Yii::$app->controller->action->id,['login', 'signup'])) {
+if (in_array(Yii::$app->controller->action->id,['login', 'signup', 'error'])) {
     echo $this->render(
         'wrapper-black',
         ['content' => $content]
