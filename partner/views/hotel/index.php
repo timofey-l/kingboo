@@ -14,9 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <p>
-        <?= Html::a(Yii::t('hotels', 'Create {modelClass}', [
-    'modelClass' => 'Hotel',
-]), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('hotels', 'Create {modelClass}', ['modelClass' => 'Hotel',]), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= ListView::widget([

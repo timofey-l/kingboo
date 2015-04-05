@@ -32,13 +32,10 @@ class HotelController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new PartnerSearch();
-        $searchModel->partner_id = Yii::$app->user->id; //Нормально ли это с точки зрения безопасности???
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $hotels = Yii::$app->user->identity->hotels;
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'hotels' => $hotels || [],
         ]);
     }
 
