@@ -35,7 +35,7 @@ class HotelController extends Controller
         $hotels = Yii::$app->user->identity->hotels;
 
         return $this->render('index', [
-            'hotels' => $hotels || [],
+            'hotels' => $hotels,
         ]);
     }
 

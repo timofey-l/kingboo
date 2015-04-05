@@ -4,9 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel partner\models\PartnerSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
+/* @var $hotels \common\models\Hotel[] */
 $this->title = Yii::t('hotels', 'Hotels');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -17,12 +15,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a(Yii::t('hotels', 'Create {modelClass}', ['modelClass' => 'Hotel',]), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= ListView::widget([
-        'dataProvider' => $dataProvider,
-        'itemOptions' => ['class' => 'item'],
-        'itemView' => function ($model, $key, $index, $widget) {
-            return Html::a(Html::encode($model->name), ['view', 'id' => $model->id]);
-        },
-    ]) ?>
+    <?php
+    foreach($hotels as $hotel) {
+        echo $this->render('_hotel_index', ['hotel' => $hotel]);
+    }
+    ?>
 
 </div>
