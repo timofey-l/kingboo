@@ -7,13 +7,13 @@ use yii\bootstrap\Button;
 /* @var $this yii\web\View */
 /* @var $model common\models\Hotel */
 
-$this->title = $model->name;
+$this->title = $model->{'title_' . \common\models\Lang::$current->url};
+
 $this->params['breadcrumbs'][] = ['label' => Yii::t('hotels', 'Hotels'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="hotel-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a(Yii::t('hotels', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -29,24 +29,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'partner_id',
             'name',
             'address',
-            'lng',
-            'lat',
-            'description_ru:ntext',
-            'category',
-            'timezone',
-            'description_en:ntext',
-            'title_ru',
-            'title_en',
         ],
     ]) ?>
     
-    <?= Button::widget([
-        'label' => Yii::t('hotels','Create room'),
-        'options' => ['class' => 'btn-lg'],
-    ]) ?>
+    <?= $this->render('_rooms_manage',['hotel' => $model]) ?>
+
 
 </div>

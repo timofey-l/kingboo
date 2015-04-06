@@ -59,4 +59,8 @@ class Room extends \yii\db\ActiveRecord
             'active' => Yii::t('rooms', 'Active'),
         ];
     }
+
+    public function getHotel() {
+        return $this->hasOne(Hotel::className(), ['id' => 'hotel_id']);
+    }
 }

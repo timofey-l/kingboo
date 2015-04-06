@@ -23,7 +23,7 @@ if (in_array(Yii::$app->controller->action->id,['login', 'signup', 'error'])) {
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
-    <body class="skin-black">
+    <body class="skin-blue fixed">
     <?php $this->beginBody() ?>
 
     <?= $this->render(

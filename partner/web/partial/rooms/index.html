@@ -1,0 +1,52 @@
+<div class="box-header">
+    <h3 class="box-title">{{t('room_list_title')}}</h3>
+
+    <span style="font-size: 20px;" class="fa fa-spin fa-gear" ng-show="loading"></span>
+
+    <div class="box-tools pull-right">
+        <a href="#/add" class="btn btn-link" ><i class="fa fa-plus-circle"></i> {{t('room_add')}}</a>
+    </div>
+</div>
+<!-- /.box-header -->
+
+<div class="box-body no-padding" >
+
+    <div ng-show="!rooms.length && !loading" style="color: #aaa;padding: 10px 10px 10px 10px;">
+        <h4>{{t('room_list_empty')}}</h4>
+    </div>
+
+    <table  ng-show="rooms.length" class="table">
+        <thead>
+            <tr>
+                <th>{{t('room_table_head_title')}}</th>
+                <th>{{t('room_table_head_adults')}}</th>
+                <th>{{t('room_table_head_children')}}</th>
+                <th>{{t('room_table_head_total')}}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="room in rooms">
+                <td>
+                    <a href="#/edit/{{room.id}}">{{room['title_' + LANG]}}</a>
+                </td>
+                <td>
+                    {{room.adults}}
+                </td>
+                <td>
+                    {{room.children}}
+                </td>
+                <td>
+                    {{room.total}}
+                </td>
+                <td>
+                    <a class="btn btn-xs btn-danger" ng-click="delete(room)">
+                        <i class="fa fa-close"></i>
+                        {{t('room_table_head_delete')}}
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- /.box-body -->

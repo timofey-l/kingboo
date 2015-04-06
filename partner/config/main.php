@@ -34,10 +34,15 @@ return [
             'showScriptName' => false,
             'class' => 'common\components\LangUrlManager',
             'rules' => [
+                // REST for rooms
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'rooms']
             ],
         ],
         'request' => [
-            'class' => 'common\components\LangRequest'
+            'class' => 'common\components\LangRequest',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
     ],
     'params' => $params,

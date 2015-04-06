@@ -1,0 +1,115 @@
+<div class="box-header">
+    <span style="font-size: 20px;" class="fa fa-gear fa-spin" ng-show="loading"></span>
+
+    <h3 class="box-title" ng-if="room!=null && !room.id">{{t('room_add')}}</h3>
+
+    <h3 class="box-title" ng-if="room.id">{{t('room_edit_title')}}</h3>
+
+    <div class="box-tools pull-right">
+
+    </div>
+</div>
+<!-- /.box-header -->
+
+<div class="box-body">
+    <form action="" name="add_room" onsubmit="return false;" novalidate ng-show="room">
+
+        <div class="row">
+            <div class="col-sm-6">
+
+                <div class="nav-tabs-custom"> <!-- titles -->
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a ng-class="labelClasses('title_ru')" href="" data-tabid="title_ru_tab"
+                                              data-toggle="tab">{{t('room_title_ru')}}</a></li>
+                        <li><a ng-class="labelClasses('title_en')" href="" data-tabid="title_en_tab" data-toggle="tab">{{t('room_title_en')}}</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="title_ru_tab">
+                            <div class="form-group" ng-class="getClasses('title_ru')">
+                                <input type="text" class="form-control" ng-model="room.title_ru" name="title_ru"
+                                       id="title_ru" placeholder="" required>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="title_en_tab">
+                            <div class="form-group" ng-class="getClasses('title_en')">
+                                <input type="text" class="form-control" ng-model="room.title_en" name="title_en"
+                                       id="title_en" placeholder="" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /titles -->
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group" ng-class="getClasses('adults')">
+                            <label for="adults">{{t('room_adults_title')}}</label>
+                            <input type="number" class="form-control" ng-model="room.adults" name="adults"
+                                   id="adults" placeholder="" required integer min="1">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group" ng-class="getClasses('children')">
+                            <label for="children">{{t('room_children_title')}}</label>
+                            <input type="number" class="form-control" ng-model="room.children" name="children"
+                                   id="children" placeholder="" required integer min="0">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group" ng-class="getClasses('total')">
+                            <label for="total">{{t('room_total_title')}}</label>
+                            <input type="number" class="form-control"
+                                   ng-model="room.total" name="total"
+                                   id="total" placeholder="" required
+                                   ng-min="room.adults"
+                                   ng-max="room.adults + room.children"
+                                   integer>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-6">
+                <div class="nav-tabs-custom"> <!-- descriptions -->
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a ng-class="labelClasses('description_ru')" href=""
+                                              data-tabid="description_ru_tab" data-toggle="tab">{{t('room_description_ru')}}</a>
+                        </li>
+                        <li><a ng-class="labelClasses('description_en')" href="" data-tabid="description_en_tab"
+                               data-toggle="tab">{{t('room_description_en')}}</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="description_ru_tab">
+                            <div class="form-group" ng-class="getClasses('description_ru')">
+                                <textarea rows="6" type="text" class="form-control" ng-model="room.description_ru"
+                                          name="description_ru" id="description_ru" placeholder="" required></textarea>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="description_en_tab">
+                            <div class="form-group" ng-class="getClasses('description_en')">
+                                <textarea rows="6" type="text" class="form-control" ng-model="room.description_en"
+                                          name="description_en" id="description_en" placeholder="" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /descriptions -->
+            </div>
+        </div>
+    </form>
+
+    <div ng-show="room == null && !loading">
+        <div class="alert alert-danger">
+            <i class="fa fa-ban"></i>
+            {{t('room_null_text')}}
+        </div>
+        <a class="btn btn-primary" href="#/">{{t('room_list_title')}}</a>
+    </div>
+</div>
+<!-- /.box-body -->
+
+<div class="box-footer" ng-show="room">
+    <button ng-click="save()" class="btn btn-primary">{{t('room_save')}}</button>
+    <a href="#/" class="btn btn-default">{{t('room_cancel')}}</a>
+</div>
