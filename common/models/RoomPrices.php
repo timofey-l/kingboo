@@ -1,0 +1,58 @@
+<?php
+
+namespace common\models;
+
+use Yii;
+
+/**
+ * This is the model class for table "{{%room_prices}}".
+ *
+ * @property integer $id
+ * @property string $date
+ * @property integer $room_id
+ * @property integer $adults
+ * @property integer $children
+ * @property integer $kids
+ * @property string $price
+ * @property integer $price_currency
+ */
+class RoomPrices extends \yii\db\ActiveRecord
+{
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return '{{%room_prices}}';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['date', 'room_id', 'adults', 'children', 'kids', 'price_currency'], 'required'],
+            [['date'], 'safe'],
+            [['room_id', 'adults', 'children', 'kids', 'price_currency'], 'integer'],
+            [['price'], 'number']
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('room_prices', 'ID'),
+            'date' => Yii::t('room_prices', 'Date'),
+            'room_id' => Yii::t('room_prices', 'Room ID'),
+            'adults' => Yii::t('room_prices', 'Adults'),
+            'children' => Yii::t('room_prices', 'Children'),
+            'kids' => Yii::t('room_prices', 'Kids'),
+            'price' => Yii::t('room_prices', 'Price'),
+            'price_currency' => Yii::t('room_prices', 'Price Currency'),
+        ];
+    }
+}

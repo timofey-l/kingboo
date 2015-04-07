@@ -34,7 +34,27 @@ class Room extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['hotel_id', 'title_ru', 'title_en', 'description_ru', 'description_en'], 'required'],
+            [['hotel_id'], 'required'],
+            [['title_ru'], 'required', 'when' => function($model) {
+                return empty($model->title_en);
+            }, 'whenClient' => "function (attribute, value) {
+                return !$('#room-title_en').val();
+            }"],
+            [['title_en'], 'required', 'when' => function($model) {
+                return empty($model->title_ru);
+            }, 'whenClient' => "function (attribute, value) {
+                return !$('#room-title_ru').val();
+            }"],
+            [['description_ru'], 'required', 'when' => function($model) {
+                return empty($model->description_en);
+            }, 'whenClient' => "function (attribute, value) {
+                return !$('#room-description_en').val();
+            }"],
+            [['description_en'], 'required', 'when' => function($model) {
+                return empty($model->description_ru);
+            }, 'whenClient' => "function (attribute, value) {
+                return !$('#room-description_ru').val();
+            }"],
             [['hotel_id', 'adults', 'children', 'total', 'active'], 'integer'],
             [['description_ru', 'description_en'], 'string'],
             [['title_ru', 'title_en'], 'string', 'max' => 255]

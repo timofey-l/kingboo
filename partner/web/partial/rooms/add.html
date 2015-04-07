@@ -28,13 +28,13 @@
                         <div class="tab-pane active" id="title_ru_tab">
                             <div class="form-group" ng-class="getClasses('title_ru')">
                                 <input type="text" class="form-control" ng-model="room.title_ru" name="title_ru"
-                                       id="title_ru" placeholder="" required>
+                                       id="title_ru" placeholder="" ng-required="!room.title_en">
                             </div>
                         </div>
                         <div class="tab-pane" id="title_en_tab">
                             <div class="form-group" ng-class="getClasses('title_en')">
                                 <input type="text" class="form-control" ng-model="room.title_en" name="title_en"
-                                       id="title_en" placeholder="" required>
+                                       id="title_en" placeholder="" ng-required="!room.title_ru">
                             </div>
                         </div>
                     </div>
@@ -83,13 +83,13 @@
                         <div class="tab-pane active" id="description_ru_tab">
                             <div class="form-group" ng-class="getClasses('description_ru')">
                                 <textarea rows="6" type="text" class="form-control" ng-model="room.description_ru"
-                                          name="description_ru" id="description_ru" placeholder="" required></textarea>
+                                          name="description_ru" id="description_ru" placeholder="" ng-required="!room.description_en"></textarea>
                             </div>
                         </div>
                         <div class="tab-pane" id="description_en_tab">
                             <div class="form-group" ng-class="getClasses('description_en')">
                                 <textarea rows="6" type="text" class="form-control" ng-model="room.description_en"
-                                          name="description_en" id="description_en" placeholder="" required></textarea>
+                                          name="description_en" id="description_en" placeholder="" ng-required="!room.description_ru"></textarea>
                             </div>
                         </div>
                     </div>

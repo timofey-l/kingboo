@@ -36,7 +36,17 @@ class Hotel extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['partner_id', 'name', 'address', 'title_ru', 'title_en'], 'required'],
+            [['partner_id', 'name', 'address'], 'required'],
+            [['title_ru'], 'required', 'when' => function($model) {
+                return empty($model->title_en);
+            }, 'whenClient' => "function (attribute, value) {
+                return !$('#hotel-title_en').val();
+            }"],
+            [['title_en'], 'required', 'when' => function($model) {
+                return empty($model->title_ru);
+            }, 'whenClient' => "function (attribute, value) {
+                return !$('#hotel-title_ru').val();
+            }"],
             [['partner_id', 'category'], 'integer'],
             [['lng', 'lat'], 'number'],
             [['description_ru', 'description_en'], 'string'],
