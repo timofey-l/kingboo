@@ -31,5 +31,6 @@ return [
     'Title' => 'Название',
     'Description' => 'Описание',
     'Geo coordinates' => 'Координаты',
-    'Other information' => 'Прочая информация'
+    'Other information' => 'Прочая информация',
+    'Currency' => 'Валюта',
 ];

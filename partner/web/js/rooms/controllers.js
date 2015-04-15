@@ -83,9 +83,11 @@ roomsManageControllers.controller('RoomListCtrl',
     
     //Возвращает соответствующую id запись из типов цены
     $scope.getPriceType = function (room) {
-        var el = null;
+        var el = null;      
         PriceTypes.forEach(function(elem){
-            if (room.price_type == elem.id) el = elem;
+            if (room.price_type == elem.id) {
+                el = elem;
+            }
         });
         return el;
     }

@@ -6,9 +6,10 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Room */
 
-$this->title = $model->id;
+$this->title = $model->{'title_' . \common\models\Lang::$current->url};
 $this->params['breadcrumbs'][] = ['label' => Yii::t('rooms', 'Rooms'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="room-view">
 

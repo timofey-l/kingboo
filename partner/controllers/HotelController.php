@@ -22,7 +22,7 @@ class HotelController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['view', 'update', 'delete'],
+                        'actions' => ['view', 'update', 'delete', 'rooms'],
                         'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
@@ -126,6 +126,19 @@ class HotelController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+    * Выводит номера отеля
+    * 
+    * @param mixed $id
+    * @return string
+    */
+    public function actionRooms($id)
+    {
+        return $this->render('rooms', [ 
+            'model' => $this->findModel($id),
+        ]);
     }
 
     /**

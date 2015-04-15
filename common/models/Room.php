@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use \common\components\ListPriceType;
 
 /**
  * This is the model class for table "{{%room}}".
@@ -88,6 +89,7 @@ class Room extends \yii\db\ActiveRecord
     }
     
     public function getPricetype() {
-        return $this->hasOne(ListPriceType::className(), ['id' => 'price_type']);
+        return ListPriceType::getOption($this->price_type);
+        //return $this->hasOne(\common\components\ListPriceType::className(), ['id' => 'price_type']);
     }
 }

@@ -36,7 +36,7 @@ class Hotel extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['partner_id', 'name', 'address'], 'required'],
+            [['partner_id', 'name', 'address', 'currency_id'], 'required'],
             [['title_ru'], 'required', 'when' => function($model) {
                 return empty($model->title_en);
             }, 'whenClient' => "function (attribute, value) {
@@ -47,7 +47,7 @@ class Hotel extends \yii\db\ActiveRecord
             }, 'whenClient' => "function (attribute, value) {
                 return !$('#hotel-title_ru').val();
             }"],
-            [['partner_id', 'category'], 'integer'],
+            [['partner_id', 'category', 'currency_id'], 'integer'],
             [['lng', 'lat'], 'number'],
             [['description_ru', 'description_en'], 'string'],
             [['name', 'address', 'timezone', 'title_ru', 'title_en'], 'string', 'max' => 255],
@@ -67,6 +67,7 @@ class Hotel extends \yii\db\ActiveRecord
             'address' => Yii::t('hotels', 'Address'),
             'lng' => Yii::t('hotels', 'Lng'),
             'lat' => Yii::t('hotels', 'Lat'),
+            'currency_id' => Yii::t('hotels', 'Currency'),
             'description_ru' => Yii::t('hotels', 'Description Ru'),
             'category' => Yii::t('hotels', 'Category'),
             'timezone' => Yii::t('hotels', 'Timezone'),
@@ -80,4 +81,8 @@ class Hotel extends \yii\db\ActiveRecord
         return $this->hasMany('\common\models\Room', ['hotel_id' => 'id']);
     }
 
+    public function getCurrency() {
+        return $this->hasOne('\common\models\Currency', ['currency_id' => 'id']);
+    }
+    
 }

@@ -74,7 +74,7 @@ hotelRoomPrices.createPriceMatrix = function(Roomprices, pricelist, room, start,
                     children: 0,
                     kids: 0,
                     price: 0,
-                    price_currency: 1 //TODO: Исправить валюту
+                    price_currency: CURRENCY
                 });
             }
             dates[k] = dates[k].format(getLocale('dateFormat'));
@@ -111,7 +111,7 @@ hotelRoomPrices.createPriceMatrix = function(Roomprices, pricelist, room, start,
                                 children: j1,
                                 kids: j0,
                                 price: 0,
-                                price_currency: 1 //TODO: Исправить валюту
+                                price_currency: CURRENCY
                             });
                         }
                     }

@@ -68,7 +68,7 @@ class RoompricesController extends ActiveController
     * Если TYPE_GUESTS нужны еще adults, children, kids
     */
     public function actionUpdategroup() {
-        $this->checkAccess('updategroup');
+        //TODO: CheckAccess
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         
         $startDate = \Yii::$app->request->post('startDate', false);
@@ -83,9 +83,10 @@ class RoompricesController extends ActiveController
         if (!$room_id || !$startDate || !$endDate) {
             return [];
         }
-        if (!$room->price_type == \common\models\ListPriceType::TYPE_GUESTS && (!$adults || $children === false || $kids === false)) {
+        if (!$room->price_type == \common\components\ListPriceType::TYPE_GUESTS && (!$adults || $children === false || $kids === false)) {
             return [];
         }
+        $hotel = \common\models\Hotel::findOne($room->hotel_id);
         
         $prices = RoomPrices::find()
             ->where(['room_id' => $room_id, 'adults' => $adults, 'children' => $children, 'kids' => $kids])
@@ -117,9 +118,12 @@ class RoompricesController extends ActiveController
         
         //Добавляем цены, которых не было
         $date = \DateTime::createFromFormat('Y-m-d', $startDate);
-        $to = \DateTime::createFromFormat('Y-m-d', $endDate);
+        $to = \DateTime::createFromFormat('Y-m-d', $endDate);   
         while ($date <= $to) {
-            if (in_array($date->format('Y-m-d'),$updated)) continue;
+            if (in_array($date->format('Y-m-d'),$updated)) {
+                $date->modify('+1 day');
+                continue;
+            }   
             $p = new RoomPrices();
             $p->date = $date->format('Y-m-d');
             $p->room_id = $room_id;
@@ -127,11 +131,10 @@ class RoompricesController extends ActiveController
             $p->children = $children;
             $p->kids = $kids;
             $p->price = $price;
-            $p->price_currency = 1; //TODO: Исправить валюту
+            $p->price_currency = $hotel->currency_id;
             if ($p->save()) {
                 $saved[] = $p->date;
             }
-            $updated[] = $p->date;            
             $date->modify('+1 day');
         }
 

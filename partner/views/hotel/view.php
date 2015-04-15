@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a(Yii::t('hotels', 'Rooms'), ['rooms', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= DetailView::widget([
@@ -34,6 +35,5 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
     
-    <?= $this->render('_rooms_manage',['hotel' => $model]) ?>
 
 </div>

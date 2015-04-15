@@ -54,12 +54,16 @@ class Currency extends \yii\db\ActiveRecord
     * Возвращает options для использования модели в селектах array(id=>name)
     * 
     */
-    public static function getOptions($name = 'name') {
+    public static function getOptions($name = 'code', $emptyval = false) {
         $array = self::find()->asArray()->all();
         if ($name == 'name') {
             $name = 'name_' . Lang::$current->url;
         }
-        $result = [];
+        if ($emptyval) {
+            $result = [0 => ''];
+        } else {
+            $result = [];
+        }
         foreach ($array as $v) {
             $result[$v['id']] = $v[$name];
         }
