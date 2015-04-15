@@ -49,4 +49,30 @@ class Currency extends \yii\db\ActiveRecord
             'symbol' => Yii::t('common_models', 'Symbol'),
         ];
     }
+
+    /**
+    * Возвращает options для использования модели в селектах array(id=>name)
+    * 
+    */
+    public static function getOptions($name = 'name') {
+        $array = self::find()->asArray()->all();
+        if ($name == 'name') {
+            $name = 'name_' . Lang::$current->url;
+        }
+        $result = [];
+        foreach ($array as $v) {
+            $result[$v['id']] = $v[$name];
+        }
+        return $result;
+    }
+    
+    /**
+    * Возвращает массив объектов, закодированный для JavaScript
+    * 
+    */
+    public static function getJsObjects() {
+        return json_encode(array_map(function($el) {
+            return $el->attributes;
+        },self::find()->all()));
+    }
 }

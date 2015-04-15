@@ -23,7 +23,8 @@
         "bower-asset/angular": "1.3.5",
         "bower-asset/angular-mocks": "~1.3.0",
         "bower-asset/angular-route": "~1.3.0",
-        "bower-asset/angular-resource": "~1.3.0"
+        "bower-asset/angular-resource": "~1.3.0",
+        "bower-asset/moment": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

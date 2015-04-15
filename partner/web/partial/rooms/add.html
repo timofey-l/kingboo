@@ -96,6 +96,14 @@
                 </div>
                 <!-- /descriptions -->
             </div>
+            <div class="col-sm-6">
+                        <div class="form-group"  ng-class="getClasses('price_type')">
+                            <label for="price_type">{{t('room_price_type_title')}}</label>
+                            <select class="form-control" ng-model="room.price_type" name="price_type"
+                                   id="price_type" required ng-options="t.id as t['name_'+LANG] for t in PriceTypes">
+                            </select>
+                        </div>
+            </div>
         </div>
     </form>
 

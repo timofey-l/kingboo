@@ -24,6 +24,7 @@ return [
     'Adults' => 'Взрослые',
     'Children' => 'Дети',
     'Total' => 'Всего гостей',
+    'Price type' => 'Тип цен',
     'Active' => 'Активен',
 ];
 

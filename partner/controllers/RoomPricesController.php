@@ -1,121 +1,153 @@
 <?php
-
 namespace partner\controllers;
 
-use Yii;
-use common\models\RoomPrices;
-use yii\data\ActiveDataProvider;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use yii\rest\ActiveController;
+use yii\web\BadRequestHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
+use common\models\RoomPrices;
 
-/**
- * RoomPricesController implements the CRUD actions for RoomPrices model.
- */
-class RoomPricesController extends Controller
+class RoompricesController extends ActiveController
 {
+
+    public $modelClass = 'common\models\RoomPrices';
+
     public function behaviors()
     {
-        return [
+        $a = parent::behaviors();
+        $b = [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['post'],
+                    'updategroup' => ['post'],
                 ],
             ],
         ];
+        return \yii\helpers\ArrayHelper::merge($a,$b);
     }
-
-    /**
-     * Lists all RoomPrices models.
-     * @return mixed
-     */
-    public function actionIndex()
+    
+    public function actions()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => RoomPrices::find(),
-        ]);
-
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-        ]);
+        return [
+            'index' => [
+                'class' => 'common\components\RoompricesIndexAction',
+                'modelClass' => $this->modelClass,
+                'checkAccess' => [$this, 'checkAccess'],
+            ],
+            'view' => [
+                'class' => 'yii\rest\ViewAction',
+                'modelClass' => $this->modelClass,
+                'checkAccess' => [$this, 'checkAccess'],
+            ],
+            'create' => [
+                'class' => 'yii\rest\CreateAction',
+                'modelClass' => $this->modelClass,
+                'checkAccess' => [$this, 'checkAccess'],
+                'scenario' => $this->createScenario,
+            ],
+            'update' => [
+                'class' => 'yii\rest\UpdateAction',
+                'modelClass' => $this->modelClass,
+                'checkAccess' => [$this, 'checkAccess'],
+                'scenario' => $this->updateScenario,
+            ],
+            'delete' => [
+                'class' => 'yii\rest\DeleteAction',
+                'modelClass' => $this->modelClass,
+                'checkAccess' => [$this, 'checkAccess'],
+            ],
+            
+            'options' => [
+                'class' => 'yii\rest\OptionsAction',
+            ],
+        ];
     }
-
+    
     /**
-     * Displays a single RoomPrices model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new RoomPrices model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new RoomPrices();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+    * Групповое изменение цен с startDate до endDate для room_id
+    * Если TYPE_GUESTS нужны еще adults, children, kids
+    */
+    public function actionUpdategroup() {
+        $this->checkAccess('updategroup');
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        
+        $startDate = \Yii::$app->request->post('startDate', false);
+        $endDate = \Yii::$app->request->post('endDate', false);
+        $room_id = \Yii::$app->request->post('room_id', false);
+        $adults = \Yii::$app->request->post('adults', false);
+        $children = \Yii::$app->request->post('children', false);
+        $kids = \Yii::$app->request->post('kids', false);
+        $price = \Yii::$app->request->post('price', false);
+        
+        $room = \common\models\Room::findOne($room_id);
+        if (!$room_id || !$startDate || !$endDate) {
+            return [];
         }
-    }
-
-    /**
-     * Updates an existing RoomPrices model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        if (!$room->price_type == \common\models\ListPriceType::TYPE_GUESTS && (!$adults || $children === false || $kids === false)) {
+            return [];
         }
+        
+        $prices = RoomPrices::find()
+            ->where(['room_id' => $room_id, 'adults' => $adults, 'children' => $children, 'kids' => $kids])
+            ->andWhere(['>=', 'date', $startDate])
+            ->andWhere(['<=', 'date', $endDate])
+            ->all();
+         
+        //Записываем существующие цены   
+        $updated = $saved = [];
+        if ($prices) {
+            foreach ($prices as $p) {
+                if ($price == 0) {
+                    if ($p->delete()) {
+                        $saved[] = $p->date;
+                    }
+                } else {
+                    $p->price = $price;
+                    if ($p->save()) {
+                        $saved[] = $p->date;
+                    }
+                    $updated[] = $p->date;
+                }
+            }
+        }
+        
+        if ($price == 0) {
+            return $saved;
+        }
+        
+        //Добавляем цены, которых не было
+        $date = \DateTime::createFromFormat('Y-m-d', $startDate);
+        $to = \DateTime::createFromFormat('Y-m-d', $endDate);
+        while ($date <= $to) {
+            if (in_array($date->format('Y-m-d'),$updated)) continue;
+            $p = new RoomPrices();
+            $p->date = $date->format('Y-m-d');
+            $p->room_id = $room_id;
+            $p->adults = $adults;
+            $p->children = $children;
+            $p->kids = $kids;
+            $p->price = $price;
+            $p->price_currency = 1; //TODO: Исправить валюту
+            if ($p->save()) {
+                $saved[] = $p->date;
+            }
+            $updated[] = $p->date;            
+            $date->modify('+1 day');
+        }
+
+        return $saved;
     }
 
-    /**
-     * Deletes an existing RoomPrices model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
+    public function checkAccess($action, $model = null, $params = [])
     {
-        $this->findModel($id)->delete();
+        if (\Yii::$app->user->isGuest) {
+            throw new ForbiddenHttpException();
+        }
 
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the RoomPrices model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return RoomPrices the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = RoomPrices::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+        if ($model !== null) {
+            if ($model->room->hotel->partner_id != \Yii::$app->user->id) {
+                throw new ForbiddenHttpException();
+            }
         }
     }
 }

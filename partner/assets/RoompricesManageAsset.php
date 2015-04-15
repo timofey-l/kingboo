@@ -3,15 +3,14 @@ namespace partner\assets;
 
 use yii\web\AssetBundle;
 
-class RoomsManageAsset extends AssetBundle
+class RoompricesManageAsset extends AssetBundle
 {
 //    public $sourcePath = '@partner/assets/web/';
     public $js = [
-        'js/rooms/langs.js',
-        'js/rooms/controllers.js',
-        'js/rooms/services.js',
-        'js/rooms/app.js',
-        'js/rooms/hotelroomprices.js',
+        'js/roomprices/langs.js',
+        'js/roomprices/controllers.js',
+        'js/roomprices/services.js',
+        'js/roomprices/app.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
@@ -20,3 +19,4 @@ class RoomsManageAsset extends AssetBundle
         'partner\assets\AngularAsset',
     ];
 }
+

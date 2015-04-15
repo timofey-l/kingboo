@@ -36,5 +36,4 @@ $this->params['breadcrumbs'][] = $this->title;
     
     <?= $this->render('_rooms_manage',['hotel' => $model]) ?>
 
-
 </div>

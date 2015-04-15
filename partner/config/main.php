@@ -35,7 +35,8 @@ return [
             'class' => 'common\components\LangUrlManager',
             'rules' => [
                 // REST for rooms
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'rooms']
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'rooms'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'roomprices']
             ],
         ],
         'request' => [

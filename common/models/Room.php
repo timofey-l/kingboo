@@ -17,6 +17,7 @@ use Yii;
  * @property integer $children
  * @property integer $total
  * @property integer $active
+ * @property integer $price_type
  */
 class Room extends \yii\db\ActiveRecord
 {
@@ -34,7 +35,7 @@ class Room extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['hotel_id'], 'required'],
+            [['hotel_id', 'price_type'], 'required'],
             [['title_ru'], 'required', 'when' => function($model) {
                 return empty($model->title_en);
             }, 'whenClient' => "function (attribute, value) {
@@ -56,6 +57,7 @@ class Room extends \yii\db\ActiveRecord
                 return !$('#room-description_ru').val();
             }"],
             [['hotel_id', 'adults', 'children', 'total', 'active'], 'integer'],
+            [['price_type'], 'integer', 'min' => 1],
             [['description_ru', 'description_en'], 'string'],
             [['title_ru', 'title_en'], 'string', 'max' => 255]
         ];
@@ -76,11 +78,16 @@ class Room extends \yii\db\ActiveRecord
             'adults' => Yii::t('rooms', 'Adults'),
             'children' => Yii::t('rooms', 'Children'),
             'total' => Yii::t('rooms', 'Total'),
+            'price_type' => Yii::t('room','Price type'),
             'active' => Yii::t('rooms', 'Active'),
         ];
     }
 
     public function getHotel() {
         return $this->hasOne(Hotel::className(), ['id' => 'hotel_id']);
+    }
+    
+    public function getPricetype() {
+        return $this->hasOne(ListPriceType::className(), ['id' => 'price_type']);
     }
 }

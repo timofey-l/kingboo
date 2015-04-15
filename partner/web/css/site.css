@@ -114,3 +114,36 @@ a.desc:after {
 .box .box-header > .fa, .box .box-header > .glyphicon, .box .box-header > .ion, .box .box-header .box-title {
     font-weight: 300;
 }
+
+/* Price table */
+.price-inp {
+    padding: 0px !important;
+    border: none !important;
+    height: 20px !important;
+    line-height: normal !important;
+}
+.price-inp.error {
+    color: red;
+}
+.price-inp-addon {
+    padding: 0px 5px !important;
+    border: none !important;
+    height: 20px !important;
+    line-height: normal !important;
+    cursor: pointer;
+}
+
+#price_titles {
+    padding-right: 0;
+}
+.matrix_data_cont {
+    position: relative;
+    padding-left: 0;
+}
+#matrix_data {
+    overflow: auto;
+    position: absolute;
+    width: calc(100% - 3px);
+    float: left;
+}
+/* ./Price table */

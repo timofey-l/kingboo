@@ -5,3 +5,12 @@ roomsServices.factory('Room', ['$resource', function($resource){
         'update': {method: 'PUT'}
     })
 }]);
+
+var roompricesServices = angular.module('roompricesServices', ['ngResource']);
+
+roompricesServices.factory('Roomprices', ['$resource', function($resource){
+    return $resource('/roomprices/:id', null, {
+        'query':  {method:'GET', isArray:true},
+        'update': {method: 'PUT'}
+    })
+}]);

@@ -14,6 +14,9 @@ use Yii;
  */
 class ListPriceType extends \yii\db\ActiveRecord
 {
+    const TYPE_FIXED = 1; //Значение id для фиксированной цены
+    const TYPE_GUESTS = 2; //Значение id для цены, зависящей от количества гостей
+    
     /**
      * @inheritdoc
      */
@@ -45,5 +48,29 @@ class ListPriceType extends \yii\db\ActiveRecord
             'name_en' => Yii::t('common_models', 'Name En'),
             'order' => Yii::t('common_models', 'Order'),
         ];
+    }
+    
+    /**
+    * Возвращает options для использования моели в селектах array(id=>name)
+    * 
+    */
+    public static function getOptions() {
+        $array = self::find()->asArray()->all();
+        $name = 'name_' . Lang::$current->url;
+        $result = [];
+        foreach ($array as $v) {
+            $result[$v['id']] = $v[$name];
+        }
+        return $result;
+    }
+    
+    /**
+    * Возвращает массив объектов, закодированный для JavaScript
+    * 
+    */
+    public static function getJsObjects() {
+        return json_encode(array_map(function($el) {
+            return $el->attributes;
+        },self::find()->orderBy('order')->all()));
     }
 }

@@ -55,4 +55,12 @@ class RoomPrices extends \yii\db\ActiveRecord
             'price_currency' => Yii::t('room_prices', 'Price Currency'),
         ];
     }
+    
+    public function getRoom() {
+        return $this->hasOne(Room::className(), ['id' => 'room_id']);
+    }
+    
+    public function getCurrency() {
+        return $this->hasOne(Currency::className(), ['id' => 'price_currency']);
+    }
 }

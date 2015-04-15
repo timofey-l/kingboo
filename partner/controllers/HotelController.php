@@ -22,6 +22,22 @@ class HotelController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
+                        'actions' => ['view', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            if ($action->id == 'delete') {
+                                $id = \Yii::$app->request->post('id', false);
+                            } else {
+                                $id = \Yii::$app->request->get('id', false);
+                            }
+                            if (!$id) return false;
+                            $hotel = \common\models\Hotel::findOne($id);
+                            return $hotel->partner_id == \Yii::$app->user->id;
+                        }
+                    ],
+                    [
+                        'actions' => ['index', 'create'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -56,7 +72,7 @@ class HotelController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->render('view', [ 
             'model' => $this->findModel($id),
         ]);
     }
@@ -127,4 +143,5 @@ class HotelController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
 }

@@ -19,8 +19,8 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $sourcePath = '@bower/';
     public $css = [
-        'css/site.css',
         'admin-lte/css/AdminLTE.css',
+        'css/site.css',
     ];
     public $js = [
         'admin-lte/js/AdminLTE/app.js',

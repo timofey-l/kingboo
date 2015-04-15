@@ -24,7 +24,7 @@ class SiteController extends Controller
      */
     public function behaviors()
     {
-        return [
+        return [           //TODO: Сделать Check Access
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [

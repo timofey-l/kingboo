@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6df728ea5c6a4b61ac97af7a454387fd",
+    "hash": "7d2db0d3ab84c51db4abf94bd8bcf025",
     "packages": [
         {
             "name": "bower-asset/admin-lte",
@@ -319,6 +319,40 @@
                 "mask",
                 "plugins"
             ]
+        },
+        {
+            "name": "bower-asset/moment",
+            "version": "2.10.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/moment/moment.git",
+                "reference": "ce233cecf3d07aa15869a1db0fd8a8c43efccfcd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/moment/moment/zipball/ce233cecf3d07aa15869a1db0fd8a8c43efccfcd",
+                "reference": "ce233cecf3d07aa15869a1db0fd8a8c43efccfcd",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "moment.js",
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "node_modules",
+                    "bower_components",
+                    "test",
+                    "tests",
+                    "tasks",
+                    "component.json",
+                    "composer.json",
+                    "CONTRIBUTING.md",
+                    "ender.js",
+                    "Gruntfile.js",
+                    "package.js",
+                    "package.json"
+                ]
+            }
         },
         {
             "name": "bower-asset/punycode",

@@ -12,6 +12,7 @@ if (in_array(Yii::$app->controller->action->id,['login', 'signup', 'error'])) {
     dmstr\web\AdminLteAsset::register($this);
     backend\assets\AppAsset::register($this);
     $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@bower') . '/admin-lte';
+    $this->registerJsFile('/js/scripts.js');
     ?>
     <?php $this->beginPage() ?>
     <!DOCTYPE html>
