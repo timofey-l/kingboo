@@ -136,6 +136,10 @@ a.desc:after {
 #price_titles {
     padding-right: 0;
 }
+#price_titles table td:nth-child(1) {
+    cursor: help;
+}
+
 .matrix_data_cont {
     position: relative;
     padding-left: 0;

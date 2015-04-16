@@ -16,8 +16,12 @@ LANGS.ru = {
     room_table_head_children: "Детей",
     room_table_head_total: "Всего",
     room_table_head_price_type : "Тип стоимости",
+    
+    room_table_head_list: "Список номеров",
     room_table_head_delete: "Удалить",
     room_table_head_update: "Редактировать",
+    room_table_head_money: "Цены",
+    room_table_head_timetable: "Количество и доступность номеров",
 
     room_adults_title: "Взрослых",
     room_children_title: "Детей",
@@ -32,10 +36,15 @@ LANGS.ru = {
     room_null_text: "Такого номера не найдено.",
     room_cancel : "Отмена",
     
+    room_price_head : 'Управление ценами на номер',
     room_price_date_range : "Период",
+    room_price_show : "Показать",
     
-    price_table_col_1_title : "Цены"
+    price_table_col_1_title : "Варианты",
+    price_table_col_1_description: "Количество взрослых + количество детей (7-11 лет) + количество детей (0-6 лет)",
+    price_table_fixed_price: "Фикс. цена",
 };
+
 LANGS.en = {
     room_add: "Add room",
     room_title_ru: "Title RU",
@@ -51,8 +60,12 @@ LANGS.en = {
     room_table_head_children: "Children",
     room_table_head_price_type : "Price type",
     room_table_head_total: "Title",
+    
+    room_table_head_list: "Room list",
     room_table_head_delete: "Delete",
     room_table_head_update: "Edit",
+    room_table_head_money: "Prices",
+    room_table_head_timetable: "Количество и доступность номеров",
 
     room_adults_title: "Adults",
     room_children_title: "Children",
@@ -64,12 +77,16 @@ LANGS.en = {
     room_list_title: "Rooms list",
     room_edit_title: "Edit room",
     room_save : "Save",
-    room_null_text: "Такого номера не найдено.",
+    room_null_text: "Cannot find room.",
     room_cancel : "Cancel",
     
+    room_price_head : 'Room prices manage',
     room_price_date_range : "Period",
-    
-    price_table_col_1_title : "Prices",
+    room_price_show : "Show",
+
+    price_table_col_1_title : "Types",
+    price_table_col_1_description: "Adults + kids (7-11 y.o.) + children (0-6 y.o)",
+    price_table_fixed_price: "Fixed price",
 };
 
 function t(v, l) {

@@ -1,5 +1,32 @@
+<div class="box-header">
+    <h3 class="box-title">{{t('room_price_head')}}</h3>
+    <span style="font-size: 20px;" class="fa fa-spin fa-gear" ng-show="loading"></span>
+</div>
+<!-- /.box-header -->
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <select class="form-control" ng-model="selectedRoom.id" name="price_type" ng-change="changeRoom()"
+                required ng-options="t.id as t['title_'+LANG] for t in rooms">
+            </select>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_list')}}" href="#/">
+            <i class="fa  fa-list"></i>
+        </a>
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_update')}}" href="#/edit/{{selectedRoom.id}}">
+            <i class="fa fa-edit"></i>
+        </a>
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_timetable')}}" href="#/">
+            <i class="fa fa-calendar"></i>
+        </a>
+    </div>
+</div>
+
 <!-- Price block -->
-<div class="box-body" ng-show="selectedRoom !== null">
+<div class="box-body">
     <div class="row">
         <div class="col-sm-4">
             <div class="form-group">
@@ -8,73 +35,76 @@
                     <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                     </div>
-                    <input type="text" class="form-control pull-right" id="daterange" ng-model="filter.date" />
+                    <input type="text" class="form-control pull-right" id="daterange" ng-model="filter.date" ng-change="getPrices()" />
                 </div><!-- /.input group -->
             </div><!-- /.form group -->
         </div><!-- /.col -->
-        <div class="col-sm-4">
+        <!--div class="col-sm-4">
             <div class="form-group">
                 <label>&nbsp;</label>
                 <div class="input-group">
                     <a class="btn btn-primary" ng-click="getPrices()">
                         <i class="fa  fa-filter"></i>
-                        Search
+                        {{t('room_price_show')}}
                     </a>
                 </div>
             </div>
-        </div>
+        </div-->
     </div><!-- /.row -->
+    
     <div class="row">
-    <div id="price_titles" class="col-sm-4">
-        <table class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th style="width:50%;">{{t('price_table_col_1_title')}}</th>
-                    <th style="width:50%;">&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="title in titles">
-                    <td>{{title.title}}</td>
-                    <td>
-                        <div class="input-group input-group-sm">
-                            <input type="text" class="form-control price-inp" ng-class="{error: title._error}" ng-model="title.price">
-                            <span class="input-group-addon price-inp-addon" >
-                                <a class="fa fa-angle-double-right" ng-click="groupPriceSave($index,title)"></a>
-                            </span>
-                        </div>
-                    </td>
-                </tr>        
-            </tbody>
-        </table>
-    </div>
-    <span style="font-size: 20px;" class="fa fa-spin fa-gear" ng-show="selectedRoom !== null && priceLoading"></span>
-    <div class="col-sm-8 matrix_data_cont">
-        <div id="matrix_data">
-        <table id="price_table" class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th ng-repeat="date in dates">{{date}}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="priceCol in prices">
-                    <td ng-repeat="price in priceCol">
-                        <div class="input-group input-group-sm">
-                            <input type="text" class="form-control price-inp" ng-class="{error: price._error}" ng-model="price.price" ng-change="priceEdit(price)">
-                            <span class="input-group-addon price-inp-addon" ng-show="price._focused">
-                                <a class="fa fa-check" ng-click="priceSave(price)"></a>
-                            </span>
-                            <span class="input-group-addon price-inp-addon" ng-show="price._focused">
-                                <a class="fa fa-close text-red" ng-click="priceCancel(price)"></a>
-                            </span>
-                        </div>
-                    </td>
-                </tr>        
-            </tbody>
-        </table>
+        
+        <div id="price_titles" class="col-sm-2">
+            <span style="font-size: 20px;" class="fa fa-spin fa-gear" ng-show="priceLoading"></span>
+            <table class="table table-bordered table-hover" ng-show="titles">
+                <thead>
+                    <tr>
+                        <th style="width:"50%" nowrap="">{{t('price_table_col_1_title')}}</th>
+                        <th style="width:"50%">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="title in titles">
+                        <td title="{{t('price_table_col_1_description')}}" nowrap="">{{title.title}}</td>
+                        <td>
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control price-inp" ng-class="{error: title._error}" ng-model="title.price">
+                                <span class="input-group-addon price-inp-addon" >
+                                    <a class="fa fa-angle-double-right" ng-click="groupPriceSave($index,title)"></a>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>        
+                </tbody>
+            </table>
         </div>
-    </div>
+        
+        <div class="col-sm-10 matrix_data_cont">
+            <div id="matrix_data">
+                <table id="price_table" class="table table-bordered table-hover" ng-show="titles">
+                    <thead>
+                        <tr>
+                            <th ng-repeat="date in dates" style="max-width:100px;">{{date}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="priceCol in prices">
+                            <td ng-repeat="price in priceCol">
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control price-inp" ng-class="{error: price._error}" ng-model="price.price" ng-change="priceEdit(price)">
+                                    <span class="input-group-addon price-inp-addon" ng-show="price._focused">
+                                        <a class="fa fa-check" ng-click="priceSave(price)"></a>
+                                    </span>
+                                    <span class="input-group-addon price-inp-addon" ng-show="price._focused">
+                                        <a class="fa fa-close text-red" ng-click="priceCancel(price)"></a>
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>        
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div><!-- /.row -->
 </div>
 <br />

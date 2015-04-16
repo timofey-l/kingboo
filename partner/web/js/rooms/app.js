@@ -16,6 +16,10 @@
                     templateUrl: '/partial/rooms/add.html',
                     controller: 'RoomEditCtrl'
                 })
+                .when('/prices/:id', {
+                    templateUrl: '/partial/rooms/prices.html',
+                    controller: 'PricesCtrl'
+                })
             ;
     }]);
 })();

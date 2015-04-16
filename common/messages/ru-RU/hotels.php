@@ -33,4 +33,5 @@ return [
     'Geo coordinates' => 'Координаты',
     'Other information' => 'Прочая информация',
     'Currency' => 'Валюта',
+    'Rooms' => 'Номера',
 ];

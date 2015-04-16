@@ -31,7 +31,7 @@ class RoomController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    {
+    {      
         $searchModel = new RoomSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

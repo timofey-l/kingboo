@@ -53,7 +53,7 @@ hotelRoomPrices.createPriceMatrix = function(Roomprices, pricelist, room, start,
     if (room.price_type == PriceTypeFixed) {
         titles[0] = {
             _error: false,
-            title: 'Room Price',
+            title: t('price_table_fixed_price'),
             price: ''
         };
         //Только один вариант
