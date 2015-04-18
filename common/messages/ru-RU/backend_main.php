@@ -17,5 +17,10 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Manage users' => '',
+    'Manage clients' => '',
+    'Manage countries ' => '',
+    'Manage currencies ' => '',
+    'Manage partners' => '',
+    'Manage types of food ' => '',
+    'Manage users' => '@@@@',
 ];

@@ -1,5 +1,6 @@
 <?php
-
+          exit();
+          //TODO: Старый вариант, который использовался на странице редактирования отеля. Удалить?
 \partner\assets\RoomsManageAsset::register($this);
 
 /* @var $hotel \common\models\Hotel */

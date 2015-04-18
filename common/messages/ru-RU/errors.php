@@ -17,10 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Code' => '',
-    'ID' => '',
-    'Name En' => '',
-    'Name Ru' => '',
-    'Sort' => '',
-    'Symbol' => '',
+    'Return to main page' => '',
+    'The above error occurred while the Web server was processing your request.
+                        Please contact us if you think this is a server error. Thank you.' => '',
 ];

@@ -17,10 +17,12 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Code' => '',
+    'Adults' => '',
+    'Children' => '',
+    'Date' => '',
     'ID' => '',
-    'Name En' => '',
-    'Name Ru' => '',
-    'Sort' => '',
-    'Symbol' => '',
+    'Kids' => '',
+    'Price' => '',
+    'Price Currency' => '',
+    'Room ID' => '',
 ];

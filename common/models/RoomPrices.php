@@ -36,7 +36,7 @@ class RoomPrices extends \yii\db\ActiveRecord
             [['date'], 'safe'],
             [['room_id', 'adults', 'children', 'kids', 'price_currency'], 'integer'],
             [['price'], 'number'],
-            [['date', 'room_id', 'adults', 'children', 'kids'], 'unique', 'targetAttribute' => ['date']]
+            [['date', 'room_id', 'adults', 'children', 'kids'], 'unique', 'targetAttribute' => ['date', 'room_id', 'adults', 'children', 'kids']]
         ];
     }
 

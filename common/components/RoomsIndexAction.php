@@ -7,10 +7,6 @@ use yii\data\ActiveDataProvider;
 use yii\rest\IndexAction;
 use yii\web\BadRequestHttpException;
 
-/**
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
- */
 class RoomsIndexAction extends IndexAction
 {
     protected function prepareDataProvider()

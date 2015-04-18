@@ -22,6 +22,19 @@ use Yii;
  */
 class Hotel extends \yii\db\ActiveRecord
 {
+    
+    public function beforeDelete() {
+        if (parent::beforeDelete()) {
+            foreach ($this->rooms as $room) {
+                $room->delete();
+            };
+            foreach ($this->images as $image) {
+                $image->delete();
+            };
+        }
+        return true;
+    }
+    
     /**
      * @inheritdoc
      */
@@ -81,6 +94,10 @@ class Hotel extends \yii\db\ActiveRecord
         return $this->hasMany('\common\models\Room', ['hotel_id' => 'id']);
     }
 
+    public function getImages() {
+        return $this->hasMany('\common\models\HotelImage', ['hotel_id' => 'id']);
+    }
+    
     public function getCurrency() {
         return $this->hasOne('\common\models\Currency', ['currency_id' => 'id']);
     }

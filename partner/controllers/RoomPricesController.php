@@ -68,7 +68,6 @@ class RoompricesController extends ActiveController
     * Если TYPE_GUESTS нужны еще adults, children, kids
     */
     public function actionUpdategroup() {
-        //TODO: CheckAccess
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         
         $startDate = \Yii::$app->request->post('startDate', false);
@@ -88,6 +87,14 @@ class RoompricesController extends ActiveController
         }
         $hotel = \common\models\Hotel::findOne($room->hotel_id);
         
+        //CheckAccess
+        if (\Yii::$app->user->isGuest) {
+            throw new ForbiddenHttpException();
+        }
+        if ($hotel->partner_id != \Yii::$app->user->id) {
+            throw new ForbiddenHttpException();
+        }
+            
         $prices = RoomPrices::find()
             ->where(['room_id' => $room_id, 'adults' => $adults, 'children' => $children, 'kids' => $kids])
             ->andWhere(['>=', 'date', $startDate])
