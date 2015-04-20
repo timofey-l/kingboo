@@ -3,6 +3,9 @@ return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'language'=>'ru-RU',
     'components' => [
+        'assetManager' => [
+            'linkAssets' => true,
+        ],
         'cache' => [
 			'class' => 'yii\caching\FileCache',
 		],
