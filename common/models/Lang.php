@@ -127,4 +127,24 @@ class Lang extends \yii\db\ActiveRecord
             'date_create' => Yii::t('langs', 'Date Create'),
         ];
     }
+    
+    /**
+    * Возвращает отсортированный список языков: текущий язык ставится на первое место
+    */
+    public static function sortedLangList() {
+        $langs = self::find()->all();
+        $cur_id = self::$current->id;
+        $cur_lang = false;
+        foreach ($langs as $k=>$lang) {
+            if ($cur_id == $lang->id) {
+                if ($k == 0) break;
+                $cur_lang = array_splice($langs,$k,1);
+                continue;
+            }
+        }         
+        if ($cur_lang) {
+            array_unshift($langs,$cur_lang[0]);
+        }
+        return $langs;
+    }
 }

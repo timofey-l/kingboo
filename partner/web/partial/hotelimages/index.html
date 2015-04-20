@@ -21,11 +21,14 @@
         <h4>{{t('image_list_empty')}}</h4>
     </div>
     
-    <span ng-repeat="image in images">
-        <a href="{{image.image}}"><img ng-src="{{image.thumb}}"></a>
-        <a class="fa fa-close" ng-click="delete(image)"></a>
-    </span>
-
+    <div class="row">
+        <div class="col-xs-1 col-md-1" ng-repeat="image in images">
+            <a href="{{image.image}}" class="thumbnail">
+                <img src="{{image.thumb}}">
+            </a>
+            <a class="fa fa-close" ng-click="delete(image)"></a>
+        </div>
+    </div>
     
 </div>
 <!-- /.box-body -->

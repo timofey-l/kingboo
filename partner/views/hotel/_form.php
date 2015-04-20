@@ -8,8 +8,7 @@ use \common\models\Currency;
 /* @var $model common\models\Hotel */
 /* @var $form yii\widgets\ActiveForm */
 
-$langs = \common\models\Lang::find()->all();
-
+$langs = \common\models\Lang::sortedLangList();   
 
 ?>
 
