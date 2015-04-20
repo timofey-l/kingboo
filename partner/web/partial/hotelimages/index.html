@@ -1,0 +1,31 @@
+<div class="box-header">
+    <h3 class="box-title">{{t('image_list_title')}}</h3>
+
+    <span style="font-size: 20px;" class="fa fa-spin fa-gear" ng-show="loading"></span>
+
+    <form id="add_image" name="add_image" onsubmit="return false;" novalidate enctype="multipart/form-data" method="POST" action="">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <input type="text" name="hotel_id" ng-show="false" ng-model="newImage.hotel_id">
+                <input type="file" class="form-control" name="image" width="200px;" required ng-model="newImage.image" id="addNewImage" placeholder="" >
+                <a ng-click="save()" title="{{t('image_add')}}" class="fa fa-check"></a>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- /.box-header -->
+
+<div class="box-body no-padding" >
+
+    <div ng-show="" style="color: #aaa;padding: 10px 10px 10px 10px;">
+        <h4>{{t('image_list_empty')}}</h4>
+    </div>
+    
+    <span ng-repeat="image in images">
+        <a href="{{image.image}}"><img ng-src="{{image.thumb}}"></a>
+        <a class="fa fa-close" ng-click="delete(image)"></a>
+    </span>
+
+    
+</div>
+<!-- /.box-body -->

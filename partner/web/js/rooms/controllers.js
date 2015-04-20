@@ -40,6 +40,7 @@ roomsManageControllers.controller('RoomListCtrl',
                 $scope.loading = false;
             }
         );
+        $rootScope.rooms = $scope.rooms;
     };
     $scope.load();
 
@@ -208,20 +209,25 @@ roomsManageControllers.controller('PricesCtrl',
         room_id: 0
     };
     
-    $scope.load = function() {
-        $scope.rooms = Room.query(
-            {
-                hotel_id: $rootScope.hotelId
-            },
-            function () {
-                $scope.loading = false;
-            },
-            function () {
-                $scope.loading = false;
-            }
-        );
-    };
-    $scope.load();
+    //Загружаем комнаты, если был прямой заход на УРЛ
+    if ($rootScope.rooms == null) {
+        $scope.load = function() {
+            $scope.rooms = Room.query(
+                {
+                    hotel_id: $rootScope.hotelId
+                },
+                function () {
+                    $scope.loading = false;
+                },
+                function () {
+                    $scope.loading = false;
+                }
+            );
+        };
+        $scope.load();
+    } else {
+        $scope.rooms = $rootScope.rooms;
+    }
     
     var promise = Room.get({
         id: $routeParams.id
@@ -339,9 +345,9 @@ roomsManageControllers.controller('PricesCtrl',
             price: title.price
         };
         $http.post('/roomprices/updategroup/',f)
-            .success(function(data) {
+            .success(function(data) { console.log(data);
                 for (var i in $scope.prices[k]) {
-                    if (data.in_array($scope.prices[k][i].date)) {
+                    if (_.indexOf(data, $scope.prices[k][i].date) != -1) {
                         $scope.prices[k][i].price = title.price;
                     }
                 }

@@ -17,14 +17,26 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'ID' => 'ID',
-    'Hotel ID' => 'Отель',
-    'Title' => 'Название',
-    'Description' => 'Описание',
+    'Are you sure you want to delete this item?' => '',
+    'Create' => '',
+    'Create Room' => '',
+    'Delete' => '',
+    'Description En' => '',
+    'Description Ru' => '',
+    'Reset' => '',
+    'Rooms' => '',
+    'Search' => '',
+    'Title En' => '',
+    'Title Ru' => '',
+    'Update' => '',
+    'Update {modelClass}: ' => '',
+    'Description' => '@@Описание@@',
+    'Price type' => '@@Тип цен@@',
+    'Title' => '@@Название@@',
+    'Active' => 'Активен',
     'Adults' => 'Взрослые',
     'Children' => 'Дети',
+    'Hotel ID' => 'Отель',
+    'ID' => 'ID',
     'Total' => 'Всего гостей',
-    'Price type' => 'Тип цен',
-    'Active' => 'Активен',
 ];
-

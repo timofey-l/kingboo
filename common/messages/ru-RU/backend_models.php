@@ -17,7 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Countries' => '',
+    'Create partner' => '',
+    'Currencies' => '',
+    'Food Types' => '',
     'Partner Users' => '',
+    'This email address already been taken' => '',
+    'This username already been taken' => '',
     'Add value' => '@@Добавить значение@@',
     'Enter item value' => '@@Введите значение элемента@@',
     'ID' => '@@ID@@',

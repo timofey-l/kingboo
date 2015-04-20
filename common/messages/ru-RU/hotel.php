@@ -17,10 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Code' => '',
+    'Hotel ID' => '',
     'ID' => '',
-    'Name En' => '',
-    'Name Ru' => '',
-    'Sort' => '',
-    'Symbol' => '',
+    'Image' => '',
 ];
