@@ -2,7 +2,7 @@
 
 # копируем конфигурационные файлы
 cp -r /vagrant/vagrant_setup/dot_files/* ~/
-cp -r /vagrant/vagrant_setup/dot_files/.[^.]* ~
+cp /vagrant/vagrant_setup/dot_files/.bashrc ~/.bashrc
 
 # обновление apt, установка дополнительного софта, копирование виртуальных хостов
 # и перезапуск служб
@@ -10,7 +10,7 @@ sudo apt-get update
 sudo service apache2 stop
 sudo cp /vagrant/vagrant_setup/vhosts/* /etc/apache2/sites-available/
 sudo a2ensite *.conf
-sudo apt-get install php5-intl php5-apcu -y
+sudo apt-get install php5-intl php5-apcu php5-readline php5-xdebug -y
 sudo service apache2 start
 cd /vagrant
 
