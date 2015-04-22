@@ -151,3 +151,8 @@ a.desc:after {
     float: left;
 }
 /* ./Price table */
+
+/* Images */
+.img-del {
+    cursor: pointer;
+}

@@ -14,3 +14,11 @@ roompricesServices.factory('Roomprices', ['$resource', function($resource){
         'update': {method: 'PUT'}
     })
 }]);
+
+var imagesServices = angular.module('imagesServices', ['ngResource']);
+
+imagesServices.factory('Image', ['$resource', function($resource){
+    return $resource('/roomimages/:id', null, {
+        'update': {method: 'PUT'}
+    })
+}]);

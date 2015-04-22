@@ -366,5 +366,82 @@ roomsManageControllers.controller('PricesCtrl',
     
 }]);
 
+roomsManageControllers.controller('ImagesCtrl', 
+    ['$rootScope', '$scope', '$routeParams', 'Room', 'Image', '$http', '$timeout',
+    function ($rootScope, $scope, $routeParams, Room, Image, $http, $timeout) {
+        
+    $scope.LANG = window.LANG;
+    $scope.loading = true;
+    $scope.images = [];
+    $scope.t = window.t;
+    $scope.room = null;
 
+    var promise = Room.get({
+        id: $routeParams.id
+    }).$promise;
 
+    promise
+        .then(function (room) {
+            $scope.room = room;
+            const defaultImage = {
+                room_id: $scope.room.id,
+                image: undefined
+            };
+            $scope.load();
+            $scope.newImage = new Image(defaultImage);
+        })
+        .finally(function () {
+            $scope.reqStatus = promise.$$state.value;
+            $scope.loading = false;
+        });
+        
+    $scope.load = function() {
+        $scope.images = Image.query(
+            {
+                room_id: $scope.room.id
+            },
+            function () {
+                $scope.loading = false;
+                $timeout(function(){ $('.thumbnail').colorbox({rel:'thumbnail'});}, 0, false);
+            },
+            function () {
+                $scope.loading = false;
+            }
+        );
+    };
+   
+    $scope.save = function () {
+        //if (!$scope.add_image.$valid) return false;
+        $scope.loading = true;
+        var f = $('#add_image')[0];
+        $.ajax({
+            url: '/roomimages',
+            type: "POST",
+            contentType: false,
+            cache: false,
+            processData: false,
+            data: new FormData(f)
+        }).success(function(data){
+            //console.log(data);
+            $scope.newImage.image = undefined;
+            var i = $("#addNewImage");    //console.log(i);
+            i.replaceWith( i = i.clone( true ) ); 
+            $scope.load();
+        }).error(function(){
+            $scope.loading = false;
+            //TODO: add error
+        });
+    };
+    
+    $scope.delete = function (image) {
+        if (confirm(t('delete_confirm'))) {
+            Image.delete({id: image.id})
+                .$promise.then(function (image) {
+                    $scope.loading = true;
+                    $scope.load();
+                });
+        }
+    };    
+    window.s = $scope;
+
+}]);

@@ -1,8 +1,8 @@
 var imagesManageControllers = angular.module('imagesManageControllers', []);
 
 imagesManageControllers.controller('ImageListCtrl', 
-    ['$rootScope', '$scope', '$routeParams', 'Image', '$http', 
-    function ($rootScope, $scope, $routeParams, Image, $http) {
+    ['$rootScope', '$scope', '$routeParams', 'Image', '$http', '$timeout',
+    function ($rootScope, $scope, $routeParams, Image, $http, $timeout) {
         
     $scope.LANG = window.LANG;
     $scope.loading = true;
@@ -21,14 +21,16 @@ imagesManageControllers.controller('ImageListCtrl',
             },
             function () {
                 $scope.loading = false;
+                $timeout(function(){ $('.thumbnail').colorbox({rel:'thumbnail'});}, 0, false);
             },
             function () {
                 $scope.loading = false;
             }
         );
     };
-    $scope.load();
+    $scope.load();  
 
+   
     $scope.newImage = new Image(defaultImage);
 
     $scope.save = function () {
@@ -45,10 +47,11 @@ imagesManageControllers.controller('ImageListCtrl',
         }).success(function(data){
             //console.log(data);
             $scope.newImage.image = undefined;
-            var i = $("#addNewImage");
+            var i = $("#addNewImage");    //console.log(i);
             i.replaceWith( i = i.clone( true ) ); 
             $scope.load();
         }).error(function(){
+            $scope.loading = false;
             //TODO: add error
         });
     };

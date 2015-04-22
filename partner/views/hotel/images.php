@@ -9,6 +9,12 @@ use yii\bootstrap\Button;
 
 $directoryBower = Yii::$app->assetManager->getPublishedUrl('@bower');
 $directoryLTE = $directoryBower . '/admin-lte';
+$lang = \common\models\Lang::$current->url;
+
+//Подключаем colorbox
+$this->registerJsFile($directoryBower . '/colorbox/jquery.colorbox-min.js');
+$this->registerJsFile($directoryBower . '/colorbox/i18n/jquery.colorbox-'.$lang.'.js');
+$this->registerCssFile($directoryBower . '/colorbox/example1/colorbox.css',[],'colorbox');
 
 $hotel_title = $model->{'title_' . \common\models\Lang::$current->url};
 $this->title = $hotel_title . ': ' . Yii::t('hotels', 'Images');

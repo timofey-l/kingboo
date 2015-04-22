@@ -37,6 +37,7 @@ return [
                 // REST for rooms
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'rooms'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'roomprices'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'roomimages'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'hotelimages'],
             ],
         ],

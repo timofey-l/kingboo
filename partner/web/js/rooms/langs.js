@@ -20,6 +20,7 @@ LANGS.ru = {
     room_table_head_list: "Список номеров",
     room_table_head_delete: "Удалить",
     room_table_head_update: "Редактировать",
+    room_table_head_photos: "Фотографии",
     room_table_head_money: "Цены",
     room_table_head_timetable: "Количество и доступность номеров",
 
@@ -64,6 +65,7 @@ LANGS.en = {
     room_table_head_list: "Room list",
     room_table_head_delete: "Delete",
     room_table_head_update: "Edit",
+    room_table_head_photos: "Photos",
     room_table_head_money: "Prices",
     room_table_head_timetable: "Количество и доступность номеров",
 

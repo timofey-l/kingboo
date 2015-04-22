@@ -1,6 +1,6 @@
 'use strict';
 (function(){
-    var roomsManageApp = angular.module('RoomsManageApp',['ngRoute', 'roomsManageControllers' , 'roomsServices', 'roompricesServices']);
+    var roomsManageApp = angular.module('RoomsManageApp',['ngRoute', 'roomsManageControllers' , 'roomsServices', 'roompricesServices', 'imagesServices']);
 
     roomsManageApp.config(['$routeProvider', function($routeProvider) {
             $routeProvider
@@ -19,6 +19,10 @@
                 .when('/prices/:id', {
                     templateUrl: '/partial/rooms/prices.html',
                     controller: 'PricesCtrl'
+                })
+                .when('/images/:id', {
+                    templateUrl: '/partial/rooms/images.html',
+                    controller: 'ImagesCtrl'
                 })
             ;
     }]);

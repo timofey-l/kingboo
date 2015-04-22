@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "90414d8d29738c9d243e2746409f50e4",
+    "hash": "bc8001165e4bd994775d646aeb74399c",
     "packages": [
         {
             "name": "bower-asset/admin-lte",
@@ -161,6 +161,47 @@
                 "mobile-first",
                 "responsive",
                 "web"
+            ]
+        },
+        {
+            "name": "bower-asset/colorbox",
+            "version": "1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jackmoore/colorbox.git",
+                "reference": "27b45a32377d117b484633af3381691ae461fe82"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jackmoore/colorbox/zipball/27b45a32377d117b484633af3381691ae461fe82",
+                "reference": "27b45a32377d117b484633af3381691ae461fe82",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.3.2"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "jquery.colorbox.js",
+                "bower-asset-ignore": [
+                    "colorbox.jquery.json",
+                    "colorbox.ai",
+                    "content",
+                    "example1/index.html",
+                    "example2/index.html",
+                    "example3/index.html",
+                    "example4/index.html",
+                    "example5/index.html"
+                ]
+            },
+            "description": "jQuery lightbox and modal window plugin",
+            "keywords": [
+                "gallery",
+                "jquery-plugin",
+                "lightbox",
+                "modal",
+                "popup",
+                "ui"
             ]
         },
         {
@@ -1148,9 +1189,9 @@
                 "bower-asset/jquery": ">=1.7"
             },
             "require-dev": {
-                "bower-asset/jasmine-ajax": "~1.3.1",
-                "bower-asset/jasmine-jquery": "~1.5.2",
-                "bower-asset/jquery": "~1.7"
+                "bower-asset/jasmine-ajax": ">=1.3.1,<1.4",
+                "bower-asset/jasmine-jquery": ">=1.5.2,<1.6",
+                "bower-asset/jquery": ">=1.7,<1.8"
             },
             "type": "bower-asset-library",
             "extra": {
@@ -1432,7 +1473,6 @@
     "minimum-stability": "stable",
     "stability-flags": [],
     "prefer-stable": false,
-    "prefer-lowest": false,
     "platform": {
         "php": ">=5.4.0"
     },

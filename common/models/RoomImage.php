@@ -5,20 +5,20 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%hotel_image}}".
+ * This is the model class for table "{{%room_image}}".
  *
  * @property integer $id
- * @property integer $hotel_id
+ * @property integer $room_id
  * @property string $image
  */
-class HotelImage extends \yii\db\ActiveRecord
+class RoomImage extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%hotel_image}}';
+        return '{{%room_image}}';
     }
 
     /**
@@ -27,9 +27,21 @@ class HotelImage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['hotel_id'], 'required'],
-            [['hotel_id'], 'integer'],
+            [['room_id'], 'required'],
+            [['room_id'], 'integer'],
             ['image', 'image', 'extensions' => 'jpg, jpeg, gif, png', 'on' => ['insert', 'update']],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('rooms', 'ID'),
+            'room_id' => Yii::t('rooms', 'Room ID'),
+            'image' => Yii::t('rooms', 'Image'),
         ];
     }
     
@@ -45,8 +57,8 @@ class HotelImage extends \yii\db\ActiveRecord
                 'instanceByName' => true,
                 'scenarios' => ['insert', 'update', 'default'],
                 'placeholder' => '@app/web/images/noimage.png',
-                'path' => '@common/uploads/hotel/{hotel_id}',
-                'url' => '@web/uploads/hotel/{hotel_id}',
+                'path' => '@common/uploads/room/{room_id}',
+                'url' => '@web/uploads/room/{room_id}',
                 'thumbs' => [
                     'thumb' => ['width' => 90, 'height' => 90, 'quality' => 100],
                     'preview' => ['width' => 184, 'height' => 123, 'quality' => 100],
@@ -55,18 +67,6 @@ class HotelImage extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => Yii::t('hotels', 'ID'),
-            'hotel_id' => Yii::t('hotels', 'Hotel ID'),
-            'image' => Yii::t('hotels', 'Image'),
-        ];
-    }
-    
     public function fields() {
         return [
             'id',
@@ -82,8 +82,7 @@ class HotelImage extends \yii\db\ActiveRecord
         ];
     }
     
-    public function getHotel() {
-        return $this->hasOne(Hotel::className(), ['id' => 'hotel_id']);
+    public function getRoom() {
+        return $this->hasOne(Room::className(), ['id' => 'room_id']);
     }
-
 }

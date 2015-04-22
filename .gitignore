@@ -36,6 +36,10 @@ phpunit.phar
 */web/uploads
 
 /common/uploads/*
+/common/uploads/hotel/*
+/common/uploads/room/*
+
+
 !*/.gitkeep
 !/common/uploads/hotel
 !/common/uploads/room
