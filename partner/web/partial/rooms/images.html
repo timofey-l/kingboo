@@ -1,22 +1,49 @@
 <div class="box-header">
     <h3 class="box-title">{{t('image_list_title')}}</h3>
-
     <span style="font-size: 20px;" class="fa fa-spin fa-gear" ng-show="loading"></span>
-
+    
+    <div class="box-tools pull-right">
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_list')}}" href="#/">
+            <i class="fa  fa-list"></i>
+        </a>
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_update')}}" href="#/edit/{{room.id}}">
+            <i class="fa fa-edit"></i>
+        </a>
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_money')}}" href="#/prices/{{room.id}}">
+            <i class="fa fa-usd"></i>
+        </a>
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_timetable')}}" href="#/">
+            <i class="fa fa-calendar"></i>
+        </a>
+    </div>
 </div>
 <!-- /.box-header -->
 
-<div class="box-body no-padding" >
+
+<div class="box-body" >
+<!-- Room manage block -->
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <select class="form-control" ng-model="room.id" name="price_type" ng-change="changeRoom()"
+                    required ng-options="t.id as t['title_'+LANG] for t in rooms">
+                </select>
+            </div>
+        </div>
+    </div><!-- /.Room manage block -->
 
     <div class="row">
     <form id="add_image" name="add_image" onsubmit="return false;" novalidate enctype="multipart/form-data" method="POST" action="">
         <div class="col-sm-4">
-            <div class="input-group input-group-sm">
-                <input type="text" name="room_id" ng-show="false" ng-model="newImage.room_id">
-                <input type="file" class="form-control" name="image" width="200px;" required ng-model="newImage.image" id="addNewImage" placeholder="" >
-                <span class="input-group-addon price-inp-addon">
-                    <a class="fa fa-check" title="{{t('image_add')}}" ng-click="save()"></a>
-                </span>
+            <input type="text" name="room_id" ng-show="false" ng-model="newImage.room_id">
+            <div class="form-group">
+                <label>{{t('image_add')}}</label>
+                <div class="input-group input-group-sm">
+                    <input type="file" class="form-control" name="image" width="200px;" required ng-model="newImage.image" id="addNewImage" placeholder="" >
+                    <span class="input-group-addon price-inp-addon">
+                        <a class="fa fa-check" title="{{t('image_add')}}" ng-click="save()"></a>
+                    </span>
+                </div>
             </div>
         </div>
     </form>

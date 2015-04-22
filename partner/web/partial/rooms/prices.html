@@ -1,32 +1,37 @@
 <div class="box-header">
     <h3 class="box-title">{{t('room_price_head')}}</h3>
     <span style="font-size: 20px;" class="fa fa-spin fa-gear" ng-show="loading"></span>
-</div>
-<!-- /.box-header -->
-
-<div class="row">
-    <div class="col-sm-6">
-        <div class="form-group">
-            <select class="form-control" ng-model="selectedRoom.id" name="price_type" ng-change="changeRoom()"
-                required ng-options="t.id as t['title_'+LANG] for t in rooms">
-            </select>
-        </div>
-    </div>
-    <div class="col-sm-6">
+    
+    <div class="box-tools pull-right">
         <a class="btn btn-xs btn-primary" title="{{t('room_table_head_list')}}" href="#/">
             <i class="fa  fa-list"></i>
         </a>
-        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_update')}}" href="#/edit/{{selectedRoom.id}}">
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_update')}}" href="#/edit/{{room.id}}">
             <i class="fa fa-edit"></i>
+        </a>
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_photos')}}" href="#/images/{{room.id}}">
+            <i class="fa fa-camera"></i>
         </a>
         <a class="btn btn-xs btn-primary" title="{{t('room_table_head_timetable')}}" href="#/">
             <i class="fa fa-calendar"></i>
         </a>
     </div>
 </div>
+<!-- /.box-header -->
 
 <!-- Price block -->
 <div class="box-body">
+    <!-- Room manage block -->
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <select class="form-control" ng-model="room.id" name="price_type" ng-change="changeRoom()"
+                    required ng-options="t.id as t['title_'+LANG] for t in rooms">
+                </select>
+            </div>
+        </div>
+    </div><!-- /.Room manage block -->
+
     <div class="row">
         <div class="col-sm-4">
             <div class="form-group">

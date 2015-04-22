@@ -44,6 +44,15 @@ LANGS.ru = {
     price_table_col_1_title : "Варианты",
     price_table_col_1_description: "Количество взрослых + количество детей (7-11 лет) + количество детей (0-6 лет)",
     price_table_fixed_price: "Фикс. цена",
+    
+    edit_cancel_confirm: "Изменения не записаны.\nВ случае продолжения изменения будут потеряны!\n",
+    
+    image_list_title : "Фотографии",
+    image_list_empty : "Нет загруженных фотографий",
+    image_add : "Добавить фотографию",
+    delete_confirm : 'Вы уверены, что хотите удалить фотографию?\n' +
+    'В случае продолжения фотография будет удалена безвозвратно!\n',
+
 };
 
 LANGS.en = {
@@ -89,6 +98,14 @@ LANGS.en = {
     price_table_col_1_title : "Types",
     price_table_col_1_description: "Adults + kids (7-11 y.o.) + children (0-6 y.o)",
     price_table_fixed_price: "Fixed price",
+    
+    edit_cancel_confirm: "Changes not saved.\nIf you leave changes will be lost.",
+    
+    image_list_title : "Photos",
+    image_list_empty : "No photos uploaded",
+    image_add : "Add photo",
+    delete_confirm : 'Are you sure want to delete this photo?\n',
+
 };
 
 function t(v, l) {

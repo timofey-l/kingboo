@@ -6,7 +6,18 @@
     <h3 class="box-title" ng-if="room.id">{{t('room_edit_title')}}</h3>
 
     <div class="box-tools pull-right">
-
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_list')}}" ng-click="cancel('#/')" >
+            <i class="fa  fa-list"></i>
+        </a>
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_photos')}}" ng-click="cancel('#/images/')">
+            <i class="fa fa-camera"></i>
+        </a>
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_money')}}" ng-click="cancel('#/prices/')">
+            <i class="fa fa-usd"></i>
+        </a>
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_timetable')}}" ng-click="cancel('#/')">
+            <i class="fa fa-calendar"></i>
+        </a>
     </div>
 </div>
 <!-- /.box-header -->

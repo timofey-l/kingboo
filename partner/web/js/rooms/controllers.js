@@ -20,8 +20,8 @@ function tabsRegister() {
 var roomsManageControllers = angular.module('roomsManageControllers', []);
 
 roomsManageControllers.controller('RoomListCtrl', 
-    ['$rootScope', '$scope', '$routeParams', 'Room', 'Roomprices', '$http', 
-    function ($rootScope, $scope, $routeParams, Room, Roomprices, $http) {
+    ['$rootScope', '$scope', '$routeParams', 'Room', '$http', 
+    function ($rootScope, $scope, $routeParams, Room, $http) {
         
     $scope.LANG = window.LANG;
     $scope.loading = true;
@@ -128,6 +128,15 @@ roomsManageControllers.controller('RoomEditCtrl', ['$rootScope', '$scope', '$rou
             });
         }
     };
+    
+    $scope.cancel = function (url) {
+        if (url != '#/') {
+            url = url + $scope.room.id;
+        }
+        if (confirm(t('edit_cancel_confirm'))) {
+            document.location = url;
+        }
+    };
 
 }]);
 
@@ -185,7 +194,15 @@ roomsManageControllers.controller('RoomAddCtrl', ['$rootScope', '$scope', '$rout
         }
     };
 
-    window.s = $scope;
+    $scope.cancel = function (url) {
+        if (url != '#/') {
+            url = url + $scope.room.id;
+        }
+        if (confirm(t('edit_cancel_confirm'))) {
+            document.location = url;
+        }
+    };
+    
 }]);
 
 roomsManageControllers.controller('PricesCtrl', 
@@ -198,7 +215,7 @@ roomsManageControllers.controller('PricesCtrl',
     $scope.t = window.t;
     
     //Цены
-    $scope.selectedRoom = null;
+    $scope.room = null;
     $scope.prices = null;
     $scope.dates = null;
     $scope.titles = null;
@@ -229,23 +246,23 @@ roomsManageControllers.controller('PricesCtrl',
         $scope.rooms = $rootScope.rooms;
     }
     
+    $scope.changeRoom = function () {
+        window.location.hash = "#/prices/" + $scope.room.id;
+    }
+        
     var promise = Room.get({
         id: $routeParams.id
     }).$promise;
 
     promise
         .then(function (room) {
-            $scope.selectedRoom = room;
+            $scope.room = room;
             $scope.filter.room_id = room.id;
         })
         .finally(function () {
             $scope.reqStatus = promise.$$state.value;
             $scope.loading = false;
         });
-        
-    $scope.changeRoom = function () {
-        window.location.hash = "#/prices/" + $scope.selectedRoom.id;
-    }
         
     //Настройка daterangepicker
     $('#daterange').daterangepicker(
@@ -279,7 +296,7 @@ roomsManageControllers.controller('PricesCtrl',
             function (res) {
                 $scope.priceLoading = false;
                 var pricelist = res;
-                var data = hotelRoomPrices.createPriceMatrix(Roomprices, pricelist, $scope.selectedRoom, $scope.filter.startDate, $scope.filter.endDate);
+                var data = hotelRoomPrices.createPriceMatrix(Roomprices, pricelist, $scope.room, $scope.filter.startDate, $scope.filter.endDate);
                 $scope.dates = data.dates;
                 $scope.titles = data.titles;
                 $scope.prices = data.prices;
@@ -376,6 +393,30 @@ roomsManageControllers.controller('ImagesCtrl',
     $scope.t = window.t;
     $scope.room = null;
 
+    //Загружаем комнаты, если был прямой заход на УРЛ
+    if ($rootScope.rooms == null) {
+        $scope.load = function() {
+            $scope.rooms = Room.query(
+                {
+                    hotel_id: $rootScope.hotelId
+                },
+                function () {
+                    $scope.loading = false;
+                },
+                function () {
+                    $scope.loading = false;
+                }
+            );
+        };
+        $scope.load();
+    } else {
+        $scope.rooms = $rootScope.rooms;
+    }
+    
+    $scope.changeRoom = function () {
+        window.location.hash = "#/images/" + $scope.room.id;
+    }
+    
     var promise = Room.get({
         id: $routeParams.id
     }).$promise;
@@ -442,6 +483,5 @@ roomsManageControllers.controller('ImagesCtrl',
                 });
         }
     };    
-    window.s = $scope;
 
 }]);
