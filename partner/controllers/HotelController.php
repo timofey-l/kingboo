@@ -22,7 +22,7 @@ class HotelController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['view', 'update', 'delete', 'rooms', 'images'],
+                        'actions' => ['view', 'update', 'delete', 'rooms', 'images', 'facilities'],
                         'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
@@ -151,6 +151,29 @@ class HotelController extends Controller
     {
         return $this->render('images', [ 
             'model' => $this->findModel($id),
+        ]);
+    }
+
+    /**
+    * Редактирует фотографии отеля
+    * 
+    * @param mixed $id
+    * @return string
+    */
+    public function actionFacilities($id)
+    {
+        if (Yii::$app->request->isPost) {
+            return print_r($_POST,true);
+        }
+        $groups = \common\components\ListFacilitiesType::getOptions();
+        $facilities = [];
+        foreach ($groups as $k=>$gr) {
+            $facilities[$k] = \common\models\HotelFacilities::getOptions('name', false, ['group_id' => $k]);
+        }
+        return $this->render('facilities', [ 
+            'model' => $this->findModel($id),
+            'groups' => $groups,
+            'facilities' => $facilities,
         ]);
     }
 

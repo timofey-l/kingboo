@@ -102,4 +102,22 @@ class Hotel extends \yii\db\ActiveRecord
         return $this->hasOne('\common\models\Currency', ['currency_id' => 'id']);
     }
     
+    //http://www.yiiframework.com/doc-2.0/guide-db-active-record.html#relations-via-a-junction-table
+    /*public function getItems()
+    {
+        return $this->hasMany(Item::className(), ['id' => 'item_id'])
+            ->viaTable('order_item', ['order_id' => 'id']);
+    }*/
+    /*  Saving Relations
+$customer = Customer::findOne(123);
+$order = new Order();
+$order->subtotal = 100;
+// ...
+
+$order->link('customer', $customer);
+
+$customer = Customer::find()->with('orders')->all();
+$customer->unlink('orders', $customer->orders[0]);
+    */
+    
 }

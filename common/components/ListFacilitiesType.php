@@ -4,21 +4,39 @@ namespace common\components;
 use Yii;
 use \common\models\Lang;
 
-class ListPriceType
+class ListFacilitiesType
 {
-    const TYPE_FIXED = 1; //Значение id для фиксированной цены
-    const TYPE_GUESTS = 2; //Значение id для цены, зависящей от количества гостей
+    const TYPE_FEATURE = 1;
+    const TYPE_HOTEL = 2;
+    const TYPE_SPORT = 3;
+    const TYPE_PAYMENT = 4;
+    const TYPE_BEACH = 5;
     
     static $_options = [
         [
             'id' => 1,
-            'name_ru' => 'Фиксированная цена',
-            'name_en' => 'Fixed price'
+            'name_ru' => 'Услуги',
+            'name_en' => 'Facilities'
         ],
         [
             'id' => 2,
-            'name_ru' => 'Цена зависит от количества гостей',
-            'name_en' => 'The price depends on the number of guests'
+            'name_ru' => 'Категория',
+            'name_en' => 'Category'
+        ],
+        [
+            'id' => 3,
+            'name_ru' => 'Спорт',
+            'name_en' => 'Sport'
+        ],
+        [
+            'id' => 4,
+            'name_ru' => 'Типы оплаты',
+            'name_en' => 'Payment types'
+        ],
+        [
+            'id' => 5,
+            'name_ru' => 'Пляж',
+            'name_en' => 'Beach'
         ]
     ];
     

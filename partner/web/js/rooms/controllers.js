@@ -133,7 +133,11 @@ roomsManageControllers.controller('RoomEditCtrl', ['$rootScope', '$scope', '$rou
         if (url != '#/') {
             url = url + $scope.room.id;
         }
-        if (confirm(t('edit_cancel_confirm'))) {
+        if ($scope.add_room.$dirty) {
+            if (confirm(t('edit_cancel_confirm'))) {
+                document.location = url;
+            }
+        } else {
             document.location = url;
         }
     };
@@ -198,7 +202,11 @@ roomsManageControllers.controller('RoomAddCtrl', ['$rootScope', '$scope', '$rout
         if (url != '#/') {
             url = url + $scope.room.id;
         }
-        if (confirm(t('edit_cancel_confirm'))) {
+        if ($scope.add_room.$dirty) {
+            if (confirm(t('edit_cancel_confirm'))) {
+                document.location = url;
+            }
+        } else {
             document.location = url;
         }
     };
