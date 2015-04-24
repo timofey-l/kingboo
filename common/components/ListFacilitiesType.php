@@ -40,16 +40,16 @@ class ListFacilitiesType
         ]
     ];
     
-    public static function getAllOptions() {
+    public static function getOptions() {
         return self::$_options;
     }
         
     /**
-    * Возвращает options для использования в селектах array(id=>name)
+    * Возвращает options для использования в селектах array(id=>name) с учетом языка
     * 
     */
-    public static function getOptions() {
-        $name = 'name_' . Lang::$current->url;
+    public static function options($lang = false) {
+        $name = $lang ? 'name_' . $lang : 'name_' . Lang::$current->url;
         $result = [];
         foreach (self::$_options as $v) {
             $result[$v['id']] = $v[$name];
@@ -65,8 +65,8 @@ class ListFacilitiesType
     * @param mixed $id
     * @param mixed $lang
     */
-    public static function getOption($id, $lang='') {
-        $options = self::getAllOptions();
+    public static function option($id, $lang='') {
+        $options = self::$_options;
         $option = [];
         foreach ($options as $o) {
             if ($o['id'] == $id) {
@@ -91,9 +91,9 @@ class ListFacilitiesType
     * Возвращает массив объектов, закодированный для JavaScript
     * 
     */
-    public static function getJsObjects() {
+    public static function jsObjects() {
         $a = [];
-        $b = self::getAllOptions();
+        $b = self::$_options;
         foreach ($b as $k=>$o) {
             $a[$k] = json_encode($o);
         }

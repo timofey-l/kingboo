@@ -155,28 +155,48 @@ class HotelController extends Controller
     }
 
     /**
-    * Редактирует фотографии отеля
+    * Редактирует особенности отеля
     * 
     * @param mixed $id
     * @return string
     */
     public function actionFacilities($id)
     {
-        if (Yii::$app->request->isPost) {
-            return print_r($_POST,true);
+        $hotel = $this->findModel($id);
+        
+        if (Yii::$app->request->isPost) {//обработка входящих данных
+            //удаляем существующие связи
+            $old = $hotel->facilities;
+            foreach ($old as $f) {
+                $hotel->unlink('facilities', $f, true);
+            }
+            
+            //добавляем новые связи
+            $new = Yii::$app->request->post('facilities',[]);
+            foreach ($new as $k=>$id) {
+                if (($f = \common\models\HotelFacilities::findOne($id)) !== null) {
+                    $hotel->link('facilities',$f);
+                }
+            }
+            
+            return $this->redirect(['view', 'id' => $hotel->id]);
+            
+        } else {//Вывод формы
+            $groups = \common\components\ListFacilitiesType::options();
+            $checked = $hotel->facilityArray();
+            $facilities = [];
+            foreach ($groups as $k=>$gr) {
+                $facilities[$k] = \common\models\HotelFacilities::options(['group_id' => $k],$checked);
+            }
+            
+            return $this->render('facilities', [ 
+                'model' => $this->findModel($id),
+                'groups' => $groups,
+                'facilities' => $facilities,
+            ]);
         }
-        $groups = \common\components\ListFacilitiesType::getOptions();
-        $facilities = [];
-        foreach ($groups as $k=>$gr) {
-            $facilities[$k] = \common\models\HotelFacilities::getOptions('name', false, ['group_id' => $k]);
-        }
-        return $this->render('facilities', [ 
-            'model' => $this->findModel($id),
-            'groups' => $groups,
-            'facilities' => $facilities,
-        ]);
     }
-
+    
     /**
      * Finds the Hotel model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

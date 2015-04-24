@@ -43,15 +43,14 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('hotels', 'Rooms'), 'url' =>
                             <div class="box-body">
                                 <div class="row">
                                 <?php
-                                    //$form->field($model,'facilities')->checkboxList();
-                                    foreach ($facilities[$k] as $id=>$f) {
+                                    foreach ($facilities[$k] as $f) {
                                 ?>
                                     <div class="col-sm-4">          
                                         <div class="form-group">
                                             <div class="checkbox">
                                                 <label>
-                                                    <input name="facilities[]" type="checkbox" value="<?= $id ?>" />
-                                                    <?= $f ?>
+                                                    <input name="facilities[]" type="checkbox" value="<?= $f['id'] ?>"<?php if ($f['checked']) echo ' checked'; ?> />
+                                                    <?= $f['name'] ?>
                                                 </label>
                                             </div>
                                         </div>

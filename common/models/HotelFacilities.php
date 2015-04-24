@@ -59,27 +59,22 @@ class HotelFacilities extends \yii\db\ActiveRecord
     }
 
     /**
-    * Возвращает options для использования модели в селектах array(id=>name)
+    * Возвращает записи из таблицы в виде массива, название на текущем языке дает в свойстве name
+    * В каждой возвращаемой записи есть поле checked, оно равно true если id найден как ключ в массиве $checked
     * 
     */
-    public static function getOptions($name = 'name', $emptyval = false, $where = false) {
+    public static function options($where = false, $checked = []) {
         if ($where) {
-            $array = self::find()->asArray()->Where($where)->orderBy('order')->all();
+            $a = self::find()->asArray()->Where($where)->orderBy('order')->all();
         } else {
-            $array = self::find()->asArray()->orderBy('order')->all();
+            $a = self::find()->asArray()->orderBy('order')->all();
         }
-        if ($name == 'name') {
-            $name = 'name_' . Lang::$current->url;
+        $name = 'name_' . Lang::$current->url;
+        foreach ($a as $k=>$v) {
+            $a[$k]['name'] = $v[$name];
+            $a[$k]['checked'] = key_exists($v['id'], $checked);
         }
-        if ($emptyval) {
-            $result = [0 => ''];
-        } else {
-            $result = [];
-        }
-        foreach ($array as $v) {
-            $result[$v['id']] = $v[$name];
-        }
-        return $result;
+        return $a;
     }
     
     /**

@@ -91,33 +91,38 @@ class Hotel extends \yii\db\ActiveRecord
     }
     
     public function getRooms() {
-        return $this->hasMany('\common\models\Room', ['hotel_id' => 'id']);
+        return $this->hasMany('\common\models\Room', ['hotel_id' => 'id'])->inverseOf('hotel');
     }
 
     public function getImages() {
-        return $this->hasMany('\common\models\HotelImage', ['hotel_id' => 'id']);
+        return $this->hasMany('\common\models\HotelImage', ['hotel_id' => 'id'])->inverseOf('hotel');
     }
     
     public function getCurrency() {
-        return $this->hasOne('\common\models\Currency', ['currency_id' => 'id']);
+        return $this->hasOne('\common\models\Currency', ['currency_id' => 'id'])->inverseOf('hotel');
     }
     
-    //http://www.yiiframework.com/doc-2.0/guide-db-active-record.html#relations-via-a-junction-table
-    /*public function getItems()
-    {
-        return $this->hasMany(Item::className(), ['id' => 'item_id'])
-            ->viaTable('order_item', ['order_id' => 'id']);
-    }*/
-    /*  Saving Relations
-$customer = Customer::findOne(123);
-$order = new Order();
-$order->subtotal = 100;
-// ...
-
-$order->link('customer', $customer);
-
-$customer = Customer::find()->with('orders')->all();
-$customer->unlink('orders', $customer->orders[0]);
+    public function getFacilities() {
+        return $this->hasMany('\common\models\HotelFacilities', ['id' => 'facility_id'])
+            ->viaTable('rel_hotel_facility', ['hotel_id' => 'id']);
+    }
+    
+    /**
+    * Возвращает массив особенностей отеля [id => поле заданное через $name]
+    * 
+    * @param mixed $name
+    * @param mixed $lang
     */
+    public function facilityArray($name = 'name', $lang = false) {
+        $flist = $this->facilities;
+        $a = [];
+        if ($name == 'name') {
+            $name = $lang ? 'name_'.$lang : 'name_' . Lang::$current->url;
+        }
+        foreach ($flist as $f) {
+            $a[$f->id] = $f[$name];
+        }
+        return $a;
+    }
     
 }
