@@ -8,6 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-frontend',
+    'name' => 'BooBooking',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
@@ -37,6 +38,7 @@ return [
                 '/signup' => 'site/signup',
                 '/login' => 'site/login',
                 '/logout' => 'site/logout',
+                '/hotel/<name:\w+>' => 'hotel/index',
                 // '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
             ]
         ],
