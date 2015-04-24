@@ -70,6 +70,7 @@ roomsManageControllers.controller('RoomListCtrl',
 
 roomsManageControllers.controller('RoomEditCtrl', ['$rootScope', '$scope', '$routeParams', 'Room', function ($rootScope, $scope, $routeParams, Room) {
         
+    $scope.edit = true;
     $scope.LANG = window.LANG;
     $scope.t = window.t;
     tabsRegister();
@@ -144,12 +145,17 @@ roomsManageControllers.controller('RoomEditCtrl', ['$rootScope', '$scope', '$rou
 
 }]);
 
-roomsManageControllers.controller('RoomAddCtrl', ['$rootScope', '$scope', '$routeParams', 'Room', function ($rootScope, $scope, $routeParams, Room) {
+roomsManageControllers.controller('RoomAddCtrl', 
+    ['$rootScope', '$scope', '$routeParams', '$http', 'Room',
+    function ($rootScope, $scope, $routeParams, $http, Room) {
+        
     tabsRegister();
 
+    $scope.edit = false;
     $scope.LANG = window.LANG;
     $scope.t = window.t;
     $scope.PriceTypes = window.PriceTypes;
+    $scope.loading = true;
 
     const defaultRoom = {
         'title_ru': '',
@@ -162,6 +168,18 @@ roomsManageControllers.controller('RoomAddCtrl', ['$rootScope', '$scope', '$rout
         hotel_id: $rootScope.hotelId
     };
 
+    //Facilities
+    window.s = $scope;
+    $http.get('/rooms/facilities')
+        .success(function(data){
+            $scope.loading = false;
+            $scope.facilities = data;
+        }).error(function(){
+            $scope.loading = false;
+            //TODO: add error
+        });
+    // .\Facilities
+    
     $scope.getClasses = function (name) {
         var el = $scope.add_room[name];
         return {

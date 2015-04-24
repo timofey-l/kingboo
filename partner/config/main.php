@@ -39,6 +39,7 @@ return [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'roomprices'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'roomimages'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'hotelimages'],
+                
             ],
         ],
         'request' => [

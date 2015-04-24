@@ -45,6 +45,11 @@ class RoomsController extends ActiveController
             ],
         ];
     }
+    
+    public function actionFacilities() {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        return \common\models\RoomFacilities::options();
+    }
 
     public function checkAccess($action, $model = null, $params = [])
     {

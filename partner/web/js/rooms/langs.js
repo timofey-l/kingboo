@@ -53,6 +53,8 @@ LANGS.ru = {
     delete_confirm : 'Вы уверены, что хотите удалить фотографию?\n' +
     'В случае продолжения фотография будет удалена безвозвратно!\n',
 
+    room_facilities : 'Особенности номера',
+    
 };
 
 LANGS.en = {
@@ -105,6 +107,8 @@ LANGS.en = {
     image_list_empty : "No photos uploaded",
     image_add : "Add photo",
     delete_confirm : 'Are you sure want to delete this photo?\n',
+    
+    room_facilities : 'Facilities',
 
 };
 

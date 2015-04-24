@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 $lang = \common\models\Lang::$current->url;
 
 $hotel_title = $model->{'title_' . \common\models\Lang::$current->url};
-$this->title = $hotel_title . ': ' . Yii::t('hotels', 'Images');
+$this->title = $hotel_title . ': ' . Yii::t('hotels', 'Facilities');
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('hotels', 'Hotels'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $hotel_title, 'url' => ['view', 'id' => $model->id]];
@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('hotels', 'Rooms'), 'url' =>
     
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h3 class="box-title">Collapsible Accordion</h3>
+                <h3 class="box-title"><?= Yii::t('hotels', 'Facilities') ?></h3>
             </div><!-- /.box-header -->
             <div class="box-body">
                 <div class="box-group" id="accordion">

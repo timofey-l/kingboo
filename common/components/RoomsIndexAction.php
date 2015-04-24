@@ -32,6 +32,7 @@ class RoomsIndexAction extends IndexAction
         return new ActiveDataProvider([
             'query' => $modelClass::find()
                 ->joinWith('hotel')
+                ->joinWith('facilities')
                 ->where($params)
         ]);
     }

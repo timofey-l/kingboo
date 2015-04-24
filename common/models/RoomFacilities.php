@@ -5,23 +5,22 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%hotel_facilities}}".
+ * This is the model class for table "{{%room_facilities}}".
  *
  * @property integer $id
  * @property string $name_ru
  * @property string $name_en
- * @property integer $group_id
  * @property integer $important
  * @property integer $order
  */
-class HotelFacilities extends \yii\db\ActiveRecord
+class RoomFacilities extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%hotel_facilities}}';
+        return '{{%room_facilities}}';
     }
 
     /**
@@ -30,12 +29,11 @@ class HotelFacilities extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name_ru', 'name_en', 'group_id'], 'required'],
+            [['name_ru', 'name_en'], 'required'],
             [['important', 'order'], 'integer'],
-            [['group_id'], 'integer', 'min' => 1, 'max' => 5],
             [['name_ru', 'name_en'], 'string', 'max' => 255],
-            [['group_id', 'name_ru'], 'unique', 'targetAttribute' => ['group_id', 'name_ru'], 'message' => 'The combination of Name Ru and Group ID has already been taken.'],
-            [['group_id', 'name_en'], 'unique', 'targetAttribute' => ['group_id', 'name_en'], 'message' => 'The combination of Name En and Group ID has already been taken.']
+            [['name_ru'], 'unique'],
+            [['name_en'], 'unique']
         ];
     }
 
@@ -45,19 +43,14 @@ class HotelFacilities extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('hotels', 'ID'),
-            'name_ru' => Yii::t('hotels', 'Name Ru'),
-            'name_en' => Yii::t('hotels', 'Name En'),
-            'group_id' => Yii::t('hotels', 'Group ID'),
-            'important' => Yii::t('hotels', 'Important'),
-            'order' => Yii::t('hotels', 'Order'),
+            'id' => Yii::t('rooms', 'ID'),
+            'name_ru' => Yii::t('rooms', 'Name Ru'),
+            'name_en' => Yii::t('rooms', 'Name En'),
+            'important' => Yii::t('rooms', 'Important'),
+            'order' => Yii::t('rooms', 'Order'),
         ];
     }
     
-    public function getGroup() {
-        return \common\components\ListFacilitiesType::option($this->group_id);
-    }
-
     /**
     * Возвращает записи из таблицы в виде массива, название на текущем языке дает в свойстве name
     * В каждой возвращаемой записи есть поле checked, оно равно true если id найден как ключ в массиве $checked
@@ -86,5 +79,5 @@ class HotelFacilities extends \yii\db\ActiveRecord
             return $el->attributes;
         },self::find()->all()));
     }
-
+    
 }

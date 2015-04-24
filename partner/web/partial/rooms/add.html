@@ -5,7 +5,7 @@
 
     <h3 class="box-title" ng-if="room.id">{{t('room_edit_title')}}</h3>
 
-    <div class="box-tools pull-right">
+    <div class="box-tools pull-right" ng-show="edit">
         <a class="btn btn-xs btn-primary" title="{{t('room_table_head_list')}}" ng-click="cancel('#/')" >
             <i class="fa fa-list"></i>
         </a>
@@ -51,6 +51,34 @@
                     </div>
                 </div>
                 <!-- /titles -->
+                
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="nav-tabs-custom"> <!-- descriptions -->
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a ng-class="labelClasses('description_ru')" href=""
+                                    data-tabid="description_ru_tab" data-toggle="tab">{{t('room_description_ru')}}</a>
+                                </li>
+                                <li><a ng-class="labelClasses('description_en')" href="" data-tabid="description_en_tab"
+                                    data-toggle="tab">{{t('room_description_en')}}</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="description_ru_tab">
+                                    <div class="form-group" ng-class="getClasses('description_ru')">
+                                        <textarea rows="6" type="text" class="form-control" ng-model="room.description_ru"
+                                            name="description_ru" id="description_ru" placeholder="" ng-required="!room.description_en"></textarea>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="description_en_tab">
+                                    <div class="form-group" ng-class="getClasses('description_en')">
+                                        <textarea rows="6" type="text" class="form-control" ng-model="room.description_en"
+                                            name="description_en" id="description_en" placeholder="" ng-required="!room.description_ru"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /descriptions -->
+                    </div>                
+                </div><!-- /.row -->
 
                 <div class="row">
                     <div class="col-sm-4">
@@ -79,43 +107,40 @@
                         </div>
                     </div>
                 </div>
-
-            </div>
-            <div class="col-sm-6">
-                <div class="nav-tabs-custom"> <!-- descriptions -->
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a ng-class="labelClasses('description_ru')" href=""
-                                              data-tabid="description_ru_tab" data-toggle="tab">{{t('room_description_ru')}}</a>
-                        </li>
-                        <li><a ng-class="labelClasses('description_en')" href="" data-tabid="description_en_tab"
-                               data-toggle="tab">{{t('room_description_en')}}</a></li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="description_ru_tab">
-                            <div class="form-group" ng-class="getClasses('description_ru')">
-                                <textarea rows="6" type="text" class="form-control" ng-model="room.description_ru"
-                                          name="description_ru" id="description_ru" placeholder="" ng-required="!room.description_en"></textarea>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="description_en_tab">
-                            <div class="form-group" ng-class="getClasses('description_en')">
-                                <textarea rows="6" type="text" class="form-control" ng-model="room.description_en"
-                                          name="description_en" id="description_en" placeholder="" ng-required="!room.description_ru"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /descriptions -->
-            </div>
-            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-12">
                         <div class="form-group"  ng-class="getClasses('price_type')">
                             <label for="price_type">{{t('room_price_type_title')}}</label>
                             <select class="form-control" ng-model="room.price_type" name="price_type"
-                                   id="price_type" required ng-options="t.id as t['name_'+LANG] for t in PriceTypes">
-                            </select>
+                                id="price_type" required ng-options="t.id as t['name_'+LANG] for t in PriceTypes">
+                                </select>
                         </div>
+                    </div>
+                </div>
+
+            </div><!-- /.col-6 -->
+            <div class="col-sm-6">
+                <div class="box-title">
+                    <h4>{{t('room_facilities')}}</h4>
+                </div>
+                <div class="row"><!-- facilities -->
+                    
+                    <div class="col-sm-12" ng-show="loading">
+                        <span style="font-size: 20px;" class="fa fa-spin fa-gear"></span>
+                    </div>
+                    <div class="col-sm-6" ng-repeat="facility in facilities">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                <input name="facilities[]" type="checkbox" value="{{facility.id}}" />
+                                    {{facility['name_' + LANG]}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>                
+                </div><!-- /.row -->
             </div>
-        </div>
+        </div><!-- /.row -->
     </form>
 
     <div ng-show="room == null && !loading">

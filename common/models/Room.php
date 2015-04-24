@@ -88,8 +88,15 @@ class Room extends \yii\db\ActiveRecord
         return $this->hasOne(Hotel::className(), ['id' => 'hotel_id']);
     }
     
+    public function getFacilities() {
+        return $this->hasMany('\common\models\RoomFacilities', ['id' => 'facility_id'])
+            ->viaTable('rel_room_facility', ['room_id' => 'id']);
+    }
+    
     public function getPricetype() {
         return ListPriceType::getOption($this->price_type);
         //return $this->hasOne(\common\components\ListPriceType::className(), ['id' => 'price_type']);
     }
+    
+
 }

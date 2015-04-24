@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="hotel-view">
 
     <p>
-        <?= Html::a(Yii::t('hotels', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('hotels', 'Edit'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('hotels', 'Facilities'), ['facilities', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('hotels', 'Rooms'), ['rooms', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('hotels', 'Images'), ['images', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
