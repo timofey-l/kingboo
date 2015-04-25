@@ -15,14 +15,14 @@ use yii\web\AssetBundle;
  */
 class GalleryAsset extends AssetBundle
 {
-    public $sourcePath = '@bower/';
+    public $sourcePath = '@bower/swiper/';
 //    public $basePath = '@webroot';
 //    public $baseUrl = '@web';
     public $css = [
-
+        '/dist/css/swiper.min.css',
     ];
     public $js = [
-        '/jssor-slider/js/jssor.slider.mini.js',
+        '/dist/js/swiper.jquery.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

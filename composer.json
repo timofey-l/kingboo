@@ -27,7 +27,7 @@
         "bower-asset/angular-mocks": "~1.3.0",
         "bower-asset/angular-route": "~1.3.0",
         "bower-asset/angular-resource": "~1.3.0",
-        "bower-asset/jssor-slider": "*",
+        "bower-asset/swiper": "*",
         "bower-asset/moment": "*"
     },
     "require-dev": {

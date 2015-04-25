@@ -10,6 +10,9 @@ use frontend\widgets\Alert;
 /* @var $content string */
 
 AppAsset::register($this);
+
+Yii::$app->assetManager->publish('@bower');
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
