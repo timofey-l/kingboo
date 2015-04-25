@@ -58,7 +58,7 @@ class Room extends \yii\db\ActiveRecord
                 return !$('#room-description_ru').val();
             }"],
             [['hotel_id', 'adults', 'children', 'total', 'active'], 'integer'],
-            [['price_type'], 'integer', 'min' => 1],
+            [['price_type'], 'integer', 'min' => 1, 'max' => 2],
             [['description_ru', 'description_en'], 'string'],
             [['title_ru', 'title_en'], 'string', 'max' => 255]
         ];

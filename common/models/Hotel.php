@@ -91,15 +91,38 @@ class Hotel extends \yii\db\ActiveRecord
     }
     
     public function getRooms() {
-        return $this->hasMany('\common\models\Room', ['hotel_id' => 'id']);
+        return $this->hasMany('\common\models\Room', ['hotel_id' => 'id'])->inverseOf('hotel');
     }
 
     public function getImages() {
-        return $this->hasMany('\common\models\HotelImage', ['hotel_id' => 'id']);
+        return $this->hasMany('\common\models\HotelImage', ['hotel_id' => 'id'])->inverseOf('hotel');
     }
     
     public function getCurrency() {
-        return $this->hasOne('\common\models\Currency', ['currency_id' => 'id']);
+        return $this->hasOne('\common\models\Currency', ['currency_id' => 'id'])->inverseOf('hotel');
+    }
+    
+    public function getFacilities() {
+        return $this->hasMany('\common\models\HotelFacilities', ['id' => 'facility_id'])
+            ->viaTable('rel_hotel_facility', ['hotel_id' => 'id']);
+    }
+    
+    /**
+    * Возвращает массив особенностей отеля [id => поле заданное через $name]
+    * 
+    * @param mixed $name
+    * @param mixed $lang
+    */
+    public function facilityArray($name = 'name', $lang = false) {
+        $flist = $this->facilities;
+        $a = [];
+        if ($name == 'name') {
+            $name = $lang ? 'name_'.$lang : 'name_' . Lang::$current->url;
+        }
+        foreach ($flist as $f) {
+            $a[$f->id] = $f[$name];
+        }
+        return $a;
     }
     
 }

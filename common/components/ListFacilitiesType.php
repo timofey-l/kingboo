@@ -4,34 +4,52 @@ namespace common\components;
 use Yii;
 use \common\models\Lang;
 
-class ListPriceType
+class ListFacilitiesType
 {
-    const TYPE_FIXED = 1; //Значение id для фиксированной цены
-    const TYPE_GUESTS = 2; //Значение id для цены, зависящей от количества гостей
+    const TYPE_FEATURE = 1;
+    const TYPE_HOTEL = 2;
+    const TYPE_SPORT = 3;
+    const TYPE_PAYMENT = 4;
+    const TYPE_BEACH = 5;
     
     static $_options = [
         [
             'id' => 1,
-            'name_ru' => 'Фиксированная цена',
-            'name_en' => 'Fixed price'
+            'name_ru' => 'Услуги',
+            'name_en' => 'Facilities'
         ],
         [
             'id' => 2,
-            'name_ru' => 'Цена зависит от количества гостей',
-            'name_en' => 'The price depends on the number of guests'
+            'name_ru' => 'Категория',
+            'name_en' => 'Category'
+        ],
+        [
+            'id' => 3,
+            'name_ru' => 'Спорт',
+            'name_en' => 'Sport'
+        ],
+        [
+            'id' => 4,
+            'name_ru' => 'Типы оплаты',
+            'name_en' => 'Payment types'
+        ],
+        [
+            'id' => 5,
+            'name_ru' => 'Пляж',
+            'name_en' => 'Beach'
         ]
     ];
     
-    public static function getAllOptions() {
+    public static function getOptions() {
         return self::$_options;
     }
         
     /**
-    * Возвращает options для использования в селектах array(id=>name)
+    * Возвращает options для использования в селектах array(id=>name) с учетом языка
     * 
     */
-    public static function getOptions() {
-        $name = 'name_' . Lang::$current->url;
+    public static function options($lang = false) {
+        $name = $lang ? 'name_' . $lang : 'name_' . Lang::$current->url;
         $result = [];
         foreach (self::$_options as $v) {
             $result[$v['id']] = $v[$name];
@@ -47,8 +65,8 @@ class ListPriceType
     * @param mixed $id
     * @param mixed $lang
     */
-    public static function getOption($id, $lang='') {
-        $options = self::getAllOptions();
+    public static function option($id, $lang='') {
+        $options = self::$_options;
         $option = [];
         foreach ($options as $o) {
             if ($o['id'] == $id) {
@@ -73,9 +91,9 @@ class ListPriceType
     * Возвращает массив объектов, закодированный для JavaScript
     * 
     */
-    public static function getJsObjects() {
+    public static function jsObjects() {
         $a = [];
-        $b = self::getAllOptions();
+        $b = self::$_options;
         foreach ($b as $k=>$o) {
             $a[$k] = json_encode($o);
         }

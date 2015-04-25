@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('hotels', 'Rooms'), 'url' =>
     const LANG = '<?= \common\models\Lang::$current->url ?>';
 </script>
 
-<div class="hotel-view">
+<div class="hotel-images">
     <div ng-app="ImagesManageApp" ng-init="hotelId = <?= $model->id ?>;">
         <div class="box" ng-view>
 

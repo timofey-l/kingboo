@@ -28,7 +28,7 @@ return [
     'Search' => '',
     'Title En' => '',
     'Title Ru' => '',
-    'Update' => 'Редактировать',
+    'Update' => 'Сохранить',
     'Update {modelClass}: ' => '',
     'Geo coordinates' => '@@Координаты@@',
     'Other information' => '@@Прочая информация@@',
