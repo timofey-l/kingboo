@@ -13,6 +13,8 @@ AppAsset::register($this);
 
 Yii::$app->assetManager->publish('@bower');
 
+$this->registerJsFile('/js/langs.js');
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -22,6 +24,9 @@ Yii::$app->assetManager->publish('@bower');
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+    <script>
+        var LANG = '<?= \common\models\Lang::$current->url ?>';
+    </script>
     <?php $this->head() ?>
 </head>
 <body>

@@ -92,4 +92,8 @@ class Room extends \yii\db\ActiveRecord
         return ListPriceType::getOption($this->price_type);
         //return $this->hasOne(\common\components\ListPriceType::className(), ['id' => 'price_type']);
     }
+
+    public function getImages() {
+        return $this->hasMany(RoomImage::className(), ['room_id' => 'id']);
+    }
 }

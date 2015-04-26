@@ -38,8 +38,9 @@ return [
                 '/signup' => 'site/signup',
                 '/login' => 'site/login',
                 '/logout' => 'site/logout',
-                '/hotel/<name:\w+>' => 'hotel/index',
-                // '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
+                //'<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
+                'POST /hotel/search' => 'hotel/search',
+                'GET /hotel/<name:\w+>' => 'hotel/index',
             ]
         ],
         'request' => [
