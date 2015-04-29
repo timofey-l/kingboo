@@ -1,6 +1,6 @@
 <?php
 
-namespace common\components;
+namespace partner\components;
 
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -11,7 +11,7 @@ use yii\web\BadRequestHttpException;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class RoompricesIndexAction extends IndexAction
+class RoomPricesIndexAction extends IndexAction
 {
     protected function prepareDataProvider()
     {

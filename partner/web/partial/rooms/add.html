@@ -128,11 +128,11 @@
                     <div class="col-sm-12" ng-show="loading">
                         <span style="font-size: 20px;" class="fa fa-spin fa-gear"></span>
                     </div>
-                    <div class="col-sm-6" ng-repeat="facility in facilities">
+                    <div class="col-sm-6" ng-repeat="facility in room.facilities">
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                <input name="facilities[]" type="checkbox" value="{{facility.id}}" />
+                                <input name="facilities[]" type="checkbox" ng-model="facility.checked" value="{{facility.id}}" />
                                     {{facility['name_' + LANG]}}
                                 </label>
                             </div>

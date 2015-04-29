@@ -30,7 +30,7 @@ class RoompricesController extends ActiveController
     {
         return [
             'index' => [
-                'class' => 'common\components\RoompricesIndexAction',
+                'class' => 'partner\components\RoomPricesIndexAction',
                 'modelClass' => $this->modelClass,
                 'checkAccess' => [$this, 'checkAccess'],
             ],

@@ -14,7 +14,7 @@ class HotelimagesController extends ActiveController
     {
         return [
             'index' => [
-                'class' => 'common\components\HotelImagesIndexAction',
+                'class' => 'partner\components\HotelImagesIndexAction',
                 'modelClass' => $this->modelClass,
                 'checkAccess' => [$this, 'checkAccess'],
             ],

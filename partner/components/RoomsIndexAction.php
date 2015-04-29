@@ -1,6 +1,6 @@
 <?php
 
-namespace common\components;
+namespace partner\components;
 
 use Yii;
 use yii\data\ActiveDataProvider;

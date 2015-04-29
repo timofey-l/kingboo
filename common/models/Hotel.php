@@ -31,6 +31,10 @@ class Hotel extends \yii\db\ActiveRecord
             foreach ($this->images as $image) {
                 $image->delete();
             };
+            $facilities = $this->facilities;
+            foreach ($facilities as $f) {
+                $this->unlink('facilities', $f, true);
+            }
         }
         return true;
     }
@@ -91,15 +95,15 @@ class Hotel extends \yii\db\ActiveRecord
     }
     
     public function getRooms() {
-        return $this->hasMany('\common\models\Room', ['hotel_id' => 'id'])->inverseOf('hotel');
+        return $this->hasMany('\common\models\Room', ['hotel_id' => 'id']);
     }
 
     public function getImages() {
-        return $this->hasMany('\common\models\HotelImage', ['hotel_id' => 'id'])->inverseOf('hotel');
+        return $this->hasMany('\common\models\HotelImage', ['hotel_id' => 'id']);
     }
-    
+
     public function getCurrency() {
-        return $this->hasOne('\common\models\Currency', ['currency_id' => 'id'])->inverseOf('hotel');
+        return $this->hasOne('\common\models\Currency', ['currency_id' => 'id']);
     }
     
     public function getFacilities() {

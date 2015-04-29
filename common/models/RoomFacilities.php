@@ -65,7 +65,7 @@ class RoomFacilities extends \yii\db\ActiveRecord
         $name = 'name_' . Lang::$current->url;
         foreach ($a as $k=>$v) {
             $a[$k]['name'] = $v[$name];
-            $a[$k]['checked'] = key_exists($v['id'], $checked);
+            $a[$k]['checked'] = array_key_exists($v['id'], $checked);
         }
         return $a;
     }

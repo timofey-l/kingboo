@@ -1,23 +1,23 @@
 <?php
 
-namespace common\components;
+namespace partner\components;
 
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\rest\IndexAction;
 use yii\web\BadRequestHttpException;
 
-class RoomImagesIndexAction extends IndexAction
+class HotelImagesIndexAction extends IndexAction
 {
     protected function prepareDataProvider()
     {
-        $room_id = Yii::$app->request->get('room_id', false);
+        $hotel_id = Yii::$app->request->get('hotel_id', false);
         $params = [
             'hotel.partner_id' => Yii::$app->user->id,
         ];
 
-        if ($room_id !== false) {
-            $params['room_id'] = (int) $room_id;
+        if ($hotel_id !== false) {
+            $params['hotel_id'] = (int) $hotel_id;
         }
 
         if ($this->prepareDataProvider !== null) {
@@ -27,10 +27,12 @@ class RoomImagesIndexAction extends IndexAction
         /* @var $modelClass \yii\db\BaseActiveRecord */
         $modelClass = $this->modelClass;
 
+        //var_dump($modelClass::find()->asArray()->where(['hotel_id' => $hotel_id])->all());
+
         return new ActiveDataProvider([
             'query' => $modelClass::find()
                 ->asArray()
-                ->joinWith('room.hotel')
+                ->joinWith('hotel')
                 ->where($params)
         ]);
     }
@@ -41,13 +43,13 @@ class RoomImagesIndexAction extends IndexAction
             call_user_func($this->checkAccess, $this->id);
         }
         
-        $room_id = Yii::$app->request->get('room_id', false);
+        $hotel_id = Yii::$app->request->get('hotel_id', false);
         $params = [
             'hotel.partner_id' => Yii::$app->user->id,
         ];
 
-        if ($room_id !== false) {
-            $params['room_id'] = (int) $room_id;
+        if ($hotel_id !== false) {
+            $params['hotel_id'] = (int) $hotel_id;
         }
 
         if ($this->prepareDataProvider !== null) {
@@ -57,8 +59,9 @@ class RoomImagesIndexAction extends IndexAction
         /* @var $modelClass \yii\db\BaseActiveRecord */
         $modelClass = $this->modelClass;
 
+        //var_dump($modelClass::find()->asArray()->where(['hotel_id' => $hotel_id])->all());
         $images = $modelClass::find()
-                ->joinWith('room.hotel')
+                ->joinWith('hotel')
                 ->where($params)
                 ->all(); 
             
@@ -66,6 +69,11 @@ class RoomImagesIndexAction extends IndexAction
             $images[$k] = $img->toArray();
         }
         return($images); 
+
+       /* return  $modelClass::find()
+                ->joinWith('hotel')
+                ->where($params)
+                ->asArray()->all();   */
     }
 
 }

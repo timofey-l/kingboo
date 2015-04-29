@@ -68,8 +68,10 @@ roomsManageControllers.controller('RoomListCtrl',
         
 }]);
 
-roomsManageControllers.controller('RoomEditCtrl', ['$rootScope', '$scope', '$routeParams', 'Room', function ($rootScope, $scope, $routeParams, Room) {
-        
+roomsManageControllers.controller('RoomEditCtrl', 
+    ['$rootScope', '$scope', '$routeParams', '$http', 'Room', 
+    function ($rootScope, $scope, $routeParams, $http, Room) {
+
     $scope.edit = true;
     $scope.LANG = window.LANG;
     $scope.t = window.t;
@@ -77,6 +79,7 @@ roomsManageControllers.controller('RoomEditCtrl', ['$rootScope', '$scope', '$rou
     $scope.loading = true;
     $scope.room = null;
     $scope.PriceTypes = window.PriceTypes;
+        window.s = $scope;
 
     $scope.reqStatus = null;
 
@@ -86,13 +89,26 @@ roomsManageControllers.controller('RoomEditCtrl', ['$rootScope', '$scope', '$rou
 
     promise
         .then(function (room) {
+            $scope.loading = false;
             $scope.room = room;
+            $scope.facilityArray();
         })
         .finally(function () {
             $scope.reqStatus = promise.$$state.value;
             $scope.loading = false;
         });
 
+    //Facilities
+    $scope.facilityArray = function () {
+        $http.get('/rooms/facilities?room_id=' + $scope.room.id)
+            .success(function(data){
+                $scope.room.facilities = data;
+            }).error(function(){
+                //TODO: add error
+            });
+    }
+    // .\Facilities
+    
     $scope.getClasses = function (name) {
         var el = $scope.add_room[name];
         return {
@@ -170,14 +186,16 @@ roomsManageControllers.controller('RoomAddCtrl',
 
     //Facilities
     window.s = $scope;
-    $http.get('/rooms/facilities')
-        .success(function(data){
-            $scope.loading = false;
-            $scope.facilities = data;
-        }).error(function(){
-            $scope.loading = false;
-            //TODO: add error
-        });
+    $scope.facilityArray = function () {
+        $http.get('/rooms/facilities')
+            .success(function(data){
+                $scope.loading = false;
+                $scope.room.facilities = data;
+            }).error(function(){
+                $scope.loading = false;
+                //TODO: add error
+            });
+    }
     // .\Facilities
     
     $scope.getClasses = function (name) {
@@ -197,6 +215,7 @@ roomsManageControllers.controller('RoomAddCtrl',
     };
 
     $scope.room = new Room(defaultRoom);
+    $scope.facilityArray();
 
     $scope.save = function () {
         if ($scope.add_room.$invalid) {

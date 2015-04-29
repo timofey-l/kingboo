@@ -14,7 +14,7 @@ class RoomsController extends ActiveController
     {
         return [
             'index' => [
-                'class' => 'common\components\RoomsIndexAction',
+                'class' => 'partner\components\RoomsIndexAction',
                 'modelClass' => $this->modelClass,
                 'checkAccess' => [$this, 'checkAccess'],
             ],
@@ -46,9 +46,19 @@ class RoomsController extends ActiveController
         ];
     }
     
+    /**
+    * Возвращает полный список особенностей номера (независимо от того, есть они у этого номера или нет)
+    * 
+    */
     public function actionFacilities() {
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        return \common\models\RoomFacilities::options();
+        $room_id = \Yii::$app->request->get('room_id',false);
+        if ($room_id) {
+            $checked = $this->findModel($room_id)->facilityArray();
+        } else {
+            $checked = [];
+        }
+        return \common\models\RoomFacilities::options(false,$checked);
     }
 
     public function checkAccess($action, $model = null, $params = [])
@@ -63,4 +73,14 @@ class RoomsController extends ActiveController
             }
         }
     }
+
+    protected function findModel($id)
+    {
+        if (($model = \common\models\Room::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
 }

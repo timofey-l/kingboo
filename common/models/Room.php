@@ -22,6 +22,19 @@ use \common\components\ListPriceType;
  */
 class Room extends \yii\db\ActiveRecord
 {
+    public function beforeDelete() {
+        if (parent::beforeDelete()) {
+            foreach ($this->images as $image) {
+                $image->delete();
+            };
+            $facilities = $this->facilities;
+            foreach ($facilities as $f) {
+                $this->unlink('facilities', $f, true);
+            }
+        }
+        return true;
+    }
+
     /**
      * @inheritdoc
      */
@@ -79,9 +92,37 @@ class Room extends \yii\db\ActiveRecord
             'adults' => Yii::t('rooms', 'Adults'),
             'children' => Yii::t('rooms', 'Children'),
             'total' => Yii::t('rooms', 'Total'),
-            'price_type' => Yii::t('room','Price type'),
+            'price_type' => Yii::t('rooms','Price type'),
             'active' => Yii::t('rooms', 'Active'),
         ];
+    }
+    
+    public function fields() {
+        $fields = parent::fields();
+        $fields['facilities'] = function ($model) {
+            return $model->facilities;
+        };
+        return $fields;
+    }
+
+    public function afterSave($insert, $changedAttributes) {
+        parent::afterSave($insert, $changedAttributes);
+        //обновляем свойства
+        $facilities = Yii::$app->request->post('facilities',false);
+        if ($facilities) {
+            //удаляем существующие связи
+            $old = $this->facilities;
+            foreach ($old as $f) {
+                $this->unlink('facilities', $f, true);
+            }
+            //добавляем новые связи
+            foreach ($facilities as $k=>$facility) {
+                if (!$facility['checked']) continue;
+                if (($f = \common\models\RoomFacilities::findOne($facility['id'])) !== null) {
+                    $this->link('facilities',$f);
+                }
+            }
+        }
     }
 
     public function getHotel() {
@@ -92,11 +133,34 @@ class Room extends \yii\db\ActiveRecord
         return $this->hasMany('\common\models\RoomFacilities', ['id' => 'facility_id'])
             ->viaTable('rel_room_facility', ['room_id' => 'id']);
     }
-    
+
+    public function getImages() {
+        return $this->hasMany('\common\models\RoomImage', ['room_id' => 'id']);
+    }
+
     public function getPricetype() {
         return ListPriceType::getOption($this->price_type);
         //return $this->hasOne(\common\components\ListPriceType::className(), ['id' => 'price_type']);
     }
-    
+
+    /**
+     * Возвращает массив особенностей номера [id => поле заданное через $name]
+     *
+     * @param mixed $name
+     * @param mixed $lang
+     */
+    public function facilityArray($name = 'name', $lang = false) {
+        $flist = $this->facilities;
+        $a = [];
+        if ($name == 'name') {
+            $name = $lang ? 'name_'.$lang : 'name_' . Lang::$current->url;
+        }
+        foreach ($flist as $f) {
+            $a[$f->id] = $f[$name];
+        }
+        return $a;
+    }
+
+
 
 }

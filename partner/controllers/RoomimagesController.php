@@ -5,7 +5,7 @@ use yii\rest\ActiveController;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 
-class RoomimagesController extends ActiveController
+class RoomImagesController extends ActiveController
 {
 
     public $modelClass = 'common\models\RoomImage';
@@ -14,7 +14,7 @@ class RoomimagesController extends ActiveController
     {
         return [
             'index' => [
-                'class' => 'common\components\RoomImagesIndexAction',
+                'class' => 'partner\components\RoomImagesIndexAction',
                 'modelClass' => $this->modelClass,
                 'checkAccess' => [$this, 'checkAccess'],
             ],
