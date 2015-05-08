@@ -60,8 +60,8 @@ class RoomImage extends \yii\db\ActiveRecord
                 'path' => '@common/uploads/room/{room_id}',
                 'url' => '@web/uploads/room/{room_id}',
                 'thumbs' => [
-                    'thumb' => ['width' => 90, 'height' => 51, 'quality' => 100],
-                    'preview' => ['width' => 200, 'height' => 113, 'quality' => 100],
+                    'thumb' => ['width' => 255, 'height' => 123, 'quality' => 100],
+                    'preview' => ['width' => 600, 'height' => 352, 'quality' => 100],
                 ],
             ],
         ];

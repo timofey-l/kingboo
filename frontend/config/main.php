@@ -40,6 +40,7 @@ return [
                 '/logout' => 'site/logout',
                 //'<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
                 'POST /hotel/search' => 'hotel/search',
+//	            'POST /hotel/booking' => 'hotel/booking',
                 'GET /hotel/<name:\w+>' => 'hotel/index',
             ]
         ],

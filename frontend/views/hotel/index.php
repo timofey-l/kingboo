@@ -6,10 +6,16 @@ $directoryBower = Yii::$app->assetManager->getPublishedUrl('@bower');
 
 $this->title = $model->{'title_' . $l};
 
+// underscore.js
+$this->registerJsFile($directoryBower . '/underscore/underscore-min.js');
+
 //Подключаем colorbox
 $this->registerJsFile($directoryBower . '/colorbox/jquery.colorbox-min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 $this->registerJsFile($directoryBower . '/colorbox/i18n/jquery.colorbox-' . $l . '.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 $this->registerCssFile($directoryBower . '/colorbox/example1/colorbox.css', [], 'colorbox');
+
+// Подключаем библиотеку moment.js
+$this->registerJsFile($directoryBower . '/moment/min/moment-with-locales.min.js');
 
 // Галлерея
 \frontend\assets\GalleryAsset::register($this);
@@ -80,7 +86,7 @@ $this->registerCssFile($directoryBower . '/admin-lte/css/datepicker/datepicker3.
 
 <h2><?= Yii::t('frontend', 'Search') ?></h2>
 
-<div ng-app="roomsSearch" ng-controller="searchCtrl">
+<div ng-app="roomsSearch" ng-controller="searchCtrl" ng-init="search.hotelId = <?= $model->id ?>;">
     <div class="row well">
         <div class="input-daterange" id="datepicker">
             <div class="form-group col-md-2 col-sm-6">
@@ -149,13 +155,28 @@ $this->registerCssFile($directoryBower . '/admin-lte/css/datepicker/datepicker3.
 
     </div>
 
-    <div class="row result-item" ng-repeat="r in results">
-        <div class="col-md-2">
-            <div class="gallery">
+    <div class="row result-item well" ng-repeat="r in results">
+        <div class="col-md-3">
+            <div class="gallery thumbnail">
+	            <div class="swiper-container" id="{{'hotel-room-' + r.id}}" data-room-id="{{ r.id }}">
+		            <div class="swiper-wrapper">
+			            <!-- Slides -->
+			            <a class="swiper-slide"
+			                 ng-style="{'background-image':'url('+i.preview+')'}"
+			                 href="{{ i.image }}"
+			                 rel="{{ 'hotelImages' + r.id }}"
+			                 ng-repeat="i in r.images">
+			            </a>
+		            </div>
+		            <div class="swiper-pagination"></div>
 
+		            <div class="swiper-button-prev"></div>
+		            <div class="swiper-button-next"></div>
+
+	            </div>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-7 info">
             <div class="row">
                 <div class="title">{{r['title_' + LANG]}}</div>
             </div>
@@ -164,8 +185,10 @@ $this->registerCssFile($directoryBower . '/admin-lte/css/datepicker/datepicker3.
             </div>
         </div>
         <div class="col-md-2 price">
-
-            {{ r.sum }}&nbsp;{{ r.sum_currency.code }}
+            {{ r.price }}&nbsp;{{ r.sum_currency.code }}
+	        <br/>
+	        <br/>
+	        <div class="btn btn-success" ng-click="goBooking(r)"><?= Yii::t('frontend', 'Booking') ?></div>
         </div>
     </div>
 </div>

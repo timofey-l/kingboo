@@ -120,8 +120,8 @@ ul.hotel-facilities  li:before {
 }
 
 /*.datepicker table tr td.selected, .datepicker table tr td.selected:hover, .datepicker table tr td.selected.disabled, .datepicker table tr td.selected.disabled:hover {*/
-    /*background: rgba(78, 128, 192,0.2);*/
-    /*background: #4e80c0;*/
+/*background: rgba(78, 128, 192,0.2);*/
+/*background: #4e80c0;*/
 /*}*/
 
 .datepicker table tr td.active,
@@ -173,7 +173,9 @@ ul.hotel-facilities  li:before {
 }
 
 .result-item .price {
+    text-align: right;
 
+    font-size: 20px;
 }
 
 .result-item .gallery {
@@ -185,9 +187,62 @@ ul.hotel-facilities  li:before {
 }
 
 .result-item .info .title {
+    font-size: 20px;
 
+    color: #000;
+    padding: 0 0 10px 0;
 }
 
 .result-item .info .description {
+    font-size: 14px;
 
+}
+
+[id^='hotel-room-'] {
+    height: 100px;
+}
+
+[id^='hotel-room-'] .swiper-button-prev, [id^='hotel-room-'] .swiper-button-next {
+    background-size: 50% !important;
+}
+
+
+[id^='hotel-room-'] .swiper-slide {
+    background-size: cover;
+}
+
+.order-info-panel .panel-body {
+    text-align: center;
+    font-size: 20px;
+}
+
+.order-info-panel .panel-body .sum {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.help-block {
+    font-size: 80%;
+}
+
+.hotel-facilities {
+    margin-top: 10px;
+}
+.hotel-facilities .label {
+    display: inline-block;
+}
+
+
+.form-group.required label:before {
+    content: "* ";
+    color: red;
+}
+
+.panel-primary .panel-heading a {
+    color: white;
+    cursor: pointer;
+}
+
+.panel-room .room-form {
+    margin-top: 15px;
 }

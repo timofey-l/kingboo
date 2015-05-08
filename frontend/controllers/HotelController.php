@@ -2,100 +2,153 @@
 
 namespace frontend\controllers;
 
+use common\components\BookingHelper;
 use common\models\Hotel;
 use common\models\Room;
-use common\models\RoomPrices;
-use yii\base\ErrorException;
-use yii\filters\AccessControl;
-use yii\helpers\ArrayHelper;
+use frontend\models\BookingParams;
+use frontend\models\OrderForm;
+use frontend\models\OrderItemForm;
+use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\Response;
 
 class HotelController extends \yii\web\Controller
 {
-    public function behaviours()
-    {
-//        return [
-//            'access' => [
-//                'class' => AccessControl::className(),
-//                'rules' => [
-//
-//                ],
-//            ],
-//        ];
-    }
+	public function behaviours()
+	{
+		return [
+			'verb' => [
+				'class'   => VerbFilter::className(),
+				'actions' => [
+					['booking'] => ['post']
+				]
+			],
+		];
+	}
 
-    public function actionBooking()
-    {
-        return $this->render('booking');
-    }
+//	public function beforeAction($action) {
+//		if ($action->id == 'booking') {
+//			$this->enableCsrfValidation = false;
+//		}
+//		return parent::beforeAction($action);
+//	}
 
-    public function actionIndex($name)
-    {
-        $model = Hotel::findOne(['name' => $name]);
+	public function actionBooking()
+	{
+		$bookingParams = new BookingParams();
+		if (!$bookingParams->load(\Yii::$app->request->post()) || !$bookingParams->validate()) {
+			throw new BadRequestHttpException('Wrong parameters passed');
+		};
 
-        if (is_null($model)) {
-            throw new \yii\web\HttpException(404, 'The requested hotel does not exist.');
-        }
+		$room = Room::findOne($bookingParams->roomId);
+		/** @var Hotel $hotel */
+		$hotel = $room->hotel;
 
-        return $this->render('index', [
-            'model' => $model,
-        ]);
-    }
+		$orderForm = new OrderForm();
+		if ($orderForm->load(\Yii::$app->request->post()) && $orderForm->validate()) {
+			// сохраняем заказ
+			return $this->render('booking_success',[
+				[
+					'room'          => $room,
+					'hotel'         => $hotel,
+					'bookingParams' => $bookingParams,
+					'orderForm'     => $orderForm,
+					'price'         => BookingHelper::calcRoomPrice($bookingParams->toArray()),
+				]
+			]);
+		} else {
+			$orderForm->dateFrom = $bookingParams->dateFrom;
+			$orderForm->dateTo = $bookingParams->dateTo;
+			$orderForm->items[] = new OrderItemForm([
+				'room' => $room,
+				'roomId' => $room->id,
+				'name' => '',
+				'surname' => '',
+			]);
+			return $this->render('booking', [
+				'room'          => $room,
+				'hotel'         => $hotel,
+				'bookingParams' => $bookingParams,
+				'orderForm'     => $orderForm,
+				'price'         => BookingHelper::calcRoomPrice($bookingParams->toArray()),
+			]);
+		}
+	}
 
-    public function actionSearch()
-    {
-        // вывод в формате JSON
-        \Yii::$app->response->format = Response::FORMAT_JSON;
-        $req = \Yii::$app->request;
+	public function actionIndex($name)
+	{
+		$model = Hotel::findOne(['name' => $name]);
 
-        // разбираем входные данные
-        $dateFrom = $req->post('dateFrom', false);
-        $dateTo = $req->post('dateTo', false);
-        $adults = (int) $req->post('adults', false);
-        $children = (int) $req->post('children', false);
-        $kids = (int) $req->post('kids', false);
+		if (is_null($model)) {
+			throw new \yii\web\HttpException(404, 'The requested hotel does not exist.');
+		}
 
-        if (!$dateFrom || !$dateTo || $adults === false || $children === false || $kids === false) {
-            throw new BadRequestHttpException();
-        }
+		return $this->render('index', [
+			'model' => $model,
+		]);
+	}
 
-        $prices_query = RoomPrices::find()->where(['between', 'date', $dateFrom, $dateTo]);
-        $prices = $prices_query->all();
+	public function actionSearch()
+	{
+		// вывод в формате JSON
+		\Yii::$app->response->format = Response::FORMAT_JSON;
+		$req = \Yii::$app->request;
 
-        $arr = ArrayHelper::map($prices, 'id', 'price', 'room_id');
+		// разбираем входные данные
+		$dateFrom = $req->post('dateFrom', false);
+		$dateTo = $req->post('dateTo', false);
+		$adults = (int)$req->post('adults', false);
+		$children = (int)$req->post('children', false);
+		$kids = (int)$req->post('kids', false);
+		$hotelId = (int)$req->post('hotelId', false);
 
-        $rooms = Room::find()->where(['in', 'room.id', array_keys($arr)])->all();
+		if (!$dateFrom || !$dateTo || $adults === false || $children === false || $kids === false) {
+			throw new BadRequestHttpException();
+		}
 
-        $result = [];
+		$hotel = Hotel::findOne($hotelId);
 
-        foreach ($rooms as $room) {
-            $item = $room->toArray();
-            $item['images'] = [];
-            foreach($room->images as $image) {
-                $im = [];
-                $im['image'] = $image->getUploadUrl('image');
-                $im['thumb'] = $image->getThumbUploadUrl('image', 'thumb');
-                $im['preview'] = $image->getThumbUploadUrl('image', 'preview');
-                $item['images'][] = $im;
-            }
-            // считаем сумму
-            $sum = 0;
-            $count = 0;
-            foreach ($arr[$room->id] as $s) {
-                $sum += (float)($s);
-                $count++;
-            }
-            $item['sum'] = $sum;
-            $item['count'] = $count;
-            $item['sum_currency'] = $prices[0]->currency->toArray();
+		if ($hotel === null) {
+			throw new BadRequestHttpException();
+		}
 
-            $result[] = $item;
-        }
+		$rooms = Room::findAll(['hotel_id' => $hotelId]);
+		$result = [];
+		foreach ($rooms as $room) {
+			$price = null;
+			try {
+				$price = BookingHelper::calcRoomPrice([
+					'dateFrom' => $dateFrom,
+					'roomId'   => $room->id,
+					'dateTo'   => $dateTo,
+					'adults'   => $adults,
+					'children' => $children,
+					'kids'     => $kids,
+					'hotelId'  => $hotelId,
+				]);
+			} catch (\Exception $e) {
+				continue;
+			}
+			if ($price === null) continue;
+
+			$item = $room->toArray();
+			$item['images'] = [];
+			foreach ($room->images as $image) {
+				$im = [];
+				$im['image'] = $image->getUploadUrl('image');
+				$im['thumb'] = $image->getThumbUploadUrl('image', 'thumb');
+				$im['preview'] = $image->getThumbUploadUrl('image', 'preview');
+				$item['images'][] = $im;
+			}
+			$item['price'] = $price;
+			$item['sum_currency'] = $hotel->currency;
+
+			$result[] = $item;
+		}
 
 
-        return $result;
+		return $result;
 
-    }
+	}
 
 }

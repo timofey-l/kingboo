@@ -1,5 +1,5 @@
 <?php
-
+// TODO: Сделать stop booking на определенную дату
 namespace common\models;
 
 use Yii;

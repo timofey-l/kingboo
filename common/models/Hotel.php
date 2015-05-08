@@ -99,20 +99,21 @@ class Hotel extends \yii\db\ActiveRecord
     }
     
     public function getCurrency() {
-        return $this->hasOne('\common\models\Currency', ['currency_id' => 'id'])->inverseOf('hotel');
+        return $this->hasOne('\common\models\Currency', ['id' => 'currency_id']);
     }
     
     public function getFacilities() {
         return $this->hasMany('\common\models\HotelFacilities', ['id' => 'facility_id'])
             ->viaTable('rel_hotel_facility', ['hotel_id' => 'id']);
     }
-    
-    /**
-    * Возвращает массив особенностей отеля [id => поле заданное через $name]
-    * 
-    * @param mixed $name
-    * @param mixed $lang
-    */
+
+	/**
+	 * Возвращает массив особенностей отеля [id => поле заданное через $name]
+	 *
+	 * @param mixed $name
+	 * @param mixed $lang
+	 * @return array
+	 */
     public function facilityArray($name = 'name', $lang = false) {
         $flist = $this->facilities;
         $a = [];

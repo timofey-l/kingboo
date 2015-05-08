@@ -9,7 +9,8 @@
             dateTo: '',
             adults: 1,
             children: 0,
-            kids: 0
+            kids: 0,
+            hotelId: $scope.hotelId
         };
 
         $('.input-daterange').on('changeDate', function (e) {
@@ -22,6 +23,7 @@
             //console.log(e);
         });
 
+        // Поиск комнат
         $scope.find = function () {
             $.post('/' + LANG + '/hotel/search', $scope.search)
                 .success(function (data) {
@@ -32,8 +34,17 @@
                 })
                 .done(function(){
                     $scope.$digest();
+                    init_rooms_gallery();
                 });
-        }
+        };
+
+        // переход к бронированию
+        $scope.goBooking = function(r) {
+            var data = _.clone($scope.search);
+            data.roomId = r.id;
+
+            goWithPOST('/hotel/booking', data, 'BookingParams');
+        };
 
     }]);
 })();
