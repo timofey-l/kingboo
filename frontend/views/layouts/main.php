@@ -10,6 +10,11 @@ use frontend\widgets\Alert;
 /* @var $content string */
 
 AppAsset::register($this);
+
+Yii::$app->assetManager->publish('@bower');
+
+$this->registerJsFile('/js/langs.js');
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -19,6 +24,9 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+    <script>
+        var LANG = '<?= \common\models\Lang::$current->url ?>';
+    </script>
     <?php $this->head() ?>
 </head>
 <body>
@@ -26,7 +34,7 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
             NavBar::begin([
-                'brandLabel' => 'My Company',
+                'brandLabel' => \Yii::$app->name,
                 'brandUrl' => \yii\helpers\Url::to(['site/index']),
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',
@@ -37,16 +45,16 @@ AppAsset::register($this);
                 ['label' => 'About', 'url' => ['/site/about']],
                 ['label' => 'Contact', 'url' => ['/site/contact']],
             ];
-            if (Yii::$app->user->isGuest) {
-                $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-                $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-            } else {
-                $menuItems[] = [
-                    'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
-                    'url' => ['/site/logout'],
-                    'linkOptions' => ['data-method' => 'post']
-                ];
-            }
+//            if (Yii::$app->user->isGuest) {
+//                $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+//                $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+//            } else {
+//                $menuItems[] = [
+//                    'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
+//                    'url' => ['/site/logout'],
+//                    'linkOptions' => ['data-method' => 'post']
+//                ];
+//            }
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => $menuItems,

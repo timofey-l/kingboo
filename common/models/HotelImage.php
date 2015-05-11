@@ -49,7 +49,8 @@ class HotelImage extends \yii\db\ActiveRecord
                 'url' => '@web/uploads/hotel/{hotel_id}',
                 'thumbs' => [
                     'thumb' => ['width' => 90, 'height' => 90, 'quality' => 100],
-                    'preview' => ['width' => 184, 'height' => 123, 'quality' => 100],
+                    'preview' => ['width' => 160, 'height' => 90, 'quality' => 100],
+                    'bigPreview' => ['width' => 700, 'height' => 412, 'quality' => 100],
                 ],
             ],
         ];

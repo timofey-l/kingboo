@@ -39,6 +39,8 @@ return [
         '.hgignore',
         '.hgkeep',
         '/messages',
+	    '/vendor/*',
+	    '*_dynamic.php',
     ],
 
     // 'php' output format is for saving messages to php files.

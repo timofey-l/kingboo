@@ -110,13 +110,14 @@ class Hotel extends \yii\db\ActiveRecord
         return $this->hasMany('\common\models\HotelFacilities', ['id' => 'facility_id'])
             ->viaTable('rel_hotel_facility', ['hotel_id' => 'id']);
     }
-    
-    /**
-    * Возвращает массив особенностей отеля [id => поле заданное через $name]
-    * 
-    * @param mixed $name
-    * @param mixed $lang
-    */
+
+	/**
+	 * Возвращает массив особенностей отеля [id => поле заданное через $name]
+	 *
+	 * @param mixed $name
+	 * @param mixed $lang
+	 * @return array
+	 */
     public function facilityArray($name = 'name', $lang = false) {
         $flist = $this->facilities;
         $a = [];

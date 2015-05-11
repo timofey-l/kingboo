@@ -10,15 +10,16 @@ use \common\components\ListPriceType;
  *
  * @property integer $id
  * @property integer $hotel_id
- * @property string $title_ru
- * @property string $title_en
- * @property string $description_ru
- * @property string $description_en
+ * @property string  $title_ru
+ * @property string  $title_en
+ * @property string  $description_ru
+ * @property string  $description_en
  * @property integer $adults
  * @property integer $children
  * @property integer $total
  * @property integer $active
  * @property integer $price_type
+ * @property Hotel   $hotel
  */
 class Room extends \yii\db\ActiveRecord
 {
@@ -104,6 +105,25 @@ class Room extends \yii\db\ActiveRecord
         };
         return $fields;
     }
+	/**
+	 * @inheritdoc
+	 */
+	public function attributeLabels()
+	{
+		return [
+			'id'             => Yii::t('rooms', 'ID'),
+			'hotel_id'       => Yii::t('rooms', 'Hotel ID'),
+			'title_ru'       => Yii::t('rooms', 'Title Ru'),
+			'title_en'       => Yii::t('rooms', 'Title En'),
+			'description_ru' => Yii::t('rooms', 'Description Ru'),
+			'description_en' => Yii::t('rooms', 'Description En'),
+			'adults'         => Yii::t('rooms', 'Adults'),
+			'children'       => Yii::t('rooms', 'Children'),
+			'total'          => Yii::t('rooms', 'Total'),
+			'price_type'     => Yii::t('room', 'Price type'),
+			'active'         => Yii::t('rooms', 'Active'),
+		];
+	}
 
     public function afterSave($insert, $changedAttributes) {
         parent::afterSave($insert, $changedAttributes);

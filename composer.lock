@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bc8001165e4bd994775d646aeb74399c",
+    "hash": "335b3d66fbcbff6eb55b2b9b0b60f928",
     "packages": [
         {
             "name": "bower-asset/admin-lte",
@@ -422,6 +422,55 @@
                     "package.json"
                 ]
             }
+        },
+        {
+            "name": "bower-asset/swiper",
+            "version": "v3.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nolimits4web/Swiper.git",
+                "reference": "4455fb38507a357c0b5effd38c369bfcdf622b1e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nolimits4web/Swiper/zipball/4455fb38507a357c0b5effd38c369bfcdf622b1e",
+                "reference": "4455fb38507a357c0b5effd38c369bfcdf622b1e",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "dist/js/swiper.js",
+                    "dist/css/swiper.css"
+                ],
+                "bower-asset-ignore": [
+                    ".*",
+                    "demos",
+                    "gulpfile",
+                    "build",
+                    "node_modules",
+                    "playground",
+                    "package.json"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Most modern mobile touch slider and framework with hardware accelerated transitions",
+            "keywords": [
+                "app",
+                "carousel",
+                "cordova",
+                "framework",
+                "gallery",
+                "ios",
+                "mobile",
+                "phonegap",
+                "slider",
+                "swipe",
+                "swiper",
+                "touch"
+            ]
         },
         {
             "name": "bower-asset/underscore",
@@ -1189,9 +1238,9 @@
                 "bower-asset/jquery": ">=1.7"
             },
             "require-dev": {
-                "bower-asset/jasmine-ajax": ">=1.3.1,<1.4",
-                "bower-asset/jasmine-jquery": ">=1.5.2,<1.6",
-                "bower-asset/jquery": ">=1.7,<1.8"
+                "bower-asset/jasmine-ajax": "~1.3.1",
+                "bower-asset/jasmine-jquery": "~1.5.2",
+                "bower-asset/jquery": "~1.7"
             },
             "type": "bower-asset-library",
             "extra": {
