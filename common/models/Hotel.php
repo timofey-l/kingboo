@@ -103,7 +103,7 @@ class Hotel extends \yii\db\ActiveRecord
     }
 
     public function getCurrency() {
-        return $this->hasOne('\common\models\Currency', ['currency_id' => 'id']);
+        return $this->hasOne('\common\models\Currency', ['id' => 'currency_id']);
     }
     
     public function getFacilities() {
