@@ -40,7 +40,7 @@ class BookingParams extends Model
 
 	public static function getGenderItems(){
 		return ArrayHelper::map(static::$genderItems, 'id', function($array){
-			return \Yii::t('frontend', $array['label']);
+			return \Yii::t('frontend_dynamic', $array['label']);
 		});
 	}
 
