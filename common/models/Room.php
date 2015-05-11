@@ -78,26 +78,7 @@ class Room extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => Yii::t('rooms', 'ID'),
-            'hotel_id' => Yii::t('rooms', 'Hotel ID'),
-            'title_ru' => Yii::t('rooms', 'Title Ru'),
-            'title_en' => Yii::t('rooms', 'Title En'),
-            'description_ru' => Yii::t('rooms', 'Description Ru'),
-            'description_en' => Yii::t('rooms', 'Description En'),
-            'adults' => Yii::t('rooms', 'Adults'),
-            'children' => Yii::t('rooms', 'Children'),
-            'total' => Yii::t('rooms', 'Total'),
-            'price_type' => Yii::t('rooms','Price type'),
-            'active' => Yii::t('rooms', 'Active'),
-        ];
-    }
-    
+
     public function fields() {
         $fields = parent::fields();
         $fields['facilities'] = function ($model) {
@@ -105,6 +86,7 @@ class Room extends \yii\db\ActiveRecord
         };
         return $fields;
     }
+
 	/**
 	 * @inheritdoc
 	 */
