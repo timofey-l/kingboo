@@ -13,6 +13,13 @@ return [
     'name' => 'BOOBOOKING',
     'controllerNamespace' => 'partner\controllers',
     'components' => [
+	    'view' => [
+		    'theme' => [
+			    'pathMap' => [
+				    '@app/views' => '@app/adminTheme2'
+			    ],
+		    ],
+	    ],
         'user' => [
             'identityClass' => 'partner\models\PartnerUser',
             'enableAutoLogin' => true,
