@@ -112,16 +112,16 @@ $(document).ready(function () {
         format: t('datesFormat')
     });
 
-    if (typeof window.initial_dateFrom != 'undefined') {
-        $('#dateFrom').datepicker('setDate', window.initial_dateFrom);
+    if (typeof window.dateFrom != 'undefined') {
+        $('#dateFrom').datepicker('setDate', new Date(window.dateFrom));
         $('#dateFrom').datepicker('update');
     } else {
         $('#dateFrom').datepicker('setDate', new Date());
         $('#dateFrom').datepicker('update');
     }
 
-    if (typeof window.initial_dateTo != 'undefined') {
-        $('#dateTo').datepicker('setDate', window.initial_dateTo);
+    if (typeof window.dateTo != 'undefined') {
+        $('#dateTo').datepicker('setDate', new Date(window.dateTo));
         $('#dateTo').datepicker('update');
     } else {
         $('#dateTo').datepicker('setDate', moment().add(7, 'days').toDate());

@@ -12,6 +12,6 @@ $this->title = 'My Yii Application';
     </div>
 
     <div class="body-content">
-        
+        <script type="application/javascript" src="http://partner.booking.local/widget/js/sdf23kf234F23cXsdfM83"></script>
     </div>
 </div>

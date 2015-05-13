@@ -1,6 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 /* @var $model common\models\Hotel */
+/* @var $bookParams \frontend\models\BookingParams */
 $l = \common\models\Lang::$current->url;
 $directoryBower = Yii::$app->assetManager->getPublishedUrl('@bower');
 
@@ -30,6 +31,15 @@ $this->registerJsFile($directoryBower . '/admin-lte/js/plugins/datepicker/bootst
 $this->registerJsFile($directoryBower . '/admin-lte/js/plugins/datepicker/locales/bootstrap-datepicker.' . $l . '.js', ['depends' => [\yii\bootstrap\BootstrapAsset::className(), \yii\bootstrap\BootstrapPluginAsset::className()]]);
 $this->registerCssFile($directoryBower . '/admin-lte/css/datepicker/datepicker3.css', ['depends' => [\frontend\assets\GalleryAsset::className()]]);
 ?>
+
+<script>
+	var dateFrom = "<?= $bookParams->dateFrom ?>";
+	var dateTo = "<?= $bookParams->dateTo ?>";
+	var adults = <?= $bookParams->adults ?>;
+	var children = <?= $bookParams->children ?>;
+	var kids = <?= $bookParams->kids ?>;
+</script>
+
 <h1><?= $model->{'title_' . $l} ?></h1>
 <div class="hotel_stars">
     <?php foreach (range(1, 5) as $i): ?>

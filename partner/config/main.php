@@ -34,12 +34,15 @@ return [
             'showScriptName' => false,
             'class' => 'common\components\LangUrlManager',
             'rules' => [
-                // REST for rooms
+	            // Widgets
+	            'GET widget/js/<code:[\d\w]+>' => 'widget/js',
+	            'GET widget/css/<code:[\d\w]+>' => 'widget/css',
+
+	            // REST for rooms
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'rooms'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'roomprices'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'roomimages'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'hotelimages'],
-                
             ],
         ],
         'request' => [

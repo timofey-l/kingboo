@@ -32,7 +32,7 @@ return [
     'Guests information' => 'Информация о гостях',
     'Adults' => 'Взрослых',
     'Arrival date' => 'Дата заезда',
-    'Booking' => 'Дата выезда',
+    'Booking' => 'Забронировать',
     'Children' => 'Детей 7-12 лет',
     'Contact information' => 'Контактная информация',
     'Departure date' => 'Дата выезда',

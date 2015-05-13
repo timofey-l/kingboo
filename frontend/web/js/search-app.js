@@ -5,11 +5,11 @@
         $scope.t = t;
         $scope.LANG = LANG;
         $scope.search = {
-            dateFrom: '',
-            dateTo: '',
-            adults: 1,
-            children: 0,
-            kids: 0,
+            dateFrom: dateFrom,
+            dateTo: dateTo,
+            adults: adults,
+            children: children,
+            kids: kids,
             hotelId: $scope.hotelId
         };
 
@@ -45,6 +45,10 @@
 
             goWithPOST('/hotel/booking', data, 'BookingParams');
         };
+
+        setTimeout(function(){
+            $scope.find()
+        }, 1000);
 
     }]);
 })();

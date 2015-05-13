@@ -5,12 +5,15 @@ namespace frontend\controllers;
 use common\components\BookingHelper;
 use common\models\Hotel;
 use common\models\Room;
+use DateTime;
 use frontend\models\BookingParams;
 use frontend\models\OrderForm;
 use frontend\models\OrderItemForm;
+use yii\filters\PageCache;
 use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\Response;
+
 
 class HotelController extends \yii\web\Controller
 {
@@ -82,9 +85,38 @@ class HotelController extends \yii\web\Controller
 		if (is_null($model)) {
 			throw new \yii\web\HttpException(404, 'The requested hotel does not exist.');
 		}
+		$req = \Yii::$app->request;
+		$dateFrom = new DateTime($req->get('dateFrom', date('Y-m-d')));
+		$dateTo = new DateTime($req->get('dateTo', date('Y-m-d')));
+
+		$now = new DateTime();
+
+		// проверяем, если переданная дата_с меньше сегодняшней, то устанавливаем на сегодня
+		if ($now->diff($dateFrom)->invert) {
+			$dateFrom = $now;
+		}
+
+		// проверяем дата_по
+		if ($dateFrom->diff($dateTo)->invert) {
+			$dateTo = clone $dateFrom;
+			$dateTo->add(new \DateInterval('P7D'));
+		}
+
+		$adults = (int) $req->get('adults', 1);
+		$children = (int) $req->get('children', 0);
+		$kids = (int) $req->get('kids', 0);
+
+		$bookParams = new BookingParams([
+			'dateFrom' => $dateFrom->format('Y-m-d'),
+			'dateTo' => $dateTo->format('Y-m-d'),
+			'adults' => in_array($adults, range(1, 10)) ? $adults : 1,
+			'children' => in_array($children, range(1, 5)) ? $children : 0,
+			'kids' => in_array($kids, range(1, 5)) ? $kids : 0,
+		]);
 
 		return $this->render('index', [
 			'model' => $model,
+			'bookParams' => $bookParams,
 		]);
 	}
 
