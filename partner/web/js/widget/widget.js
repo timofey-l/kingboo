@@ -186,6 +186,11 @@ function changeWidgetLang(el, lang) {
             $element.html(bw_lang_vars[lang].messages[message_id]);
         }
     });
+
+    // datepicker locales
+    var locale = bw_lang_vars[lang].datepicker;
+    $('#' + el.id + ' .bw__date_input').datepicker('option', locale);
+
     $("#" + el.id + ' .bw__langFlag.active').removeClass('active');
     $("#" + el.id + ' .bw__langFlag[data-lang=' + lang + ']').addClass('active');
     return true;
