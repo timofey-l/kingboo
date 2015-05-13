@@ -24,19 +24,37 @@ var bw_lang_vars = {
             'lang_dateTo_label': "Дата отъезда",
             'lang_adults_label': "Взрослые",
             'lang_children_label': 'Дети <br> 7-11 лет',
-            'lang_kids_label': 'Дети <br> 0-7 лет',
+            'lang_kids_label': 'Дети <br> 0-6 лет',
             'lang_book_button': 'Забронировать',
             'lang_title': 'Онлайн бронирование'
         }
     },
     en: {
-        //datepicker:
+        datepicker: {
+            closeText: 'Done',
+            prevText: 'Prev',
+            nextText: 'Next',
+            currentText: 'Today',
+            monthNames: ['January','February','March','April','May','June',
+                'July','August','September','October','November','December'],
+            monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+            dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            dayNamesMin: ['Su','Mo','Tu','We','Th','Fr','Sa'],
+            weekHeader: 'Wk',
+            dateFormat: 'dd/mm/yy',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: ''
+        },
         messages: {
             'lang_dateFrom_label': "Check-in date",
             'lang_dateTo_label': "Check-out date",
             'lang_adults_label': "Adults",
             'lang_children_label': 'Children <br> 7-11 y.o.',
-            'lang_kids_label': 'Children <br> 0-7 y.o.',
+            'lang_kids_label': 'Children <br> 0-6 y.o.',
             'lang_book_button': 'Book now',
             'lang_title': 'Online booking'
         }
