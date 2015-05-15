@@ -1,0 +1,37 @@
+<div class="box-header">
+    <span style="font-size: 20px;" class="fa fa-gear fa-spin" ng-show="loading"></span>
+
+    <h3 class="box-title">{{t('room_table_head_timetable')}}</h3>
+
+    <div class="box-tools pull-right">
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_list')}}" ng-click="cancel('#/')" >
+            <i class="fa fa-list"></i>
+        </a>
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_update')}}" href="#/edit/{{room.id}}">
+            <i class="fa fa-edit"></i>
+        </a>
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_photos')}}" ng-click="cancel('#/images/{{room.id}}')">
+            <i class="fa fa-camera"></i>
+        </a>
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_money')}}" ng-click="cancel('#/prices/{{room.id}}')">
+            <i class="fa fa-usd"></i>
+        </a>
+    </div>
+</div>
+<!-- /.box-header -->
+
+<div class="box-body">
+    <!-- Room manage block -->
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <select class="form-control" ng-model="room.id" name="price_type" ng-change="changeRoom()"
+                    required ng-options="t.id as t['title_'+LANG] for t in rooms">
+                </select>
+            </div>
+        </div>
+    </div><!-- /.Room manage block -->
+
+    <div id="calendar"></div>
+
+</div>

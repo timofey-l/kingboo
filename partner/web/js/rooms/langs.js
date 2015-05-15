@@ -78,7 +78,7 @@ LANGS.en = {
     room_table_head_update: "Edit",
     room_table_head_photos: "Photos",
     room_table_head_money: "Prices",
-    room_table_head_timetable: "Количество и доступность номеров",
+    room_table_head_timetable: "Availability",
 
     room_adults_title: "Adults",
     room_children_title: "Children",

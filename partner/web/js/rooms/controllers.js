@@ -530,3 +530,54 @@ roomsManageControllers.controller('ImagesCtrl',
     };    
 
 }]);
+
+roomsManageControllers.controller('AvailabilityCtrl', 
+    ['$rootScope', '$scope', '$routeParams', '$http', 'Room',
+    function ($rootScope, $scope, $routeParams, $http, Room) {
+
+    $scope.LANG = window.LANG;
+    $scope.loading = true;
+    $scope.t = window.t;
+    $scope.room = null;
+
+    //Загружаем комнаты, если был прямой заход на УРЛ
+    if ($rootScope.rooms == null) {
+        $scope.load = function() {
+            $scope.rooms = Room.query(
+                {
+                    hotel_id: $rootScope.hotelId
+                },
+                function () {
+                    $scope.loading = false;
+                },
+                function () {
+                    $scope.loading = false;
+                }
+            );
+        };
+        $scope.load();
+    } else {
+        $scope.rooms = $rootScope.rooms;
+    }
+    
+    $scope.changeRoom = function () {
+        window.location.hash = "#/availability/" + $scope.room.id;
+    }
+    
+    var promise = Room.get({
+        id: $routeParams.id
+    }).$promise;
+
+    promise
+        .then(function (room) {
+            $scope.room = room;
+        })
+        .finally(function () {
+            $scope.reqStatus = promise.$$state.value;
+            $scope.loading = false;
+        });
+
+    initCalendar();
+
+    window.s = $scope;
+}]);

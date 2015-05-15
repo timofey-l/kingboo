@@ -24,6 +24,10 @@
                     templateUrl: '/partial/rooms/images.html',
                     controller: 'ImagesCtrl'
                 })
+                .when('/availability/:id', {
+                    templateUrl: '/partial/rooms/availability.html',
+                    controller: 'AvailabilityCtrl'
+                })
             ;
     }]);
 })();
