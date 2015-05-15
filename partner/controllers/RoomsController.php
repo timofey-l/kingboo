@@ -24,13 +24,13 @@ class RoomsController extends ActiveController
                 'checkAccess' => [$this, 'checkAccess'],
             ],
             'create' => [
-                'class' => 'yii\rest\CreateAction',
+                'class' => 'partner\components\RoomsCreateAction',
                 'modelClass' => $this->modelClass,
                 'checkAccess' => [$this, 'checkAccess'],
                 'scenario' => $this->createScenario,
             ],
             'update' => [
-                'class' => 'yii\rest\UpdateAction',
+                'class' => 'partner\components\RoomsUpdateAction',
                 'modelClass' => $this->modelClass,
                 'checkAccess' => [$this, 'checkAccess'],
                 'scenario' => $this->updateScenario,

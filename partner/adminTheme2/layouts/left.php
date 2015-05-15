@@ -34,13 +34,60 @@ $l = \common\models\Lang::$current->url;
 
 	    <ul class="sidebar-menu">
 		    <li class="header"><?= Yii::t('left_menu', 'Hotels list') ?></li>
-		    <?php foreach(Yii::$app->user->identity->hotels as $hotel): ?>
-			    <?= Html::tag('li', Html::a($hotel->{'title_' . $l}, ['hotel/view', 'id' => $hotel->id]), [
-				    'class' => $hotel->id == \Yii::$app->request->get('id') ? 'active' : '',
-			    ]) ?>
-		    <?php endforeach; ?>
+		    <?php 
+                //Вывод списка отелей
+                if ($this->context->id == 'hotel') {
+                    $hotel_id = isset($this->context->actionParams['id']) ? $this->context->actionParams['id'] : false;
+                } else {
+                    $hotel_id = false;
+                }
+                foreach(Yii::$app->user->identity->hotels as $hotel) {
+                    if ($hotel->id == $hotel_id) { //Если отель активный - выводим подменю
+            ?>
+
+            <li class="treeview active">
+                <a href="#">
+                    <i class="fa fa-share"></i> <span><?= $hotel->name ?></span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a href="<?= \yii\helpers\Url::toRoute(['hotel/view', 'id' => $hotel->id]) ?>">
+                            <span class="fa fa-building"></span> <?= Yii::t('hotels', 'View') ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= \yii\helpers\Url::toRoute(['hotel/update', 'id' => $hotel->id]) ?>">
+                            <span class="fa fa-edit"></span> <?= Yii::t('hotels', 'Edit') ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= \yii\helpers\Url::toRoute(['hotel/facilities', 'id' => $hotel->id]) ?>">
+                            <span class="fa fa-check-square-o"></span> <?= Yii::t('hotels', 'Facilities') ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= \yii\helpers\Url::toRoute(['hotel/rooms', 'id' => $hotel->id]) ?>">
+                            <span class="fa fa-institution"></span> <?= Yii::t('hotels', 'Rooms') ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= \yii\helpers\Url::toRoute(['hotel/images', 'id' => $hotel->id]) ?>">
+                            <span class="fa fa-camera"></span> <?= Yii::t('hotels', 'Images') ?>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <?php 
+                    } else {
+                        echo Html::tag('li', Html::a($hotel->{'title_' . $l}, ['hotel/view', 'id' => $hotel->id]));
+                    }
+                }
+		    ?>
 	    </ul>
 
+        <p>&nbsp;</p>
         <ul class="sidebar-menu">
             <li class="treeview">
                 <a href="#">

@@ -30,7 +30,7 @@ if (Yii::$app->controller->action->id === 'login' ||Yii::$app->controller->actio
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
-    <body class="skin-blue fixed">
+    <body class="skin-blue">
     <?php $this->beginBody() ?>
     <div class="wrapper">
 

@@ -7,7 +7,8 @@ use yii\bootstrap\Button;
 /* @var $this yii\web\View */
 /* @var $model common\models\Hotel */
 
-$this->title = $model->{'title_' . \common\models\Lang::$current->url};
+$l = \common\models\Lang::$current->url;
+$this->title = $model->{'title_' . $l};
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('hotels', 'Hotels'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -33,7 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'name',
+            'title_' . $l,
             'address',
+            'description_' . $l,
         ],
     ]) ?>
     

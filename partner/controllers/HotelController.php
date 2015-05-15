@@ -33,6 +33,7 @@ class HotelController extends Controller
                             }
                             if (!$id) return false;
                             $hotel = \common\models\Hotel::findOne($id);
+                            if (!$hotel) return false;
                             return $hotel->partner_id == \Yii::$app->user->id;
                         }
                     ],
@@ -212,5 +213,5 @@ class HotelController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    
+
 }

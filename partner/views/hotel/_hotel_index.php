@@ -14,12 +14,12 @@ $hotel_view_url = Yii::$app->urlManager->createUrl(['hotel/view', 'id' => $hotel
     <!-- /.box-header -->
     <div class="box-body">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <a href="<?= $hotel_view_url ?>">
                     <img src="http://lorempixel.com/200/150/city/<?= rand(1, 10) ?>" alt=""/>
                 </a>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-8">
                 <div class="row">
                     <div class="col-md-12">
                         <?php foreach (range(1,5) as $i): ?>

@@ -5,7 +5,7 @@ use yii\rest\ActiveController;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 
-class RoomImagesController extends ActiveController
+class RoomimagesController extends ActiveController
 {
 
     public $modelClass = 'common\models\RoomImage';

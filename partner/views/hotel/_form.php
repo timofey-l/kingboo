@@ -128,7 +128,7 @@ $langs = \common\models\Lang::sortedLangList();
 
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('hotels', 'Create') : Yii::t('hotels', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('hotels', 'Create') : Yii::t('hotels', 'Save'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

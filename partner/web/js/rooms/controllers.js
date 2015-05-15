@@ -520,7 +520,7 @@ roomsManageControllers.controller('ImagesCtrl',
     };
     
     $scope.delete = function (image) {
-        if (confirm(t('delete_confirm'))) {
+        if (confirm(t('photo_delete_confirm'))) {
             Image.delete({id: image.id})
                 .$promise.then(function (image) {
                     $scope.loading = true;

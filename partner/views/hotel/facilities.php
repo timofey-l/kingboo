@@ -7,22 +7,22 @@ use yii\widgets\ActiveForm;
 /* @var $model common\models\HotelImages */
 
 $lang = \common\models\Lang::$current->url;
-
-$hotel_title = $model->{'title_' . \common\models\Lang::$current->url};
-$this->title = $hotel_title . ': ' . Yii::t('hotels', 'Facilities');
+$hotel_title = $model->{'title_' . $lang};
+$this->title = $hotel_title;
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('hotels', 'Hotels'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $hotel_title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('hotels', 'Rooms'), 'url' => ['rooms', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = Yii::t('hotels', 'Facilities');
 
 ?>
 <div class="hotel-facilities">
+
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
     
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h3 class="box-title"><?= Yii::t('hotels', 'Facilities') ?></h3>
+                <h2 class="box-title"><?= Yii::t('hotels', 'Facilities') ?></h2>
             </div><!-- /.box-header -->
             <div class="box-body">
                 <div class="box-group" id="accordion">
@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('hotels', 'Rooms'), 'url' =>
     </div><!-- /.row -->
     
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('hotels', 'Update'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton(Yii::t('hotels', 'Save'), ['class' => 'btn btn-primary']) ?>
     </div>
     
     <?php ActiveForm::end(); ?>

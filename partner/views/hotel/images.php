@@ -16,12 +16,13 @@ $this->registerJsFile($directoryBower . '/colorbox/jquery.colorbox-min.js');
 $this->registerJsFile($directoryBower . '/colorbox/i18n/jquery.colorbox-'.$lang.'.js');
 $this->registerCssFile($directoryBower . '/colorbox/example1/colorbox.css',[],'colorbox');
 
-$hotel_title = $model->{'title_' . \common\models\Lang::$current->url};
-$this->title = $hotel_title . ': ' . Yii::t('hotels', 'Images');
+$lang = \common\models\Lang::$current->url;
+$hotel_title = $model->{'title_' . $lang};
+$this->title = $hotel_title;
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('hotels', 'Hotels'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $hotel_title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('hotels', 'Rooms'), 'url' => ['rooms', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = Yii::t('hotels', 'Images');
 
 //$o = new \common\models\HotelImage(); $o->deleteAll();
 //echo \common\helpers\DebugHelper::grid(new \common\models\HotelImage());
@@ -32,7 +33,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('hotels', 'Rooms'), 'url' =>
 </script>
 
 <div class="hotel-images">
-    <div ng-app="ImagesManageApp" ng-init="hotelId = <?= $model->id ?>;">
+    <div class="row" ng-app="ImagesManageApp" ng-init="hotelId = <?= $model->id ?>;">
         <div class="box" ng-view>
 
         </div>

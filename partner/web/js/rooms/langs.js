@@ -50,7 +50,7 @@ LANGS.ru = {
     image_list_title : "Фотографии",
     image_list_empty : "Нет загруженных фотографий",
     image_add : "Добавить фотографию",
-    delete_confirm : 'Вы уверены, что хотите удалить фотографию?\n' +
+    photo_delete_confirm : 'Вы уверены, что хотите удалить фотографию?\n' +
     'В случае продолжения фотография будет удалена безвозвратно!\n',
 
     room_facilities : 'Особенности номера',
@@ -106,7 +106,7 @@ LANGS.en = {
     image_list_title : "Photos",
     image_list_empty : "No photos uploaded",
     image_add : "Add photo",
-    delete_confirm : 'Are you sure want to delete this photo?\n',
+    photo_delete_confirm : 'Are you sure want to delete this photo?\n',
     
     room_facilities : 'Facilities',
 
@@ -140,7 +140,7 @@ locale.en.date = {
     firstDay: 0
 }
 
-locale.en.dateFormat = 'MM/DD/YYYY';
+locale.en.dateFormat = 'DD/MM/YYYY';
 
 locale.ru.date = {
     applyLabel: 'Вставить',

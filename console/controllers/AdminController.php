@@ -96,19 +96,19 @@ class AdminController extends Controller
         }
 
         $partner = new PartnerUser();
-        $partner->username = 'loceanica';
+        $partner->username = 'L\'Oceanica';
         $partner->email = 'pr@loceanicahotel.com';
         $partner->password = "loceanica";
         print_r($partner->attributes);
         if ($partner->save()) {
             $hotel = new Hotel();
             $hotel->partner_id = $partner->id;
-            $hotel->name = 'L\'Oceanica';
+            $hotel->name = 'loceanica';
             $hotel->title_ru = 'L\'Oceanica Beach Resort Hotel';
             $hotel->title_en = 'L\'Oceanica Beach Resort Hotel';
             $hotel->address = 'Camyuva Mah. 5087 Sok. No: 10/1, Kemer, Antalya/Turkey';
-            $hotel->description_en = 'У подножия Таврских гор, в сени высоких сосен, олеандр и апельсиновых деревьев, на самом берегу Средиземного моря расположился пятизвездочный отель L’Oceanica Beach Resort. Оформление, навеянное архитектурой Монреаля прошлого века, высококлассная кухня и поистине домашняя атмосфера с запахом турецкого кофе и гранатового сока сделают Ваш отдых незабываемым!';
-            $hotel->description_ru = 'Welcome to L’Oceanica Beach Resort Hotel, a magnificent five star seaside resort in Kemer\'s bright blue-green Mediterranean coast of Camyuva Bay of Antalya. Our management team have more than 25 years of experience in providing all-inclusive service at five star excellence and unbeatable affordability. L\'Oceanica Hotel is unique in its kind and strives to be all- a family hotel, budget hotel, and five star hotel- with all-included meals and drinks, all included first class animation and fun, and a wellness center and turkish bath or hamam for the ultimate relaxation and spa holiday. You will swim in the same sea as the ancient Greeks and Romans and wake up each day to mother nature untouched. Leave us to think of the rest for you and your family\'s perfect holiday.';
+            $hotel->description_en = 'Welcome to L’Oceanica Beach Resort Hotel, a magnificent five star seaside resort in Kemer\'s bright blue-green Mediterranean coast of Camyuva Bay of Antalya. Our management team have more than 25 years of experience in providing all-inclusive service at five star excellence and unbeatable affordability. L\'Oceanica Hotel is unique in its kind and strives to be all- a family hotel, budget hotel, and five star hotel- with all-included meals and drinks, all included first class animation and fun, and a wellness center and turkish bath or hamam for the ultimate relaxation and spa holiday. You will swim in the same sea as the ancient Greeks and Romans and wake up each day to mother nature untouched. Leave us to think of the rest for you and your family\'s perfect holiday.';
+            $hotel->description_ru = 'У подножия Таврских гор, в сени высоких сосен, олеандр и апельсиновых деревьев, на самом берегу Средиземного моря расположился пятизвездочный отель L’Oceanica Beach Resort. Оформление, навеянное архитектурой Монреаля прошлого века, высококлассная кухня и поистине домашняя атмосфера с запахом турецкого кофе и гранатового сока сделают Ваш отдых незабываемым!';
             $hotel->lat = 0;
             $hotel->lng = 0;
             $hotel->category = 5;

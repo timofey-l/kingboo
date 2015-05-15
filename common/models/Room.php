@@ -102,30 +102,10 @@ class Room extends \yii\db\ActiveRecord
 			'adults'         => Yii::t('rooms', 'Adults'),
 			'children'       => Yii::t('rooms', 'Children'),
 			'total'          => Yii::t('rooms', 'Total'),
-			'price_type'     => Yii::t('room', 'Price type'),
+			'price_type'     => Yii::t('rooms', 'Price type'),
 			'active'         => Yii::t('rooms', 'Active'),
 		];
 	}
-
-    public function afterSave($insert, $changedAttributes) {
-        parent::afterSave($insert, $changedAttributes);
-        //обновляем свойства
-        $facilities = Yii::$app->request->post('facilities',false);
-        if ($facilities) {
-            //удаляем существующие связи
-            $old = $this->facilities;
-            foreach ($old as $f) {
-                $this->unlink('facilities', $f, true);
-            }
-            //добавляем новые связи
-            foreach ($facilities as $k=>$facility) {
-                if (!$facility['checked']) continue;
-                if (($f = \common\models\RoomFacilities::findOne($facility['id'])) !== null) {
-                    $this->link('facilities',$f);
-                }
-            }
-        }
-    }
 
     public function getHotel() {
         return $this->hasOne(Hotel::className(), ['id' => 'hotel_id']);

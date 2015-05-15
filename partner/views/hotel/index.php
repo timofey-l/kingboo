@@ -10,8 +10,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="hotel-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <p>
+    <p style="text-align: right;">
         <?= Html::a(Yii::t('hotels', 'Create {modelClass}', ['modelClass' => 'Hotel',]), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
