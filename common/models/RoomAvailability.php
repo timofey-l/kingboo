@@ -48,4 +48,9 @@ class RoomAvailability extends \yii\db\ActiveRecord
             'availability' => Yii::t('rooms', 'Availability'),
         ];
     }
+
+    public function getRoom() {
+        return $this->hasOne(Room::className(), ['id' => 'room_id']);
+    }
+
 }

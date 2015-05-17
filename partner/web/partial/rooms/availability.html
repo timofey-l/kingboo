@@ -32,8 +32,7 @@
         </div>
     </div><!-- /.Room manage block -->
 
-    <!--div id="calendar"></div-->
-
+    <!-- Calendar -->
     <div class="row">
         <div class="col-sm-4" ng-repeat="month in months">
             <table class="table table-bordered">
@@ -44,13 +43,45 @@
                 </tr>
                 <tr><td ng-repeat="dayOfWeek in month.daysOfWeek">{{dayOfWeek.name}}</td></tr>
                 <tr ng-repeat="week in month.weeks">
-                    <td ng-repeat="day in week.days" ng-class="{nonactive: !day.active}">
+                    <td ng-repeat="day in week.days" ng-class="{nonactive: !day.active, clicable: day.active, selected: day.selected}" ng-click="chooseDate(day)">
                         <div class="ava-date">{{day.date}}</div>
                         {{day.number}}&nbsp;
                     </td>
                 </tr>
             </table>
         </div>
-    </div>
+    </div><!-- /.Calendar -->
+
+    <div class="modal" id="modal-dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cancelModal()"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">
+                        {{t('Dates')}}:
+                        {{startDate.format(dateFormat)}} <span ng-show="endDate"> &mdash; {{endDate.format(dateFormat)}}</span>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        {{t('Set_number')}}: <input type="number" name="roomsNumber" ng-model="roomsNumber" class="form-control">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                <input name="stopSale" type="checkbox" ng-model="stopSale" />
+                                    {{t('Stop_sale')}}
+                                </label>
+                            </div>
+                        </div>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info pull-left" data-dismiss="modal" ng-click="period()" ng-show="!endDate">{{t('period')}}</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelModal()">{{t('cancel')}}</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
 </div>

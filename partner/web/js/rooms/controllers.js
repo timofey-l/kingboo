@@ -539,7 +539,13 @@ roomsManageControllers.controller('AvailabilityCtrl',
     $scope.loading = true;
     $scope.t = window.t;
     $scope.room = null;
+    $scope.months = [];
     $scope.startMonth = moment().startOf('month');
+    $scope.startDate = null;
+    $scope.endDate = null;
+    $scope.dateFormat = getLocale('dateFormat');
+    $scope.roomsNumber = 0;
+    $scope.stopSale = 0;
 
     //Загружаем комнаты, если был прямой заход на УРЛ
     if ($rootScope.rooms == null) {
@@ -578,13 +584,35 @@ roomsManageControllers.controller('AvailabilityCtrl',
             $scope.loading = false;
         });
 
+    $scope.getData = function () {
+        $scope.loading = true;
+        var endMonth = startMonth.clone();
+        endMonth.add(7,'months');
+        endMonth.subtract(1, 'days');
+        f = {
+            startMonth: $scope.startMonth.format('YYYY-MM-DD'),
+            endMonth: endMonth.format('YYYY-MM-DD'),
+            room_id: $scope.filter.room_id,
+        };
+        var pricelist = null;
+        Roomprices.query(
+            f,
+            function (res) {
+
+            },
+            function () {
+                $scope.loading = false;
+                //TODO: Add error message
+            }
+        );
+    }
+
     $scope.calendars = function() {
         var daysOfWeek = [];
         for (var i = 0; i<7; i++) {
             daysOfWeek[i] = {name: moment().day(i + 1).format('dd')};
         }
         var emptyNumber = -1;
-        $scope.months = [];
         var month = $scope.startMonth.clone();
         var currentDay = month.clone();
         currentDay = currentDay.startOf('week');
@@ -603,7 +631,9 @@ roomsManageControllers.controller('AvailabilityCtrl',
                     days[d] = {
                         active: active,
                         date: active ? currentDay.format('D') : '',
+                        fulldate: active ? currentDay.format('YYYY-MM-DD') : false,
                         number: '',
+                        selected: false,
                     };
                     var nextDay = currentDay.clone();
                     if (emptyNumber == -1 && nextDay.add(1, 'days').format('M') != month.format('M') && w > 2 && d != 6) {
@@ -636,6 +666,53 @@ roomsManageControllers.controller('AvailabilityCtrl',
     $scope.nextMonth = function () {
         $scope.startMonth.add(1,'months');
         $scope.calendars();
+    }
+
+    $scope.chooseDate = function (day) {
+        if (day.fulldate == false) return;
+        if ($scope.startDate == null) {
+            $scope.startDate = moment(day.fulldate);
+            day.selected = true;
+        } else {
+            $scope.endDate = moment(day.fulldate);
+            $scope.selectPeriod();
+        }
+        $('#modal-dialog').css('display','block');
+    }
+
+    $scope.scanDays = function (f) {
+        for (var m in $scope.months) {
+            for (var w in $scope.months[m].weeks) {
+                for (var d in $scope.months[m].weeks[w].days) {
+                    var d = $scope.months[m].weeks[w].days[d];
+                    if (!d.active) continue;
+                    f(d);
+                }
+            }
+        }
+    }
+
+    $scope.selectPeriod = function () {
+        $scope.scanDays(function (d) {
+            var date = moment(d.fulldate);
+            if (date.format('X') >= $scope.startDate.format('X') && date.format('X') <= $scope.endDate.format('X')) {
+                d.selected = true;
+            }
+        });
+    }
+
+    $scope.cancelModal = function () {
+        $('#modal-dialog').css('display','none');
+        $scope.startDate = null;
+        $scope.endDate = null;
+        $scope.scanDays(function (d) {
+            var date = moment(d.fulldate);
+            d.selected = false;
+        });
+    }
+
+    $scope.period = function () {
+        $('#modal-dialog').css('display','none');
     }
 
     moment.locale(LANG);
