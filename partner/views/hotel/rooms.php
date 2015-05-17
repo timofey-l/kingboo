@@ -12,14 +12,12 @@ $lang = \common\models\Lang::$current->url;
 $directoryBower = Yii::$app->assetManager->getPublishedUrl('@bower');
 $directoryLTE = $directoryBower . '/admin-lte';
 $this->registerJsFile($directoryBower . '/moment/moment.js');
+if ($lang != 'en') {
+    $this->registerJsFile($directoryBower . '/moment/locale/' . $lang . '.js');    
+}
 $this->registerJsFile($directoryBower . '/underscore/underscore.js');
 $this->registerJsFile('/js/daterangepicker.js');
 $this->registerCssFile('/css/daterangepicker-bs3.css', [], 'daterangepicker');
-
-//Подключаем fullcalendar
-$this->registerCssFile($directoryLTE . '/plugins/fullcalendar/fullcalendar.min.css', [], 'fullcalendar');
-$this->registerJsFile($directoryLTE . '/plugins/fullcalendar/fullcalendar.min.js');
-$this->registerJsFile('/js/rooms/initcalendar.js');
 
 //Подключаем colorbox
 $this->registerJsFile($directoryBower . '/colorbox/jquery.colorbox-min.js');

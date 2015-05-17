@@ -539,6 +539,7 @@ roomsManageControllers.controller('AvailabilityCtrl',
     $scope.loading = true;
     $scope.t = window.t;
     $scope.room = null;
+    $scope.startMonth = moment().startOf('month');
 
     //Загружаем комнаты, если был прямой заход на УРЛ
     if ($rootScope.rooms == null) {
@@ -577,7 +578,68 @@ roomsManageControllers.controller('AvailabilityCtrl',
             $scope.loading = false;
         });
 
-    initCalendar();
+    $scope.calendars = function() {
+        var daysOfWeek = [];
+        for (var i = 0; i<7; i++) {
+            daysOfWeek[i] = {name: moment().day(i + 1).format('dd')};
+        }
+        var emptyNumber = -1;
+        $scope.months = [];
+        var month = $scope.startMonth.clone();
+        var currentDay = month.clone();
+        currentDay = currentDay.startOf('week');
+        for (var m=0; m<6; m++) {
+            //weeks
+            var weeks = [];
+            for (var w=0; w<6; w++) {
+                //days
+                var days = [];
+                for (var d=0; d<7; d++) {
+                    if (w == 0 && emptyNumber != -1) {
+                        emptyNumber--;
+                    }
+                    //console.log(currentDay.format('DD/MM/YYYY')+' - '+month.format('M')+' '+emptyNumber);
+                    var active = emptyNumber == -1 && currentDay.format('M') == month.format('M');
+                    days[d] = {
+                        active: active,
+                        date: active ? currentDay.format('D') : '',
+                        number: '',
+                    };
+                    var nextDay = currentDay.clone();
+                    if (emptyNumber == -1 && nextDay.add(1, 'days').format('M') != month.format('M') && w > 2 && d != 6) {
+                        emptyNumber = d;
+                        endOfMonth = true;
+                    }
+                    if (emptyNumber == -1) {
+                        currentDay.add(1, 'days');
+                    }
+                }
+                weeks[w] = {
+                    days: days,
+                };
+            };
+            $scope.months[m] = {
+                name: month.format('MMMM'),
+                year: month.format('YYYY'),
+                weeks: weeks,
+                daysOfWeek: daysOfWeek, 
+            };
+            month.add(1, 'months');
+        }
+    }
+
+    $scope.prevMonth = function () {
+        $scope.startMonth.subtract(1,'months');
+        $scope.calendars();
+    }
+
+    $scope.nextMonth = function () {
+        $scope.startMonth.add(1,'months');
+        $scope.calendars();
+    }
+
+    moment.locale(LANG);
+    $scope.calendars();
 
     window.s = $scope;
 }]);

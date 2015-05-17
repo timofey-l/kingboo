@@ -32,6 +32,25 @@
         </div>
     </div><!-- /.Room manage block -->
 
-    <div id="calendar"></div>
+    <!--div id="calendar"></div-->
+
+    <div class="row">
+        <div class="col-sm-4" ng-repeat="month in months">
+            <table class="table table-bordered">
+                <tr>
+                    <td colspan="1" class="month-prev" ng-click="prevMonth()"><i class="fa fa-backward"></i></td>
+                    <td colspan="5" class="month">{{month.name}} {{month.year}}</td>
+                    <td colspan="1" class="month-next" ng-click="nextMonth()"><i class="fa fa-forward"></i></td>
+                </tr>
+                <tr><td ng-repeat="dayOfWeek in month.daysOfWeek">{{dayOfWeek.name}}</td></tr>
+                <tr ng-repeat="week in month.weeks">
+                    <td ng-repeat="day in week.days" ng-class="{nonactive: !day.active}">
+                        <div class="ava-date">{{day.date}}</div>
+                        {{day.number}}&nbsp;
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
 </div>

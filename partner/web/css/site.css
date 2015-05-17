@@ -156,3 +156,29 @@ a.desc:after {
 .img-del {
     cursor: pointer;
 }
+
+/* Availability calendar */
+.ava-date {
+    font-size: xx-small;
+    text-align: right;
+    float: right;
+}
+.table td.nonactive {
+    background-color: #f9f9f9;
+}
+.table td.month-prev {
+    border-right: none;
+    cursor: pointer;
+    color: #d2d6de;
+}
+.table td.month {
+    border-left: none;
+    border-right: none;
+    text-align: center;
+}
+.table td.month-next {
+    border-left: none;
+    text-align: right;
+    cursor: pointer;
+    color: #d2d6de;
+}
