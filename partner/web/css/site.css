@@ -157,34 +157,63 @@ a.desc:after {
     cursor: pointer;
 }
 
-/* Availability calendar */
+/* Availability calendar-table */
 .ava-date {
     font-size: xx-small;
     text-align: right;
-    float: right;
 }
-.table td.nonactive {
+.calendar-table td.fixed {
+    width: 44px;
+    height: 49px;
+    overflow: hidden;
+}
+.calendar-table td.nonactive {
     background-color: #f9f9f9;
 }
-.table td.month-prev {
+.calendar-table td.month-prev {
     border-right: none;
     cursor: pointer;
     color: #d2d6de;
 }
-.table td.month {
+.calendar-table td.month {
     border-left: none;
     border-right: none;
     text-align: center;
 }
-.table td.month-next {
+.calendar-table td.month-next {
     border-left: none;
     text-align: right;
     cursor: pointer;
     color: #d2d6de;
 }
-.table td.clicable {
+.calendar-table td.clicable {
     cursor: pointer;
 }
-.table td.selected {
+.calendar-table td.stop {
     background-color: #f39c12;  
+}
+.calendar-table td.saling {
+    background-color: #00a65a;  
+}
+.calendar-table td.noprice {
+    background-color: #b5bbc8;  
+}
+.calendar-table td.selected {
+    background-color: #00a7d0;
+}
+#rooms-count {
+    width: 100px;
+}
+.ava-legend {
+    height: 21px;
+    margin-bottom: 3px;
+}
+.ava-legend .color {
+    width: 21px;
+    height: 21px;
+    float: left;
+}
+.ava-legend .title {
+    padding-left: 10px;  
+    float: left;  
 }

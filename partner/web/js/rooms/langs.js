@@ -54,7 +54,20 @@ LANGS.ru = {
     'В случае продолжения фотография будет удалена безвозвратно!\n',
 
     room_facilities : 'Особенности номера',
-    
+
+    availability_dates: 'Выбранные даты',
+    availability_count: 'Количество свободных номеров на выбранный период:',
+    availability_period: 'Выберите период',
+    availability_save: 'Сохранить',
+    availability_stop_sale: 'Остановить продажи',
+    availability_start_sale: 'Запустить продажи',
+    availability_cancel: 'Отмена',
+    availability_select_period: 'Вы можете выбрать период кликнув на вторую дату в календаре.',
+    availability_legend: 'Легенда',
+    availability_no_price: 'Не указана цена',
+    availability_no_count: 'Не указано количество',
+    availability_stop_sale: 'Продажа остановлена',
+    availability_on_sale: 'В продаже',
 };
 
 LANGS.en = {
@@ -110,6 +123,19 @@ LANGS.en = {
     
     room_facilities : 'Facilities',
 
+    availability_dates: 'Selected dates',
+    availability_count: 'Number of available rooms for selected period:',
+    availability_period: 'Select period',
+    availability_save: 'Update',
+    availability_stop_sale: 'Stop sale',
+    availability_start_sale: 'Start sale',
+    availability_cancel: 'Cancel',
+    availability_select_period: '',
+    availability_legend: 'Legend',
+    availability_no_price: 'Price not specified',
+    availability_no_count: 'Rooms not specified',
+    availability_stop_sale: 'Stop sale',
+    availability_on_sale: 'On sale',
 };
 
 function t(v, l) {

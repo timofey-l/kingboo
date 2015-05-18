@@ -396,7 +396,7 @@ roomsManageControllers.controller('PricesCtrl',
     
     $scope.groupPriceSave = function (k, title) {
         if (title.price == '') return;
-        if (!$scope.priceValidate(title)) return;  //console.log($scope.prices[k][0]);
+        if (!$scope.priceValidate(title)) return;
         f = {
             startDate: $scope.filter.startDate.format('YYYY-MM-DD'),
             endDate: $scope.filter.endDate.format('YYYY-MM-DD'),
@@ -407,7 +407,7 @@ roomsManageControllers.controller('PricesCtrl',
             price: title.price
         };
         $http.post('/roomprices/updategroup/',f)
-            .success(function(data) { console.log(data);
+            .success(function(data) {
                 for (var i in $scope.prices[k]) {
                     if (_.indexOf(data, $scope.prices[k][i].date) != -1) {
                         $scope.prices[k][i].price = title.price;
@@ -508,9 +508,8 @@ roomsManageControllers.controller('ImagesCtrl',
             processData: false,
             data: new FormData(f)
         }).success(function(data){
-            //console.log(data);
             $scope.newImage.image = undefined;
-            var i = $("#addNewImage");    //console.log(i);
+            var i = $("#addNewImage");
             i.replaceWith( i = i.clone( true ) ); 
             $scope.load();
         }).error(function(){
@@ -532,8 +531,8 @@ roomsManageControllers.controller('ImagesCtrl',
 }]);
 
 roomsManageControllers.controller('AvailabilityCtrl', 
-    ['$rootScope', '$scope', '$routeParams', '$http', 'Room',
-    function ($rootScope, $scope, $routeParams, $http, Room) {
+    ['$rootScope', '$scope', '$routeParams', '$http', 'Room', 'Availability', 
+    function ($rootScope, $scope, $routeParams, $http, Room, Availability) {
 
     $scope.LANG = window.LANG;
     $scope.loading = true;
@@ -544,8 +543,10 @@ roomsManageControllers.controller('AvailabilityCtrl',
     $scope.startDate = null;
     $scope.endDate = null;
     $scope.dateFormat = getLocale('dateFormat');
-    $scope.roomsNumber = 0;
-    $scope.stopSale = 0;
+    $scope.count = '';
+    $scope.countInvalid = false;
+
+    moment.locale(LANG);
 
     //Загружаем комнаты, если был прямой заход на УРЛ
     if ($rootScope.rooms == null) {
@@ -578,6 +579,8 @@ roomsManageControllers.controller('AvailabilityCtrl',
     promise
         .then(function (room) {
             $scope.room = room;
+            $scope.calendars();
+            $scope.getData();
         })
         .finally(function () {
             $scope.reqStatus = promise.$$state.value;
@@ -585,26 +588,98 @@ roomsManageControllers.controller('AvailabilityCtrl',
         });
 
     $scope.getData = function () {
-        $scope.loading = true;
-        var endMonth = startMonth.clone();
-        endMonth.add(7,'months');
+        var endMonth = $scope.startMonth.clone();
+        endMonth.add(6,'months');
         endMonth.subtract(1, 'days');
         f = {
             startMonth: $scope.startMonth.format('YYYY-MM-DD'),
             endMonth: endMonth.format('YYYY-MM-DD'),
-            room_id: $scope.filter.room_id,
+            room_id: $scope.room.id,
         };
-        var pricelist = null;
-        Roomprices.query(
+        Availability.query(
             f,
             function (res) {
-
+                $scope.scanDays(function(d) {
+                    for (var i in res) {
+                        if (res[i].date != undefined && res[i].date == d.fulldate) {
+                            d.count = res[i].count;
+                            d.stopSale = res[i].availability;
+                        }
+                    }
+                });
             },
             function () {
-                $scope.loading = false;
                 //TODO: Add error message
             }
         );
+
+        //Check prices
+        $http.post('/roomavailability/checkprices/',f)
+            .success(function(data) {
+                $scope.scanDays(function(d) {
+                    if (_.indexOf(data, d.fulldate) != -1) {
+                        d.price = true;
+                    }
+                });
+            })
+            .error(function (data, status, headers, config) {
+                //TODO: Add error message
+            });
+    }
+
+    $scope.save = function () {
+        if (!$scope.countValidate()) return;
+        f = {
+            startDate: $scope.startDate.format('YYYY-MM-DD'),
+            endDate: $scope.endDate != null ? $scope.endDate.format('YYYY-MM-DD') : $scope.startDate.format('YYYY-MM-DD'),
+            room_id: $scope.room.id,
+            count: $scope.count,
+        };
+        $http.post('/roomavailability/updategroup/',f)
+            .success(function(data) {
+                $scope.scanDays(function(d) {
+                    if (_.indexOf(data, d.fulldate) != -1) {
+                        d.count = $scope.count;
+                    }
+                });
+                $scope.cancelModal();
+            })
+            .error(function (data, status, headers, config) {
+                //TODO: Add error message
+            });
+    }
+
+    $scope.stopSale = function (stop) {
+        f = {
+            startDate: $scope.startDate.format('YYYY-MM-DD'),
+            endDate: $scope.endDate != null ? $scope.endDate.format('YYYY-MM-DD') : $scope.startDate.format('YYYY-MM-DD'),
+            room_id: $scope.room.id,
+            stopSale: stop ? 1 : 0,
+        };
+        $http.post('/roomavailability/updategroup/',f)
+            .success(function(data) {
+                //console.log(data);
+                $scope.scanDays(function(d) {
+                    if (_.indexOf(data, d.fulldate) != -1) {
+                        d.stopSale = stop;
+                    }
+                });
+                $scope.cancelModal();
+            })
+            .error(function (data, status, headers, config) {
+                //TODO: Add error message
+            });
+    }
+
+    $scope.countValidate = function () {
+        var n = parseInt($scope.count);
+        if (n != NaN && n >= 0 && n == $scope.count && n < 1000) {
+            $scope.countInvalid = false;
+            return true;
+        } else {
+            $scope.countInvalid = true;
+            return false;
+        }
     }
 
     $scope.calendars = function() {
@@ -626,14 +701,15 @@ roomsManageControllers.controller('AvailabilityCtrl',
                     if (w == 0 && emptyNumber != -1) {
                         emptyNumber--;
                     }
-                    //console.log(currentDay.format('DD/MM/YYYY')+' - '+month.format('M')+' '+emptyNumber);
                     var active = emptyNumber == -1 && currentDay.format('M') == month.format('M');
                     days[d] = {
                         active: active,
                         date: active ? currentDay.format('D') : '',
                         fulldate: active ? currentDay.format('YYYY-MM-DD') : false,
-                        number: '',
+                        count: '',
+                        stopSale: false,
                         selected: false,
+                        price: false,
                     };
                     var nextDay = currentDay.clone();
                     if (emptyNumber == -1 && nextDay.add(1, 'days').format('M') != month.format('M') && w > 2 && d != 6) {
@@ -661,11 +737,13 @@ roomsManageControllers.controller('AvailabilityCtrl',
     $scope.prevMonth = function () {
         $scope.startMonth.subtract(1,'months');
         $scope.calendars();
+        $scope.getData();
     }
 
     $scope.nextMonth = function () {
         $scope.startMonth.add(1,'months');
         $scope.calendars();
+        $scope.getData();
     }
 
     $scope.chooseDate = function (day) {
@@ -674,8 +752,13 @@ roomsManageControllers.controller('AvailabilityCtrl',
             $scope.startDate = moment(day.fulldate);
             day.selected = true;
         } else {
-            $scope.endDate = moment(day.fulldate);
-            $scope.selectPeriod();
+            var d = moment(day.fulldate);
+            if (d.format('X') < $scope.startDate.format('X')) {
+                return;
+            } else if (d.format('X') > $scope.startDate.format('X')) {
+                $scope.endDate = moment(day.fulldate);
+                $scope.selectPeriod();
+            }
         }
         $('#modal-dialog').css('display','block');
     }
@@ -705,6 +788,8 @@ roomsManageControllers.controller('AvailabilityCtrl',
         $('#modal-dialog').css('display','none');
         $scope.startDate = null;
         $scope.endDate = null;
+        $scope.count = '';
+        $scope.countInvalid = false;
         $scope.scanDays(function (d) {
             var date = moment(d.fulldate);
             d.selected = false;
@@ -714,9 +799,6 @@ roomsManageControllers.controller('AvailabilityCtrl',
     $scope.period = function () {
         $('#modal-dialog').css('display','none');
     }
-
-    moment.locale(LANG);
-    $scope.calendars();
 
     window.s = $scope;
 }]);

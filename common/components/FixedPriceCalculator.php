@@ -39,4 +39,26 @@ class FixedPriceCalculator
 
 		return $result;
 	}
+
+	/**
+	 * Проверяет установлена ли цена на номер
+	 * Возвращает true, если цена установлена, и false, если нет
+	 *
+	 * @param Room  $room   Объект комнаты
+	 * @param array $params Параметры формирования цены
+	 *
+	 * @return boolean|null
+	 */
+	public static function isPriceSet($room, $params) {
+		$date = ArrayHelper::getValue($params, 'date', false);
+
+		$price = RoomPrices::find()
+			->where([
+				'room_id' => $room->id,
+				'date'   => $date,
+			])
+			->one();
+
+		return ($price && $price['price'] > 0);
+	}
 }

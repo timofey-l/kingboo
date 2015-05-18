@@ -1,6 +1,7 @@
 'use strict';
 (function(){
-    var roomsManageApp = angular.module('RoomsManageApp',['ngRoute', 'roomsManageControllers' , 'roomsServices', 'roompricesServices', 'imagesServices']);
+    var roomsManageApp = angular.module('RoomsManageApp',
+        ['ngRoute', 'roomsManageControllers' , 'roomsServices', 'roompricesServices', 'imagesServices', 'availabilityServices']);
 
     roomsManageApp.config(['$routeProvider', function($routeProvider) {
             $routeProvider

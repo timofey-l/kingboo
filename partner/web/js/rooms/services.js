@@ -21,7 +21,7 @@ imagesServices.factory('Image', ['$resource', function($resource){
 }]);
 
 var availabilityServices = angular.module('availabilityServices', ['ngResource']);
-imagesServices.factory('Availability', ['$resource', function($resource){
+availabilityServices.factory('Availability', ['$resource', function($resource){
     return $resource('/roomavailability/:id', null, {
         'update': {method: 'PUT'}
     })

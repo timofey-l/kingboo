@@ -10,10 +10,10 @@
         <a class="btn btn-xs btn-primary" title="{{t('room_table_head_update')}}" href="#/edit/{{room.id}}">
             <i class="fa fa-edit"></i>
         </a>
-        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_photos')}}" ng-click="cancel('#/images/{{room.id}}')">
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_photos')}}" href="#/images/{{room.id}}">
             <i class="fa fa-camera"></i>
         </a>
-        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_money')}}" ng-click="cancel('#/prices/{{room.id}}')">
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_money')}}" href="#/prices/{{room.id}}">
             <i class="fa fa-usd"></i>
         </a>
     </div>
@@ -23,7 +23,7 @@
 <div class="box-body">
     <!-- Room manage block -->
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-xs-6">
             <div class="form-group">
                 <select class="form-control" ng-model="room.id" name="price_type" ng-change="changeRoom()"
                     required ng-options="t.id as t['title_'+LANG] for t in rooms">
@@ -32,10 +32,28 @@
         </div>
     </div><!-- /.Room manage block -->
 
+    <div class="callout callout-info">
+        <h4>{{t('availability_legend')}}</h4>
+        <div class="row">
+        <div class="col-xs-12 col-sm-6 col-lg-3">
+            <div class="ava-legend"><div class="color" style="background-color: #b5bbc8"></div><div class="title">{{t('availability_no_price')}}</div></div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-3">
+            <div class="ava-legend"><div class="color" style="background-color: #ffffff"></div><div class="title">{{t('availability_no_count')}}</div></div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-3">
+            <div class="ava-legend"><div class="color" style="background-color: #f39c12"></div><div class="title">{{t('availability_stop_sale')}}</div></div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-3">
+            <div class="ava-legend"><div class="color" style="background-color: #00a65a"></div><div class="title">{{t('availability_on_sale')}}</div></div>
+        </div>
+        </div>
+    </div>
+
     <!-- Calendar -->
     <div class="row">
-        <div class="col-sm-4" ng-repeat="month in months">
-            <table class="table table-bordered">
+        <div class="col-md-6 col-lg-4" ng-repeat="month in months">
+            <table class="table table-bordered calendar-table">
                 <tr>
                     <td colspan="1" class="month-prev" ng-click="prevMonth()"><i class="fa fa-backward"></i></td>
                     <td colspan="5" class="month">{{month.name}} {{month.year}}</td>
@@ -43,9 +61,11 @@
                 </tr>
                 <tr><td ng-repeat="dayOfWeek in month.daysOfWeek">{{dayOfWeek.name}}</td></tr>
                 <tr ng-repeat="week in month.weeks">
-                    <td ng-repeat="day in week.days" ng-class="{nonactive: !day.active, clicable: day.active, selected: day.selected}" ng-click="chooseDate(day)">
+                    <td ng-repeat="day in week.days" class="fixed"
+                        ng-class="{nonactive: !day.active, clicable: day.active, selected: day.selected, stop: day.stopSale, saling: day.count && !day.stopSale, noprice: day.active && !day.price}" 
+                        ng-click="chooseDate(day)">
                         <div class="ava-date">{{day.date}}</div>
-                        {{day.number}}&nbsp;
+                        {{day.count}}&nbsp;
                     </td>
                 </tr>
             </table>
@@ -58,27 +78,27 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cancelModal()"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">
-                        {{t('Dates')}}:
+                        {{t('availability_dates')}}:
                         {{startDate.format(dateFormat)}} <span ng-show="endDate"> &mdash; {{endDate.format(dateFormat)}}</span>
                     </h4>
                 </div>
                 <div class="modal-body">
-                    <p>
-                        {{t('Set_number')}}: <input type="number" name="roomsNumber" ng-model="roomsNumber" class="form-control">
-                        <div class="form-group">
-                            <div class="checkbox">
-                                <label>
-                                <input name="stopSale" type="checkbox" ng-model="stopSale" />
-                                    {{t('Stop_sale')}}
-                                </label>
-                            </div>
+                        <div class="form-group" ng-class="{'has-error': countInvalid}">
+                            {{t('availability_count')}}
+                            <input type="number" name="count" id="rooms-count" ng-model="count" min="0" class="form-control">
                         </div>
+                    <p ng-show="!endDate">
+                        {{t('availability_select_period')}}<br />
+                        <button type="button" class="btn btn-info" data-dismiss="modal" ng-click="period()">
+                            {{t('availability_period')}}
+                        </button>
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-info pull-left" data-dismiss="modal" ng-click="period()" ng-show="!endDate">{{t('period')}}</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelModal()">{{t('cancel')}}</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-warning pull-left" data-dismiss="modal" ng-click="stopSale(true)">{{t('availability_stop_sale')}}</button>
+                    <button type="button" class="btn btn-success pull-left" data-dismiss="modal" ng-click="stopSale(false)">{{t('availability_start_sale')}}</button>
+                    <button type="button" class="btn btn-primary" ng-click="save()">{{t('availability_save')}}</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelModal()">{{t('availability_cancel')}}</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

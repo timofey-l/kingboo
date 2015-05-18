@@ -35,7 +35,8 @@ class RoomPricesIndexAction extends IndexAction
         //var_dump($modelClass::find()->joinWith('room.hotel')->where($params));
         
         return new ActiveDataProvider([
-            'query' => $query
+            'query' => $query,
+            'pagination' => false,
         ]);
     }
 }
