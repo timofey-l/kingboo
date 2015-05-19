@@ -8,7 +8,6 @@
 		s.type = 'text/javascript';
 		s.src = src;
 		s.onload = s.onreadystatechange = function() {
-			console.log(!this.readyState);
 			if ( !r && (!this.readyState || this.readyState == 'complete') )
 			{
 				r = true;
@@ -74,15 +73,11 @@
 
 		document.write('<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css"><link rel="stylesheet" href="http://partner.booking.local/widget/css/<?= $code ?>"><div id="widget_<?= $code ?>" style="display: none;"></div>');
 		preLoadWidgetLibs(function(){
-			var params = <?= $params ?>;
+			var params = <?= $widget_params ?>;
 			var el = document.getElementById('widget_<?= $code ?>');
-
 			loadWLibs(libsToLoad, function(){
 				initWidget(el, params);
 			});
-			//loadScript('http://partner.booking.local/js/widget/widget.js', function() {
-			//	initWidget(el, params);
-			//});
 		});
 	})();
 

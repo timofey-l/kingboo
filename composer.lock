@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "335b3d66fbcbff6eb55b2b9b0b60f928",
+    "hash": "20c8eef9dbe41235a5dc51d9866b03ae",
     "packages": [
         {
             "name": "bower-asset/admin-lte",
@@ -195,16 +195,16 @@
         },
         {
             "name": "bower-asset/colorbox",
-            "version": "1.6.0",
+            "version": "1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jackmoore/colorbox.git",
-                "reference": "27b45a32377d117b484633af3381691ae461fe82"
+                "reference": "7c13e71cb12bb7291a674ca09f78de0c823aad8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jackmoore/colorbox/zipball/27b45a32377d117b484633af3381691ae461fe82",
-                "reference": "27b45a32377d117b484633af3381691ae461fe82",
+                "url": "https://api.github.com/repos/jackmoore/colorbox/zipball/7c13e71cb12bb7291a674ca09f78de0c823aad8f",
+                "reference": "7c13e71cb12bb7291a674ca09f78de0c823aad8f",
                 "shasum": ""
             },
             "require": {
@@ -276,6 +276,43 @@
                 "javascript",
                 "jquery",
                 "library"
+            ]
+        },
+        {
+            "name": "bower-asset/jquery-minicolors",
+            "version": "2.1.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/claviska/jquery-minicolors.git",
+                "reference": "3bd7753361de137d5de895daa9a8d5aa6dc0ede2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/claviska/jquery-minicolors/zipball/3bd7753361de137d5de895daa9a8d5aa6dc0ede2",
+                "reference": "3bd7753361de137d5de895daa9a8d5aa6dc0ede2",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "./jquery.minicolors.js",
+                    "./jquery.minicolors.css"
+                ],
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "node_modules",
+                    "bower_components",
+                    "test",
+                    "tests"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "jQuery MiniColors Plugin",
+            "keywords": [
+                "colorpicker",
+                "jquery"
             ]
         },
         {
@@ -988,6 +1025,52 @@
                 "mailer"
             ],
             "time": "2015-03-14 06:06:39"
+        },
+        {
+            "name": "tedivm/jshrink",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tedious/JShrink.git",
+                "reference": "7575d9d96f113bc7c1c28ec8231ee086751a9078"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tedious/JShrink/zipball/7575d9d96f113bc7c1c28ec8231ee086751a9078",
+                "reference": "7575d9d96f113bc7c1c28ec8231ee086751a9078",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "0.4.0",
+                "phpunit/phpunit": "4.0.*",
+                "satooshi/php-coveralls": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "JShrink": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Robert Hafner",
+                    "email": "tedivm@tedivm.com"
+                }
+            ],
+            "description": "Javascript Minifier built in PHP",
+            "homepage": "http://github.com/tedious/JShrink",
+            "keywords": [
+                "javascript",
+                "minifier"
+            ],
+            "time": "2014-11-11 03:54:14"
         },
         {
             "name": "yiisoft/yii2",

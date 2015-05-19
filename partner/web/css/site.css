@@ -216,4 +216,14 @@ a.desc:after {
 .ava-legend .title {
     padding-left: 10px;  
     float: left;  
+}}
+
+/* Widget form */
+#paramsPanel .control-label {
+    line-height: 34px;
+    width: 100%;
+    text-align: right;
+    margin: 0;
 }
+
+/* ./Widget form */

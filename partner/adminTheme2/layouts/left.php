@@ -87,6 +87,21 @@ $l = \common\models\Lang::$current->url;
 		    ?>
 	    </ul>
 
+	    <ul class="sidebar-menu">
+		    <li class="header"></li>
+	    </ul>
+
+	    <ul class="sidebar-menu">
+		    <li>
+			    <?= Html::tag('li', Html::a(\Yii::t('partner_widget','Widgets'), ['widgets/index']), [
+				    'class' => $this->context->id == 'widgets' ? "active" : "",
+			    ]) ?>
+		    </li>
+	    </ul>
+
+	    <ul class="sidebar-menu">
+		    <li class="header"></li>
+	    </ul>
         <p>&nbsp;</p>
         <ul class="sidebar-menu">
             <li class="treeview">
