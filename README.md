@@ -1,4 +1,3 @@
-=======================================
 Booking application
 =======================================
 
@@ -11,71 +10,37 @@ Booking application
 2. Virtual Box [Скачать](https://www.virtualbox.org/wiki/Downloads)
 3. Vagrant [Скачать](https://www.vagrantup.com/downloads.html)
 
-Все комманды в Git Bash
 Клонирование репозитория
 
-    git clone git@twebdev.ru:~/booking.git [ПУТЬ ДЛЯ КЛОНИРОВАНИЯ]
-    cd [ПУТЬ ДЛЯ КЛОНИРОВАНИЯ]
+	git clone git@twebdev.ru:~/booking.git [ПУТЬ ДЛЯ КЛОНИРОВАНИЯ]
+	cd [ПУТЬ ДЛЯ КЛОНИРОВАНИЯ]
 
 Создание виртуального окружения Vagrant (продолжительная операция)
 
     vagrant up
 
-Добавить в файл
+Добавить в файл (Windows)
 
-    c:\windows\System32\drivers\etc\hosts 
+	c:\windows\System32\drivers\etc\hosts
+или (Linux)
 
+	/etc/hosts
 строки
 
     192.168.10.10 booking.local
     192.168.10.10 backend.booking.local
     192.168.10.10 partner.booking.local
 
-
-Подключение к виртуальной машине по ssh и переход в рабочий каталог
+Подключение к виртуальной машине
 
     vagrant ssh
-    cd /vagrant
 
+Домены
 
-Установка плагина для composer, необходимого для yii
+- http://booking.local
+- http://backend.booking.local
+- http://partner.booking.local
+	
+phpMyadmin:
 
-    composer global require "fxp/composer-asset-plugin:1.0.0"
-
-
-Обновление зависимостей Composer (потребуется ввод данных аккаунта в GitHub)
-
-    composer update
-
-
-Инициализация приложения
-    
-    php init
-    
-Далее выбираем Development и соглашаемся.
-
-Редактируем файл 
-
-    common/config/main-local.php
-
-    ...
-    'dsn' => 'mysql:host=localhost;dbname=booking',
-    'username' => 'booking',
-    'password' => 'booking',
-    ...
-
-Запускаем миграции
-  
-    php yii migrate/up
-
-
-Добавляем админа
-
-    php yii admin/add-admin
-
-
-
-Готово!
-
-Используя данные админа можно входить в бэкенд.
-http://backend.booking.local
+	http://192.168.10.10/phpmyadmin
