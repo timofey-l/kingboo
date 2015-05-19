@@ -3,7 +3,7 @@
 <?= $c ?> {
 	width: 280px;
 	background: #ffffff;
-	border: 2px solid #cccccc;
+	border: <?= $params['borderWidth']['value'] ?>px solid <?= $params['borderColor']['value'] ?>;
 	border-radius: 10px;
 }
 
@@ -89,6 +89,7 @@
 
 <?= $c ?> .bw__headContainer {
 	position: relative;
+	min-height: 16px;
 }
 
 <?= $c ?> .bw__langFlag {

@@ -61,6 +61,7 @@ var bw_lang_vars = {
     }
 };
 function initWidget(el, config) {
+    console.log(config);
     if (typeof config == 'undefined') {
         config = {lang:{}};
     } else {
@@ -83,7 +84,11 @@ function initWidget(el, config) {
 
     var $title = $('<div class="bw__titleContainer" data-bw-translate="lang_title"></div>');
 
-    var $head = $('<div class="bw__headContainer"></div>').append($title).append($langs);
+    var $head = $('<div class="bw__headContainer"></div>');
+    if (parseInt(config.showTitle) == 1) {
+        $head.append($title);
+    }
+    $head.append($langs);
 
     var $dateFrom = $('<input readonly class="bw__date_input" type="text"/>');
     var $dateFromH = $('<input name="dateFrom" type="hidden">');

@@ -40,7 +40,7 @@ Booking application
 
 Установка плагина для composer, необходимого для yii
 
-    composer global require "fxp/composer-asset-plugin:1.0.0
+    composer global require "fxp/composer-asset-plugin:1.0.0"
 
 
 Обновление зависимостей Composer (потребуется ввод данных аккаунта в GitHub)

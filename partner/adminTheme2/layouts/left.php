@@ -41,6 +41,21 @@ $l = \common\models\Lang::$current->url;
 		    <?php endforeach; ?>
 	    </ul>
 
+	    <ul class="sidebar-menu">
+		    <li class="header"></li>
+	    </ul>
+
+	    <ul class="sidebar-menu">
+		    <li>
+			    <?= Html::tag('li', Html::a(\Yii::t('partner_widget','Widgets'), ['widgets/index']), [
+				    'class' => $this->context->id == 'widgets' ? "active" : "",
+			    ]) ?>
+		    </li>
+	    </ul>
+
+	    <ul class="sidebar-menu">
+		    <li class="header"></li>
+	    </ul>
         <ul class="sidebar-menu">
             <li class="treeview">
                 <a href="#">

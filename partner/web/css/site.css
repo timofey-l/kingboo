@@ -156,3 +156,13 @@ a.desc:after {
 .img-del {
     cursor: pointer;
 }
+
+/* Widget form */
+#paramsPanel .control-label {
+    line-height: 34px;
+    width: 100%;
+    text-align: right;
+    margin: 0;
+}
+
+/* ./Widget form */
