@@ -100,7 +100,7 @@ class RoomavailabilityController extends ActiveController
         if ($availability) {
             foreach ($availability as $a) {
                 if ($count !== false) $a->count = $count;
-                if ($stopSale !== false) $a->availability = $stopSale;
+                if ($stopSale !== false) $a->stop_sale = $stopSale;
                 if ($a->save()) {
                     $saved[] = $a->date;
                 }
@@ -108,7 +108,7 @@ class RoomavailabilityController extends ActiveController
             }
         }
         
-        if (!$count) {
+        if ($count === false) {
             return $saved;
         }
         
@@ -124,7 +124,7 @@ class RoomavailabilityController extends ActiveController
             $a->date = $date->format('Y-m-d');
             $a->room_id = $room_id;
             if ($count !== false) $a->count = $count;
-            $a->availability = 0;
+            $a->stop_sale = 0;
             if ($a->save()) {
                 $saved[] = $a->date;
             }

@@ -29,9 +29,9 @@ class RoomAvailability extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['date', 'room_id', 'count', 'availability'], 'required'],
+            [['date', 'room_id', 'count', 'stop_sale'], 'required'],
             [['date'], 'safe'],
-            [['room_id', 'count', 'availability'], 'integer']
+            [['room_id', 'count', 'stop_sale'], 'integer']
         ];
     }
 
@@ -45,7 +45,7 @@ class RoomAvailability extends \yii\db\ActiveRecord
             'date' => Yii::t('rooms', 'Date'),
             'room_id' => Yii::t('rooms', 'Room ID'),
             'count' => Yii::t('rooms', 'Count'),
-            'availability' => Yii::t('rooms', 'Availability'),
+            'stop_sale' => Yii::t('rooms', 'Stop sale'),
         ];
     }
 

@@ -556,10 +556,10 @@ roomsManageControllers.controller('AvailabilityCtrl',
                     hotel_id: $rootScope.hotelId
                 },
                 function () {
-                    $scope.loading = false;
+                    //$scope.loading = false;
                 },
                 function () {
-                    $scope.loading = false;
+                    //$scope.loading = false;
                 }
             );
         };
@@ -588,6 +588,7 @@ roomsManageControllers.controller('AvailabilityCtrl',
         });
 
     $scope.getData = function () {
+        $scope.loading = true;
         var endMonth = $scope.startMonth.clone();
         endMonth.add(6,'months');
         endMonth.subtract(1, 'days');
@@ -603,7 +604,7 @@ roomsManageControllers.controller('AvailabilityCtrl',
                     for (var i in res) {
                         if (res[i].date != undefined && res[i].date == d.fulldate) {
                             d.count = res[i].count;
-                            d.stopSale = res[i].availability;
+                            d.stopSale = res[i].stop_sale;
                         }
                     }
                 });
@@ -621,8 +622,10 @@ roomsManageControllers.controller('AvailabilityCtrl',
                         d.price = true;
                     }
                 });
+                $scope.loading = false;
             })
             .error(function (data, status, headers, config) {
+                $scope.loading = false;
                 //TODO: Add error message
             });
     }

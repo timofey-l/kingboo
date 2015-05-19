@@ -62,7 +62,7 @@
                 <tr><td ng-repeat="dayOfWeek in month.daysOfWeek">{{dayOfWeek.name}}</td></tr>
                 <tr ng-repeat="week in month.weeks">
                     <td ng-repeat="day in week.days" class="fixed"
-                        ng-class="{nonactive: !day.active, clicable: day.active, selected: day.selected, stop: day.stopSale, saling: day.count && !day.stopSale, noprice: day.active && !day.price}" 
+                        ng-class="{nonactive: !day.active, clicable: day.active, selected: day.selected, stop: day.stopSale, saling: day.count !== '' && !day.stopSale, noprice: day.active && !day.price}" 
                         ng-click="chooseDate(day)">
                         <div class="ava-date">{{day.date}}</div>
                         {{day.count}}&nbsp;
