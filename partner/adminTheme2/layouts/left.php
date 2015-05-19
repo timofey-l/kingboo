@@ -81,7 +81,7 @@ $l = \common\models\Lang::$current->url;
 
             <?php 
                     } else {
-                        echo Html::tag('li', Html::a($hotel->{'title_' . $l}, ['hotel/view', 'id' => $hotel->id]));
+                        echo Html::tag('li', Html::a($hotel->name, ['hotel/view', 'id' => $hotel->id]));
                     }
                 }
 		    ?>
