@@ -27,9 +27,9 @@ $this->registerJsFile('/js/search.js', ['depends' => [\frontend\assets\GalleryAs
 $this->registerJsFile('/js/search-app.js', ['depends' => [\partner\assets\AngularAsset::className()]]);
 
 // Плагин datepicker
-$this->registerJsFile($directoryBower . '/admin-lte/js/plugins/datepicker/bootstrap-datepicker.js', ['depends' => [\yii\bootstrap\BootstrapAsset::className(), \yii\bootstrap\BootstrapPluginAsset::className()]]);
-$this->registerJsFile($directoryBower . '/admin-lte/js/plugins/datepicker/locales/bootstrap-datepicker.' . $l . '.js', ['depends' => [\yii\bootstrap\BootstrapAsset::className(), \yii\bootstrap\BootstrapPluginAsset::className()]]);
-$this->registerCssFile($directoryBower . '/admin-lte/css/datepicker/datepicker3.css', ['depends' => [\frontend\assets\GalleryAsset::className()]]);
+$this->registerJsFile($directoryBower . '/admin-lte/plugins/datepicker/bootstrap-datepicker.js', ['depends' => [\yii\bootstrap\BootstrapAsset::className(), \yii\bootstrap\BootstrapPluginAsset::className()]]);
+$this->registerJsFile($directoryBower . '/admin-lte/plugins/datepicker/locales/bootstrap-datepicker.' . $l . '.js', ['depends' => [\yii\bootstrap\BootstrapAsset::className(), \yii\bootstrap\BootstrapPluginAsset::className()]]);
+$this->registerCssFile($directoryBower . '/admin-lte/plugins/datepicker/datepicker3.css', ['depends' => [\frontend\assets\GalleryAsset::className()]]);
 ?>
 
 <script>

@@ -24,7 +24,7 @@ class BookingHelper
 	 *
 	 * @param array   $params Параметры для расчета цены
 	 *
-	 * @return int Сумма
+	 * @return int|null Сумма
 	 * @throws \Exception
 	 */
 	public static function calcRoomPrice($params)
@@ -58,7 +58,7 @@ class BookingHelper
 			$sum += $info['price'];
 		}
 
-		return $sum > 0 ? $sum : false;
+		return $sum > 0 ? $sum : null;
 	}
 
 	/**
