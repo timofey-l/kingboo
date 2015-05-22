@@ -10,6 +10,56 @@ use \common\models\Currency;
 
 $langs = \common\models\Lang::sortedLangList();   
 
+\Yii::$app->assetManager->publish('@bower/admin-lte/plugins/iCheck');
+\Yii::$app->assetManager->publish('@bower/admin-lte/plugins/bootstrap-slider');
+
+$dir_iCheck  = \Yii::$app->assetManager->getPublishedUrl('@bower/admin-lte/plugins/iCheck');
+$dir_slider  = \Yii::$app->assetManager->getPublishedUrl('@bower/admin-lte/plugins/bootstrap-slider');
+
+// подключаем плагины iCheck и slider
+$this->registerJsFile($dir_iCheck . '/icheck.min.js', ['depends' => \yii\web\JqueryAsset::className()]);
+$this->registerCssFile($dir_iCheck . '/minimal/blue.css');
+$this->registerJsFile($dir_slider . '/bootstrap-slider.js', ['depends' => \yii\web\JqueryAsset::className()]);
+$this->registerCssFile($dir_slider . '/slider.css', ['depends' => \yii\web\JqueryAsset::className()]);
+
+
+$this->registerJs("
+$('.icheck').iCheck({
+ checkboxClass: 'icheckbox_minimal-blue'
+}).on('ifChecked', function(event){
+	$('.partial_pay_container').removeClass('hide');
+    $('.partialSlider').slider('enable');
+}).on('ifUnchecked', function(event){
+    $('.partial_pay_container').addClass('hide');
+    $('.partialSlider').slider('disable');
+});
+
+$('.partialSlider').slider({
+	enabled: " . ($model->allow_partial_pay ? "true" : "false") . ",
+	formatter: function(value) {
+		$('#partial_pay_value').html(value);
+		return value;
+	}
+});
+");
+
+$this->registerCss('
+.slider .slider-selection {
+	background: #3c8dbc;
+}
+.tooltip.top {
+  padding: 5px 0;
+  margin-top: -27px;
+}
+.partial_pay_value {
+	font-weight: bold;
+	font-size: 110%;
+}
+
+.iCheck-helper {
+	margin-right: 7px;
+}
+')
 ?>
 
 <div class="hotel-form">
@@ -32,6 +82,32 @@ $langs = \common\models\Lang::sortedLangList();
                     <?= $form->field($model, 'category')->dropDownList([1,2,3,4,5]) ?>
 
                     <?= $form->field($model, 'timezone')->dropDownList(array_combine(DateTimeZone::listIdentifiers(),DateTimeZone::listIdentifiers())) ?>
+
+	                <div class="form-group">
+		                <label>
+		                    <?= Html::activeCheckbox($model, 'allow_partial_pay', [
+			                    'class' => 'icheck',
+		                    ]) ?>
+		                    &nbsp;
+
+		                </label>
+		                <div class="partial_pay_container <?= $model->allow_partial_pay ? "" : "hide" ?>">
+							<div class="partial_pay_value">
+								<span id="partial_pay_value">
+									<?= $model->partial_pay_percent ?>
+								</span>%
+							</div>
+			                <?= Html::activeInput('text', $model, 'partial_pay_percent', [
+				                'class' => 'partialSlider',
+				                'data-slider-value' => $model->partial_pay_percent,
+				                'data-slider-id' => 'partial_pay_percent_slider',
+				                'data-slider-min' => \common\models\Hotel::MIN_PART_PAY,
+				                'data-slider-max' => 100,
+				                'data-slider-step' => 1,
+			                ]) ?>
+		                </div>
+	                </div>
+
                 </div>
             </div>
         </div>
