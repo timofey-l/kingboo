@@ -163,7 +163,7 @@ class HotelController extends \yii\web\Controller
 			}
 			if ($price === null) continue;
 
-			$item = $room->toArray();
+			$item = $room->toArray([], ['facilities']);
 			$item['images'] = [];
 			foreach ($room->images as $image) {
 				$im = [];

@@ -193,6 +193,11 @@ $this->registerCssFile($directoryBower . '/admin-lte/plugins/datepicker/datepick
             <div class="row">
                 <div class="description">{{r['description_' + LANG]}}</div>
             </div>
+		        <div class="room-facilities row">
+			        <span class="label label-default" ng-repeat="f in r.facilities">
+				        {{f['name_' + LANG]}}
+			        </span>
+		        </div>
         </div>
         <div class="col-md-2 price">
             {{ r.price }}&nbsp;{{ r.sum_currency.code }}

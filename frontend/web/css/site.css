@@ -232,6 +232,11 @@ ul.hotel-facilities  li:before {
     display: inline-block;
 }
 
+.room-facilities .label {
+    display: inline-block;
+    margin-right: 5px;
+}
+
 
 .form-group.required label:before {
     content: "* ";

@@ -16,21 +16,22 @@ class OrderForm extends Model
 	public $items;
 
 	// контактная информация
-	public $email;
-	public $phone;
-	public $name;
-	public $surname;
+	public $contact_email;
+	public $contact_phone;
+	public $contact_name;
+	public $contact_surname;
+	public $contact_address;
 
 	/**
 	 * @inheritdoc
 	 */
 	public function rules() {
 		return [
-			[['roomId', 'dateFrom', 'dateTo', 'adults', 'children', 'kids', 'name', 'surname', 'email'], 'required'],
+			[['roomId', 'dateFrom', 'dateTo', 'adults', 'children', 'kids', 'contact_name', 'contact_surname', 'contact_email'], 'required'],
 			[['roomId', 'adults', 'children', 'kids'], 'number'],
 			[['dateFrom', 'dateTo'], 'string', 'max' => 10, 'min' => 10],
-			[['name', 'surname'], 'string'],
-			['email', 'email'],
+			[['contact_name', 'contact_surname'], 'string'],
+			['contact_email', 'email'],
 		];
 	}
 

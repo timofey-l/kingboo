@@ -23,7 +23,7 @@ return [
     'Guest surname' => 'Фамилия гостя',
     'Room booking' => 'Бронирование номера',
     '{n, plural, =1{one guest} other{# guests}}' => '{n, plural, =1{один гость} one{# гость} few{# гостя} many{# гостей} other{# гостей}}',
-    '{n, plural, =1{one night} other{# nights}}' => '{n, plural, =1{одна ночь} one{# ночь} few{# ночи} many{# ночей} other{# ночей}}',
+    '{n, plural, =1{one night} few{# nights} many{# nights} other{# nights}}' => '{n, plural, =1{одна ночь} one{# ночь} few{# ночи} many{# ночей} other{# ночей}}',
     '{n, plural, =1{photo} other{# photos}}' => '{n, plural, =1{фото} other{# фото}}',
     'Age' => 'Возраст',
     'Enter name' => 'Введите имя',
@@ -44,4 +44,6 @@ return [
     'Phone number' => 'Номер телефона',
     'Search' => 'Искать',
     'Surname' => 'Фамилия',
+	'Nights: #' => 'Ночей: {n}',
+	'Guests: #' => 'Гостей: {n}',
 ];

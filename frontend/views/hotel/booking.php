@@ -100,11 +100,11 @@ $this->title = \Yii::t('frontend', 'Room booking');
 							class=""><?= (new DateTime($bookingParams->dateTo))->format('d/m/Y') ?></span>
 					</span>
 					<br/>
-					<?= \Yii::t('frontend', '{n, plural, =1{one night} other{# nights}}', [
-						'n' => (new DateTime($bookingParams->dateTo))->diff(new DateTime($bookingParams->dateFrom))->days
+					<?= \Yii::t('frontend', 'Nights: #', [
+						'n' => (int)(new DateTime($bookingParams->dateTo))->diff(new DateTime($bookingParams->dateFrom))->days
 					]) ?>
 					<br/>
-					<?= \Yii::t('frontend', '{n, plural, =1{one guest} other{# guests}}', [
+					<?= \Yii::t('frontend', 'Guests: #', [
 						'n' => $bookingParams->adults + $bookingParams->children + $bookingParams->kids
 					]) ?>
 					<br/>
