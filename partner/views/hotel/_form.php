@@ -194,6 +194,14 @@ $this->registerCss('
 
                 </div>
             </div>
+	        <div class="box box-default">
+	        	<div class="box-header with-border">
+	        		<h3 class="box-title"><?= \Yii::t('hotels','Payment types') ?></h3>
+	        	</div>
+	        	<div class="box-body">
+
+	        	</div>
+	        </div>
         </div>
     </div>
 

@@ -3,14 +3,14 @@
 /* @var $room \common\models\Room */
 /* @var $hotel \common\models\Hotel */
 /* @var $bookingParams \frontend\models\BookingParams */
-/* @var $orderForm \frontend\models\OrderForm */
+/* @var $orderForm \common\models\Order */
 
 $l = \common\models\Lang::$current->url;
 $bower = \Yii::$app->assetManager->getPublishedUrl('@bower');
 
 //Подключаем colorbox
 $this->registerJsFile($bower . '/colorbox/jquery.colorbox-min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
-$this->registerJsFile($bower . '/colorbox/i18n/jquery.colorbox-' . $l . '.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJsFile($bower . '/colorbox/i18n/jquery.colorbox-' . ($l == 'en' ? 'uk' : $l) . '.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 $this->registerCssFile($bower . '/colorbox/example1/colorbox.css', [], 'colorbox');
 
 // bootstrap transition.js plugin
@@ -87,6 +87,7 @@ $this->title = \Yii::t('frontend', 'Room booking');
 <?php $form = \yii\bootstrap\ActiveForm::begin() ?>
 	<?= $form->field($orderForm, 'dateFrom', ['template' => '{input}'])->hiddenInput() ?>
 	<?= $form->field($orderForm, 'dateTo', ['template' => '{input}'])->hiddenInput() ?>
+	<?= $form->field($orderForm, 'hotel_id', ['template' => '{input}'])->hiddenInput() ?>
 	<div class="row">
 		<div class="col-sm-4">
 			<!--срок проживания-->
@@ -100,11 +101,11 @@ $this->title = \Yii::t('frontend', 'Room booking');
 							class=""><?= (new DateTime($bookingParams->dateTo))->format('d/m/Y') ?></span>
 					</span>
 					<br/>
-					<?= \Yii::t('frontend', 'Nights: #', [
+					<?= \Yii::t('frontend', 'Nights: {n}', [
 						'n' => (int)(new DateTime($bookingParams->dateTo))->diff(new DateTime($bookingParams->dateFrom))->days
 					]) ?>
 					<br/>
-					<?= \Yii::t('frontend', 'Guests: #', [
+					<?= \Yii::t('frontend', 'Guests: {n}', [
 						'n' => $bookingParams->adults + $bookingParams->children + $bookingParams->kids
 					]) ?>
 					<br/>
@@ -123,7 +124,7 @@ $this->title = \Yii::t('frontend', 'Room booking');
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-sm-7">
-							<?= $form->field($orderForm, 'email', [
+							<?= $form->field($orderForm, 'contact_email', [
 								'inputOptions' => [
 									'type'           => 'email',
 									'data-toggle'    => "tooltip",
@@ -132,15 +133,21 @@ $this->title = \Yii::t('frontend', 'Room booking');
 								]]) ?>
 						</div>
 						<div class="col-sm-5">
-							<?= $form->field($orderForm, 'phone') ?>
+							<?= $form->field($orderForm, 'contact_phone') ?>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-sm-6">
-							<?= $form->field($orderForm, 'name') ?>
+						<div class="col-sm-2">
+							<?= $form->field($orderForm, 'contact_address')
+								->dropDownList(
+									\yii\helpers\ArrayHelper::merge(['' => ''], \common\components\ListAddressType::getSelectOptions())
+								) ?>
 						</div>
-						<div class="col-sm-6">
-							<?= $form->field($orderForm, 'surname') ?>
+						<div class="col-sm-5">
+							<?= $form->field($orderForm, 'contact_name') ?>
+						</div>
+						<div class="col-sm-5">
+							<?= $form->field($orderForm, 'contact_surname') ?>
 						</div>
 					</div>
 				</div>
@@ -148,72 +155,97 @@ $this->title = \Yii::t('frontend', 'Room booking');
 		</div>
 	</div>
 
-<?php foreach ($orderForm->items as $index => $item): ?>
+<?php foreach ($items as $index => $item): $item_room = \common\models\Room::findOne($item['room_id']); ?>
 	<div class="panel panel-primary panel-room">
 		<div class="panel-heading">
-			<?= $item['room']->{'title_' . $l} ?>
+			<?= $item_room->{'title_' . $l} ?>
 			<a class="pull-right visible-xs"
-			   onclick="$('.item.active>a[rel=room-images<?= $item['room']->id ?>]').click();">
+			   onclick="$('.item.active>a[rel=room-images<?= $item_room->id ?>]').click();">
 				<span class="glyphicon glyphicon glyphicon-camera" aria-hidden="true"></span>
-				<?= \Yii::t('frontend', '{n, plural, =1{photo} other{# photos}}', ['n' => count($item->room->images)]) ?>
+				<?= \Yii::t('frontend', '{n, plural, =1{photo} other{# photos}}', ['n' => count($item_room->images)]) ?>
 			</a>
 		</div>
 		<div class="panel-body">
 			<div class="row">
 				<div class="col-sm-3">
-					<div id="room-images-carousel<?= $item->room->id ?>" class="carousel slide hidden-xs"
+					<div id="room-images-carousel<?= $item_room->id ?>" class="carousel slide hidden-xs"
 					     data-ride="carousel">
 						<!-- Wrapper for slides -->
 						<div class="carousel-inner" role="listbox">
-							<?php foreach ($item->room->images as $i => $image): ?>
+							<?php foreach ($item_room->images as $i => $image): ?>
 								<div class="item <?= $i == 0 ? "active" : '' ?>">
 									<img src="<?= $image->getThumbUploadUrl('image', 'preview') ?>" alt="">
 									<a class="colorbox" href="<?= $image->getUploadUrl('image') ?>"
-									   rel="room-images<?= $item->room->id ?>"
+									   rel="room-images<?= $item_room->id ?>"
 									   style="display:none;"></a>
 								</div>
 							<?php endforeach; ?>
 						</div>
 						<!-- Controls -->
-						<a class="left carousel-control" href="#room-images-carousel<?= $item->room->id ?>"
+						<a class="left carousel-control" href="#room-images-carousel<?= $item_room->id ?>"
 						   role="button" data-slide="prev">
 							<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 							<span class="sr-only">Previous</span>
 						</a>
-						<a class="right carousel-control" href="#room-images-carousel<?= $item->room->id ?>"
+						<a class="right carousel-control" href="#room-images-carousel<?= $item_room->id ?>"
 						   role="button" data-slide="next">
 							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 							<span class="sr-only">Next</span>
 						</a>
 					</div>
 					<a class="btn btn-link pull-right hidden-xs"
-					   onclick="$('.item.active>a[rel=room-images<?= $item['room']->id ?>]').click();">
+					   onclick="$('.item.active>a[rel=room-images<?= $item_room->id ?>]').click();">
 						<span class="glyphicon glyphicon glyphicon-camera" aria-hidden="true"></span>
-						<?= \Yii::t('frontend', '{n, plural, =1{photo} other{# photos}}', ['n' => count($item->room->images)]) ?>
+						<?= \Yii::t('frontend', '{n, plural, =1{photo} other{# photos}}', ['n' => count($item_room->images)]) ?>
 					</a>
 				</div>
 				<div class="col-sm-9">
 					<div class="room-description">
-						<?= $item['room']->{'description_' . $l} ?>
+						<?= $item_room->{'description_' . $l} ?>
 					</div>
-					<?= $form->field($item, 'roomId', [
+					<?= $form->field($item, 'room_id', [
 						'inputOptions' => [
-							'name' => 'OrderForm[items]['.$index.'][roomId]'
+							'name' => 'items['.$index.'][OrderItem][room_id]'
+						],
+						'template' => '{input}',
+					])->hiddenInput() ?>
+					<?= $form->field($item, 'adults', [
+						'inputOptions' => [
+							'name' => 'items['.$index.'][OrderItem][adults]'
+						],
+						'template' => '{input}',
+					])->hiddenInput() ?>
+					<?= $form->field($item, 'children', [
+						'inputOptions' => [
+							'name' => 'items['.$index.'][OrderItem][children]'
+						],
+						'template' => '{input}',
+					])->hiddenInput() ?>
+					<?= $form->field($item, 'kids', [
+						'inputOptions' => [
+							'name' => 'items['.$index.'][OrderItem][kids]'
 						],
 						'template' => '{input}',
 					])->hiddenInput() ?>
 					<div class="row room-form">
-						<div class="col-sm-6">
-							<?= $form->field($item, 'name', [
+						<div class="col-sm-2">
+							<?= $form->field($item, 'guest_address', [
 								'inputOptions' => [
-									'name' => 'OrderForm[items]['.$index.'][name]'
+									'name' => 'items['.$index.'][OrderItem][guest_address]',
+								]
+							])->dropDownList(\yii\helpers\ArrayHelper::merge(['' => ''], \common\components\ListAddressType::getSelectOptions()))?>
+						</div>
+						<div class="col-sm-5">
+							<?= $form->field($item, 'guest_name', [
+								'inputOptions' => [
+									'name' => 'items['.$index.'][OrderItem][guest_name]'
 								]
 							]) ?>
 						</div>
-						<div class="col-sm-6">
-							<?= $form->field($item, 'surname', [
+						<div class="col-sm-5">
+							<?= $form->field($item, 'guest_surname', [
 								'inputOptions' => [
-									'name' => 'OrderForm[items]['.$index.'][surname]'
+									'name' => 'items['.$index.'][OrderItem][guest_surname]'
 								]
 							]) ?>
 						</div>
@@ -230,6 +262,13 @@ $this->title = \Yii::t('frontend', 'Room booking');
 		<?= \yii\helpers\Html::submitButton(\Yii::t('frontend', 'Go to payment'), [
 			'class' => 'btn btn-primary btn-lg pull-right'
 		]) ?>
+		<?php if ($hotel->allow_partial_pay)
+			echo $form->field($orderForm, 'partial_pay', ['options' => ['class' => 'pull-right partial-pay']])
+			->checkbox()
+			->label(\Yii::t('frontend', 'I want to pay {p}% ({s}) now and the rest at check-in.', [
+				'p' => $orderForm->partial_pay_percent,
+				's' => number_format($orderForm->sum * (1 - $orderForm->partial_pay_percent / 100), 2, '.', ' ') . '&nbsp;' . $hotel->currency->code
+			])) ?>
 	</div>
 </div>
 

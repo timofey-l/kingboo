@@ -4,13 +4,14 @@ namespace frontend\controllers;
 
 use common\components\BookingHelper;
 use common\models\Hotel;
+use common\models\Lang;
+use common\models\Order;
+use common\models\OrderItem;
 use common\models\Room;
 use DateTime;
 use frontend\models\BookingParams;
-use frontend\models\OrderForm;
-use frontend\models\OrderItemForm;
-use yii\filters\PageCache;
 use yii\filters\VerbFilter;
+use yii\helpers\Json;
 use yii\web\BadRequestHttpException;
 use yii\web\Response;
 
@@ -23,7 +24,7 @@ class HotelController extends \yii\web\Controller
 			'verb' => [
 				'class'   => VerbFilter::className(),
 				'actions' => [
-					['booking'] => ['post']
+					['booking', 'search', 'get-form'] => ['post'],
 				]
 			],
 		];
@@ -36,48 +37,117 @@ class HotelController extends \yii\web\Controller
 //		return parent::beforeAction($action);
 //	}
 
+	/**
+	 * Страница оформления заказа
+	 * (переход со страницы поиска)
+	 *
+	 * @return string
+	 * @throws BadRequestHttpException
+	 * @throws \Exception
+	 */
 	public function actionBooking()
 	{
-		$bookingParams = new BookingParams();
-		if (!$bookingParams->load(\Yii::$app->request->post()) || !$bookingParams->validate()) {
-			throw new BadRequestHttpException('Wrong parameters passed');
-		};
+		$orderForm = new Order();
+		if ($orderForm->load(\Yii::$app->request->post())) {
 
-		$room = Room::findOne($bookingParams->roomId);
-		/** @var Hotel $hotel */
-		$hotel = $room->hotel;
+			$orderItem = new OrderItem();
+			$orderItem->load(\Yii::$app->request->post('items')[0]);
 
-		$orderForm = new OrderForm();
-		if ($orderForm->load(\Yii::$app->request->post()) && $orderForm->validate()) {
-			// сохраняем заказ
-			return $this->render('booking_success',[
-				[
-					'room'          => $room,
-					'hotel'         => $hotel,
-					'bookingParams' => $bookingParams,
-					'orderForm'     => $orderForm,
-					'price'         => BookingHelper::calcRoomPrice($bookingParams->toArray()),
-				]
+			/** @var Hotel $hotel */
+			$hotel = Hotel::findOne($orderForm->hotel_id);
+
+			if (!$hotel) {
+				throw new BadRequestHttpException('Wrong hotel id');
+			}
+
+			$orderForm->status = 1;
+			$orderForm->sum = BookingHelper::calcRoomPrice([
+				'adults'   => (int)$orderItem->adults,
+				'children' => (int)$orderItem->children,
+				'kids'     => (int)$orderItem->kids,
+				'roomId'   => (int)$orderItem->room_id,
+				'dateFrom' => $orderForm->dateFrom,
+				'dateTo'   => $orderForm->dateTo,
+			]);
+
+			$orderForm->number = md5(\Yii::$app->getSecurity()->generateRandomString(15) . $orderForm->contact_email);
+
+			$orderForm->lang = Lang::$current->url;
+
+			if ($orderForm->partial_pay && $hotel->allow_partial_pay) {
+				$orderForm->partial_pay_percent = $hotel->partial_pay_percent;
+				$orderForm->pay_sum = (float)(round($orderForm->sum * (1 - $orderForm->partial_pay_percent / 100) * 100) / 100);
+			} else {
+				$orderForm->pay_sum = $orderForm->sum;
+				$orderForm->partial_pay_percent = 100;
+			}
+
+			if ($orderForm->save()) {
+				$orderItem->order_id = $orderForm->id;
+				$orderItem->sum = $orderForm->sum;
+				if ($orderItem->save()) {
+					return $this->render('pay_page', [
+						'hotel' => $hotel,
+						'order' => $orderForm,
+						'item'  => $orderItem,
+					]);
+				}
+			}
+
+			return $this->render('booking_error', [
+				'orderForm' => $orderForm,
+				'orderItem' => $orderItem,
 			]);
 		} else {
+			$bookingParams = new BookingParams();
+
+			if (!$bookingParams->load(\Yii::$app->request->post()) || !$bookingParams->validate()) {
+				throw new BadRequestHttpException('Wrong parameters passed');
+			};
+
+			$room = Room::findOne($bookingParams->roomId);
+			/** @var Hotel $hotel */
+			$hotel = Hotel::findOne($bookingParams->hotelId);
+
+
 			$orderForm->dateFrom = $bookingParams->dateFrom;
 			$orderForm->dateTo = $bookingParams->dateTo;
-			$orderForm->items[] = new OrderItemForm([
-				'room' => $room,
-				'roomId' => $room->id,
-				'name' => '',
-				'surname' => '',
+			$orderForm->sum = BookingHelper::calcRoomPrice($bookingParams->toArray());
+			$orderForm->partial_pay_percent = $hotel->partial_pay_percent;
+			$orderForm->partial_pay = false; // по умолчанию полная оплата
+			$orderForm->hotel_id = $bookingParams->hotelId;
+
+			$items = [];
+			$items[] = new OrderItem([
+//				'room' => $room,
+				'room_id'       => $room->id,
+				'sum'           => BookingHelper::calcRoomPrice($bookingParams),
+				'adults'        => $bookingParams->adults,
+				'children'      => $bookingParams->children,
+				'kids'          => $bookingParams->kids,
+				'guest_name'    => '',
+				'guest_surname' => '',
+				'guest_address' => '',
 			]);
+
 			return $this->render('booking', [
 				'room'          => $room,
 				'hotel'         => $hotel,
 				'bookingParams' => $bookingParams,
 				'orderForm'     => $orderForm,
+				'items'         => $items,
 				'price'         => BookingHelper::calcRoomPrice($bookingParams->toArray()),
 			]);
 		}
 	}
 
+	/**
+	 * Страница поиска, куда клиенты приходят с виджета
+	 *
+	 * @param $name
+	 * @return string
+	 * @throws \yii\web\HttpException
+	 */
 	public function actionIndex($name)
 	{
 		$model = Hotel::findOne(['name' => $name]);
@@ -102,24 +172,30 @@ class HotelController extends \yii\web\Controller
 			$dateTo->add(new \DateInterval('P7D'));
 		}
 
-		$adults = (int) $req->get('adults', 1);
-		$children = (int) $req->get('children', 0);
-		$kids = (int) $req->get('kids', 0);
+		$adults = (int)$req->get('adults', 1);
+		$children = (int)$req->get('children', 0);
+		$kids = (int)$req->get('kids', 0);
 
 		$bookParams = new BookingParams([
 			'dateFrom' => $dateFrom->format('Y-m-d'),
-			'dateTo' => $dateTo->format('Y-m-d'),
-			'adults' => in_array($adults, range(1, 10)) ? $adults : 1,
+			'dateTo'   => $dateTo->format('Y-m-d'),
+			'adults'   => in_array($adults, range(1, 10)) ? $adults : 1,
 			'children' => in_array($children, range(1, 5)) ? $children : 0,
-			'kids' => in_array($kids, range(1, 5)) ? $kids : 0,
+			'kids'     => in_array($kids, range(1, 5)) ? $kids : 0,
 		]);
 
 		return $this->render('index', [
-			'model' => $model,
+			'model'      => $model,
 			'bookParams' => $bookParams,
 		]);
 	}
 
+	/**
+	 * Поиск и выдача подходящих номеров
+	 *
+	 * @return array
+	 * @throws BadRequestHttpException
+	 */
 	public function actionSearch()
 	{
 		// вывод в формате JSON
@@ -183,4 +259,53 @@ class HotelController extends \yii\web\Controller
 
 	}
 
+	public function actionTest()
+	{
+		$order = Order::findOne(5);
+
+		return $this->render('pay_page', [
+			'order' => $order,
+		]);
+	}
+
+	/**
+	 * Получение формы для оплаты, что бы перейти по ней с браузера пользователя
+	 * Вызов идет с формы на странице оплаты.
+	 * CSRF токен берется из мета тега этой страницы
+	 */
+	public function actionGetForm()
+	{
+		$req = \Yii::$app->request;
+		if (!$req->validateCsrfToken($req->post('_csrf'))) {
+			throw new BadRequestHttpException('CSRF validation failed');
+		}
+
+		$order_number = $req->post('order_number', null);
+		$pay_type = $req->post('pay_type', null);
+
+		if (!$order_number || !$pay_type) {
+			throw new BadRequestHttpException('Wrong parameters');
+		}
+
+		/** @var Order $order */
+		$order = Order::findOne(['number' => $order_number]);
+		if (!$order) {
+			throw new BadRequestHttpException('Incorrect order_id');
+		}
+
+		$partner = $order->hotel->partner;
+
+		if ($order->status == Order::OS_WAITING_PAY) {
+			$this->layout = false;
+			return base64_encode($this->render('_pay_form', [
+				'shopId' => $partner->shop_id,
+				'scid' => $partner->scid,
+				'sum' => $order->pay_sum,
+				'customerNumber' => md5($order->contact_email),
+				'orderNumber' => $order->number,
+			]));
+		} else {
+			throw new BadRequestHttpException('Wrong order status');
+		}
+	}
 }
