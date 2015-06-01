@@ -32,6 +32,7 @@ apt-get -y install apache2
 service apache2 stop
 a2enmod rewrite
 apt-get -y install php5 php5-curl php5-mysql php5-sqlite php5-xdebug php5-intl php5-apcu php5-readline php5-mcrypt
+php5enmod mcrypt
 sed -i "s/display_startup_errors = Off/display_startup_errors = On/g" ${php_config_file}
 sed -i "s/display_errors = Off/display_errors = On/g" ${php_config_file}
 cp /vagrant/vagrant_setup/vhosts/* /etc/apache2/sites-available/
@@ -71,8 +72,8 @@ composer update
 php ./init --env=Development --overwrite=All
 sed -i -e 's/\x27\x27/\x27root\x27/g' /vagrant/common/config/main-local.php
 sed -i -e 's/dbname=yii2advanced/dbname=booking/g' /vagrant/common/config/main-local.php
-./yii migrate/up --interactive=0
-./yii admin/generate-loceanica
+php ./yii migrate/up --interactive=0
+php ./yii admin/generate-loceanica
 
 cd /vagrant/frontend/web/
 ln -s '../../common/uploads' 'uploads'
