@@ -12,7 +12,7 @@ $this->registerJsFile($directoryBower . '/underscore/underscore-min.js');
 
 //Подключаем colorbox
 $this->registerJsFile($directoryBower . '/colorbox/jquery.colorbox-min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
-$this->registerJsFile($directoryBower . '/colorbox/i18n/jquery.colorbox-' . $l . '.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJsFile($directoryBower . '/colorbox/i18n/jquery.colorbox-' . ($l == 'en' ? 'uk' : $l) . '.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 $this->registerCssFile($directoryBower . '/colorbox/example1/colorbox.css', [], 'colorbox');
 
 // Подключаем библиотеку moment.js

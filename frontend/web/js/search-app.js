@@ -42,8 +42,11 @@
         $scope.goBooking = function(r) {
             var data = _.clone($scope.search);
             data.roomId = r.id;
-
-            goWithPOST('/hotel/booking', data, 'BookingParams');
+            var l = '';
+            if (LANG != 'ru') {
+                l = '/' + LANG;
+            }
+            goWithPOST(l + '/hotel/booking', data, 'BookingParams');
         };
 
         setTimeout(function(){

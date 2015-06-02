@@ -44,6 +44,8 @@ return [
     'Phone number' => 'Номер телефона',
     'Search' => 'Искать',
     'Surname' => 'Фамилия',
-	'Nights: #' => 'Ночей: {n}',
-	'Guests: #' => 'Гостей: {n}',
+	'Nights: {n}' => 'Ночей: {n}',
+	'Guests: {n}' => 'Гостей: {n}',
+    'The rooms that you chose were booked. <br/><br/>To complete the booking you need to pay.<br/><br/>Otherwise, booking will be canceled within {t} hours.'
+    => 'Выбранные Вами номера забронированны. <br/><br/>Для завершения процедуры бронирования необходимо произвести оплату.<br/><br/>В противном случае через {t} часа бронь аннулируется.',
 ];

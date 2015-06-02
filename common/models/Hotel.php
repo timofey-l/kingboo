@@ -144,4 +144,9 @@ class Hotel extends \yii\db\ActiveRecord
 		return $a;
 	}
 
+	public function getPartner()
+	{
+		return $this->hasOne('\partner\models\PartnerUser', ['id' => 'partner_id']);
+	}
+
 }
