@@ -18,6 +18,12 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'password')->passwordInput(['autocomplete' => 'off']) ?>
 
+	<?= $form->field($model, 'shopId')->textInput(['autocomplete' => 'off']) ?>
+
+	<?= $form->field($model, 'shopPassword')->textInput(['autocomplete' => 'off']) ?>
+
+	<?= $form->field($model, 'scid')->textInput(['autocomplete' => 'off']) ?>
+
     <div class="form-group">
         <?= Html::submitButton(Yii::t('backend_models', 'Create')) ?>
     </div>

@@ -11,7 +11,6 @@ use common\models\Room;
 use DateTime;
 use frontend\models\BookingParams;
 use yii\filters\VerbFilter;
-use yii\helpers\Json;
 use yii\web\BadRequestHttpException;
 use yii\web\Response;
 
@@ -297,12 +296,13 @@ class HotelController extends \yii\web\Controller
 
 		if ($order->status == Order::OS_WAITING_PAY) {
 			$this->layout = false;
+
 			return base64_encode($this->render('_pay_form', [
-				'shopId' => $partner->shop_id,
-				'scid' => $partner->scid,
-				'sum' => $order->pay_sum,
+				'shopId'         => $partner->shopId,
+				'scid'           => $partner->scid,
+				'sum'            => $order->pay_sum,
 				'customerNumber' => md5($order->contact_email),
-				'orderNumber' => $order->number,
+				'orderNumber'    => $order->number,
 			]));
 		} else {
 			throw new BadRequestHttpException('Wrong order status');

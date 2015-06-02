@@ -1,63 +1,69 @@
 <?php
 namespace backend\models;
 
-use Yii;
 use partner\models\PartnerUser;
+use Yii;
 use yii\base\Model;
 
 class CreatePartnerForm extends Model
 {
 
-    public $id;
-    public $username;
-    public $email;
-    public $password;
+	public $id;
+	public $username;
+	public $email;
+	public $password;
 
-    public function rules()
-    {
-        return [
-            ['username', 'filter', 'filter' => 'trim'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\partner\models\PartnerUser', 'message' => Yii::t('backend_models', 'This username already been taken')],
-            ['username', 'string', 'min' => 2, 'max' => 255],
+	public $shopId;
+	public $shopPassword;
+	public $scid;
 
-            ['email', 'filter', 'filter' => 'trim'],
-            ['email', 'required'],
-            ['email', 'email'],
-            ['email', 'unique', 'targetClass' => '\partner\models\PartnerUser', 'message' => Yii::t('backend_models', 'This email address already been taken')],
+	public function rules()
+	{
+		return [
+			['username', 'filter', 'filter' => 'trim'],
+			['username', 'required'],
+			['username', 'unique', 'targetClass' => '\partner\models\PartnerUser', 'message' => Yii::t('backend_models', 'This username already been taken')],
+			['username', 'string', 'min' => 2, 'max' => 255],
 
-            ['password', 'required', 'on' => 'create'],
-            ['password', 'string', 'min' => 6, 'on' => 'create'],
-        ];
-    }
+			['email', 'filter', 'filter' => 'trim'],
+			['email', 'required'],
+			['email', 'email'],
+			['email', 'unique', 'targetClass' => '\partner\models\PartnerUser', 'message' => Yii::t('backend_models', 'This email address already been taken')],
 
-    public function scenarios()
-    {
-        return [
-            'create' => ['email', 'username', 'password'],
-            'update' => ['email', 'username', 'password'],
-        ];
-    }
+			['password', 'required', 'on' => 'create'],
+			['password', 'string', 'min' => 6, 'on' => 'create'],
 
-    /**
-     * Создает учетную запись партнера
-     *
-     * @return null|PartnerUser
-     */
-    public function createPartner()
-    {
-        if ($this->validate()) {
-            $partner = new PartnerUser();
-            $partner->username = $this->username;
-            $partner->email = $this->email;
-            $partner->setPassword($this->password);
-            $partner->generateAuthKey(); // for "remember me"
-            if ($partner->save()){
-                return $partner;
-            }
-        }
+			[['shopId', 'shopPassword', 'scid'], 'string'],
+		];
+	}
 
-        return null;
-    }
+	public function scenarios()
+	{
+		return [
+			'create' => ['email', 'username', 'password', 'shopId', 'shopPassword', 'scid'],
+			'update' => ['email', 'username', 'password', 'shopId', 'shopPassword', 'scid'],
+		];
+	}
+
+	/**
+	 * пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	 *
+	 * @return null|PartnerUser
+	 */
+	public function createPartner()
+	{
+		if ($this->validate()) {
+			$partner = new PartnerUser();
+			$partner->username = $this->username;
+			$partner->email = $this->email;
+			$partner->setPassword($this->password);
+			$partner->generateAuthKey(); // for "remember me"
+			if ($partner->save()) {
+				return $partner;
+			}
+		}
+
+		return null;
+	}
 
 }
