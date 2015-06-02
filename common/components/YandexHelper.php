@@ -2,6 +2,7 @@
 namespace common\components;
 
 use common\models\Lang;
+use yii\helpers\ArrayHelper;
 
 /**
  * Class YandexHelper
@@ -24,48 +25,74 @@ class YandexHelper
 	const PAY_TYPE_PB = 9; // Оплата через Промсвязьбанк.
 
 	public static $pay_type = [
-		self::PAY_TYPE_PC => [
+		[
+			'code'     => 'PC',
 			'title_ru' => 'Оплата из кошелька в Яндекс.Деньгах',
 			'title_en' => 'Payment from Yandex.Money purse',
 		],
-		self::PAY_TYPE_AC => [
+		[
+			'code'     => 'AC',
 			'title_ru' => 'Оплата с произвольной банковской карты',
 			'title_en' => 'Payment by any bank card',
 		],
-		self::PAY_TYPE_MC => [
+		[
+			'code'     => 'MC',
 			'title_ru' => 'Платеж со счета мобильного телефона',
 			'title_en' => 'Payment from the mobile phone account',
 		],
-		self::PAY_TYPE_GP => [
+		[
+			'code'     => 'GP',
 			'title_ru' => 'Оплата наличными через кассы и терминалы',
 			'title_en' => ' Cash payments via cash offices and terminals',
 		],
-		self::PAY_TYPE_WM => [
+		[
+			'code'     => 'WM',
 			'title_ru' => 'Оплата из кошелька в системе WebMoney',
 			'title_en' => 'Payment from  WebMoney system purse',
 		],
-		self::PAY_TYPE_SB => [
+		[
+			'code'     => 'SB',
 			'title_ru' => 'Оплата через Сбербанк: оплата по SMS или Сбербанк Онлайн',
 			'title_en' => 'Sberbank payments: payment via SMS or Sberbank Online',
 		],
-		self::PAY_TYPE_MP => [
+		[
+			'code'     => 'MP',
 			'title_ru' => 'Оплата через мобильный терминал (mPOS)',
 			'title_en' => 'Payment via mobile terminal (mPOS)',
 		],
-		self::PAY_TYPE_AB => [
+		[
+			'code'     => 'AB',
 			'title_ru' => 'Оплата через Альфа-Клик',
 			'title_en' => 'Payment via Alfa-Click',
 		],
-		self::PAY_TYPE_MA => [
+		[
+			'code'     => 'MA',
 			'title_ru' => 'Оплата через MasterPass',
 			'title_en' => 'Payment via MasterPass',
 		],
-		self::PAY_TYPE_PB => [
+		[
+			'code'     => 'PB',
 			'title_ru' => 'Оплата через Промсвязьбанк',
 			'title_en' => 'Payment via Promsvyazbank',
 		],
 
 	];
+
+	/**
+	 * Получение id типа оплаты по коду для записи в базу данных
+	 *
+	 * @param null $code
+	 * @return int|null
+	 */
+	static function getIdByCode($code = null)
+	{
+		foreach (static::$pay_type as $id => $pay_type) {
+			if ($code == $pay_type['code']) {
+				return $id;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Получение заголовка по id типа оплаты
@@ -83,6 +110,19 @@ class YandexHelper
 		if (isset(static::$pay_type[$id])) {
 			return static::$pay_type[$id]['title_' . $lang];
 		}
+	}
+
+	static function checkMd5($action, $params, $partner) {
+		$hashArray = [];
+		$hashArray[] = $action;
+		$hashArray[] = ArrayHelper::getValue($params, 'orderSumAmount', '');
+		$hashArray[] = ArrayHelper::getValue($params, 'orderSumCurrencyPaycash', '');
+		$hashArray[] = ArrayHelper::getValue($params, 'orderSumBankPaycash', '');
+		$hashArray[] = ArrayHelper::getValue($params, 'shopId', '');
+		$hashArray[] = ArrayHelper::getValue($params, 'invoiceId', '');
+		$hashArray[] = ArrayHelper::getValue($params, 'customerNumber', '');
+		$hashArray[] = $partner->shopPassword;
+		return md5(implode(';', $hashArray)) == $params['md5'];
 	}
 
 }
