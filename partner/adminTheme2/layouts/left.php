@@ -99,10 +99,16 @@ $l = \common\models\Lang::$current->url;
 		    </li>
 	    </ul>
 
+
 	    <ul class="sidebar-menu">
-		    <li class="header"></li>
+		    <li>
+			    <?= Html::tag('li', Html::a(\Yii::t('partner_orders','Orders'), ['orders/index']), [
+				    'class' => $this->context->id == 'orders' ? "active" : "",
+			    ]) ?>
+		    </li>
 	    </ul>
-        <p>&nbsp;</p>
+
+	   <p>&nbsp;</p>
         <ul class="sidebar-menu">
             <li class="treeview">
                 <a href="#">

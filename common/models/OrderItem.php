@@ -81,4 +81,8 @@ class OrderItem extends \yii\db\ActiveRecord
 
 		parent::afterSave($insert, $changedAttributes);
 	}
+
+	public function getRoom() {
+		return $this->hasOne(Room::className(), ['id' => 'room_id']);
+	}
 }

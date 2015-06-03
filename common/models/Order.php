@@ -130,6 +130,21 @@ class Order extends ActiveRecord
 		}
 	}
 
+	public function beforeSave($insert) {
+		if (parent::beforeSave($insert)) {
+			// поля created_at и updated_at
+			if ($insert) {
+				$this->created_at = date('Y-m-d H:i:s');
+				$this->updated_at = date('Y-m-d H:i:s');
+			} else {
+				$this->updated_at = date('Y-m-d H:i:s');
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	/**
 	 * Связь с элементами заказа
 	 *
