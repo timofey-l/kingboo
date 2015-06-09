@@ -27,6 +27,8 @@ use yii\db\ActiveRecord;
  * @property double  $pay_sum
  * @property integer $hotel_id
  * @property string  $lang
+ * @property boolean $viewed
+ * @property string  $payment_url
  */
 class Order extends ActiveRecord
 {
@@ -40,6 +42,17 @@ class Order extends ActiveRecord
 	public static function tableName()
 	{
 		return '{{%order}}';
+	}
+
+	public static function getOrderStatusTitle($id) {
+		switch ($id) {
+			case 0:
+				return \Yii::t('orders', 'cancelled');
+			case 1:
+				return \Yii::t('orders', 'waiting for pay');
+			case 2:
+				return \Yii::t('orders', 'payed');
+		}
 	}
 
 	/**
@@ -68,6 +81,7 @@ class Order extends ActiveRecord
 			[['number', 'status', 'contact_email', 'contact_name', 'contact_surname', 'contact_address', 'dateFrom', 'dateTo', 'sum', 'partial_pay_percent', 'pay_sum'], 'required'],
 			[['status', 'contact_address', 'partial_pay', 'partial_pay_percent', 'hotel_id'], 'integer'],
 			[['sum', 'pay_sum'], 'number'],
+			[['viewed'], 'boolean'],
 			[['number'], 'string', 'max' => 32, 'min' => 32],
 			[['number'], 'unique'],
 			[['lang'], 'string', 'max' => 3],
@@ -134,6 +148,10 @@ class Order extends ActiveRecord
 		if (parent::beforeSave($insert)) {
 			// поля created_at и updated_at
 			if ($insert) {
+				// При создании устанавливаем payment_url
+				// по которому будет доступен платеж
+				$this->payment_url = \Yii::$app->security->generateRandomString(64);
+
 				$this->created_at = date('Y-m-d H:i:s');
 				$this->updated_at = date('Y-m-d H:i:s');
 			} else {

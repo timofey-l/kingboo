@@ -85,11 +85,7 @@ class HotelController extends \yii\web\Controller
 				$orderItem->order_id = $orderForm->id;
 				$orderItem->sum = $orderForm->sum;
 				if ($orderItem->save()) {
-					return $this->render('pay_page', [
-						'hotel' => $hotel,
-						'order' => $orderForm,
-						'item'  => $orderItem,
-					]);
+					return $this->redirect(['payment/show', 'id' => $orderForm->payment_url]);
 				}
 			}
 
@@ -256,56 +252,5 @@ class HotelController extends \yii\web\Controller
 
 		return $result;
 
-	}
-
-	public function actionTest()
-	{
-		$order = Order::findOne(5);
-
-		return $this->render('pay_page', [
-			'order' => $order,
-		]);
-	}
-
-	/**
-	 * Получение формы для оплаты, что бы перейти по ней с браузера пользователя
-	 * Вызов идет с формы на странице оплаты.
-	 * CSRF токен берется из мета тега этой страницы
-	 */
-	public function actionGetForm()
-	{
-		$req = \Yii::$app->request;
-		if (!$req->validateCsrfToken($req->post('_csrf'))) {
-			throw new BadRequestHttpException('CSRF validation failed');
-		}
-
-		$order_number = $req->post('order_number', null);
-		$pay_type = $req->post('pay_type', null);
-
-		if (!$order_number || !$pay_type) {
-			throw new BadRequestHttpException('Wrong parameters');
-		}
-
-		/** @var Order $order */
-		$order = Order::findOne(['number' => $order_number]);
-		if (!$order) {
-			throw new BadRequestHttpException('Incorrect order_id');
-		}
-
-		$partner = $order->hotel->partner;
-
-		if ($order->status == Order::OS_WAITING_PAY) {
-			$this->layout = false;
-
-			return base64_encode($this->render('_pay_form', [
-				'shopId'         => $partner->shopId,
-				'scid'           => $partner->scid,
-				'sum'            => $order->pay_sum,
-				'customerNumber' => md5($order->contact_email),
-				'orderNumber'    => $order->number,
-			]));
-		} else {
-			throw new BadRequestHttpException('Wrong order status');
-		}
 	}
 }

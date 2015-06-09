@@ -29,6 +29,9 @@ if (Yii::$app->controller->action->id === 'login' ||Yii::$app->controller->actio
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
+	    <script>
+		    var LANG = '<?= \common\models\Lang::$current->url ?>';
+	    </script>
     </head>
     <body class="skin-blue">
     <?php $this->beginBody() ?>

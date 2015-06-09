@@ -41,6 +41,7 @@ return [
                 'POST /hotel/search' => 'hotel/search',
 //	            'POST /hotel/booking' => 'hotel/booking',
                 '/hotel/test' => 'hotel/test',
+                '/payment/<id:[0-9a-zA-Z\-_]{64}>' => 'payment/show',
                 'GET /hotel/<name:\w+>' => 'hotel/index',
 	            '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
             ]

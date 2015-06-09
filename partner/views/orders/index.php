@@ -4,6 +4,29 @@
 $this->title = \Yii::t('partner_orders', 'Orders list');
 $l = \common\models\Lang::$current;
 
+$this->registerJs("
+
+$('.orders_table tbody tr').click(function(e){
+	var orderId = $(e.currentTarget).data('orderid');
+	var l = LANG == 'ru' ? '' : LANG;
+	window.location.assign('/' + l + 'orders/view?id=' + orderId)
+	console.log($(e.currentTarget).data('orderid'));
+});
+
+$('#setAllAsViewed_btn').click(function(){
+	var params = {};
+	var csrf_param = $('meta[name=csrf-param]').attr('content');
+	var csrf_value = $('meta[name=csrf-value]').attr('content');
+	params[csrf_param] = csrf_value;
+	$.post('/orders/set-all?type=viewed', params).done(function( data ) {
+        if (data === true) {
+            $('tr.new_order').removeClass('new_order');
+        }
+    });
+});
+
+");
+
 ?>
 <style>
 	.sum {
@@ -13,23 +36,27 @@ $l = \common\models\Lang::$current;
 
 	.table>tbody>tr>td {
 		white-space: nowrap;
+		cursor: pointer;
 	}
 
+	.new_order {
+		background-color: #ffffd0;
+	}
 </style>
 <div class="box">
 	<div class="box-header">
 		<h3 class="box-title"></h3>
-
+		<button class="btn btn-default" id="setAllAsViewed_btn"><?= \Yii::t('partner_orders','Set all as viewed') ?></button>
 	</div><!-- /.box-header -->
 	<div class="box-body table-responsive no-padding">
-		<table class="table table-hover">
+		<table class="table table-hover orders_table">
 			<thead>
 				<tr>
 					<th><?= \Yii::t('partner_orders','ID') ?></th>
 					<th><?= \Yii::t('partner_orders','Date') ?></th>
-					<th><?= \Yii::t('partner_orders','Number') ?></th>
 					<th><?= \Yii::t('partner_orders','Status') ?></th>
 					<th><?= \Yii::t('partner_orders','Dates range') ?></th>
+					<th><?= \Yii::t('partner_orders','Hotel') ?></th>
 					<th><?= \Yii::t('partner_orders','Contact info') ?></th>
 					<th><?= \Yii::t('partner_orders','Rooms') ?></th>
 					<th><?= \Yii::t('partner_orders','Order sum') ?></th>
@@ -55,14 +82,13 @@ $l = \common\models\Lang::$current;
 							$statusText = \Yii::t('partner_orders', 'Payed');
 							break;
 					}?>
-				<tr>
+				<tr class="<?= !$order->viewed ? "new_order":"" ?>" data-orderid="<?= $order->id ?>">
 					<td><?= $order->id ?></td>
 					<td>
 						<?= (new DateTime($order->created_at))->format(\Yii::t('partner_orders', 'd/m/Y'))?>
 						<br/>
 						<?= (new DateTime($order->created_at))->format(\Yii::t('partner_orders', 'H:i:s'))?>
 					</td>
-					<td><code><?= $order->number ?></code></td>
 					<td>
 						<?= \yii\helpers\Html::tag('span',$statusText, [
 							'class' => $statusClass,
@@ -70,7 +96,10 @@ $l = \common\models\Lang::$current;
 					</td>
 					<td>
 						<?= (new \DateTime($order->dateFrom))->format(\Yii::t('partner_orders', 'd/m/Y')) ?>&nbsp;&ndash;&nbsp;<?= (new \DateTime($order->dateTo))->format(\Yii::t('partner_orders', 'd/m/Y')) ?>
-						<br/>
+
+					</td>
+					<td>
+						<?= $order->hotel->name ?>
 					</td>
 					<td>
 						<?= \common\components\ListAddressType::getTitle($order->contact_address, $order->lang) ?>&nbsp;<?= \yii\helpers\Html::encode($order->contact_name) ?>&nbsp;<?= \yii\helpers\Html::encode($order->contact_surname) ?>

@@ -2,8 +2,29 @@
 
 /* @var $order \common\models\Order */
 
+/* @var $this \yii\web\View */
+
 /** @var \common\models\Hotel $hotel */
 $hotel = $order->hotel;
+
+$this->title = \Yii::t('frontend', 'Order payment');
+
+$this->registerJs("
+	$('#goToPayBtn').click(function(){
+		$.ajax({
+			url:'/payment/get-form',
+			method: 'POST',
+			data: {
+				pay_type: $('input[name=payType]').val()
+			}
+		}).done(function(data){
+			var \$form = $(atob(data));
+			$('body').append(\$form);
+			\$form.submit();
+		});
+	});
+");
+
 ?>
 
 <h4>
@@ -122,7 +143,7 @@ $hotel = $order->hotel;
 				</div>
 			</div>
 			<div class="panel-footer" style="text-align: center;">
-				<button class="btn btn-warning">
+				<button class="btn btn-warning" id="goToPayBtn">
 					<?= \Yii::t('frontend','Pay') ?>
 				</button>
 			</div>

@@ -6,6 +6,7 @@ use dmstr\widgets\Alert;
     <section class="content-header">
         <h1>
             <?php
+            if (\yii\helpers\ArrayHelper::getValue($this->params, 'showTitleAtTop', true))
             if ($this->title !== null) {
                 echo $this->title;
             } else {
