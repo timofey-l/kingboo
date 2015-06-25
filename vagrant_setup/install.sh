@@ -28,6 +28,9 @@ echo "cd /vagrant" >> /home/vagrant/.bashrc
 # Install basic tools
 apt-get -y install build-essential binutils-doc git curl
 
+# install russian language pack
+apt-get install language-pack-ru
+
 apt-get -y install apache2
 service apache2 stop
 a2enmod rewrite

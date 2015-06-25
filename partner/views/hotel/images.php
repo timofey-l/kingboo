@@ -1,9 +1,6 @@
 <?php
 \partner\assets\HotelImagesAsset::register($this);
 
-use yii\helpers\Html;
-use yii\bootstrap\Button;
-
 /* @var $this yii\web\View */
 /* @var $model common\models\HotelImages */
 
@@ -13,8 +10,8 @@ $lang = \common\models\Lang::$current->url;
 
 //Подключаем colorbox
 $this->registerJsFile($directoryBower . '/colorbox/jquery.colorbox-min.js');
-$this->registerJsFile($directoryBower . '/colorbox/i18n/jquery.colorbox-'.$lang.'.js');
-$this->registerCssFile($directoryBower . '/colorbox/example1/colorbox.css',[],'colorbox');
+$this->registerJsFile($directoryBower . '/colorbox/i18n/jquery.colorbox-' . $lang . '.js');
+$this->registerCssFile($directoryBower . '/colorbox/example1/colorbox.css', [], 'colorbox');
 
 $lang = \common\models\Lang::$current->url;
 $hotel_title = $model->{'title_' . $lang};
@@ -28,12 +25,9 @@ $this->params['breadcrumbs'][] = Yii::t('hotels', 'Images');
 //echo \common\helpers\DebugHelper::grid(new \common\models\HotelImage());
 
 ?>
-<script type="text/javascript">
-    const LANG = '<?= \common\models\Lang::$current->url ?>';
-</script>
 
 <div class="hotel-images">
-    <div class="row" ng-app="ImagesManageApp" ng-init="hotelId = <?= $model->id ?>;">
+    <div class="row" ng-app="ImagesManageApp" ng-init="hotelId = <?=$model->id?>;">
         <div class="box" ng-view>
 
         </div>
