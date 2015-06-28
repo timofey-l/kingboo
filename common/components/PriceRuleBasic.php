@@ -24,7 +24,8 @@ class PriceRuleBasic extends PriceRules
     {
         $price_rule = [
             'days_sums' => [],
-            'total' => 0,
+            'totalPrice' => 0,
+            'totalDiscount' => 0,
         ];
 
         $discount_present = false;
@@ -61,7 +62,8 @@ class PriceRuleBasic extends PriceRules
                 'discount' => $discount,
                 'price' => $price,
             ];
-            $price_rule['total'] += $price;
+            $price_rule['totalPrice'] += $price;
+            $price_rule['totalDiscount'] += $discount;
         }
         if ($discount_present) {
             if (!is_array($array['price_rules'])) {
@@ -74,9 +76,9 @@ class PriceRuleBasic extends PriceRules
                 $array['price_rules']['additive'] = [];
             }
             if ($this->additive) {
-                $array['price_rules']['additive']['items'][$this->id] = $price_rule;
+                $array['price_rules']['additive'][$this->id] = $price_rule;
             } else {
-                $array['price_rules']['other']['items'][$this->id] = $price_rule;
+                $array['price_rules']['other'][$this->id] = $price_rule;
             }
         }
     }

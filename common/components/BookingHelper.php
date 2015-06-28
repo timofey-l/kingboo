@@ -61,17 +61,42 @@ class BookingHelper
         // Если есть активные скидки, то проходим по всем
         if ($price_rules !== null) {
             foreach ($price_rules as $key => $price_rule) {
-                $model = ListPriceRules::getModel($price_rule);
+                $model = ListPriceRules::getModel($price_rule->type, $price_rule->id);
                 if ($model) {
                     $model->processPriceInfo($priceInfo, $params);
                 }
             }
         }
 
+        // вычислем сумму без скидок
         $sum = 0;
-        foreach ($priceInfo['days'] as $day => $info) {
-            $sum += $info['price'];
+        foreach ($priceInfo as $day => $room_price) {
+            $sum = $room_price['price'];
         }
+
+        // суммируем аддитивные если есть
+        $additiveSum = 0;
+        $additiveDiscount = 0;
+        if (iseet($priceInfo['price_rules']['additive']) && count($priceInfo['price_rules']['additive'])) {
+            foreach ($priceInfo['price_rules']['additive'] as $price_rule) {
+                $additiveDiscount += $price_rule['totalDiscount'];
+                $additiveSum += $price_rule['totalPrice'];
+            }
+        }
+
+        // среди остальных выбираем максимальную скидку
+        $otherSum = 0;
+        $otherDiscount = 0;
+        if (isset($priceInfo['price_rules']['other']) && count($priceInfo['price_rules']['other'])) {
+            foreach ($priceInfo['price_rules']['other'] as $price_rule) {
+                if ($otherDiscount < $price_rule['totalDiscount']) {
+                    $otherDiscount = $price_rule['totalDiscount'];
+                    $otherSum = $price_rule['totalPrice'];
+                }
+            }
+        }
+
+        $sum = $sum - $additiveDiscount - $otherDiscount;
 
         return $sum > 0 ? $sum : null;
     }
