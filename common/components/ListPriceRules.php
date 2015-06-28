@@ -13,11 +13,11 @@ class ListPriceRules
 {
     public static $_list = [
         [
-            'id'       => 0,
-            'name'     => 'basic',
-            'class'    => 'common\components\PriceRuleBasic',
-            'title_ru' => 'Обычная скидка в процентах, в определенном диапазоне дат',
-            'title_en' => 'Usual percentage discount in a certain date range',
+            'id' => 0,
+            'name' => 'basic',
+            'class' => 'common\components\PriceRuleBasic',
+            'title_ru' => 'Скидка',
+            'title_en' => 'Discount',
         ],
     ];
 
@@ -105,6 +105,7 @@ class ListPriceRules
      * Возвращает нужный класс со скидкой
      *
      * @param $typeId
+     * @return bool
      */
     public static function getModel($typeId, $id = false)
     {

@@ -9,7 +9,7 @@
  * Each array element represents the translation (value) of a message (key).
  * If the value is empty, the message is considered as not translated.
  * Messages that no longer need translation will have their translations
- * enclosed between a pair of '' marks.
+ * enclosed between a pair of '@@' marks.
  *
  * Message string can be used with plural forms format. Check i18n section
  * of the guide for details.
@@ -18,18 +18,21 @@
  */
 return [
     'Enter your email. <br/>This email will be used to contact you and confirm booking.' => '',
-    'Go to payment' => 'Перейти к оплате',
-    'Guest name' => 'Имя гостя',
-    'Guest surname' => 'Фамилия гостя',
-    'Room booking' => 'Бронирование номера',
-    '{n, plural, =1{one guest} other{# guests}}' => '{n, plural, =1{один гость} one{# гость} few{# гостя} many{# гостей} other{# гостей}}',
-    '{n, plural, =1{one night} few{# nights} many{# nights} other{# nights}}' => '{n, plural, =1{одна ночь} one{# ночь} few{# ночи} many{# ночей} other{# ночей}}',
-    '{n, plural, =1{photo} other{# photos}}' => '{n, plural, =1{фото} other{# фото}}',
-    'Age' => 'Возраст',
-    'Enter name' => 'Введите имя',
-    'Enter surname' => 'Введите фамилию',
-    'Gender' => 'Пол',
-    'Guests information' => 'Информация о гостях',
+    'I want to pay {p}% ({s}) now and the rest at check-in.' => '',
+    'Order number: <br/><code style="font-size:13px;">{n}</code>' => '',
+    'Order payment' => '',
+    'Page was not found!' => '',
+    'Pay' => '',
+    'Pay options' => '',
+    'Sum to pay now:' => '',
+    'Total sum:' => '',
+    'Age' => '@@Возраст@@',
+    'Enter name' => '@@Введите имя@@',
+    'Enter surname' => '@@Введите фамилию@@',
+    'Gender' => '@@Пол@@',
+    'Guests information' => '@@Информация о гостях@@',
+    '{n, plural, =1{one guest} other{# guests}}' => '@@{n, plural, =1{один гость} one{# гость} few{# гостя} many{# гостей} other{# гостей}}@@',
+    '{n, plural, =1{one night} few{# nights} many{# nights} other{# nights}}' => '@@{n, plural, =1{одна ночь} one{# ночь} few{# ночи} many{# ночей} other{# ночей}}@@',
     'Adults' => 'Взрослых',
     'Arrival date' => 'Дата заезда',
     'Booking' => 'Забронировать',
@@ -38,14 +41,18 @@ return [
     'Departure date' => 'Дата выезда',
     'E-mail' => 'E-mail',
     'Find' => 'Поиск',
+    'Go to payment' => 'Перейти к оплате',
+    'Guest name' => 'Имя гостя',
+    'Guest surname' => 'Фамилия гостя',
+    'Guests: {n}' => 'Гостей: {n}',
     'Kids' => 'Дети 0-7 лет',
     'Name' => 'Имя',
+    'Nights: {n}' => 'Ночей: {n}',
     'Order information' => 'Информация о заказе',
     'Phone number' => 'Номер телефона',
+    'Room booking' => 'Бронирование номера',
     'Search' => 'Искать',
     'Surname' => 'Фамилия',
-	'Nights: {n}' => 'Ночей: {n}',
-	'Guests: {n}' => 'Гостей: {n}',
-    'The rooms that you chose were booked. <br/><br/>To complete the booking you need to pay.<br/><br/>Otherwise, booking will be canceled within {t} hours.'
-    => 'Выбранные Вами номера забронированны. <br/><br/>Для завершения процедуры бронирования необходимо произвести оплату.<br/><br/>В противном случае через {t} часа бронь аннулируется.',
+    'The rooms that you chose were booked. <br/><br/>To complete the booking you need to pay.<br/><br/>Otherwise, booking will be canceled within {t} hours.' => 'Выбранные Вами номера забронированны. <br/><br/>Для завершения процедуры бронирования необходимо произвести оплату.<br/><br/>В противном случае через {t} часа бронь аннулируется.',
+    '{n, plural, =1{photo} other{# photos}}' => '{n, plural, =1{фото} other{# фото}}',
 ];

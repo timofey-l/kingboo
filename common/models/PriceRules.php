@@ -3,7 +3,6 @@
 namespace common\models;
 
 use Yii;
-use common\models\PriceRulesRoom;
 
 /**
  * This is the model class for table "{{%price_rules}}".
@@ -23,6 +22,7 @@ use common\models\PriceRulesRoom;
  * @property array   $params
  * @property string  $code
  * @property integer $applyForCheckIn
+ * @property integer $partner_id
  */
 class PriceRules extends \yii\db\ActiveRecord
 {
@@ -41,7 +41,7 @@ class PriceRules extends \yii\db\ActiveRecord
     {
         return [
             [['type'], 'required'],
-            [['dateFrom', 'dateTo'], 'safe'],
+            [['dateFrom', 'dateTo', 'dateFromB', 'dateToB', 'minSum', 'maxSum', 'code', 'valueType', 'additive', 'applyForCheckIn'], 'safe'],
             [['type', 'valueType', 'additive', 'active', 'applyForCheckIn'], 'integer'],
             [['params'], 'string'],
         ];
@@ -97,7 +97,8 @@ class PriceRules extends \yii\db\ActiveRecord
      * Заголовок формы создания
      * @return string
      */
-    public function getTitle() {
+    public function getTitle()
+    {
         return \Yii::t('pricerules', 'Price rule');
     }
 
@@ -111,6 +112,19 @@ class PriceRules extends \yii\db\ActiveRecord
 
     public function getRooms()
     {
-        return $this->hasMany(PriceRulesRoom::className(), ['price_rule_id' => 'id']);
+        return $this->hasMany(Room::className(), ['id' => 'room_id'])
+            ->viaTable('price_rules_rooms', ['price_rule_id' => 'id']);
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)
+            && !\Yii::$app->user->isGuest
+            && !($this->partner_id > 0)) {
+            $this->partner_id = Yii::$app->user->id;
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -3,6 +3,7 @@
 use yii\bootstrap\ActiveForm;
 
 /** @var \common\models\PriceRules $model */
+/** @var \common\models\Room[] $rooms */
 /** @var \yii\web\View $this */
 
 $this->registerJsFile('/js/price-rules/add-form0.js', [
@@ -40,6 +41,34 @@ $dateFormat = \Yii::t('partner', 'dd/mm/yyyy');
         'id' => 'PriceRuleForm',
     ],
 ]); ?>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    <?= \Yii::t('partner_pricerules', 'Rooms') ?>
+                </h3>
+            </div>
+            <div class="box-body">
+                <?php foreach ($rooms as $room): ?>
+                    <div class="form-group field-pricerulebasic-additive">
+                        <div class="checkbox">
+                            <label class="">
+                                <?= \yii\helpers\Html::checkbox('rooms[]', false, [
+                                    'class' => 'iCheck',
+                                    'value' => $room->id,
+                                ]) ?>
+                                <?= $room->{'title_' . \common\models\Lang::$current->url} ?>
+                            </label>
+                        </div>
+                    </div>
+
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-sm-6">
         <div class="box box-primary">
@@ -207,31 +236,56 @@ $dateFormat = \Yii::t('partner', 'dd/mm/yyyy');
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel"><?= \Yii::t('parnter_pricerules', 'Errors in form!') ?></h4>
+                <h4 class="modal-title" id="myModalLabel"><?= \Yii::t('partner_pricerules', 'Errors in form!') ?></h4>
             </div>
             <div class="modal-body">
                 <div class="callout callout-danger lead message message-value-error">
                     <h4><?= \Yii::t('partner-pricerules', 'Value of discount is incorrect') ?></h4>
+
                     <p>
                         <?= \Yii::t('partner-pricerules', 'Value of discount should be set and be greater than 0.') ?>
                     </p>
                 </div>
+                <div class="callout callout-danger lead message message-rooms">
+                    <h4><?= \Yii::t('partner-pricerules', 'Select rooms') ?></h4>
+
+                    <p>
+                        <?= \Yii::t('partner-pricerules', 'You should select at least one room to apply discount.') ?>
+                    </p>
+                </div>
                 <div class="callout callout-danger lead message message-one-condition">
                     <h4><?= \Yii::t('partner-pricerules', 'Select condition') ?></h4>
+
                     <p>
-                        <?= \Yii::t('partner-pricerules', 'You should enable at least one condition to apply discount.') ?>
+                        <?= \Yii::t('partner-pricerules', 'You should select at least one room to apply discount.') ?>
                     </p>
                 </div>
                 <div class="callout callout-danger lead message message-dates-b">
                     <h4><?= \Yii::t('partner-pricerules', 'Booking date range') ?></h4>
+
                     <p>
                         <?= \Yii::t('partner-pricerules', 'Dates in booking date range should be defined.') ?>
                     </p>
                 </div>
+                <div class="callout callout-danger lead message message-dates-b-order">
+                    <h4><?= \Yii::t('partner-pricerules', 'Booking date range') ?></h4>
+
+                    <p>
+                        <?= \Yii::t('partner-pricerules', 'Start date range must be before the end date.') ?>
+                    </p>
+                </div>
                 <div class="callout callout-danger lead message message-dates-living">
                     <h4><?= \Yii::t('partner-pricerules', 'Living dates range') ?></h4>
+
                     <p>
                         <?= \Yii::t('partner-pricerules', 'Dates in living date range should be defined.') ?>
+                    </p>
+                </div>
+                <div class="callout callout-danger lead message message-dates-order">
+                    <h4><?= \Yii::t('partner-pricerules', 'Living dates range') ?></h4>
+
+                    <p>
+                        <?= \Yii::t('partner-pricerules', 'Start date range must be before the end date.') ?>
                     </p>
                 </div>
                 <div class="callout callout-danger lead message message-minsum">
@@ -250,6 +304,7 @@ $dateFormat = \Yii::t('partner', 'dd/mm/yyyy');
                 </div>
                 <div class="callout callout-danger lead message message-code">
                     <h4><?= \Yii::t('partner-pricerules', 'Code') ?></h4>
+
                     <p>
                         <?= \Yii::t('partner-pricerules', 'Discount code should be set. It should contain letters, digits and following chars: <code>!</code> <code>+</code> <code>-</code> <code>_</code>') ?>
                     </p>

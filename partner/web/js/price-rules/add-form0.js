@@ -63,6 +63,16 @@
             }
         }
 
+        // rooms
+        var checkedRooms = $("input[type=checkbox][name='rooms[]']:checked").length;
+        if (checkedRooms == 0) {
+            $('.message-rooms').show();
+            result = false;
+            if (!focusControl) {
+                focusControl = $("input[type=checkbox][name='rooms[]']")[0];
+            }
+        }
+
         // conditions
         var bookingRangeCheck = $('input[name=bookingRange]').is(':checked');
         var livingRangeCheck = $('input[name=livingRange]').is(':checked');
@@ -74,17 +84,31 @@
 
         if (oneCondition) {
             if (bookingRangeCheck) {
-                if ($('#pricerulebasic-datefromb').val() == '' || $('#pricerulebasic-datetob').val() == '') {
+                var dF = $('#pricerulebasic-datefromb').val();
+                var dT = $('#pricerulebasic-datetob').val();
+                if (dF == '' || dT == '') {
                     result = false;
                     $('.message-dates-b').show();
                     if (!focusControl) focusControl = $('[data-input=dateFromB]');
                 }
+                if ((new Date(dF)) > (new Date(dT))) {
+                    result = false;
+                    $('.message-dates-b-order').show();
+                    if (!focusControl) focusControl = $('[data-input=dateFromB]');
+                }
             }
             if (livingRangeCheck) {
-                if ($('#pricerulebasic-datefrom').val() == '' || $('#pricerulebasic-dateto').val() == '') {
+                var dF = $('#pricerulebasic-datefrom').val();
+                var dT = $('#pricerulebasic-dateto').val();
+                if (dF == '' || dT == '') {
                     result = false;
                     $('.message-dates-living').show();
                     if (!focusControl) focusControl = $('[data-input=dateFrom]');
+                }
+                if ((new Date(dF)) > (new Date(dT))) {
+                    result = false;
+                    $('.message-dates-order').show();
+                    if (!focusControl) focusControl = $('[data-input=dateFromB]');
                 }
             }
             if (codeCheck) {

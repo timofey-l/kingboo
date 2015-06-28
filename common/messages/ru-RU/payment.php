@@ -17,17 +17,9 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Clients' => '',
-    'Countries ' => '',
-    'Currencies ' => '',
-    'Hotel facilities ' => '',
-    'Partners' => '',
-    'Room facilities ' => '',
-    'Types of food' => '',
-    'Manage clients' => '@@@@',
-    'Manage countries ' => '@@@@',
-    'Manage currencies ' => '@@@@',
-    'Manage partners' => '@@@@',
-    'Manage types of food ' => '@@@@',
-    'Manage users' => '@@@@',
+    'Internal server error' => '',
+    'This order already payed' => '',
+    'Wrong order number' => '',
+    'Wrong order status' => '',
+    'Wrong order sum' => '',
 ];
