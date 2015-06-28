@@ -122,6 +122,7 @@ class PriceRules extends \yii\db\ActiveRecord
             && !\Yii::$app->user->isGuest
             && !($this->partner_id > 0)) {
             $this->partner_id = Yii::$app->user->id;
+            $this->active = 1;
             return true;
         } else {
             return false;
