@@ -257,7 +257,7 @@ $dateFormat = \Yii::t('partner', 'dd/mm/yyyy');
                     <h4><?= \Yii::t('partner-pricerules', 'Select condition') ?></h4>
 
                     <p>
-                        <?= \Yii::t('partner-pricerules', 'You should select at least one room to apply discount.') ?>
+                        <?= \Yii::t('partner-pricerules', 'You should enable at least one condition to apply discount.') ?>
                     </p>
                 </div>
                 <div class="callout callout-danger lead message message-dates-b">

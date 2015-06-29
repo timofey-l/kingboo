@@ -5,9 +5,44 @@ namespace partner\controllers;
 use common\components\ListPriceRules;
 use common\models\PriceRules;
 use common\models\Room;
+use yii\base\ErrorException;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 
 class PriceRulesController extends \yii\web\Controller
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'create', 'deactivate'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'deactivate' => ['post'],
+                ],
+            ],
+
+        ];
+
+    }
+
+    /**
+     * Список правил
+     * @return string
+     */
     public function actionIndex()
     {
         $price_rules = PriceRules::find()
@@ -19,6 +54,37 @@ class PriceRulesController extends \yii\web\Controller
         ]);
     }
 
+    /**
+     * Деактивация правила
+     * @param $id
+     * @return \yii\web\Response
+     * @throws ErrorException
+     * @throws ForbiddenHttpException
+     */
+    public function actionDeactivate($id) {
+        /** @var PriceRules $price_rule */
+        if ($price_rule = PriceRules::findOne($id)) {
+            if ($price_rule->partner_id == \Yii::$app->user->id) {
+                $price_rule->active = 0;
+                $r = $price_rule->save();
+                if ($r) {
+                    return $this->redirect(['index']);
+                } else {
+                    throw new ErrorException(\Yii::t('pricerules', 'Unknown error'));
+                }
+            } else {
+                throw new ForbiddenHttpException(\Yii::t('pricerules', 'Price rule deactivation is not allowed'));
+            }
+        } else {
+            throw new ForbiddenHttpException(\Yii::t('pricerules', 'Price rule not found'));
+        }
+    }
+
+    /**
+     * Создание правила
+     * @param $type
+     * @return string|\yii\web\Response
+     */
     public function actionCreate($type)
     {
         /** @var PriceRules $model */

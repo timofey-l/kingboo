@@ -41,7 +41,7 @@ class PriceRules extends \yii\db\ActiveRecord
     {
         return [
             [['type'], 'required'],
-            [['dateFrom', 'dateTo', 'dateFromB', 'dateToB', 'minSum', 'maxSum', 'code','value', 'valueType', 'additive', 'applyForCheckIn'], 'safe'],
+            [['dateFrom', 'dateTo', 'dateFromB', 'dateToB', 'minSum', 'maxSum', 'code', 'value', 'valueType', 'additive', 'applyForCheckIn'], 'safe'],
             [['type', 'valueType', 'additive', 'active', 'applyForCheckIn'], 'integer'],
             [['params'], 'string'],
         ];
@@ -118,11 +118,13 @@ class PriceRules extends \yii\db\ActiveRecord
 
     public function beforeSave($insert)
     {
-        if (parent::beforeSave($insert)
-            && !\Yii::$app->user->isGuest
-            && !($this->partner_id > 0)) {
-            $this->partner_id = Yii::$app->user->id;
-            $this->active = 1;
+        if (parent::beforeSave($insert)) {
+            if (!\Yii::$app->user->isGuest && !($this->partner_id > 0)) {
+                $this->partner_id = Yii::$app->user->id;
+            }
+            if ($insert) {
+                $this->active = 1;
+            }
             return true;
         } else {
             return false;

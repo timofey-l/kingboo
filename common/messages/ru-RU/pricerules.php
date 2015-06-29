@@ -17,6 +17,9 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Price rule deactivation is not allowed' => 'Отключение правило запрещено',
+    'Price rule not found' => 'Правило не найдено',
+    'Unknown error' => 'Неизвестная ошибка',
     'Additive' => 'Аддитивная',
     'Additive discount will be applyed all time. All additive discounts will be summarized and added to one maximal non-additive discount.' => 'Аддитивные скидки будут применены всегда. Все подходящие аддитивные скидки будут просуммированы и добавлены к одной максимальной обычной',
     'Apply range for check-in date' => 'Применить диапазон к дате заселения',
