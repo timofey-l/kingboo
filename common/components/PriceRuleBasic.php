@@ -30,8 +30,8 @@ class PriceRuleBasic extends PriceRules
 
         $discount_present = false;
 
-        foreach ($array as $day => $room_price) {
-            $price = $room_price['price'];
+        foreach ($array['days'] as $day => $room_price) {
+            $price = $room_price->price;
             $discount = 0;
 
             // проверяем день на соответствие датам
@@ -66,13 +66,13 @@ class PriceRuleBasic extends PriceRules
             $price_rule['totalDiscount'] += $discount;
         }
         if ($discount_present) {
-            if (!is_array($array['price_rules'])) {
+            if (!isset($array['price_rules'])) {
                 $array['price_rules'] = [];
             }
-            if (!is_array($array['price_rules']['others'])) {
+            if (!isset($array['price_rules']['others'])) {
                 $array['price_rules']['other'] = [];
             }
-            if (!is_array($array['price_rules']['additive'])) {
+            if (!isset($array['price_rules']['additive'])) {
                 $array['price_rules']['additive'] = [];
             }
             if ($this->additive) {
@@ -81,6 +81,8 @@ class PriceRuleBasic extends PriceRules
                 $array['price_rules']['other'][$this->id] = $price_rule;
             }
         }
+
+        return $array;
     }
 
     /**
@@ -112,7 +114,7 @@ class PriceRuleBasic extends PriceRules
         $bookingDate = new \DateTime();
 
         // проверять ли по дате бронирования
-        $checkBooking = !$this->dateFromB != null && !$this->dateToB != null;
+        $checkBooking = $dateToB && $dateFromB;
         $inBookingRange = false;
         if ($checkBooking) {
             // входит ли дата бронирования в диапазон бронирования
@@ -120,7 +122,7 @@ class PriceRuleBasic extends PriceRules
         }
 
         // проверять ли по диапазону ограничения дат проживания
-        $checkLiving = !$this->dateFrom != null && $this->dateTo != null;
+        $checkLiving = !($this->dateFrom != null) && ($this->dateTo != null);
         $inLivingRange = false;
         if ($checkLiving) {
             // входит ли день проживания $day в диапазон ограничения дат проживания
@@ -136,7 +138,7 @@ class PriceRuleBasic extends PriceRules
             }
         }
 
-        $result = false;
+        $result = true;
 
         if ($checkBooking) {
             $result = $result && $inBookingRange;

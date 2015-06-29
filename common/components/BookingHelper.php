@@ -3,8 +3,6 @@ namespace common\components;
 
 use common\models\PriceRules;
 use common\models\Room;
-use yii\base\Exception;
-use common\components\ListPriceRules;
 
 class BookingHelper
 {
@@ -20,7 +18,7 @@ class BookingHelper
      * children - количество детей 7-12 лет
      * kids - количество детей 0-7 лет
      *
-     * @param array   $params Параметры для расчета цены
+     * @param array $params Параметры для расчета цены
      *
      * @return int|null Сумма
      * @throws \Exception
@@ -49,54 +47,52 @@ class BookingHelper
             throw new \Exception("Room is not availible");
         }
 
+        // вычислем сумму без скидок
+        $sum = 0;
+        foreach ($priceInfo['days'] as $day => $room_price) {
+            $sum += $room_price->price;
+        }
+
         // делаем выборку
         // все активные правила для заданной комнаты
         $price_rules = PriceRules::find()
             ->joinWith('rooms')
-            ->where(['rooms.room_id' => $room->id])
-            ->andWhere(['active' => 1])
-            ->all()
-            ;
+            ->where(['room.id' => $room->id])
+            ->andWhere(['price_rules.active' => 1])
+            ->all();
 
         // Если есть активные скидки, то проходим по всем
-        if ($price_rules !== null) {
+        if (count($price_rules) > 0) {
             foreach ($price_rules as $key => $price_rule) {
                 $model = ListPriceRules::getModel($price_rule->type, $price_rule->id);
                 if ($model) {
-                    $model->processPriceInfo($priceInfo, $params);
+                    $priceInfo = $model->processPriceInfo($priceInfo, $params);
                 }
             }
-        }
-
-        // вычислем сумму без скидок
-        $sum = 0;
-        foreach ($priceInfo as $day => $room_price) {
-            $sum = $room_price['price'];
-        }
-
-        // суммируем аддитивные если есть
-        $additiveSum = 0;
-        $additiveDiscount = 0;
-        if (iseet($priceInfo['price_rules']['additive']) && count($priceInfo['price_rules']['additive'])) {
-            foreach ($priceInfo['price_rules']['additive'] as $price_rule) {
-                $additiveDiscount += $price_rule['totalDiscount'];
-                $additiveSum += $price_rule['totalPrice'];
-            }
-        }
-
-        // среди остальных выбираем максимальную скидку
-        $otherSum = 0;
-        $otherDiscount = 0;
-        if (isset($priceInfo['price_rules']['other']) && count($priceInfo['price_rules']['other'])) {
-            foreach ($priceInfo['price_rules']['other'] as $price_rule) {
-                if ($otherDiscount < $price_rule['totalDiscount']) {
-                    $otherDiscount = $price_rule['totalDiscount'];
-                    $otherSum = $price_rule['totalPrice'];
+            // суммируем аддитивные если есть
+            $additiveSum = 0;
+            $additiveDiscount = 0;
+            if (isset($priceInfo['price_rules']['additive']) && count($priceInfo['price_rules']['additive'])) {
+                foreach ($priceInfo['price_rules']['additive'] as $price_rule) {
+                    $additiveDiscount += $price_rule['totalDiscount'];
+                    $additiveSum += $price_rule['totalPrice'];
                 }
             }
-        }
 
-        $sum = $sum - $additiveDiscount - $otherDiscount;
+            // среди остальных выбираем максимальную скидку
+            $otherSum = 0;
+            $otherDiscount = 0;
+            if (isset($priceInfo['price_rules']['other']) && count($priceInfo['price_rules']['other'])) {
+                foreach ($priceInfo['price_rules']['other'] as $price_rule_id => $p_rule) {
+                    if ($otherDiscount < $p_rule['totalDiscount']) {
+                        $otherDiscount = $p_rule['totalDiscount'];
+                        $otherSum = $p_rule['totalPrice'];
+                    }
+                }
+            }
+
+            $sum = $sum - $additiveDiscount - $otherDiscount;
+        }
 
         return $sum > 0 ? $sum : null;
     }

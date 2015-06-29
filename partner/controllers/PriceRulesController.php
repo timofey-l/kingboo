@@ -25,6 +25,7 @@ class PriceRulesController extends \yii\web\Controller
         $model = ListPriceRules::getModel($type);
 
         // пробуем получить данные из POST и сохранить правило
+        $req = \Yii::$app->request;
         $post = \Yii::$app->request->post();
         if ($model->load($post)) {
             // проверяем условия
@@ -33,7 +34,7 @@ class PriceRulesController extends \yii\web\Controller
             $valid = true;
 
             // диапазон ограничения даты бронирования
-            if ($post['bookingRange'] === $checkedValue) {
+            if ($req->post('bookingRange', false) === $checkedValue) {
                 $valid = $valid && !(new \DateTime($model->dateFromB))->diff(new \DateTime($model->dateToB))->invert;
             } else {
                 $model->dateFromB = null;
@@ -41,7 +42,7 @@ class PriceRulesController extends \yii\web\Controller
             }
 
             // диапазон ограничения дат проживания
-            if ($post['livingRange'] === $checkedValue) {
+            if ($req->post('livingRange', false) === $checkedValue) {
                 $valid = $valid && !(new \DateTime($model->dateFrom))->diff(new \DateTime($model->dateTo))->invert;
             } else {
                 $model->dateFrom = null;
@@ -49,21 +50,21 @@ class PriceRulesController extends \yii\web\Controller
             }
 
             // минимальная сумма
-            if ($post['minSum'] === $checkedValue) {
+            if ($req->post('minSum', false) === $checkedValue) {
                 $valid = $valid && $model->minSum > 0;
             } else {
                 $model->minSum = null;
             }
 
             // максимальная сумма
-            if ($post['maxSum'] === $checkedValue) {
+            if ($req->post('maxSum', false) === $checkedValue) {
                 $valid = $valid && $model->maxSum > 0;
             } else {
                 $model->minSum = null;
             }
 
             // код
-            if ($post['checkCode'] === $checkedValue) {
+            if ($req->post('checkCode', false) === $checkedValue) {
                 $valid = $valid && $model->code !== '' && $model->code != null && preg_match('/^[a-zA-Z0-9\-+_!]+$/', $model->code);
             } else {
                 $model->code = null;
@@ -83,8 +84,6 @@ class PriceRulesController extends \yii\web\Controller
             ->joinWith('hotel.partner')
             ->where(['partner_user.id' => \Yii::$app->user->id])
             ->all();
-
-//        var_dump($rooms);
 
         return $this->render('create', [
             'model' => $model,
