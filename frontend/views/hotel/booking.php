@@ -114,6 +114,9 @@ $this->title = \Yii::t('frontend', 'Room booking');
 						&nbsp;<?= $hotel->currency->symbol != "" ? $hotel->currency->symbol : $hotel->currency->code ?>
 					</span>
 				</div>
+                <div class="panel-footer">
+                    <?= $form->field($orderForm, 'code')->hint(\Yii::t('frontend', '* If you have')) ?>
+                </div>
 			</div>
 		</div>
 		<div class="col-sm-8">

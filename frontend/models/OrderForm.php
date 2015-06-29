@@ -11,7 +11,7 @@ class OrderForm extends Model
 	public $adults;
 	public $children;
 	public $kids;
-
+    public $code;
 	// информация номерах
 	public $items;
 
@@ -29,9 +29,10 @@ class OrderForm extends Model
 		return [
 			[['roomId', 'dateFrom', 'dateTo', 'adults', 'children', 'kids', 'contact_name', 'contact_surname', 'contact_email'], 'required'],
 			[['roomId', 'adults', 'children', 'kids'], 'number'],
-			[['dateFrom', 'dateTo'], 'string', 'max' => 10, 'min' => 10],
-			[['contact_name', 'contact_surname'], 'string'],
+            [['dateFrom', 'dateTo'], 'string', 'max' => 10, 'min' => 10],
+			[['contact_name', 'contact_surname', 'code'], 'string'],
 			['contact_email', 'email'],
+            [['name', 'surname', 'email', 'phone', 'code'], 'safe'],
 		];
 	}
 
@@ -45,6 +46,7 @@ class OrderForm extends Model
 			'surname' => \Yii::t('frontend', 'Surname'),
 			'email' => \Yii::t('frontend', 'E-mail'),
 			'phone' => \Yii::t('frontend', 'Phone number'),
-		];
+            'code' => \Yii::t('frontend', 'Promo code'),
+        ];
 	}
 }

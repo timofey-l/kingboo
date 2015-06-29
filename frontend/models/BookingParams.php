@@ -24,6 +24,7 @@ class BookingParams extends Model
 	public $kids;
 	public $dateFrom;
 	public $dateTo;
+	public $code;
 
 	public static function getGenderItems()
 	{

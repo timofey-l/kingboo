@@ -67,6 +67,7 @@ class HotelController extends \yii\web\Controller
 				'roomId'   => (int)$orderItem->room_id,
 				'dateFrom' => $orderForm->dateFrom,
 				'dateTo'   => $orderForm->dateTo,
+                'code'     => $orderForm->code,
 			]);
 
 			$orderForm->number = md5(\Yii::$app->getSecurity()->generateRandomString(15) . $orderForm->contact_email);

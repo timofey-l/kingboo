@@ -77,7 +77,8 @@ class Order extends ActiveRecord
 	public function rules()
 	{
 		return [
-			[['dateFrom', 'dateTo'], 'safe'],
+            [['code', 'match', 'pattern' => '/^[a-zA-Z0-9\-+_!]+$/']],
+			[['dateFrom', 'dateTo', 'code'], 'safe'],
 			[['number', 'status', 'contact_email', 'contact_name', 'contact_surname', 'contact_address', 'dateFrom', 'dateTo', 'sum', 'partial_pay_percent', 'pay_sum'], 'required'],
 			[['status', 'contact_address', 'partial_pay', 'partial_pay_percent', 'hotel_id'], 'integer'],
 			[['sum', 'pay_sum'], 'number'],
@@ -111,6 +112,7 @@ class Order extends ActiveRecord
 			'partial_pay'         => Yii::t('orders', 'Partial Pay'),
 			'partial_pay_percent' => Yii::t('orders', 'Partial Pay Percent'),
 			'pay_sum'             => Yii::t('orders', 'Pay Sum'),
+            'code'                => \Yii::t('orders', 'Promo code'),
 		];
 	}
 
