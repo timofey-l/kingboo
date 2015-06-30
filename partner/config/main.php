@@ -39,8 +39,12 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+//            'enableStrictParsing' => true,
             'class' => 'common\components\LangUrlManager',
             'rules' => [
+                '<controller:\w+>' => '<controller>/index',
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+
 	            // Widgets
 	            'GET widget/js/<code:[\d\w]+>' => 'widget/js',
 	            'GET widget/css/<code:[\d\w]+>' => 'widget/css',
@@ -51,6 +55,7 @@ return [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'roomimages'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'roomavaliability'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'hotelimages'],
+
             ],
         ],
         'request' => [
