@@ -108,34 +108,19 @@ $l = \common\models\Lang::$current->url;
 		    </li>
 	    </ul>
 
-	   <p>&nbsp;</p>
         <ul class="sidebar-menu">
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-share"></i> <span>Same tools</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="<?= \yii\helpers\Url::to(['/gii']) ?>"><span class="fa fa-file-code-o"></span> Gii</a>
-                    </li>
-                    <li><a href="<?= \yii\helpers\Url::to(['/debug']) ?>"><span class="fa fa-dashboard"></span> Debug</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-circle-o"></i> Level One <i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-circle-o"></i> Level Two <i class="fa fa-angle-left pull-right"></i>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+            <li>
+                <?= Html::tag('li', Html::a(\Yii::t('partner_support', 'Support'), ['support/index']), [
+                    'class' => $this->context->id == 'support' ? "active" : "",
+                ]) ?>
+            </li>
+        </ul>
+
+        <ul class="sidebar-menu">
+            <li>
+                <?= Html::tag('li', Html::a(\Yii::t('partner_pricerules', 'Discounts'), ['price-rules/index']), [
+                    'class' => $this->context->id == 'price-rules' ? "active" : "",
+                ]) ?>
             </li>
         </ul>
 
