@@ -50,6 +50,7 @@ class SupportController extends Controller
             $model->author = \Yii::$app->user->id;
             $model->parent_id = null;
             $model->unread = 0;
+            $model->unread_admin = 1;
 
             if ($model->save()) {
                 return $this->redirect(['thread', 'id' => $model->id]);
@@ -73,6 +74,7 @@ class SupportController extends Controller
             $newMessage->author = \Yii::$app->user->id;
             $newMessage->parent_id = $model->id;
             $newMessage->unread = 0;
+            $newMessage->unread_admin = 1;
             if ($newMessage->save()) {
                 $model->touch('updated_at');
                 return $this->redirect(['thread', 'id'=> $model->id, '#' => 'id'.$newMessage->id]);

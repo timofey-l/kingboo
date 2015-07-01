@@ -31,11 +31,18 @@ class SupportController extends Controller
         ]);
     }
 
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $dataProvider = new ActiveDataProvider([
             'query' => SupportMessage::find()->where([
                 'parent_id' => null,
-            ])->orderBy(['created_at' => 'DESC']),
+            ]),
+            'sort' => [
+                'defaultOrder' => [
+                    'updated_at' => SORT_DESC,
+                    'created_at' => SORT_DESC,
+                ]
+            ]
         ]);
 
         return $this->render('index', [
@@ -43,7 +50,8 @@ class SupportController extends Controller
         ]);
     }
 
-    public function actionThread($id) {
+    public function actionThread($id)
+    {
         $model = SupportMessage::findOne($id);
         if (!$model || $model->author != \Yii::$app->user->id || $model->parent_id) {
             throw new ForbiddenHttpException('Access forbidden');
@@ -53,10 +61,11 @@ class SupportController extends Controller
         if ($newMessage->load(\Yii::$app->request->post())) {
             $newMessage->author = null;
             $newMessage->parent_id = $model->id;
+            $newMessage->unread_admin = 0;
             $newMessage->unread = 1;
             if ($newMessage->save()) {
 //                $model->touch();
-                return $this->redirect(['thread', 'id'=> $model->id, '#' => 'id'.$newMessage->id]);
+                return $this->redirect(['thread', 'id' => $model->id, '#' => 'id' . $newMessage->id]);
             } else {
                 throw new BadRequestHttpException();
             }
@@ -75,6 +84,19 @@ class SupportController extends Controller
         ]);
 
         return $result;
+    }
+
+    public function actionSetReaded($id)
+    {
+        $model = SupportMessage::findOne($id);
+        if (!$model) {
+            throw new ForbiddenHttpException('Model not found');
+        }
+
+        $model->unread_admin = 0;
+        if ($model->save(false)) {
+            return $this->redirect(['thread', 'id' => $model->parent_id ? $model->parent_id : $model->id]);
+        }
     }
 
 }

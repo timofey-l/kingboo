@@ -13,7 +13,15 @@ $this->title = \Yii::t('support', 'Support');
             'label' => \Yii::t('support', 'Text'),
             'format' => 'raw',
             'value' => function($item) {
-                return \yii\helpers\Html::a(\yii\helpers\Html::encode($item->text), ['thread', 'id' => $item->id]);
+                $result = \yii\helpers\Html::a(\yii\helpers\Html::encode($item->text), ['thread', 'id' => $item->id]);
+                $count = \common\models\SupportMessage::find()->where(['parent_id' => $item->id, 'unread_admin' => 1])->count() + $item->unread_admin;
+                if ($count) {
+                    $result = \yii\helpers\Html::tag('span', \Yii::t('support', 'Unread messages: {n}', ['n' => $count]), [
+                        'class' => 'label label-warning',
+                    ]) . "<br>" . $result;
+                }
+
+                return $result;
             }
         ],
         [

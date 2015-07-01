@@ -11,6 +11,7 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property integer $unread
+ * @property integer $unread_admin
  * @property string $created_at
  * @property string $updated_at
  * @property string $text
@@ -66,6 +67,7 @@ class SupportMessage extends ActiveRecord
         return [
             'id' => Yii::t('support', 'ID'),
             'unread' => Yii::t('support', 'Unread'),
+            'unread_admin' => Yii::t('support', 'Unread admin'),
             'created_at' => Yii::t('support', 'Created At'),
             'updated_at' => Yii::t('support', 'Updated At'),
             'text' => Yii::t('support', 'Text'),

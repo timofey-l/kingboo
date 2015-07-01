@@ -21,18 +21,25 @@ $this->title = \Yii::t('support', 'Support message #{n}', ['n' => $model->id]);
     <div class="panel-body">
         <?= \yii\helpers\Html::encode($model->text) ?>
     </div>
+    <?php if ($model->unread_admin): ?>
+        <div class="panel-footer">
+            <?= \yii\helpers\Html::a(\Yii::t('support', 'Set as readed'), ['set-readed', 'id' => $model->id], [
+                'class' => 'btn btn-warning',
+            ]) ?>
+        </div>
+    <?php endif; ?>
 </div>
 
 <?php foreach ($answers as $answer): ?>
     <div class="row">
         <div class="col-xs-11 col-sm-10 <?= $answer->author ? "" : "col-xs-offset-1 col-sm-offset-2" ?>">
-            <div class="panel panel-<?= $answer->unread ? "warning panel-solid" : "default" ?>" id="id<?= $answer->id ?>">
+            <div class="panel panel-<?= $answer->unread_admin ? "warning panel-solid" : "default" ?>" id="id<?= $answer->id ?>">
                 <div class="panel-heading with-border">
                     <h3 class="panel-title">
                         <?php if (!$answer->author): ?>
                             <i class="fa fa-group"></i>  <?= \Yii::t('support', 'Support team') ?>
                         <?php else: ?>
-                            <?= \Yii::t('support', 'Your message') ?>
+                            <?= \Yii::t('support', 'User message') ?>
                         <?php endif; ?>
                     <div class="panel-tools pull-right">
                         <small><?= (new DateTime($answer->created_at))->format(\Yii::t('support', 'd/m/Y H:i:s')) ?></small>
@@ -42,6 +49,13 @@ $this->title = \Yii::t('support', 'Support message #{n}', ['n' => $model->id]);
                 <div class="panel-body">
                     <?= \yii\helpers\Html::encode($answer->text) ?>
                 </div>
+                <?php if ($answer->unread_admin): ?>
+                <div class="panel-footer">
+                    <?= \yii\helpers\Html::a(\Yii::t('support', 'Set as readed'), ['set-readed', 'id' => $answer->id], [
+                        'class' => 'btn btn-warning',
+                    ]) ?>
+                </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -51,7 +65,7 @@ $this->title = \Yii::t('support', 'Support message #{n}', ['n' => $model->id]);
 <?= $form->field($newMessage, 'hash')->hiddenInput()->label(false); ?>
 <div class="panel panel-solid panel-default">
     <div class="panel-heading with-border">
-        <h3 class="panel-title"><?= \Yii::t('support', 'Your message') ?></h3>
+        <h3 class="panel-title"><?= \Yii::t('support', 'Support message') ?></h3>
     </div>
     <div class="panel-body">
         <?= $form->field($newMessage, 'text')->textarea(['rows' => 5])->label(false) ?>
