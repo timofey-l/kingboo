@@ -10,15 +10,12 @@ if (Yii::$app->controller->action->id === 'login' ||Yii::$app->controller->actio
     );
 } else {
 
-    if (class_exists('backend\assets\AppAsset')) {
-        backend\assets\AppAsset::register($this);
-    } else {
-        app\assets\AppAsset::register($this);
-    }
+    partner\assets\AppAsset::register($this);
 
-    dmstr\web\AdminLteAsset::register($this);
-
-    $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@bower/admin-lte/dist');
+    $adminlte = dmstr\web\AdminLteAsset::register($this);
+    $this->params['adminlte'] = $adminlte->baseUrl;
+    $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
+    $directoryAsset = $adminlte->baseUrl;
     ?>
     <?php $this->beginPage() ?>
     <!DOCTYPE html>
