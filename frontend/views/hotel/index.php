@@ -3,20 +3,22 @@
 /* @var $model common\models\Hotel */
 /* @var $bookParams \frontend\models\BookingParams */
 $l = \common\models\Lang::$current->url;
-$directoryBower = Yii::$app->assetManager->getPublishedUrl('@bower');
+$assetManager = Yii::$app->assetManager;
+//$directoryBower = $assetManager->getPublishedUrl('@bower');
 
 $this->title = $model->{'title_' . $l};
 
 // underscore.js
-$this->registerJsFile($directoryBower . '/underscore/underscore-min.js');
+$this->registerJsFile($assetManager->publish('@bower/underscore')[1] . '/underscore-min.js');
 
 //Подключаем colorbox
-$this->registerJsFile($directoryBower . '/colorbox/jquery.colorbox-min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
-$this->registerJsFile($directoryBower . '/colorbox/i18n/jquery.colorbox-' . ($l == 'en' ? 'uk' : $l) . '.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
-$this->registerCssFile($directoryBower . '/colorbox/example1/colorbox.css', [], 'colorbox');
+$colorbox = $assetManager->publish('@bower/colorbox')[1];
+$this->registerJsFile($colorbox . '/jquery.colorbox-min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJsFile($colorbox . '/i18n/jquery.colorbox-' . ($l == 'en' ? 'uk' : $l) . '.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerCssFile($colorbox . '/example1/colorbox.css', [], 'colorbox');
 
 // Подключаем библиотеку moment.js
-$this->registerJsFile($directoryBower . '/moment/min/moment-with-locales.min.js');
+$this->registerJsFile($assetManager->publish('@bower/moment/min')[1] . '/moment-with-locales.min.js');
 
 // Галлерея
 \frontend\assets\GalleryAsset::register($this);
@@ -27,9 +29,10 @@ $this->registerJsFile('/js/search.js', ['depends' => [\frontend\assets\GalleryAs
 $this->registerJsFile('/js/search-app.js', ['depends' => [\partner\assets\AngularAsset::className()]]);
 
 // Плагин datepicker
-$this->registerJsFile($directoryBower . '/admin-lte/plugins/datepicker/bootstrap-datepicker.js', ['depends' => [\yii\bootstrap\BootstrapAsset::className(), \yii\bootstrap\BootstrapPluginAsset::className()]]);
-$this->registerJsFile($directoryBower . '/admin-lte/plugins/datepicker/locales/bootstrap-datepicker.' . $l . '.js', ['depends' => [\yii\bootstrap\BootstrapAsset::className(), \yii\bootstrap\BootstrapPluginAsset::className()]]);
-$this->registerCssFile($directoryBower . '/admin-lte/plugins/datepicker/datepicker3.css', ['depends' => [\frontend\assets\GalleryAsset::className()]]);
+$datepicker = $assetManager->publish('@vendor/almasaeed2010/adminlte/plugins/datepicker')[1];
+$this->registerJsFile($datepicker . '/bootstrap-datepicker.js', ['depends' => [\yii\bootstrap\BootstrapAsset::className(), \yii\bootstrap\BootstrapPluginAsset::className()]]);
+$this->registerJsFile($datepicker . '/locales/bootstrap-datepicker.' . $l . '.js', ['depends' => [\yii\bootstrap\BootstrapAsset::className(), \yii\bootstrap\BootstrapPluginAsset::className()]]);
+$this->registerCssFile($datepicker . '/datepicker3.css', ['depends' => [\frontend\assets\GalleryAsset::className()]]);
 ?>
 
 <script>
