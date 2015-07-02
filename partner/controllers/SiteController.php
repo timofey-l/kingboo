@@ -1,6 +1,9 @@
 <?php
 namespace partner\controllers;
 
+use common\models\Hotel;
+use common\models\Order;
+use common\models\SupportMessage;
 use partner\models\PartnerUser;
 use Yii;
 use partner\models\LoginForm;
@@ -65,7 +68,19 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $partner = PartnerUser::findOne(\Yii::$app->user->id);
+        $hotels = $partner->hotels;
+        $orders = Order::find()->joinWith('hotel.partner')->where(['partner_user.id' => \Yii::$app->user->id])->all();
+        $messages =SupportMessage::find()->where(['author' => \Yii::$app->user->id, 'parent_id' => null])->all();
+
+        $image = $hotels[0]->images[0];
+
+        return $this->render('index', [
+            'partner' => $partner,
+            'hotels' => $hotels,
+            'orders' => $orders,
+            'messages' => $messages,
+        ]);
     }
 
     public function actionLogin()
