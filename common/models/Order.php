@@ -77,7 +77,7 @@ class Order extends ActiveRecord
 	public function rules()
 	{
 		return [
-            [['code', 'match', 'pattern' => '/^[a-zA-Z0-9\-+_!]+$/']],
+            ['code', 'match', 'pattern' => '/^[a-zA-Z0-9\-+_!]+$/'],
 			[['dateFrom', 'dateTo', 'code'], 'safe'],
 			[['number', 'status', 'contact_email', 'contact_name', 'contact_surname', 'contact_address', 'dateFrom', 'dateTo', 'sum', 'partial_pay_percent', 'pay_sum'], 'required'],
 			[['status', 'contact_address', 'partial_pay', 'partial_pay_percent', 'hotel_id'], 'integer'],

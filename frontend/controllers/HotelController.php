@@ -112,6 +112,7 @@ class HotelController extends \yii\web\Controller
 			$orderForm->partial_pay_percent = $hotel->partial_pay_percent;
 			$orderForm->partial_pay = false; // по умолчанию полная оплата
 			$orderForm->hotel_id = $bookingParams->hotelId;
+            $orderForm->code = '';
 
 			$items = [];
 			$items[] = new OrderItem([

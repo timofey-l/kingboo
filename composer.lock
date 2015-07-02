@@ -7,50 +7,44 @@
     "hash": "20c8eef9dbe41235a5dc51d9866b03ae",
     "packages": [
         {
-            "name": "bower-asset/admin-lte",
-            "version": "2.1.1",
+            "name": "almasaeed2010/adminlte",
+            "version": "v2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/almasaeed2010/AdminLTE.git",
-                "reference": "e55c2b85aa037e9ecd4ef30f913104dde91a2826"
+                "reference": "406de4e708e84ed0abbc08b09870828254a6b2ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/almasaeed2010/AdminLTE/zipball/e55c2b85aa037e9ecd4ef30f913104dde91a2826",
-                "reference": "e55c2b85aa037e9ecd4ef30f913104dde91a2826",
+                "url": "https://api.github.com/repos/almasaeed2010/AdminLTE/zipball/406de4e708e84ed0abbc08b09870828254a6b2ef",
+                "reference": "406de4e708e84ed0abbc08b09870828254a6b2ef",
                 "shasum": ""
             },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": [
-                    "index2.html",
-                    "dist/css/AdminLTE.css",
-                    "dist/js/app.js",
-                    "build/less/AdminLTE.less"
-                ],
-                "bower-asset-ignore": [
-                    "/.*",
-                    "node_modules",
-                    "bower_components",
-                    "composer.json",
-                    "documentation"
-                ]
-            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "description": "Admin dashboard and control panel template",
+            "authors": [
+                {
+                    "name": "Abdullah Almsaeed",
+                    "email": "support@almsaeedstudio.com"
+                }
+            ],
+            "description": "AdminLTE - admin control panel and dashboard that's based on Bootstrap 3",
+            "homepage": "http://almsaeedstudio.com/",
             "keywords": [
+                "JS",
                 "admin",
-                "backend",
-                "bootstrap",
+                "back-end",
                 "css",
-                "html",
-                "js",
+                "less",
                 "responsive",
                 "template",
-                "theme"
-            ]
+                "theme",
+                "web"
+            ],
+            "time": "2015-06-08 22:41:48"
         },
         {
             "name": "bower-asset/angular",
@@ -143,16 +137,16 @@
         },
         {
             "name": "bower-asset/bootstrap",
-            "version": "v3.3.4",
+            "version": "v3.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "a10eb60bc0b07b747fa0c4ebd8821eb7307bd07f"
+                "reference": "16b48259a62f576e52c903c476bd42b90ab22482"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/a10eb60bc0b07b747fa0c4ebd8821eb7307bd07f",
-                "reference": "a10eb60bc0b07b747fa0c4ebd8821eb7307bd07f",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/16b48259a62f576e52c903c476bd42b90ab22482",
+                "reference": "16b48259a62f576e52c903c476bd42b90ab22482",
                 "shasum": ""
             },
             "require": {
@@ -162,13 +156,7 @@
             "extra": {
                 "bower-asset-main": [
                     "less/bootstrap.less",
-                    "dist/css/bootstrap.css",
-                    "dist/js/bootstrap.js",
-                    "dist/fonts/glyphicons-halflings-regular.eot",
-                    "dist/fonts/glyphicons-halflings-regular.svg",
-                    "dist/fonts/glyphicons-halflings-regular.ttf",
-                    "dist/fonts/glyphicons-halflings-regular.woff",
-                    "dist/fonts/glyphicons-halflings-regular.woff2"
+                    "dist/js/bootstrap.js"
                 ],
                 "bower-asset-ignore": [
                     "/.*",
@@ -181,6 +169,9 @@
                     "test-infra"
                 ]
             },
+            "license": [
+                "MIT"
+            ],
             "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
             "keywords": [
                 "css",
@@ -233,6 +224,43 @@
                 "popup",
                 "ui"
             ]
+        },
+        {
+            "name": "bower-asset/fontawesome",
+            "version": "v4.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FortAwesome/Font-Awesome.git",
+                "reference": "41b9ed01103e6820c3cb043ba7ddab30ecd3f4c0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/41b9ed01103e6820c3cb043ba7ddab30ecd3f4c0",
+                "reference": "41b9ed01103e6820c3cb043ba7ddab30ecd3f4c0",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "./css/font-awesome.css",
+                    "./fonts/*"
+                ],
+                "bower-asset-ignore": [
+                    "*/.*",
+                    "*.json",
+                    "src",
+                    "*.yml",
+                    "Gemfile",
+                    "Gemfile.lock",
+                    "*.md"
+                ]
+            },
+            "license": [
+                "OFL-1.1",
+                "MIT",
+                "CC-BY-3.0"
+            ],
+            "description": "Font Awesome"
         },
         {
             "name": "bower-asset/jquery",
@@ -459,16 +487,16 @@
         },
         {
             "name": "bower-asset/swiper",
-            "version": "v3.0.7",
+            "version": "v3.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nolimits4web/Swiper.git",
-                "reference": "282bc001ec336b23780a85e46ee60fddfdf4181a"
+                "reference": "7de949b42547ee28b430df31185b6617cd0a4c4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nolimits4web/Swiper/zipball/282bc001ec336b23780a85e46ee60fddfdf4181a",
-                "reference": "282bc001ec336b23780a85e46ee60fddfdf4181a",
+                "url": "https://api.github.com/repos/nolimits4web/Swiper/zipball/7de949b42547ee28b430df31185b6617cd0a4c4a",
+                "reference": "7de949b42547ee28b430df31185b6617cd0a4c4a",
                 "shasum": ""
             },
             "type": "bower-asset-library",
@@ -683,22 +711,22 @@
         },
         {
             "name": "dmstr/yii2-adminlte-asset",
-            "version": "2.0.0",
+            "version": "2.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dmstr/yii2-adminlte-asset.git",
-                "reference": "9f3c5b8b771bac729f5c88a375ad5a0fab84f30c"
+                "reference": "c5d2ea94209a2b087348ea9ee8fda11eedf943b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dmstr/yii2-adminlte-asset/zipball/9f3c5b8b771bac729f5c88a375ad5a0fab84f30c",
-                "reference": "9f3c5b8b771bac729f5c88a375ad5a0fab84f30c",
+                "url": "https://api.github.com/repos/dmstr/yii2-adminlte-asset/zipball/c5d2ea94209a2b087348ea9ee8fda11eedf943b6",
+                "reference": "c5d2ea94209a2b087348ea9ee8fda11eedf943b6",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/admin-lte": "~2.0",
+                "almasaeed2010/adminlte": "~2.0",
                 "cebe/yii2-gravatar": "1.*",
-                "rmrevin/yii2-fontawesome": "2.9.*",
+                "rmrevin/yii2-fontawesome": "~2.9",
                 "yiisoft/yii2": "2.*",
                 "yiisoft/yii2-bootstrap": "2.*"
             },
@@ -733,7 +761,7 @@
                 "extension",
                 "yii2"
             ],
-            "time": "2015-05-01 01:07:21"
+            "time": "2015-06-25 01:41:38"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -778,54 +806,6 @@
                 "html"
             ],
             "time": "2013-11-30 08:25:19"
-        },
-        {
-            "name": "fortawesome/font-awesome",
-            "version": "v4.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/FortAwesome/Font-Awesome.git",
-                "reference": "41b9ed01103e6820c3cb043ba7ddab30ecd3f4c0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/41b9ed01103e6820c3cb043ba7ddab30ecd3f4c0",
-                "reference": "41b9ed01103e6820c3cb043ba7ddab30ecd3f4c0",
-                "shasum": ""
-            },
-            "require-dev": {
-                "jekyll": "1.0.2",
-                "lessc": "1.4.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.0.x-dev"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "OFL-1.1",
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Dave Gandy",
-                    "email": "dave@fontawesome.io",
-                    "homepage": "http://twitter.com/davegandy",
-                    "role": "Developer"
-                }
-            ],
-            "description": "The iconic font and CSS framework",
-            "homepage": "http://fontawesome.io/",
-            "keywords": [
-                "FontAwesome",
-                "awesome",
-                "bootstrap",
-                "font",
-                "icon"
-            ],
-            "time": "2015-01-22 18:09:42"
         },
         {
             "name": "imagine/imagine",
@@ -881,22 +861,26 @@
         },
         {
             "name": "mongosoft/yii2-upload-behavior",
-            "version": "0.1.2",
+            "version": "0.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mongosoft/yii2-upload-behavior.git",
-                "reference": "f44d71e302a6041a0772de2ad17d51bed124897b"
+                "reference": "8868928ae53ecc8e73eca4ec873a4ea2c3ec984a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mongosoft/yii2-upload-behavior/zipball/f44d71e302a6041a0772de2ad17d51bed124897b",
-                "reference": "f44d71e302a6041a0772de2ad17d51bed124897b",
+                "url": "https://api.github.com/repos/mongosoft/yii2-upload-behavior/zipball/8868928ae53ecc8e73eca4ec873a4ea2c3ec984a",
+                "reference": "8868928ae53ecc8e73eca4ec873a4ea2c3ec984a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.4.0",
                 "yiisoft/yii2": "*",
                 "yiisoft/yii2-imagine": "*"
+            },
+            "require-dev": {
+                "phpunit/dbunit": "~1.0",
+                "phpunit/phpunit": "~4.0"
             },
             "type": "yii2-extension",
             "autoload": {
@@ -926,28 +910,34 @@
                 "upload",
                 "yii2"
             ],
-            "time": "2015-04-04 11:49:39"
+            "time": "2015-05-25 20:44:14"
         },
         {
             "name": "rmrevin/yii2-fontawesome",
-            "version": "2.9.2",
+            "version": "2.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rmrevin/yii2-fontawesome.git",
-                "reference": "717747ffd1f5169e4217b3f17e407366b51d22ca"
+                "reference": "8786dbfe1edfc0b25aed9e25461ec4e4e37a1d15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rmrevin/yii2-fontawesome/zipball/717747ffd1f5169e4217b3f17e407366b51d22ca",
-                "reference": "717747ffd1f5169e4217b3f17e407366b51d22ca",
+                "url": "https://api.github.com/repos/rmrevin/yii2-fontawesome/zipball/8786dbfe1edfc0b25aed9e25461ec4e4e37a1d15",
+                "reference": "8786dbfe1edfc0b25aed9e25461ec4e4e37a1d15",
                 "shasum": ""
             },
             "require": {
-                "fortawesome/font-awesome": "4.3.*",
+                "bower-asset/fontawesome": "4.3.*",
                 "php": ">=5.4.0",
                 "yiisoft/yii2": "2.0.*"
             },
             "type": "yii2-extension",
+            "extra": {
+                "asset-installer-paths": {
+                    "npm-asset-library": "vendor/npm",
+                    "bower-asset-library": "vendor/bower"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "rmrevin\\yii\\fontawesome\\": ""
@@ -972,27 +962,27 @@
                 "font",
                 "yii"
             ],
-            "time": "2015-04-28 20:15:13"
+            "time": "2015-06-29 09:47:23"
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v5.4.0",
+            "version": "v5.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "31454f258f10329ae7c48763eb898a75c39e0a9f"
+                "reference": "0697e6aa65c83edf97bb0f23d8763f94e3f11421"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/31454f258f10329ae7c48763eb898a75c39e0a9f",
-                "reference": "31454f258f10329ae7c48763eb898a75c39e0a9f",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/0697e6aa65c83edf97bb0f23d8763f94e3f11421",
+                "reference": "0697e6aa65c83edf97bb0f23d8763f94e3f11421",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "require-dev": {
-                "mockery/mockery": "~0.9.1"
+                "mockery/mockery": "~0.9.1,<0.9.4"
             },
             "type": "library",
             "extra": {
@@ -1021,10 +1011,11 @@
             "description": "Swiftmailer, free feature-rich PHP mailer",
             "homepage": "http://swiftmailer.org",
             "keywords": [
+                "email",
                 "mail",
                 "mailer"
             ],
-            "time": "2015-03-14 06:06:39"
+            "time": "2015-06-06 14:19:39"
         },
         {
             "name": "tedivm/jshrink",
@@ -1425,9 +1416,9 @@
                 "bower-asset/jquery": ">=1.7"
             },
             "require-dev": {
-                "bower-asset/jasmine-ajax": ">=1.3.1,<1.4",
-                "bower-asset/jasmine-jquery": ">=1.5.2,<1.6",
-                "bower-asset/jquery": ">=1.7,<1.8"
+                "bower-asset/jasmine-ajax": "~1.3.1",
+                "bower-asset/jasmine-jquery": "~1.5.2",
+                "bower-asset/jquery": "~1.7"
             },
             "type": "bower-asset-library",
             "extra": {
@@ -1436,16 +1427,16 @@
         },
         {
             "name": "fzaninotto/faker",
-            "version": "v1.4.0",
+            "version": "v1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "010c7efedd88bf31141a02719f51fb44c732d5a0"
+                "reference": "d0190b156bcca848d401fb80f31f504f37141c8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/010c7efedd88bf31141a02719f51fb44c732d5a0",
-                "reference": "010c7efedd88bf31141a02719f51fb44c732d5a0",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/d0190b156bcca848d401fb80f31f504f37141c8d",
+                "reference": "d0190b156bcca848d401fb80f31f504f37141c8d",
                 "shasum": ""
             },
             "require": {
@@ -1455,14 +1446,18 @@
                 "phpunit/phpunit": "~4.0",
                 "squizlabs/php_codesniffer": "~1.5"
             },
+            "suggest": {
+                "ext-intl": "*"
+            },
             "type": "library",
             "extra": {
-                "branch-alias": []
+                "branch-alias": {
+                    "dev-master": "1.5.x-dev"
+                }
             },
             "autoload": {
-                "psr-0": {
-                    "Faker": "src/",
-                    "Faker\\PHPUnit": "test/"
+                "psr-4": {
+                    "Faker\\": "src/Faker/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1480,7 +1475,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2014-06-04 14:43:02"
+            "time": "2015-05-29 06:29:14"
         },
         {
             "name": "phpspec/php-diff",

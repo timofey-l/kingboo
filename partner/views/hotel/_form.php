@@ -10,11 +10,11 @@ use \common\models\Currency;
 
 $langs = \common\models\Lang::sortedLangList();   
 
-\Yii::$app->assetManager->publish('@bower/admin-lte/plugins/iCheck');
-\Yii::$app->assetManager->publish('@bower/admin-lte/plugins/bootstrap-slider');
+\Yii::$app->assetManager->publish('@vendor/almasaeed2010/adminlte/plugins/iCheck');
+\Yii::$app->assetManager->publish('@vendor/almasaeed2010/adminlte/plugins/bootstrap-slider');
 
-$dir_iCheck  = \Yii::$app->assetManager->getPublishedUrl('@bower/admin-lte/plugins/iCheck');
-$dir_slider  = \Yii::$app->assetManager->getPublishedUrl('@bower/admin-lte/plugins/bootstrap-slider');
+$dir_iCheck  = \Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/plugins/iCheck');
+$dir_slider  = \Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/plugins/bootstrap-slider');
 
 // подключаем плагины iCheck и slider
 $this->registerJsFile($dir_iCheck . '/icheck.min.js', ['depends' => \yii\web\JqueryAsset::className()]);

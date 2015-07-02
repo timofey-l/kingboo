@@ -19,14 +19,14 @@ $assetOptions = ['depends' => [
 
 
 // iCheck plugin
-$icheck = \Yii::$app->assetManager->publish('@bower/admin-lte/plugins/iCheck');
+$icheck = \Yii::$app->assetManager->publish('@vendor/almasaeed2010/adminlte/plugins/iCheck');
 //$this->registerCssFile($icheck[1] . '/all.css', $assetOptions);
 $this->registerCssFile($icheck[1] . '/flat/flat.css', $assetOptions);
 $this->registerCssFile($icheck[1] . '/flat/blue.css', $assetOptions);
 $this->registerJsFile($icheck[1] . '/icheck.min.js', $assetOptions);
 
 //DatePicker Bootstrap plugin
-$datePicker = \Yii::$app->assetManager->publish('@bower/admin-lte/plugins/datepicker');
+$datePicker = \Yii::$app->assetManager->publish('@vendor/almasaeed2010/adminlte/plugins/datepicker');
 $this->registerCssFile($datePicker[1] . '/datepicker3.css', $assetOptions);
 $this->registerJsFile($datePicker[1] . '/bootstrap-datepicker.js', $assetOptions);
 if (\common\models\Lang::$current->url != 'en')

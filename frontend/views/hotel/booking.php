@@ -6,17 +6,21 @@
 /* @var $orderForm \common\models\Order */
 
 $l = \common\models\Lang::$current->url;
-$bower = \Yii::$app->assetManager->getPublishedUrl('@bower');
+$assetManager = \Yii::$app->assetManager;
+//$bower = \Yii::$app->assetManager->getPublishedUrl('@bower');
+
 
 //Подключаем colorbox
-$this->registerJsFile($bower . '/colorbox/jquery.colorbox-min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
-$this->registerJsFile($bower . '/colorbox/i18n/jquery.colorbox-' . ($l == 'en' ? 'uk' : $l) . '.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
-$this->registerCssFile($bower . '/colorbox/example1/colorbox.css', [], 'colorbox');
+$colorbox = $assetManager->publish('@bower/colorbox')[1];
+$this->registerJsFile($colorbox . '/jquery.colorbox-min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJsFile($colorbox . '/i18n/jquery.colorbox-' . ($l == 'en' ? 'uk' : $l) . '.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerCssFile($colorbox . '/example1/colorbox.css', [], 'colorbox');
 
 // bootstrap transition.js plugin
-$this->registerJsFile($bower . "/bootstrap/js/transition.js", ['depends' => [\yii\bootstrap\BootstrapPluginAsset::className()]]);
-$this->registerJsFile($bower . "/bootstrap/js/carousel.js", ['depends' => [\yii\bootstrap\BootstrapPluginAsset::className()]]);
-$this->registerJsFile($bower . "/bootstrap/js/tooltip.js", ['depends' => [\yii\bootstrap\BootstrapPluginAsset::className()]]);
+$bootstrap_js = $assetManager->publish('@bower/bootstrap/js')[1];
+$this->registerJsFile($bootstrap_js . "/transition.js", ['depends' => [\yii\bootstrap\BootstrapPluginAsset::className()]]);
+$this->registerJsFile($bootstrap_js . "/carousel.js", ['depends' => [\yii\bootstrap\BootstrapPluginAsset::className()]]);
+$this->registerJsFile($bootstrap_js . "/tooltip.js", ['depends' => [\yii\bootstrap\BootstrapPluginAsset::className()]]);
 
 $this->registerJsFile('/js/order.js', ['depends' => [\yii\web\YiiAsset::className()]]);
 
