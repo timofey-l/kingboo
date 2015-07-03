@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use Faker\Provider\cs_CZ\DateTime;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -184,4 +185,16 @@ class Order extends ActiveRecord
 	{
 		return $this->hasOne(Hotel::className(), ['id' => 'hotel_id']);
 	}
+
+    public function getSumText() {
+        if ($currency = $this->orderItems[0]->room->hotel->currency) {
+            return $currency->getFormatted($this->sum);
+        } else {
+            return $this->sum;
+        }
+    }
+
+    public function getNights() {
+        return (new \DateTime($this->dateFrom))->diff((new \DateTime($this->dateTo)))->days;
+    }
 }

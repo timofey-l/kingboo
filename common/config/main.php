@@ -2,6 +2,7 @@
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'language'=>'ru-RU',
+    'name' => 'king-boo.com',
     'components' => [
         'assetManager' => [
             'linkAssets' => true,

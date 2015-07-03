@@ -5,18 +5,21 @@
 
 $this->title = \Yii::t('support', 'New message to support');
 
+$this->params['breadcrumbs'][] = ['label' => Yii::t('partner_support', 'Support messages'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = \Yii::t('partner_support', 'New message');
 ?>
 
 <?php $form = \yii\bootstrap\ActiveForm::begin() ?>
 <?= $form->field($model, 'hash')->hiddenInput()->label(false); ?>
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-lg-6 col-md-10 col-sm-12">
         <div class="box box-default">
             <div class="box-header with-border">
-                <h3 class="box-title"><?= \Yii::t('support', 'Message text') ?></h3>
+                <h3 class="box-title"><?= \Yii::t('support', 'Contacting сustomer support') ?></h3>
             </div>
             <div class="box-body">
-                <?= $form->field($model, 'text')->textarea(['rows' => 10])->label(false) ?>
+                <?= $form->field($model, 'title'); ?>
+                <?= $form->field($model, 'text')->textarea(['rows' => 10])?>
             </div>
             <div class="box-footer">
                 <div class="pull-right">

@@ -36,7 +36,10 @@ class SupportController extends Controller
             'query' => SupportMessage::find()->where([
                 'author' => \Yii::$app->user->id,
                 'parent_id' => null,
-            ])->orderBy(['created_at' => 'DESC']),
+            ])->orderBy(['updated_at' => SORT_DESC]),
+            'pagination' => [
+                'pageSize' => 10,
+            ]
         ]);
 
         return $this->render('index', [
@@ -46,6 +49,7 @@ class SupportController extends Controller
 
     public function actionCreate() {
         $model = new SupportMessage();
+        $model->scenario = 'insert';
         if ($model->load(\Yii::$app->request->post())) {
             $model->author = \Yii::$app->user->id;
             $model->parent_id = null;

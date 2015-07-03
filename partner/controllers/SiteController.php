@@ -70,16 +70,46 @@ class SiteController extends Controller
     {
         $partner = PartnerUser::findOne(\Yii::$app->user->id);
         $hotels = $partner->hotels;
-        $orders = Order::find()->joinWith('hotel.partner')->where(['partner_user.id' => \Yii::$app->user->id])->all();
-        $messages =SupportMessage::find()->where(['author' => \Yii::$app->user->id, 'parent_id' => null])->all();
+        $orders = Order::find()
+            ->joinWith('hotel.partner')
+            ->orderBy(['created_at' => SORT_DESC])
+            ->where(['partner_user.id' => \Yii::$app->user->id])
+            ->limit(5)
+            ->all();
 
-        $image = $hotels[0]->images[0];
+        $messages =SupportMessage::find()
+            ->where([
+                'author' => \Yii::$app->user->id,
+                'parent_id' => null
+            ])
+            ->orderBy(['updated_at' => SORT_DESC])
+            ->limit(5)
+            ->all();
+
+        $newMessagesCount = SupportMessage::find()
+            ->joinWith(['parent' => function($q){
+                $q->from('support_messages p');
+            }])
+            ->where([
+                'support_messages.unread' => 1,
+                'p.author' => \Yii::$app->user->id,
+            ])->count();
+
+        $newOrdersCount = Order::find()
+            ->joinWith('hotel.partner')
+            ->where([
+                'partner_user.id' => \Yii::$app->user->id,
+                'viewed' => 0,
+            ])
+            ->count();
 
         return $this->render('index', [
             'partner' => $partner,
             'hotels' => $hotels,
             'orders' => $orders,
             'messages' => $messages,
+            'newOrdersCount' => $newOrdersCount,
+            'newMessagesCount' => $newMessagesCount,
         ]);
     }
 

@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%support_messages}}".
@@ -18,6 +19,7 @@ use yii\db\ActiveRecord;
  * @property integer $author
  * @property integer $parent_id
  * @property string $hash
+ * @property string $title
  */
 class SupportMessage extends ActiveRecord
 {
@@ -55,8 +57,15 @@ class SupportMessage extends ActiveRecord
             [['unread', 'author', 'parent_id'], 'integer'],
             [['text'], 'required'],
             [['hash'], 'safe'],
-            [['text'], 'string']
+            [['text', 'title'], 'string'],
+            [['title', 'text'], 'required', 'on' => 'insert'],
         ];
+    }
+
+    public function scenarios() {
+        return ArrayHelper::merge(parent::scenarios(),[
+            'insert' => ['title', 'text'],
+        ]);
     }
 
     /**
@@ -73,6 +82,7 @@ class SupportMessage extends ActiveRecord
             'text' => Yii::t('support', 'Text'),
             'author' => Yii::t('support', 'Author'),
             'parent_id' => Yii::t('support', 'Parent ID'),
+            'title' => Yii::t('support', 'Title'),
         ];
     }
 
@@ -93,7 +103,7 @@ class SupportMessage extends ActiveRecord
             ->count();
     }
 
-    public function getPartner() {
+    public function getParent() {
         return $this->hasOne(static::className(), ['id' => 'parent_id']);
     }
 

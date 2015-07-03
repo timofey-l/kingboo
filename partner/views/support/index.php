@@ -1,36 +1,50 @@
 <?php
 
 /* @var $this yii\web\View */
+/* @var $dataProvider \yii\data\ActiveDataProvider */
 
 $this->title = \Yii::t('support', 'Support');
 
+$this->params['breadcrumbs'][] = \Yii::t('partner_support', 'Support messages');
+
+$tickets = $dataProvider->getModels();
+
 ?>
+<div class="row">
+    <div class="col-md-12">
+        <?= \yii\helpers\Html::a(
+            '<i class="fa fa-comments-o"></i> ' . \Yii::t('partner_support', 'Start new dialog'),
+            ['create'],
+            ['class' => 'btn btn-success pull-right']) ?>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-12">
+        <?php foreach ($tickets as $index => $ticket): ?>
+            <?php /** @var \common\models\SupportMessage $ticket */ ?>
+            <div class="box box-<?= $ticket->newMessages ? "warning" : "default" ?>">
+                <div class="box-header with-border">
+                    <div class="box-title">
+                        <?= \yii\helpers\Html::a(\yii\helpers\Html::encode($ticket->title), ['thread', 'id' => $ticket->id]) ?>
+                    </div>
+                    <span class="small text-muted pull-right">
+                        <?= (new \DateTime($ticket->created_at))->format(\Yii::t('partner_support', 'd/m/Y H:i:s')) ?>
+                    </span>
+                    <?php if ($ticket->newMessages): ?>
+                        <span class="pull-right">&nbsp;</span>
+                        <span class="label label-warning pull-right"><?= $ticket->newMessages ?></span>
+                    <?php endif; ?>
+                </div>
+                <div class="box-body">
+                    <?= \yii\helpers\StringHelper::truncateWords(\yii\helpers\Html::encode($ticket->text), 30) ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
 
-<?= \yii\helpers\Html::a(\Yii::t('support', 'Send new message'), ['create'],[
-    'class' => 'btn btn-success'
-]) ?>
+    </div>
+</div>
 
-<?= \yii\grid\GridView::widget([
-    'dataProvider' => $dataProvider,
-    'columns' => [
-        [
-            'label' => \Yii::t('support', 'Text'),
-            'format' => 'raw',
-            'value' => function($item) {
-                return \yii\helpers\Html::a(\yii\helpers\Html::encode($item->text), ['thread', 'id' => $item->id]);
-            }
-        ],
-        [
-            'label' => \Yii::t('support', 'Created at'),
-            'value' => function($item) {
-                return (new DateTime($item->created_at))->format(\Yii::t('support', 'd/m/Y H:i:s'));
-            }
-        ],
-        [
-            'label' => \Yii::t('support', 'New messages'),
-            'value' => function($item) {
-                return $item->newMessages;
-            }
-        ]
-    ]
+<?= \yii\widgets\LinkPager::widget([
+    'pagination' => $dataProvider->getPagination(),
 ]) ?>
