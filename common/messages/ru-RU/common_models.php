@@ -18,6 +18,7 @@
  */
 return [
     'Code' => '',
+    'Format' => '',
     'ID' => '',
     'Name En' => '',
     'Name Ru' => '',

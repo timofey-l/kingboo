@@ -140,15 +140,13 @@ $this->registerCssFile($colorbox . '/example1/colorbox.css', [], 'colorbox');
                                   data-original-title="<?= \Yii::t('partner_index', '{n, plural, =1{# new message} other{# new messages}}', ['n' => $newMessagesCount]) ?>">+<?= $newMessagesCount ?></span>
                                 <?php endif; ?>
                                 <?php if ($messages): ?>
-                                    <div class="text-center">
-                                        <?= \yii\helpers\Html::a(
-                                            '<i class="fa fa-comments-o"></i> ' . \Yii::t('partner_support', 'Start new dialog'),
-                                            ['/support/create'],
-                                            [
-                                                'class' => 'btn btn-link'
-                                            ]
-                                        ) ?>
-                                    </div>
+                                    <?= \yii\helpers\Html::a(
+                                        '<i class="fa fa-comments-o"></i> ' . \Yii::t('partner_support', 'Start new dialog'),
+                                        ['/support/create'],
+                                        [
+                                            'class' => 'btn btn-link pull-right'
+                                        ]
+                                    ) ?>
                                 <?php endif; ?>
                             </div>
                     </div>
@@ -184,7 +182,7 @@ $this->registerCssFile($colorbox . '/example1/colorbox.css', [], 'colorbox');
                                 '<i class="fa fa-comments-o"></i> ' . \Yii::t('partner_support', 'Start new dialog'),
                                 ['/support/create'],
                                 [
-                                    'class' => 'btn btn-link'
+                                    'class' => 'btn btn-app'
                                 ]
                             ) ?>
                             </div>
@@ -194,6 +192,7 @@ $this->registerCssFile($colorbox . '/example1/colorbox.css', [], 'colorbox');
                     <?php if ($messages): ?>
                         <div class="box-footer text-center">
                             <?= \yii\helpers\Html::a(\Yii::t('partner_index', 'View all support messages'), ['/support'], []) ?>
+
                         </div>
                     <?php endif; ?>
                 </div>

@@ -17,13 +17,17 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Back to all messages' => 'Назад ко всем сообщениям',
-    'Dialog #{n}' => 'Диалог №{n}',
-    'Message {n}' => 'Сообщение №{n}',
-    'New message' => 'Новое сообщение',
-    'Start new dialog' => 'Начать новый диалог',
+    'Adminstrative panel' => 'Администранивная панель',
+    'Hotels' => 'Отели',
+    'New' => 'Новый',
+    'Nights: {n}' => 'Ночей: {n}',
+    'Order #{n}' => 'Заказ №{n}',
+    'Orders' => 'Заказы',
     'Support messages' => 'Сообщения службы поддержки',
+    'View all orders' => 'Все заказы',
+    'View all support messages' => 'Все сообщения',
     'd/m/Y' => 'd.m.Y',
     'd/m/Y H:i:s' => 'd.m.Y H:i:s',
-    'Support' => 'Поддержка',
+    '{n, plural, =1{# new message} other{# new messages}}' => 'Новых сообщений: {n}',
+    '{n, plural, =1{# new order} other{# new orders}}' => 'Новых заказов: {n}',
 ];
