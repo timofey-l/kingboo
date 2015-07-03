@@ -12,7 +12,7 @@ class OrdersController extends \yii\web\Controller
 {
 	/**
 	 * Получение списка заказов
-	 * @return array|\yii\db\ActiveRecord[]
+	 * @return array|\yii\db\ActiveQuery
 	 */
 	public function getOrdersActiveQuery() {
 		return Order::find()
@@ -56,10 +56,19 @@ class OrdersController extends \yii\web\Controller
 			throw new BadRequestHttpException('CSRF validation failed');
 		}
 
+        $ids = \Yii::$app->request->post('ids', false);
+        if (!$ids) {
+            return false;
+        }
+
 		switch ($type) {
 			// отметить все как просмотеренные
 			case 'viewed':
-				$orders = $this->getOrdersActiveQuery()->andWhere(['viewed' => 0])->all();
+
+				$orders = $this->getOrdersActiveQuery()
+                    ->andWhere(['in', 'order.id', $ids])
+                    ->andWhere(['viewed' => 0])
+                    ->all();
 				foreach ($orders as $order) {
 					/* @var $order Order */
 					$order->viewed = 1;
@@ -70,5 +79,19 @@ class OrdersController extends \yii\web\Controller
 		}
 		return false;
 	}
+
+    public function actionViewed($id) {
+        $order = Order::findOne($id);
+        if (!$order) {
+            throw new BadRequestHttpException('Wrong order_id');
+        }
+        $order->viewed = 1;
+        $order->save(false);
+        if (\Yii::$app->request->referrer) {
+            return $this->redirect(\Yii::$app->request->referrer);
+        } else {
+            return $this->redirect(['index']);
+        }
+    }
 
 }

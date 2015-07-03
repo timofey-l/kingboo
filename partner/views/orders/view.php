@@ -7,7 +7,7 @@ use \common\components\ListAddressType;
 $l = \common\models\Lang::$current->url;
 
 
-$this->title = \Yii::t('partner_orders', 'Order #{n}', ['n' => $order->number]);
+$this->title = \Yii::t('partner_orders', 'Order #{n}', ['n' => $order->id]);
 $this->params['showTitleAtTop'] = false;
 $this->params['breadcrumbs'][] = [
 	'label' => Yii::t('partner_orders', 'Orders'),
@@ -23,6 +23,18 @@ $('#printButton').click(function(){
 ");
 
 ?>
+
+<?= \yii\helpers\Html::a(
+    '<i class="fa fa-arrow-left"></i> ' . \Yii::t('partner_orders', 'Back to all orders'),
+    ['index'],
+    ['class' => 'btn btn-default']) ?>
+
+<?php if (!$order->viewed): ?>
+    <?= \yii\helpers\Html::a(
+        '<i class="fa fa-check"></i> ' . \Yii::t('partner_orders', 'Set as viewed'),
+        ['viewed', 'id' => $order->id],
+        ['class' => 'btn btn-warning']) ?>
+<?php endif; ?>
 
 <style>
 	.invoice {

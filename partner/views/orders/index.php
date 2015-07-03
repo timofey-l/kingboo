@@ -3,13 +3,44 @@
 
 $this->title = \Yii::t('partner_orders', 'Orders list');
 $l = \common\models\Lang::$current;
+$assetOptions = ['depends' => [
+    \partner\assets\AppAsset::className(),
+    \dmstr\web\AdminLteAsset::className(),
+]];
+
+// iCheck plugin
+$icheck = \Yii::$app->assetManager->publish('@vendor/almasaeed2010/adminlte/plugins/iCheck');
+//$this->registerCssFile($icheck[1] . '/all.css', $assetOptions);
+$this->registerCssFile($icheck[1] . '/flat/flat.css', $assetOptions);
+$this->registerCssFile($icheck[1] . '/flat/blue.css', $assetOptions);
+$this->registerJsFile($icheck[1] . '/icheck.min.js', $assetOptions);
+
 
 $this->registerJs("
+
+var checked = 0;
+
+$('.iCheck').iCheck({
+    checkboxClass: 'icheckbox_flat-blue'
+});
+
+$('.iCheck').on('ifToggled', function(event) {
+    updateGroup(event.target);
+});
+
+function updateGroup() {
+    checked = $('.iCheck:checked').length;
+    if (!checked) {
+        $('.group-actions').slideUp();
+    } else {
+        $('.group-actions').slideDown();
+    }
+}
 
 $('.orders_table tbody tr').click(function(e){
 	var orderId = $(e.currentTarget).data('orderid');
 	var l = LANG == 'ru' ? '' : LANG;
-	window.location.assign('/' + l + 'orders/view?id=' + orderId)
+	window.location.assign('/' + l + 'orders/view?id=' + orderId);
 	console.log($(e.currentTarget).data('orderid'));
 });
 
@@ -17,14 +48,28 @@ $('#setAllAsViewed_btn').click(function(){
 	var params = {};
 	var csrf_param = $('meta[name=csrf-param]').attr('content');
 	var csrf_value = $('meta[name=csrf-value]').attr('content');
+
+    params.ids = [];
+	$('.iCheck:checked').each(function(i, el){
+	    params.ids.push($(el).data('id'));
+	});
+
 	params[csrf_param] = csrf_value;
+	$('.box>.overlay').fadeIn();
 	$.post('/orders/set-all?type=viewed', params).done(function( data ) {
+	    $('.box>.overlay').fadeOut();
         if (data === true) {
-            $('tr.new_order').removeClass('new_order');
+            $.each(params.ids, function(i, el){
+                $('tr.id'+el).removeClass('new_order');
+                $('.iCheck').iCheck('uncheck');
+            });
+//            $('tr.new_order').removeClass('new_order');
         }
+    }).error(function(){
+        $('.box>.overlay').fadeOut();
     });
 });
-
+updateGroup();
 ");
 
 ?>
@@ -42,17 +87,34 @@ $('#setAllAsViewed_btn').click(function(){
 	.new_order {
 		background-color: #ffffd0;
 	}
+
+
 </style>
-<div class="box">
-	<div class="box-header">
-		<h3 class="box-title"></h3>
-		<button class="btn btn-default" id="setAllAsViewed_btn"><?= \Yii::t('partner_orders','Set all as viewed') ?></button>
-	</div><!-- /.box-header -->
+
+
+<?php if (!$orders): ?>
+    <div class="alert alert-info alert-dismissable col-sm-6">
+        <h4><i class="icon fa fa-info"></i> <?= \Yii::t('partner_orders', 'Orders are absent') ?></h4>
+        <?= \Yii::t('partner_orders', 'So far, no one ordered.') ?>
+    </div>
+<?php endif; ?>
+
+<?php if ($orders): ?>
+<div class="row group-actions" style="display: none;">
+    <div class="col-md-12">
+        <button class="btn btn-default"
+                id="setAllAsViewed_btn"><?= \Yii::t('partner_orders', 'Set as viewed') ?></button>
+    </div>
+</div>
+<br/>
+
+<div class="box loading">
 	<div class="box-body table-responsive no-padding">
 		<table class="table table-hover orders_table">
 			<thead>
 				<tr>
-					<th><?= \Yii::t('partner_orders','ID') ?></th>
+                    <th></th>
+					<th><?= \Yii::t('partner_orders','Number') ?></th>
 					<th><?= \Yii::t('partner_orders','Date') ?></th>
 					<th><?= \Yii::t('partner_orders','Status') ?></th>
 					<th><?= \Yii::t('partner_orders','Dates range') ?></th>
@@ -82,7 +144,10 @@ $('#setAllAsViewed_btn').click(function(){
 							$statusText = \Yii::t('partner_orders', 'Payed');
 							break;
 					}?>
-				<tr class="<?= !$order->viewed ? "new_order":"" ?>" data-orderid="<?= $order->id ?>">
+				<tr class="<?= !$order->viewed ? "new_order":"" ?> id<?= $order->id ?>" data-orderid="<?= $order->id ?>">
+                    <td>
+                        <input class="iCheck" type="checkbox" data-id="<?= $order->id ?>" id="order_<?= $order->id ?>"/>
+                    </td>
 					<td><?= $order->id ?></td>
 					<td>
 						<?= (new DateTime($order->created_at))->format(\Yii::t('partner_orders', 'd/m/Y'))?>
@@ -132,4 +197,8 @@ $('#setAllAsViewed_btn').click(function(){
 			</tbody>
 		</table>
 	</div><!-- /.box-body -->
+    <div class="overlay" style="display: none;">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
 </div>
+<?php endif; ?>

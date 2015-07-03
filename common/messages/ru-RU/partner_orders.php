@@ -32,6 +32,7 @@ return [
     'H:i:s' => 'H:i:s',
     'Hotel' => 'Отель',
     'ID' => '',
+    'Number' => 'Номер',
     'Kids' => 'Дети 0-6',
     'Kids: {n}' => 'Детей 0-6: {n}',
     'Nights' => 'Ночей',
@@ -52,4 +53,6 @@ return [
     'Waiting payment' => 'Ожидание оплыты',
     'd/m/Y' => 'd.m.Y',
     'd/m/Y H:i:s' => 'd.m.Y H:i:s',
+    'So far, no one ordered.' => 'Пока никто ничего не заказывал',
+    'Orders are absent' => 'Заказы отсутствуют'
 ];
