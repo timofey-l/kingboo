@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = \Yii::t('partner_support', 'Dialog #{n}', ['n' 
 
 
 <?php foreach ($answers as $answer): ?>
-    <div class="row">
+    <div class="row" id="id<?= $answer->id ?>">
         <?php if ($answer->author): ?>
             <div class="col-sm-7 col-sm-offset-3 col-xs-8 col-xs-offset-1">
                 <div class="box box-default">

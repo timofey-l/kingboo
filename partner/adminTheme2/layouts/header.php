@@ -5,6 +5,9 @@ use yii\bootstrap\NavBar;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
+
+/** @var \common\models\SupportMessage[] $messages */
+$messages = \common\models\SupportMessage::findNew();
 ?>
 
 <header class="main-header">
@@ -22,87 +25,41 @@ use yii\bootstrap\NavBar;
             <ul class="nav navbar-nav">
 
                 <!-- Messages: style can be found in dropdown.less-->
+                <?php if ($messages): ?>
                 <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope-o"></i>
-                        <span class="label label-success">4</span>
+                        <span class="label label-success"><?= count($messages) ?></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">You have 4 messages</li>
+                        <li class="header"><?= \Yii::t('main', 'New messages:{n}', ['n' => count($messages)]) ?></li>
                         <li>
                             <!-- inner menu: contains the actual data -->
+                            <?php foreach($messages as $index => $message): ?>
+                                <?php /** @var \common\models\SupportMessage $message */ ?>
                             <ul class="menu">
-                                <li><!-- start message -->
-                                    <a href="#">
-                                        <div class="pull-left">
-                                            <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle"
-                                                 alt="User Image"/>
-                                        </div>
-                                        <h4>
-                                            Support Team
-                                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                        </h4>
-                                        <p>Why not buy a new awesome theme?</p>
-                                    </a>
-                                </li>
-                                <!-- end message -->
                                 <li>
-                                    <a href="#">
-                                        <div class="pull-left">
-                                            <img src="<?= $directoryAsset ?>/img/user3-128x128.jpg" class="img-circle"
-                                                 alt="user image"/>
-                                        </div>
-                                        <h4>
-                                            AdminLTE Design Team
-                                            <small><i class="fa fa-clock-o"></i> 2 hours</small>
+
+                                    <a href="<?= \yii\helpers\Url::to(['support/thread', 'id'=> $message->parent_id, '#' => 'id'.$message->id]) ?>">
+                                        <h4 style="margin-left: 0">
+                                            <?= \yii\helpers\StringHelper::truncateWords($message->parent->title, 5) ?>
+
                                         </h4>
-                                        <p>Why not buy a new awesome theme?</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="pull-left">
-                                            <img src="<?= $directoryAsset ?>/img/user4-128x128.jpg" class="img-circle"
-                                                 alt="user image"/>
-                                        </div>
-                                        <h4>
-                                            Developers
-                                            <small><i class="fa fa-clock-o"></i> Today</small>
-                                        </h4>
-                                        <p>Why not buy a new awesome theme?</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="pull-left">
-                                            <img src="<?= $directoryAsset ?>/img/user3-128x128.jpg" class="img-circle"
-                                                 alt="user image"/>
-                                        </div>
-                                        <h4>
-                                            Sales Department
-                                            <small><i class="fa fa-clock-o"></i> Yesterday</small>
-                                        </h4>
-                                        <p>Why not buy a new awesome theme?</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="pull-left">
-                                            <img src="<?= $directoryAsset ?>/img/user4-128x128.jpg" class="img-circle"
-                                                 alt="user image"/>
-                                        </div>
-                                        <h4>
-                                            Reviewers
-                                            <small><i class="fa fa-clock-o"></i> 2 days</small>
-                                        </h4>
-                                        <p>Why not buy a new awesome theme?</p>
+                                        <p style="margin-left: 0"><?= \yii\helpers\StringHelper::truncateWords($message->text, 5) ?></p>
+                                        <small style="bottom:0"><i
+                                                class="fa fa-clock-o"></i> <?= (new \DateTime($message->created_at))->format(\Yii::t('main', 'd/m/Y H:i')) ?>
+                                        </small>
                                     </a>
                                 </li>
                             </ul>
+                            <?php endforeach; ?>
                         </li>
-                        <li class="footer"><a href="#">See All Messages</a></li>
+                        <li class="footer"><?= Html::a(\Yii::t('main', 'All messages'), ['/support']) ?></li>
                     </ul>
                 </li>
+                <?php endif; ?>
+
+
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bell-o"></i>

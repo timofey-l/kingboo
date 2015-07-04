@@ -112,5 +112,19 @@ class SupportMessage extends ActiveRecord
             ->where(['parent_id'=>$this->id])
             ->count();
     }
+
+    public static function findNew() {
+        $messages = static::find()
+            ->joinWith(['parent' => function ($q) {
+                $q->from('support_messages p');
+            }])
+            ->where([
+                'support_messages.unread' => 1,
+                'p.author' => \Yii::$app->user->id,
+            ])
+            ->orderBy(['updated_at' => SORT_DESC])
+            ->all();
+        return $messages;
+    }
 }
 
