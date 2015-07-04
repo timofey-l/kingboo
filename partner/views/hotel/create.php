@@ -12,8 +12,12 @@ $this->title = Yii::t('hotels', 'Create {modelClass}', [
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="hotel-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+    <?= \yii\helpers\Html::a(
+        '<i class="fa fa-arrow-left"></i> ' . \Yii::t('partner_hotel', 'Back to hotel view'),
+        ['view', 'id' => $hotel->id],
+        ['class' => 'btn btn-default']) ?>
+    <br/>
+    <br/>
 
     <?= $this->render('_form', [
         'model' => $model,

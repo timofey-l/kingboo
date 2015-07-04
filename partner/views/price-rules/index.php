@@ -2,22 +2,13 @@
 /* @var $this yii\web\View */
 /** @var \common\models\PriceRules[] $price_rules */
 $this->title = \Yii::t('partner_pricerules', 'Price rules');
-
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="btn-group">
-    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-        <?= \Yii::t('partner_pricerules', 'Add price rule') ?> <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu">
-        <?php foreach (\common\components\ListPriceRules::$_list as $item): ?>
-            <li><?= \yii\helpers\Html::a(\common\components\ListPriceRules::getTitleById($item['id']), ['create', 'type' => $item['id']]) ?></li>
-        <?php endforeach; ?>
-    </ul>
-</div>
-
-<hr/>
+<?= \yii\helpers\Html::a(
+    '<i class="fa text-bold">%</i>'.\Yii::t('partner_pricerules', 'Add discount'), ['create', 'type' => 0],[
+    'class' => 'btn btn-app'
+]) ?>
 
 <?php if (count($price_rules) > 0): ?>
     <div class="box box-default">
