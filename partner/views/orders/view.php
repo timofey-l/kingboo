@@ -31,7 +31,7 @@ $('#printButton').click(function(){
 
 <?php if (!$order->viewed): ?>
     <?= \yii\helpers\Html::a(
-        '<i class="fa fa-check"></i> ' . \Yii::t('partner_orders', 'Set as viewed'),
+        '<i class="fa fa-eye"></i> ' . \Yii::t('partner_orders', 'Set as viewed'),
         ['viewed', 'id' => $order->id],
         ['class' => 'btn btn-warning']) ?>
 <?php endif; ?>

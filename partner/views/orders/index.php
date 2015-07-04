@@ -103,7 +103,7 @@ updateGroup();
 <div class="row group-actions" style="display: none;">
     <div class="col-md-12">
         <button class="btn btn-default"
-                id="setAllAsViewed_btn"><?= \Yii::t('partner_orders', 'Set as viewed') ?></button>
+                id="setAllAsViewed_btn"><i class="fa fa-eye"></i> <?= \Yii::t('partner_orders', 'Set as viewed') ?></button>
     </div>
 </div>
 <br/>

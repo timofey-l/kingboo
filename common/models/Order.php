@@ -197,4 +197,12 @@ class Order extends ActiveRecord
     public function getNights() {
         return (new \DateTime($this->dateFrom))->diff((new \DateTime($this->dateTo)))->days;
     }
+
+    static public function findNew() {
+        return static::find()
+            ->joinWith('hotel')
+            ->where(['hotel.partner_id' => \Yii::$app->user->id,'viewed' => '0'])
+            ->orderBy(['created_at' => SORT_DESC])
+            ->all();
+    }
 }
