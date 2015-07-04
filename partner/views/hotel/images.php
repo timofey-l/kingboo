@@ -27,7 +27,14 @@ $this->params['breadcrumbs'][] = Yii::t('hotels', 'Images');
 ?>
 
 <div class="hotel-images">
-    <div class="row" ng-app="ImagesManageApp" ng-init="hotelId = <?=$model->id?>;">
+    <?= \yii\helpers\Html::a(
+        '<i class="fa fa-arrow-left"></i> ' . \Yii::t('partner_hotel', 'Back to hotel view'),
+        ['view', 'id' => $model->id],
+        ['class' => 'btn btn-default']) ?>
+    <br/>
+    <br/>
+
+    <div class="" ng-app="ImagesManageApp" ng-init="hotelId = <?=$model->id?>;">
         <div class="box" ng-view>
 
         </div>

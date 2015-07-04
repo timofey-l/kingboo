@@ -96,6 +96,14 @@ $this->registerCssFile($colorbox . '/example1/colorbox.css', [], 'colorbox');
                         <?php endif; ?>
                     </div>
                     <div class="box-body">
+                        <?php if (!$orders): ?>
+                            <div class="alert alert-info alert-dismissable">
+                                <h4>
+                                    <i class="icon fa fa-info"></i> <?= \Yii::t('partner_orders', 'Orders are absent') ?>
+                                </h4>
+                                <?= \Yii::t('partner_orders', 'No orders have been made yet.') ?>
+                            </div>
+                        <?php endif; ?>
                         <ul class="products-list product-list-in-box">
                             <?php foreach ($orders as $order): ?>
                             <li class="item">
@@ -124,10 +132,12 @@ $this->registerCssFile($colorbox . '/example1/colorbox.css', [], 'colorbox');
                             <?php endforeach; ?>
                         </ul>
                     </div>
-                    <div class="box-footer text-center">
-                        <?= \yii\helpers\Html::a(\Yii::t('partner_index', 'View all orders'), ['/orders']) ?>
+                    <?php if ($orders): ?>
+                        <div class="box-footer text-center">
+                            <?= \yii\helpers\Html::a(\Yii::t('partner_index', 'View all orders'), ['/orders']) ?>
+                        </div>
+                    <?php endif; ?>
 
-                    </div>
                 </div>
             </div>
             <div class="col-sm-6">
@@ -144,7 +154,7 @@ $this->registerCssFile($colorbox . '/example1/colorbox.css', [], 'colorbox');
                                         '<i class="fa fa-comments-o"></i> ' . \Yii::t('partner_support', 'Start new dialog'),
                                         ['/support/create'],
                                         [
-                                            'class' => 'btn btn-link pull-right'
+                                            'class' => 'btn btn-link pull-right visible-lg-inline'
                                         ]
                                     ) ?>
                                 <?php endif; ?>

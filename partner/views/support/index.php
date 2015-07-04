@@ -10,16 +10,29 @@ $this->params['breadcrumbs'][] = \Yii::t('partner_support', 'Support messages');
 $tickets = $dataProvider->getModels();
 
 ?>
-<div class="row">
-    <div class="col-md-12">
-        <?= \yii\helpers\Html::a(
-            '<i class="fa fa-comments-o"></i> ' . \Yii::t('partner_support', 'Start new dialog'),
-            ['create'],
-            ['class' => 'btn btn-success pull-right']) ?>
+
+<?php if (!$tickets): ?>
+    <?= \yii\helpers\Html::a(
+        '<i class="fa fa-comments-o"></i> ' . \Yii::t('partner_support', 'Start new dialog'),
+        ['create'],
+        ['class' => 'btn btn-success']) ?>
+    <br/>
+    <br/>
+    <div class="alert alert-info alert-dismissable col-sm-8 col-md-6">
+        <h4><i class="icon fa fa-info"></i> <?= \Yii::t('partner_support', 'Dialogs are absent') ?></h4>
+        <?= \Yii::t('partner_support', 'Press upper button to start dialog.') ?>
     </div>
-</div>
-<br/>
-<div class="row">
+<?php endif; ?>
+<?php if ($tickets): ?>
+    <div class="row">
+        <div class="col-md-12">
+            <?= \yii\helpers\Html::a(
+                '<i class="fa fa-comments-o"></i> ' . \Yii::t('partner_support', 'Start new dialog'),
+                ['create'],
+                ['class' => 'btn btn-success pull-right']) ?>
+        </div>
+    </div>
+    <br/><div class="row">
     <div class="col-md-12">
         <?php foreach ($tickets as $index => $ticket): ?>
             <?php /** @var \common\models\SupportMessage $ticket */ ?>
@@ -48,3 +61,4 @@ $tickets = $dataProvider->getModels();
 <?= \yii\widgets\LinkPager::widget([
     'pagination' => $dataProvider->getPagination(),
 ]) ?>
+<?php endif; ?>

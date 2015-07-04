@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = \Yii::t('partner_support', 'Dialog #{n}', ['n' 
 <?php endforeach; ?>
 
 <div class="row">
-    <div class="col-sm-offset-3 col-sm-9">
+    <div class="col-sm-offset-3 col-sm-9 col-lg-7 col-lg-offset-3">
         <?php $form = \yii\bootstrap\ActiveForm::begin() ?>
         <?= $form->field($newMessage, 'hash')->hiddenInput()->label(false); ?>
         <div class="box box-solid box-default">

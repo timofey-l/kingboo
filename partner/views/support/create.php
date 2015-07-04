@@ -8,6 +8,10 @@ $this->title = \Yii::t('support', 'New message to support');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('partner_support', 'Support messages'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = \Yii::t('partner_support', 'New message');
 ?>
+<?= \yii\helpers\Html::a(
+    '<i class="fa fa-arrow-left"></i> ' . \Yii::t('partner_support', 'Back to all messages'),
+    ['index'],
+    ['class' => 'btn btn-default']) ?>
 
 <?php $form = \yii\bootstrap\ActiveForm::begin() ?>
 <?= $form->field($model, 'hash')->hiddenInput()->label(false); ?>

@@ -39,4 +39,6 @@ return [
     'Widget id:' => '',
     'Widgets' => 'Виджеты',
     'Yes' => 'Да',
+    'Widgets are absent' => 'Виджеты отсутствуют',
+    'Press upper button to create new widget.' => 'Нажмите кнопку выше для создания нового виджета.',
 ];

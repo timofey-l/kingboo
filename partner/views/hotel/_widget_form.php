@@ -28,9 +28,6 @@ $bd = \Yii::$app->assetManager->getPublishedUrl('@bower');
 				<div class="widget-form">
 
 					<div class="form-group">
-						<?= $form->field($model, 'hotel_id')->dropDownList(\yii\helpers\ArrayHelper::map(\Yii::$app->user->identity->hotels, 'id', 'title_' . $l)) ?>
-					</div>
-					<div class="form-group">
 						<?= $form->field($model, 'comment')->textarea(['rows' => 5]) ?>
 					</div>
 				</div>

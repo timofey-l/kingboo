@@ -9,7 +9,6 @@ use yii\helpers\Html;
 $this->title = Yii::t('hotels', 'Create {modelClass}', [
     'modelClass' => 'Hotel',
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('hotels', 'Hotels'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="hotel-create">

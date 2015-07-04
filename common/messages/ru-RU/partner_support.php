@@ -26,4 +26,6 @@ return [
     'd/m/Y' => 'd.m.Y',
     'd/m/Y H:i:s' => 'd.m.Y H:i:s',
     'Support' => 'Поддержка',
+    'Dialogs are absent' => 'Диалоги отсутствуют',
+    'Press upper button to start dialog.' => 'Нажмите на кнопку выше для начала общения.',
 ];

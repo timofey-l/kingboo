@@ -10,15 +10,19 @@ $lang = \common\models\Lang::$current->url;
 $hotel_title = $model->{'title_' . $lang};
 $this->title = $hotel_title;
 
-$this->params['breadcrumbs'][] = ['label' => Yii::t('hotels', 'Hotels'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $hotel_title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('hotels', 'Facilities');
 
 ?>
 <div class="hotel-facilities">
-
+    <?= \yii\helpers\Html::a(
+        '<i class="fa fa-arrow-left"></i> ' . \Yii::t('partner_hotel', 'Back to hotel view'),
+        ['view', 'id' => $model->id],
+        ['class' => 'btn btn-default']) ?>
+    <br/>
+    <br/>
     <?php $form = ActiveForm::begin(); ?>
-    <div class="row">
+    <div class="">
     
         <div class="box box-solid">
             <div class="box-header with-border">

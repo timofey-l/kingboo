@@ -34,21 +34,19 @@
                 <td>{{room.total}}</td>
                 <td>{{getPriceType(room)['name_'+LANG]}}</td>
                 <td>
-                    <a class="btn btn-xs btn-primary" title="{{t('room_table_head_update')}}" href="#/edit/{{room.id}}">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <a class="btn btn-xs btn-primary" title="{{t('room_table_head_photos')}}" href="#/images/{{room.id}}">
-                        <i class="fa fa-camera"></i>
-                    </a>
-                    <a class="btn btn-xs btn-primary" title="{{t('room_table_head_money')}}" href="#/prices/{{room.id}}">
-                        <i class="fa fa-usd"></i>
-                    </a>
-                    <a class="btn btn-xs btn-primary" title="{{t('room_table_head_timetable')}}" href="#/availability/{{room.id}}">
-                        <i class="fa fa-calendar"></i>
-                    </a>
-                    <a class="btn btn-xs btn-danger" title="{{t('room_table_head_delete')}}" ng-click="delete(room)">
-                        <i class="fa fa-close"></i>
-                    </a>
+                    <div class="btn-group" style="width:125px;">
+                        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_update')}}" href="#/edit/{{room.id}}">
+                            <i class="fa fa-edit"></i>
+                        </a>&nbsp;<a class="btn btn-xs btn-primary" title="{{t('room_table_head_photos')}}" href="#/images/{{room.id}}">
+                            <i class="fa fa-camera"></i>
+                        </a>&nbsp;<a class="btn btn-xs btn-primary" title="{{t('room_table_head_money')}}" href="#/prices/{{room.id}}">
+                            <i class="fa fa-usd"></i>
+                        </a>&nbsp;<a class="btn btn-xs btn-primary" title="{{t('room_table_head_timetable')}}" href="#/availability/{{room.id}}">
+                            <i class="fa fa-calendar"></i>
+                        </a>&nbsp;<a class="btn btn-xs btn-danger" title="{{t('room_table_head_delete')}}" ng-click="delete(room)">
+                            <i class="fa fa-close"></i>
+                        </a>
+                    </div>
                 </td>
             </tr>
         </tbody>

@@ -2,10 +2,14 @@
 
 namespace partner\controllers;
 
+use common\models\Widget;
 use Yii;
 use common\models\Hotel;
-use partner\models\PartnerSearch;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -38,7 +42,7 @@ class HotelController extends Controller
                         }
                     ],
                     [
-                        'actions' => ['index', 'create'],
+                        'actions' => ['index', 'create', 'widgets', 'widget-create', 'delete-widget', 'update-widget'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -54,27 +58,16 @@ class HotelController extends Controller
     }
 
     /**
-     * Lists all Hotel models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $hotels = Yii::$app->user->identity->hotels;
-
-        return $this->render('index', [
-            'hotels' => $hotels,
-        ]);
-    }
-
-    /**
      * Displays a single Hotel model.
      * @param integer $id
      * @return mixed
      */
     public function actionView($id)
     {
-        return $this->render('view', [ 
-            'model' => $this->findModel($id),
+        $hotel = $this->findModel($id);
+        return $this->render('view', [
+            'model' => $hotel,
+            'rooms' => $hotel->rooms,
         ]);
     }
 
@@ -112,6 +105,7 @@ class HotelController extends Controller
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'hotel' => $model,
             ]);
         }
     }
@@ -124,7 +118,7 @@ class HotelController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        //$this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -214,4 +208,105 @@ class HotelController extends Controller
         }
     }
 
+    /**
+     * Lists all Widget models.
+     * @param $id
+     * @return mixed
+     * @throws BadRequestHttpException
+     */
+    public function actionWidgets($id)
+    {
+        if (!$hotel = Hotel::findOne($id)) {
+            throw new BadRequestHttpException();
+        }
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => Widget::find()
+                ->where(['hotel_id' => $id])
+        ]);
+
+        return $this->render('widgets', [
+            'dataProvider' => $dataProvider,
+            'hotel_id' => $id,
+            'hotel' => $hotel,
+        ]);
+    }
+
+    /**
+     * Creates a new Widget model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @param $id
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function actionWidgetCreate($id)
+    {
+        $hotel = Hotel::findOne($id);
+        if (!$hotel) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+        $model = new Widget();
+        $model->params = Json::encode(Widget::$defaultParams);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->params = Json::encode(ArrayHelper::merge(Widget::$defaultParams, Yii::$app->request->post('Widget')['params']));
+            $model->hash_code = \Yii::$app->getSecurity()->generateRandomString();
+            $model->hotel_id = $id;
+            if ($model->save())
+                return $this->redirect(['widgets', 'id' => $id]);
+            else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+        } else {
+            return $this->render('create-widget', [
+                'model' => $model,
+                'hotel' => $hotel,
+            ]);
+        }
+    }
+
+    /**
+     * Deletes an existing Widget model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDeleteWidget($id)
+    {
+        $model = Widget::findOne($id);
+        $hotel_id = $model->hotel_id;
+        $model->delete();
+
+        return $this->redirect(['widgets', 'id' => $hotel_id]);
+    }
+
+    /**
+     * Updates an existing Widget model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function actionUpdateWidget($id)
+    {
+        $model = Widget::findOne($id);
+        $hotel = Hotel::findOne($model->hotel_id);
+        if (!$model || !$hotel) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->params = Json::encode(ArrayHelper::merge(Widget::$defaultParams, Yii::$app->request->post('Widget')['params']));
+            if ($model->save()) {
+                return $this->redirect(['widgets', 'id' => $model->hotel_id]);
+            }
+        }
+
+        return $this->render('update-widget', [
+            'model' => $model,
+            'hotel' => $hotel,
+        ]);
+
+    }
 }

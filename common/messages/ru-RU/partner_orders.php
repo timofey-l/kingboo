@@ -53,6 +53,6 @@ return [
     'Waiting payment' => 'Ожидание оплыты',
     'd/m/Y' => 'd.m.Y',
     'd/m/Y H:i:s' => 'd.m.Y H:i:s',
-    'So far, no one ordered.' => 'Пока никто ничего не заказывал',
+    'No orders have been made yet.' => 'Пока никто ничего не заказывал',
     'Orders are absent' => 'Заказы отсутствуют'
 ];

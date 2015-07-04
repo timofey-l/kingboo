@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Contacting сustomer support' => '',
+    'Contacting сustomer support' => 'Сообщение в службу поддержки',
     'ID' => '',
     'Parent ID' => '',
     'Title' => 'Тема',

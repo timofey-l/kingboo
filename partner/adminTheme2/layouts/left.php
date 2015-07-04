@@ -1,36 +1,12 @@
 <?php
 use yii\bootstrap\Nav;
 use yii\helpers\Html;
-
+/** @var \yii\web\View $this */
 $l = \common\models\Lang::$current->url;
 ?>
-<aside class="main-sidebar">
+<aside class="main-sidebar" style="padding-top: 0px;">
 
     <section class="sidebar">
-
-        <!-- Sidebar user panel -->
-        <div class="user-panel">
-            <div class="pull-left image">
-                <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
-            </div>
-            <div class="pull-left info">
-                <p>Alexander Pierce</p>
-
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-            </div>
-        </div>
-
-        <!-- search form -->
-        <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search..."/>
-              <span class="input-group-btn">
-                <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-            </div>
-        </form>
-        <!-- /.search form -->
 
 	    <ul class="sidebar-menu">
 		    <li class="header"><?= Yii::t('left_menu', 'Hotels list') ?></li>
@@ -51,31 +27,49 @@ $l = \common\models\Lang::$current->url;
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li>
-                        <a href="<?= \yii\helpers\Url::toRoute(['hotel/view', 'id' => $hotel->id]) ?>">
-                            <span class="fa fa-building"></span> <?= Yii::t('hotels', 'View') ?>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= \yii\helpers\Url::toRoute(['hotel/update', 'id' => $hotel->id]) ?>">
-                            <span class="fa fa-edit"></span> <?= Yii::t('hotels', 'Edit') ?>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= \yii\helpers\Url::toRoute(['hotel/facilities', 'id' => $hotel->id]) ?>">
-                            <span class="fa fa-check-square-o"></span> <?= Yii::t('hotels', 'Facilities') ?>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= \yii\helpers\Url::toRoute(['hotel/rooms', 'id' => $hotel->id]) ?>">
-                            <span class="fa fa-institution"></span> <?= Yii::t('hotels', 'Rooms') ?>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= \yii\helpers\Url::toRoute(['hotel/images', 'id' => $hotel->id]) ?>">
-                            <span class="fa fa-camera"></span> <?= Yii::t('hotels', 'Images') ?>
-                        </a>
-                    </li>
+
+                    <?php
+                        $hotelMenu = [
+                            [
+                                'url' => ['hotel/view'],
+                                'title' => Yii::t('hotels', 'View'),
+                                'icon' => 'building',
+                            ],
+                            [
+                                'url' => ['hotel/update'],
+                                'title' => Yii::t('hotels', 'Edit'),
+                                'icon' => 'edit',
+                            ],
+                            [
+                                'url' => ['hotel/facilities'],
+                                'title' => Yii::t('hotels', 'Facilities'),
+                                'icon' => 'check-square-o',
+                            ],
+                            [
+                                'url' => ['hotel/rooms'],
+                                'title' => Yii::t('hotels', 'Rooms'),
+                                'icon' => 'institution',
+                            ],
+                            [
+                                'url' => ['hotel/images'],
+                                'title' => Yii::t('hotels', 'Images'),
+                                'icon' => 'camera',
+                            ],
+                            [
+                                'url' => ['hotel/widgets', 'hotel/widget-create', 'hotel/update-widget'],
+                                'title' => Yii::t('partner_widget', 'Widgets'),
+                                'icon' => 'th',
+                            ],
+                        ]
+                    ?>
+
+                    <?php foreach($hotelMenu as $item): ?>
+                        <li class="<?= in_array($this->context->id.'/'.$this->context->action->id, $item['url']) ? "active" : "" ?>">
+                            <a href="<?= \yii\helpers\Url::toRoute([$item['url'][0], 'id' => $hotel->id]) ?>">
+                                <span class="fa fa-<?= $item['icon'] ?>"></span> <?= $item['title']?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
             </li>
 
@@ -90,15 +84,6 @@ $l = \common\models\Lang::$current->url;
 	    <ul class="sidebar-menu">
 		    <li class="header"></li>
 	    </ul>
-
-	    <ul class="sidebar-menu">
-		    <li>
-			    <?= Html::tag('li', Html::a(\Yii::t('partner_widget','Widgets'), ['widgets/index']), [
-				    'class' => $this->context->id == 'widgets' ? "active" : "",
-			    ]) ?>
-		    </li>
-	    </ul>
-
 
 	    <ul class="sidebar-menu">
 		    <li>
