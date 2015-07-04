@@ -17,11 +17,11 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Add discount' => 'Добавить скидку',
-    'Back to price rules' => 'Вернуться к правилам форм. цен',
     'Add price rule' => '@@Добавить правило@@',
+    'Add discount' => 'Добавить скидку',
     'Additive' => 'Аддитивная',
     'Are you sure you want to deactivate this price rule?' => 'Вы действительно хотите деактивировать это правило?',
+    'Back to price rules' => 'Вернуться к правилам форм. цен',
     'Booking date range' => 'Диапазон даты бронирования',
     'Booking dates range' => 'Диапазон даты бронирования',
     'Check code' => 'Проверить код',

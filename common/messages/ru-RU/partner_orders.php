@@ -17,14 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Back to all orders' => 'Вернуться к заказам',
-    'Please add some photos to hotel.' => 'Добавьте, пожалуйста, фотографии для отеля.',
-    'Set as viewed' => '',
+    'Set as viewed' => 'Отметить как просмотренный',
     'ID' => '@@@@',
     'Set all as viewed' => '@@Отметить как прочитанные@@',
     '(partial pay {percents}%)' => '(частичная оплата {percents}%)',
     'Adults' => 'Взрослые',
     'Adults: {n}' => 'Взрослых: {n}',
+    'Back to all orders' => 'Вернуться к заказам',
     'Cancelled' => 'Отменён',
     'Children' => 'Дети 7-12 лет',
     'Children: {n}' => 'Детей 7-12 лет: {n}',
@@ -50,6 +49,7 @@ return [
     'Pay sum' => 'Сумма оплаты',
     'Payed' => 'Оплачен',
     'Phone' => 'Телефон',
+    'Please add some photos to hotel.' => 'Добавьте, пожалуйста, фотографии для отеля.',
     'Print' => 'Печать',
     'Room and guest' => 'Комната и гость',
     'Rooms' => 'Комнаты',

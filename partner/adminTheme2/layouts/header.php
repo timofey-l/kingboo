@@ -75,7 +75,7 @@ $orders = \common\models\Order::findNew();
                                     <?php /** @var \common\models\Order $order */ ?>
                                     <li>
                                         <a href="<?= \yii\helpers\Url::to(['/orders/view', 'id' => $order->id]) ?>">
-                                        <span class="text-muted small pull-right"><?= (new \DateTime($order->created_at))->format(\Yii::t('main', 'd/m/Y H:m:s')) ?></span>
+                                        <span class="text-muted small pull-right"><?= (new \DateTime($order->created_at))->format(\Yii::t('main', 'd/m/Y H:i:s')) ?></span>
                                             <span class="label label-info"><?= $order->getSumText() ?></span>
                                             <?= \Yii::t('main', 'Order #{n}', ['n' => $order->id]) ?>
                                         </a>

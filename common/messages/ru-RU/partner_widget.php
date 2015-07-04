@@ -17,15 +17,14 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Back to widgets' => 'Вернутья к виджетам',
     'ID' => '',
     'Params' => '',
-    'Widget #{n} edit' => 'Редактирование виджета №{n}',
     'Widget id:' => '',
     'Reset' => '@@Сбросить@@',
     'Search' => '@@Поиск@@',
     'Update {modelClass}: ' => '@@@@',
     'Are you sure you want to delete this item?' => 'Вы действительно хотите удалить этот элемент?',
+    'Back to widgets' => 'Вернутья к виджетам',
     'Comment' => 'Комментарий',
     'Common information' => 'Общая информация',
     'Compiled Css' => 'Скомпилированный Css',
@@ -40,6 +39,7 @@ return [
     'Options' => 'Параметры',
     'Press upper button to create new widget.' => 'Нажмите кнопку выше для создания нового виджета.',
     'Update' => 'Обновить',
+    'Widget #{n} edit' => 'Редактирование виджета №{n}',
     'Widgets' => 'Виджеты',
     'Widgets are absent' => 'Виджеты отсутствуют',
     'Yes' => 'Да',

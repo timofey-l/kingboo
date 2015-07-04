@@ -17,9 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Manage photos' => 'Управление фотографиями',
-    'Manage rooms' => 'Управление комнатами',
-    'No photos' => 'Нет фотографий',
     'Geo coordinates' => '@@Координаты@@',
     'Other information' => '@@Прочая информация@@',
     'Update' => '@@Редактировать@@',
@@ -45,11 +42,15 @@ return [
     'Image' => 'Изображение',
     'Images' => 'Фотографии',
     'Important' => 'Важное',
+    'Information' => 'Информация',
     'Lat' => 'Широта',
     'Lng' => 'Долгота',
+    'Manage photos' => 'Управление фотографиями',
+    'Manage rooms' => 'Управление комнатами',
     'Name' => 'Название',
     'Name En' => 'Имя En',
     'Name Ru' => 'Имя Ru',
+    'No photos' => 'Нет фотографий',
     'Order' => 'Заказ',
     'Partner ID' => 'ID партнера',
     'Payment types' => 'Типы оплаты',
@@ -62,6 +63,5 @@ return [
     'Title' => 'Название',
     'Title En' => 'Название En',
     'Title Ru' => 'Название Ru',
-    'Information' => 'Информация',
     'View' => 'Просмотр',
 ];

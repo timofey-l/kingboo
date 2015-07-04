@@ -17,6 +17,14 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'All rights reserved.' => 'Все права защищены',
+    'All messages' => 'Все сообщения',
     'Copyright &copy; 2014-2015' => '',
+    'New messages:{n}' => 'Новых сообщений: {n}',
+    'New orders: {n}' => 'Новых заказов: {n}',
+    'Order #{n}' => 'Заказ №{n}',
+    'Sign out' => 'Выход',
+    'View all orders' => 'Все заказы',
+    'd/m/Y H:i' => 'd.m.Y H:i',
+    'd/m/Y H:i:s' => 'd.m.Y H:i:s',
+    'All rights reserved.' => 'Все права защищены',
 ];
