@@ -88,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-8">
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title"><?= \Yii::t('hoetls', 'Information') ?></h3>
+                    <h3 class="box-title"><?= \Yii::t('hotels', 'Information') ?></h3>
                 </div>
                 <div class="box-body">
                     <?= DetailView::widget([

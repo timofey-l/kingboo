@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= \yii\helpers\Html::a(
     '<i class="fa fa-arrow-left"></i> ' . \Yii::t('partner_widget', 'Back to widgets'),
-    ['index'],
+    ['widgets', 'id' => $hotel->id],
     ['class' => 'btn btn-default']) ?>
 <br/>
 <br/>

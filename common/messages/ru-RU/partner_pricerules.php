@@ -17,8 +17,9 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Discounts' => 'Скидки',
-    'Add price rule' => 'Добавить правило',
+    'Add discount' => 'Добавить скидку',
+    'Back to price rules' => 'Вернуться к правилам форм. цен',
+    'Add price rule' => '@@Добавить правило@@',
     'Additive' => 'Аддитивная',
     'Are you sure you want to deactivate this price rule?' => 'Вы действительно хотите деактивировать это правило?',
     'Booking date range' => 'Диапазон даты бронирования',
@@ -29,6 +30,7 @@ return [
     'Create' => 'Создать',
     'Create {price_rule}' => 'Создать {price_rule}',
     'Discount value' => 'Значение скидки',
+    'Discounts' => 'Скидки',
     'Errors in form!' => 'В форме имеются ошибки',
     'Fixed sum. Currency depends from hotel\'s currency.' => 'Фиксированная сумма. Валюта зависит от установленной валюты отеля.',
     'Living date range' => 'Диапазон на срок бронирования',

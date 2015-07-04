@@ -18,12 +18,10 @@ $widgets = $dataProvider->getModels();
         '<i class="fa fa-arrow-left"></i> ' . \Yii::t('partner_hotel', 'Back to hotel view'),
         ['view', 'id' => $hotel->id],
         ['class' => 'btn btn-default']) ?>
-    <br/>
-    <br/>
-    <?php if (!$widgets): ?>
-        <p>
+        <?php if (!$widgets): ?>
             <?= Html::a('<i class="fa fa-plus-circle"></i> ' . Yii::t('partner_widget', 'Create Widget'), ['widget-create', 'id'=>$hotel_id], ['class' => 'btn btn-success']) ?>
-        </p>
+            <br/>
+            <br/>
         <div class="alert alert-info alert-dismissable col-sm-8 col-md-6">
             <h4><i class="icon fa fa-info"></i> <?= \Yii::t('partner_widget', 'Widgets are absent') ?></h4>
             <?= \Yii::t('partner_widget', 'Press upper button to create new widget.') ?>
@@ -32,11 +30,9 @@ $widgets = $dataProvider->getModels();
 
 
     <?php if ($widgets): ?>
-	<p>
 		<?= Html::a('<i class="fa fa-plus-circle"></i> ' . Yii::t('partner_widget', 'Create Widget'), ['widget-create', 'id' => $hotel_id], ['class' => 'btn btn-success']) ?>
-	</p>
-
-	<hr style="border-color: #ccc;"/>
+        <br/>
+        <br/>
 	<div class="row">
 		<?php foreach ($widgets as $widget): ?>
 			<div class="col-sm-6">

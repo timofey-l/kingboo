@@ -17,6 +17,11 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Back to all orders' => 'Вернуться к заказам',
+    'Please add some photos to hotel.' => 'Добавьте, пожалуйста, фотографии для отеля.',
+    'Set as viewed' => '',
+    'ID' => '@@@@',
+    'Set all as viewed' => '@@Отметить как прочитанные@@',
     '(partial pay {percents}%)' => '(частичная оплата {percents}%)',
     'Adults' => 'Взрослые',
     'Adults: {n}' => 'Взрослых: {n}',
@@ -31,14 +36,15 @@ return [
     'Email' => 'Email',
     'H:i:s' => 'H:i:s',
     'Hotel' => 'Отель',
-    'ID' => '',
-    'Number' => 'Номер',
     'Kids' => 'Дети 0-6',
     'Kids: {n}' => 'Детей 0-6: {n}',
     'Nights' => 'Ночей',
+    'No orders have been made yet.' => 'Пока никто ничего не заказывал',
+    'Number' => 'Номер',
     'Order #{n}' => 'Заказ №{n}',
     'Order sum' => 'Сумма заказа',
     'Orders' => 'Заказы',
+    'Orders are absent' => 'Заказы отсутствуют',
     'Orders list' => 'Список заказов',
     'Pay status' => 'Статус оплаты',
     'Pay sum' => 'Сумма оплаты',
@@ -47,12 +53,9 @@ return [
     'Print' => 'Печать',
     'Room and guest' => 'Комната и гость',
     'Rooms' => 'Комнаты',
-    'Set all as viewed' => 'Отметить как прочитанные',
     'Status' => 'Статус',
     'Sum' => 'Сумма',
     'Waiting payment' => 'Ожидание оплыты',
     'd/m/Y' => 'd.m.Y',
     'd/m/Y H:i:s' => 'd.m.Y H:i:s',
-    'No orders have been made yet.' => 'Пока никто ничего не заказывал',
-    'Orders are absent' => 'Заказы отсутствуют'
 ];

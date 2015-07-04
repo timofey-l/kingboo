@@ -17,16 +17,15 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Contacting сustomer support' => 'Сообщение в службу поддержки',
     'ID' => '',
     'Parent ID' => '',
-    'Title' => 'Тема',
     'Unread admin' => '',
     'New messages' => '@@Новые сообщения@@',
     'Send new message' => '@@Отправить новое сообщения@@',
     'All messages' => 'Все сообщения',
     'Author' => 'Автор',
     'Cancel' => 'Отмена',
+    'Contacting сustomer support' => 'Сообщение в службу поддержки',
     'Created At' => 'Дата создания',
     'Created at' => 'Дата создания',
     'Message text' => 'Текст сообщения',
@@ -38,6 +37,7 @@ return [
     'Support message #{n}' => 'Сообщение в поддержку №{n}',
     'Support team' => 'Служба поддержки',
     'Text' => 'Текст',
+    'Title' => 'Тема',
     'Total messages' => 'Всего сообщений',
     'Unread' => 'Не прочитано',
     'Unread messages: {n}' => 'Не прочитанных сообщений: {n}',

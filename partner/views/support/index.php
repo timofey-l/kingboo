@@ -29,7 +29,7 @@ $tickets = $dataProvider->getModels();
             <?= \yii\helpers\Html::a(
                 '<i class="fa fa-comments-o"></i> ' . \Yii::t('partner_support', 'Start new dialog'),
                 ['create'],
-                ['class' => 'btn btn-success pull-right']) ?>
+                ['class' => 'btn btn-app bg-green']) ?>
         </div>
     </div>
     <br/><div class="row">
