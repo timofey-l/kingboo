@@ -18,6 +18,7 @@
  */
 return [
     'Geo coordinates' => '@@Координаты@@',
+    'Hotels' => '@@Отели@@',
     'Other information' => '@@Прочая информация@@',
     'Update' => '@@Редактировать@@',
     'Update {modelClass}: ' => '@@@@',
@@ -37,7 +38,6 @@ return [
     'Facilities' => 'Особенности отеля',
     'Group ID' => 'ID группы',
     'Hotel ID' => 'ID отеля',
-    'Hotels' => 'Отели',
     'ID' => 'ID',
     'Image' => 'Изображение',
     'Images' => 'Фотографии',
@@ -46,7 +46,7 @@ return [
     'Lat' => 'Широта',
     'Lng' => 'Долгота',
     'Manage photos' => 'Управление фотографиями',
-    'Manage rooms' => 'Управление комнатами',
+    'Manage rooms' => 'Управление номерами',
     'Name' => 'Название',
     'Name En' => 'Имя En',
     'Name Ru' => 'Имя Ru',

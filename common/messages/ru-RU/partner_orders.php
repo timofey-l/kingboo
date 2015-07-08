@@ -17,7 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Set as viewed' => 'Отметить как просмотренный',
     'ID' => '@@@@',
     'Set all as viewed' => '@@Отметить как прочитанные@@',
     '(partial pay {percents}%)' => '(частичная оплата {percents}%)',
@@ -53,6 +52,7 @@ return [
     'Print' => 'Печать',
     'Room and guest' => 'Комната и гость',
     'Rooms' => 'Комнаты',
+    'Set as viewed' => 'Отметить как просмотренный',
     'Status' => 'Статус',
     'Sum' => 'Сумма',
     'Waiting payment' => 'Ожидание оплыты',

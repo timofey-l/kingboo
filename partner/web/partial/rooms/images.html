@@ -1,7 +1,7 @@
 <div class="box-header">
     <h3 class="box-title">{{t('image_list_title')}}</h3>
     <span style="font-size: 20px;" class="fa fa-spin fa-gear" ng-show="loading"></span>
-    
+
     <div class="box-tools pull-right">
         <a class="btn btn-xs btn-primary" title="{{t('room_table_head_list')}}" href="#/">
             <i class="fa  fa-list"></i>
@@ -20,47 +20,51 @@
 <!-- /.box-header -->
 
 
-<div class="box-body" >
-<!-- Room manage block -->
+<div class="box-body">
+    <!-- Room manage block -->
     <div class="row">
         <div class="col-sm-6">
             <div class="form-group">
                 <select class="form-control" ng-model="room.id" name="price_type" ng-change="changeRoom()"
-                    required ng-options="t.id as t['title_'+LANG] for t in rooms">
+                        required ng-options="t.id as t['title_'+LANG] for t in rooms">
                 </select>
             </div>
         </div>
-    </div><!-- /.Room manage block -->
+    </div>
+    <!-- /.Room manage block -->
 
     <div class="row">
-    <form id="add_image" name="add_image" onsubmit="return false;" novalidate enctype="multipart/form-data" method="POST" action="">
-        <div class="col-sm-4">
-            <input type="text" name="room_id" ng-show="false" ng-model="newImage.room_id">
-            <div class="form-group">
-                <label>{{t('image_add')}}</label>
-                <div class="input-group input-group-sm">
-                    <input type="file" class="form-control" name="image" width="200px;" required ng-model="newImage.image" id="addNewImage" placeholder="" >
-                    <span class="input-group-addon price-inp-addon">
-                        <a class="fa fa-check" title="{{t('image_add')}}" ng-click="save()"></a>
-                    </span>
+
+        <div class="col-xs-12">
+            <form id="add_image" name="add_image" onsubmit="return false;" novalidate enctype="multipart/form-data"
+                  method="POST" action="">
+                <input type="text" name="room_id" ng-show="false" ng-model="newImage.room_id">
+
+                <div class="form-group">
+                    <label>{{t('image_add')}}</label>
+                    <input type="file" class="" name="image" width="200px;" required
+                           ng-model="newImage.image" id="addNewImage" placeholder="">
                 </div>
-            </div>
+                <button ng-disabled="loading" class="btn btn-success" ng-click="save()">{{t('send')}}</button>
+            </form>
+
         </div>
-    </form>
+
+
     </div>
-    
+
     <div ng-show="!images.length" style="color: #aaa;padding: 10px 10px 10px 10px;">
         <h4>{{t('image_list_empty')}}</h4>
     </div>
-        
-    <div class="row">
-        <div class="col-xs-3 col-md-2 col-lg-2" ng-repeat="image in images">
-            <a class="fa fa-close img-del" ng-click="delete(image)"></a><br />
-            <a href="{{image.image}}" class="thumbnail">
+    <br/>
+    <div class="hotel-images-container">
+        <div class="" ng-repeat="image in images">
+            <div href="{{image.image}}" class="hotel-image">
                 <img ng-src="{{image.thumb}}">
-            </a>
+                <a class="fa fa-close img-del text-red" ng-click="delete(image)"></a>
+            </div>
         </div>
     </div>
-    
+
 </div>
 <!-- /.box-body -->

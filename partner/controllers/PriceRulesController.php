@@ -153,7 +153,8 @@ class PriceRulesController extends \yii\web\Controller
 
         return $this->render('create', [
             'model' => $model,
-            'rooms' => $rooms,
+//            'rooms' => $rooms,
+            'hotels' => \Yii::$app->user->identity->hotels,
         ]);
     }
 }

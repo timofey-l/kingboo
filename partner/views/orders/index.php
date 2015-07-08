@@ -8,6 +8,9 @@ $assetOptions = ['depends' => [
     \dmstr\web\AdminLteAsset::className(),
 ]];
 
+
+$this->params['breadcrumbs'][] = $this->title;
+
 // iCheck plugin
 $icheck = \Yii::$app->assetManager->publish('@vendor/almasaeed2010/adminlte/plugins/iCheck');
 //$this->registerCssFile($icheck[1] . '/all.css', $assetOptions);
@@ -148,7 +151,7 @@ updateGroup();
                     <td>
                         <input class="iCheck" type="checkbox" data-id="<?= $order->id ?>" id="order_<?= $order->id ?>"/>
                     </td>
-					<td><?= $order->id ?></td>
+					<td><?= $order->partner_number ?></td>
 					<td>
 						<?= (new DateTime($order->created_at))->format(\Yii::t('partner_orders', 'd/m/Y'))?>
 						<br/>

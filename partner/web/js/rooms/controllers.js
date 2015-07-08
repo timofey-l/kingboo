@@ -500,6 +500,12 @@ roomsManageControllers.controller('ImagesCtrl',
         //if (!$scope.add_image.$valid) return false;
         $scope.loading = true;
         var f = $('#add_image')[0];
+
+        if (!$('#addNewImage').val()) {
+            alert(t('need_image_select'));
+            return false;
+        }
+
         $.ajax({
             url: '/roomimages',
             type: "POST",
@@ -512,8 +518,11 @@ roomsManageControllers.controller('ImagesCtrl',
             var i = $("#addNewImage");
             i.replaceWith( i = i.clone( true ) ); 
             $scope.load();
-        }).error(function(){
+        }).error(function(data){
             $scope.loading = false;
+            $scope.$digest();
+            console.log(data);
+
             //TODO: add error
         });
     };

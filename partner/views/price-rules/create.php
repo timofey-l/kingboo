@@ -19,6 +19,6 @@ $this->params['breadcrumbs'][] = $this->title;
     ['class' => 'btn btn-default']) ?>
 <br/>
 <br/>
-<?= $this->render('_form' . $model->type, ['model' => $model, 'rooms' => $rooms]) ?>
+<?= $this->render('_form' . $model->type, ['model' => $model, 'hotels' => $hotels]) ?>
 
 

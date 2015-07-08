@@ -10,28 +10,30 @@
 
     <div class="row">
     <form id="add_image" name="add_image" onsubmit="return false;" novalidate enctype="multipart/form-data" method="POST" action="">
-        <div class="col-sm-4">
-            <div class="input-group input-group-sm">
-                <input type="text" name="hotel_id" ng-show="false" ng-model="newImage.hotel_id">
-                <input type="file" class="form-control" name="image" width="200px;" required ng-model="newImage.image" id="addNewImage" placeholder="" >
-                <span class="input-group-addon price-inp-addon">
-                    <a class="fa fa-check" title="{{t('image_add')}}" ng-click="save()"></a>
-                </span>
+        <input type="text" name="hotel_id" style="display: none;" ng-model="newImage.hotel_id">
+        <div class="col-xs-12">
+            <div class="form-group">
+                <label for="addNewImage">{{t('select_file')}}</label>
+                <input type="file" name="image" width="200px;" required ng-model="newImage.image"
+                       id="addNewImage" placeholder="">
             </div>
+            <button ng-disabled="loading" class="btn btn-success" ng-click="save()">{{t('send')}}</button>
         </div>
     </form>
     </div>
-    
+
+    <br/>
+
     <div ng-show="!images.length" style="color: #aaa;padding: 10px 10px 10px 10px;">
         <h4>{{t('image_list_empty')}}</h4>
     </div>
         
-    <div class="row">
-        <div class="col-xs-3 col-md-2 col-lg-2" ng-repeat="image in images">
-            <a class="fa fa-close img-del" ng-click="delete(image)"></a><br />
-            <a href="{{image.image}}" class="thumbnail">
+    <div class="hotel-images-container">
+        <div class="" ng-repeat="image in images">
+            <div href="{{image.image}}" class="hotel-image">
                 <img ng-src="{{image.thumb}}">
-            </a>
+            </div>
+            <a class="fa fa-close img-del text-red" ng-click="delete(image)"></a>
         </div>
     </div>
     

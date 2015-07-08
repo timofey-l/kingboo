@@ -14,8 +14,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <style>
-    .rooms-list>*:not(:last-child) {
+    .rooms-list {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .rooms-list:not(:last-child) {
         margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #efefef;
     }
 </style>
 <div class="hotel-view">
@@ -160,7 +166,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <?php if ($rooms): ?>
             <div class="box-footer text-center">
-                <?= \yii\helpers\Html::a(\Yii::t('hotels', 'Manage rooms'), ['/rooms', 'id' => $model->id], []) ?>
+                <?= \yii\helpers\Html::a(\Yii::t('hotels', 'Manage rooms'), ['rooms', 'id' => $model->id], []) ?>
             </div>
         <?php endif; ?>
     </div>

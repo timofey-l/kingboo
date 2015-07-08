@@ -27,6 +27,28 @@ $this->registerJsFile('/js/order.js', ['depends' => [\yii\web\YiiAsset::classNam
 // инициализация подсказок
 $this->registerJs(" $('[data-toggle=\"tooltip\"]').tooltip({html: true})", \yii\web\View::POS_READY, 'tooltip init');
 
+$this->registerJs("
+window.inputBlur = function(e) {
+    switch (e.name) {
+        case 'Order[contact_address]':
+            if (!$('#orderitem-guest_address').val()) {
+                $('#orderitem-guest_address').val($(e).val());
+            }
+            break;
+        case 'Order[contact_name]':
+            if (!$('#orderitem-guest_name').val()) {
+                $('#orderitem-guest_name').val($(e).val());
+            }
+            break;
+        case 'Order[contact_surname]':
+            if (!$('#orderitem-guest_surname').val()) {
+                $('#orderitem-guest_surname').val($(e).val());
+            }
+            break;
+    }
+}
+");
+
 $this->title = \Yii::t('frontend', 'Room booking');
 ?>
 
@@ -101,8 +123,7 @@ $this->title = \Yii::t('frontend', 'Room booking');
 				</div>
 				<div class="panel-body">
 					<span class="dates-range">
-						<span class=""><?= (new DateTime($bookingParams->dateFrom))->format('d/m') ?></span>&nbsp;&mdash;&nbsp;<span
-							class=""><?= (new DateTime($bookingParams->dateTo))->format('d/m/Y') ?></span>
+						<span class=""><?= (new DateTime($bookingParams->dateFrom))->format('d/m') ?></span>&nbsp;&mdash;&nbsp;<span class=""><?= (new DateTime($bookingParams->dateTo))->format('d/m/Y') ?></span>
 					</span>
 					<br/>
 					<?= \Yii::t('frontend', 'Nights: {n}', [
@@ -145,16 +166,28 @@ $this->title = \Yii::t('frontend', 'Room booking');
 					</div>
 					<div class="row">
 						<div class="col-sm-2">
-							<?= $form->field($orderForm, 'contact_address')
+							<?= $form->field($orderForm, 'contact_address', [
+                                'inputOptions' => [
+                                    'onblur' => "window.inputBlur(this)"
+                                ]
+                            ])
 								->dropDownList(
 									\yii\helpers\ArrayHelper::merge(['' => ''], \common\components\ListAddressType::getSelectOptions())
 								) ?>
 						</div>
 						<div class="col-sm-5">
-							<?= $form->field($orderForm, 'contact_name') ?>
+							<?= $form->field($orderForm, 'contact_name', [
+                                'inputOptions' => [
+                                    'onblur' => "window.inputBlur(this)"
+                                ]
+                            ]) ?>
 						</div>
 						<div class="col-sm-5">
-							<?= $form->field($orderForm, 'contact_surname') ?>
+							<?= $form->field($orderForm, 'contact_surname', [
+                                'inputOptions' => [
+                                    'onblur' => "window.inputBlur(this)"
+                                ]
+                            ]) ?>
 						</div>
 					</div>
 				</div>

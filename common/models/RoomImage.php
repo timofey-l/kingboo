@@ -56,7 +56,8 @@ class RoomImage extends \yii\db\ActiveRecord
                 'attribute' => 'image',
                 'instanceByName' => true,
                 'scenarios' => ['insert', 'update', 'default'],
-                'placeholder' => '@app/web/images/noimage.png',
+//                'placeholder' => '@app/web/images/noimage.png',
+                'path' => '@common/uploads/room/{room_id}',
                 'path' => '@common/uploads/room/{room_id}',
                 'url' => '@web/uploads/room/{room_id}',
                 'thumbs' => [

@@ -1,3 +1,24 @@
+(function addXhrProgressEvent($) {
+    var originalXhr = $.ajaxSettings.xhr;
+    $.ajaxSetup({
+        progress: function () {
+            console.log("standard progress callback");
+        },
+        xhr: function () {
+            var req = originalXhr(), that = this;
+            if (req) {
+                if (typeof req.addEventListener == "function") {
+                    req.addEventListener("progress", function (evt) {
+                        that.progress(evt);
+                    }, false);
+                }
+            }
+            return req;
+        }
+    });
+})(jQuery);
+
+
 var imagesManageControllers = angular.module('imagesManageControllers', []);
 
 imagesManageControllers.controller('ImageListCtrl', 
@@ -35,15 +56,31 @@ imagesManageControllers.controller('ImageListCtrl',
 
     $scope.save = function () {
         //if (!$scope.add_image.$valid) return false;
-        $scope.loading = true;
+        if (!$('#addNewImage').val()) {
+            alert(t('need_image_select'));
+            return false;
+        }
+
         var f = $('#add_image')[0];
+        var data = new FormData(f);
+        data.hotel_id = $rootScope.hotelId;
+
+        $scope.loading = true;
         $.ajax({
             url: '/hotelimages',
             type: "POST",
             contentType: false,
             cache: false,
             processData: false,
-            data: new FormData(f)
+            data: new FormData(f),
+            progress: function (evt) {
+                if (evt.lengthComputable) {
+                    console.log("Loaded " + parseInt((evt.loaded / evt.total * 100), 10) + "%");
+                }
+                else {
+                    console.log("Length not computable.");
+                }
+            }
         }).success(function(data){
             //console.log(data);
             $scope.newImage.image = undefined;
@@ -52,6 +89,8 @@ imagesManageControllers.controller('ImageListCtrl',
             $scope.load();
         }).error(function(){
             $scope.loading = false;
+            alert(t('upload_error'));
+            $scope.$digest();
             //TODO: add error
         });
     };

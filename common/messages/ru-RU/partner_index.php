@@ -17,6 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Add hotel' => 'Добавить отель',
     'Adminstrative panel' => 'Администранивная панель',
     'Hotels' => 'Отели',
     'New' => 'Новый',

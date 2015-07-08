@@ -5,8 +5,27 @@ $this->title = \Yii::t('partner_pricerules', 'Price rules');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
+<style>
+    .pricerule-params {
+        width: 100%;
+    }
+
+    .pricerule-params td {
+        padding-bottom: 5px;
+    }
+
+    .pricerule-params tr > td:first-child {
+        text-align: right;
+        padding-right: 10px;
+    }
+
+    .pricerule-params tr > td:nth-child(2){
+        width: 160px;
+    }
+</style>
+
 <?= \yii\helpers\Html::a(
-    '<i class="fa text-bold">%</i>'.\Yii::t('partner_pricerules', 'Add discount'), ['create', 'type' => 0],[
+    '<i class="fa text-bold">%</i>' . \Yii::t('partner_pricerules', 'Add discount'), ['create', 'type' => 0], [
     'class' => 'btn btn-app'
 ]) ?>
 
@@ -21,9 +40,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th><?= \Yii::t('partner_pricerules', 'Type') ?></th>
+                    <th style=""><?= \Yii::t('partner_pricerules', 'Type') ?></th>
                     <th><?= \Yii::t('partner_pricerules', 'Rooms') ?></th>
-                    <th><?= \Yii::t('partner_pricerules', 'Options') ?></th>
+                    <th style="width: 50%"><?= \Yii::t('partner_pricerules', 'Options') ?></th>
                     <th><?= \Yii::t('partner_pricerules', 'Status') ?></th>
                 </tr>
                 </thead>
@@ -33,83 +52,107 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td>
                             <?= \common\components\ListPriceRules::getTitleById($price_rule->type) ?><?php if ($price_rule->type == 0): ?>
                                 <span><?= $price_rule->value ?><?php if ($price_rule->valueType == 0): ?>
-                                    %
-                                <?php else: ?>
-                                    <br/>
-                                    <small
-                                        class="text-muted"><?= \Yii::t('partner_pricerules', 'Fixed sum. Currency depends from hotel\'s currency.') ?></small>
-                                <?php endif; ?>
+                                        %
+                                    <?php else: ?>
+                                        <br/>
+                                        <small
+                                            class="text-muted"><?= \Yii::t('partner_pricerules', 'Fixed sum. Currency depends from hotel\'s currency.') ?></small>
+                                    <?php endif; ?>
                                 </span>
                             <?php endif; ?>
                         </td>
                         <td>
                             <?php foreach ($price_rule->rooms as $room): ?>
-                                <span
-                                    class="label label-default"><?= $room->{'title_' . \common\models\Lang::$current->url} ?></span>
+                                <span class="label label-default"><?= $room->{'title_' . \common\models\Lang::$current->url} ?></span>
                                 <br/>
                             <?php endforeach; ?>
                         </td>
                         <td>
-                            <?php if ($price_rule->type == 0): ?>
-                                <?php if ($price_rule->additive): ?>
-                                    <span class="label label-info">
-                                        <?= \Yii::t('partner_pricerules', 'Additive') ?>
-                                    </span>
-                                <?php endif; ?>
-                                <?php if ($price_rule->dateFrom && $price_rule->dateTo): ?>
-                                    <div>
-                                        <?php if ($price_rule->applyForCheckIn): ?>
-                                            <?= \Yii::t('partner_pricerules', 'Check-in date range') ?>:
-                                        <?php else: ?>
-                                            <?= \Yii::t('partner_pricerules', 'Living dates range') ?>:
-                                        <?php endif; ?>
-<!--                                        <br/>-->
-                                        <span class="label label-warning">
-                                        <?= (new DateTime($price_rule->dateFrom))->format(\Yii::t('partner_pricerules', 'd/m/Y')) ?>
-                                    </span>&ndash;<span class="label label-warning">
-                                        <?= (new DateTime($price_rule->dateTo))->format(\Yii::t('partner_pricerules', 'd/m/Y')) ?>
-                                    </span>
-                                    </div>
-                                <?php endif; ?>
+                            <table class="pricerule-params">
+                                <tbody>
+                                <?php if ($price_rule->type == 0): ?>
+                                    <?php if ($price_rule->additive): ?>
+                                        <tr>
+                                            <td colspan="2">
+                                                <span class="label label-info"><?= \Yii::t('partner_pricerules', 'Additive') ?></span>
+                                            </td>
+                                        </tr>
+                                    <?php endif; ?>
+                                    <?php if ($price_rule->dateFrom && $price_rule->dateTo): ?>
+                                        <tr>
+                                            <td>
+                                                <?php if ($price_rule->applyForCheckIn): ?>
+                                                    <?= \Yii::t('partner_pricerules', 'Check-in date range') ?>
+                                                <?php else: ?>
+                                                    <?= \Yii::t('partner_pricerules', 'Living dates range') ?>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <span class="label label-warning">
+                                                    <?= (new DateTime($price_rule->dateFrom))->format(\Yii::t('partner_pricerules', 'd/m/Y')) ?>
+                                                </span>&nbsp;&ndash;&nbsp;<span class="label label-warning">
+                                                    <?= (new DateTime($price_rule->dateTo))->format(\Yii::t('partner_pricerules', 'd/m/Y')) ?>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    <?php endif; ?>
 
-                                <?php if ($price_rule->dateFromB && $price_rule->dateToB): ?>
-                                    <div>
-                                        <?= \Yii::t('partner_pricerules', 'Booking dates range') ?>:
-                                    <span class="label label-warning">
-                                        <?= (new DateTime($price_rule->dateFromB))->format(\Yii::t('partner_pricerules', 'd/m/Y')) ?>
-                                    </span>&ndash;<span class="label label-warning">
-                                        <?= (new DateTime($price_rule->dateToB))->format(\Yii::t('partner_pricerules', 'd/m/Y')) ?>
-                                    </span>
-                                    </div>
-                                <?php endif; ?>
+                                    <?php if ($price_rule->dateFromB && $price_rule->dateToB): ?>
+                                        <tr>
+                                            <td>
+                                                <?= \Yii::t('partner_pricerules', 'Booking dates range') ?>
+                                            </td>
+                                            <td>
+                                                <span class="label label-warning">
+                                                    <?= (new DateTime($price_rule->dateFromB))->format(\Yii::t('partner_pricerules', 'd/m/Y')) ?>
+                                                </span>&nbsp;&ndash;&nbsp;<span class="label label-warning">
+                                                    <?= (new DateTime($price_rule->dateToB))->format(\Yii::t('partner_pricerules', 'd/m/Y')) ?>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    <?php endif; ?>
 
-                                <?php if ($price_rule->minSum): ?>
-                                    <div>
-                                        <?= \Yii::t('partner_pricerules', 'Minimal discount sum limit') ?>:
-                                        <span class="label label-warning">
-                                            <?= $price_rule->minSum ?>
-                                        </span>
-                                    </div>
-                                <?php endif; ?>
+                                    <?php if ($price_rule->minSum): ?>
+                                        <tr>
+                                            <td>
+                                                <?= \Yii::t('partner_pricerules', 'Minimal discount sum limit') ?>
+                                            </td>
+                                            <td>
+                                                <span class="label label-warning">
+                                                    <?= $price_rule->minSum ?>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    <?php endif; ?>
 
-                                <?php if ($price_rule->maxSum): ?>
-                                    <div>
-                                        <?= \Yii::t('partner_pricerules', 'Maximal discount sum limit') ?>:
-                                        <span class="label label-warning">
-                                            <?= $price_rule->maxSum ?>
-                                        </span>
-                                    </div>
-                                <?php endif; ?>
+                                    <?php if ($price_rule->maxSum): ?>
+                                        <tr>
+                                            <td>
+                                                <?= \Yii::t('partner_pricerules', 'Maximal discount sum limit') ?>:
+                                            </td>
+                                            <td>
+                                                <span class="label label-warning">
+                                                    <?= $price_rule->maxSum ?>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    <?php endif; ?>
 
-                                <?php if ($price_rule->code): ?>
-                                    <div>
-                                        <?= \Yii::t('partner_pricerules', 'Promo code') ?>:
-                                        <span class="label label-warning">
-                                            <?= $price_rule->code ?>
-                                        </span>
-                                    </div>
+                                    <?php if ($price_rule->code): ?>
+                                        <tr>
+                                            <td>
+                                                <?= \Yii::t('partner_pricerules', 'Promo code') ?>
+                                            </td>
+                                            <td>
+                                                <span class="label label-warning">
+                                                    <?= $price_rule->code ?>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    <?php endif; ?>
                                 <?php endif; ?>
-                            <?php endif; ?>
+                                </tbody>
+                            </table>
                         </td>
                         <td>
                             <?php if ($price_rule->active): ?>

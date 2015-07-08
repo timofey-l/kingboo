@@ -24,7 +24,6 @@ $lang = \common\models\Lang::$current->url;
 $hotel_title = $model->{'title_' . $lang};
 $this->title = $hotel_title;
 
-$this->params['breadcrumbs'][] = ['label' => Yii::t('hotels', 'Hotels'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $hotel_title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('hotels', 'Rooms'), 'url' => ['rooms', 'id' => $model->id]];
 

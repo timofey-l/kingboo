@@ -9,7 +9,7 @@ $l = \common\models\Lang::$current->url;
     <section class="sidebar">
 
 	    <ul class="sidebar-menu">
-		    <li class="header"><?= Yii::t('left_menu', 'Hotels list') ?></li>
+		    <li class="header hotels-header"><?= Yii::t('left_menu', 'Hotels list') ?></li>
 		    <?php 
                 //Вывод списка отелей
                 if ($this->context->id == 'hotel') {

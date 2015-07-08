@@ -10,6 +10,8 @@ $this->registerJsFile('/js/price-rules/add-form0.js', [
     'depends' => \partner\assets\AppAsset::className()
 ]);
 
+$l = \common\models\Lang::$current->url;
+
 $assetOptions = ['depends' => [
     \partner\assets\AppAsset::className(),
     \dmstr\web\AdminLteAsset::className(),
@@ -50,19 +52,25 @@ $dateFormat = \Yii::t('partner', 'dd/mm/yyyy');
                 </h3>
             </div>
             <div class="box-body">
-                <?php foreach ($rooms as $room): ?>
-                    <div class="form-group field-pricerulebasic-additive">
-                        <div class="checkbox">
-                            <label class="">
-                                <?= \yii\helpers\Html::checkbox('rooms[]', false, [
-                                    'class' => 'iCheck',
-                                    'value' => $room->id,
-                                ]) ?>
-                                <?= $room->{'title_' . \common\models\Lang::$current->url} ?>
-                            </label>
-                        </div>
-                    </div>
+                <?php foreach ($hotels as $index => $hotel): ?>
+                    <?php /** @var \common\models\Hotel $hotel */ ?>
 
+                    <h3><?= $hotel->{'title_' . $l} ?></h3>
+
+                    <?php foreach ($hotel->rooms as $room): ?>
+                        <div class="form-group field-pricerulebasic-additive">
+                            <div class="checkbox">
+                                <label class="">
+                                    <?= \yii\helpers\Html::checkbox('rooms[]', false, [
+                                        'class' => 'iCheck',
+                                        'value' => $room->id,
+                                    ]) ?>
+                                    <?= $room->{'title_' . \common\models\Lang::$current->url} ?>
+                                </label>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                    <br/>
                 <?php endforeach; ?>
             </div>
         </div>

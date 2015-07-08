@@ -23,6 +23,10 @@ $this->registerCssFile($colorbox . '/example1/colorbox.css', [], 'colorbox');
         <div class="box box-default">
             <div class="box-header with-border">
                 <h3 class="box-title"><?= \Yii::t('partner_index', 'Hotels') ?></h3>
+
+                <?= \yii\helpers\Html::a('<i class="fa fa-plus"></i> '.\Yii::t('partner_index', 'Add hotel'), ['hotel/create'], [
+                    'class' => 'btn btn-xs btn-success pull-right'
+                ]) ?>
             </div>
             <div class="box-body">
                 <?php foreach ($hotels as $index => $hotel): ?>
