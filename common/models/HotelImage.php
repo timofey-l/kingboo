@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\components\ITDesignUploadImageBehavior;
 
 /**
  * This is the model class for table "{{%hotel_image}}".
@@ -40,7 +41,7 @@ class HotelImage extends \yii\db\ActiveRecord
     {
         return [
             'image' => [
-                'class' => \mongosoft\file\UploadImageBehavior::className(),
+                'class' => ITDesignUploadImageBehavior::className(),
                 'attribute' => 'image',
                 'instanceByName' => true,
                 'scenarios' => ['insert', 'update', 'default'],
