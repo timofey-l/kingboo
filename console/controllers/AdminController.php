@@ -113,7 +113,7 @@ class AdminController extends Controller
             $hotel->lng = 0;
             $hotel->category = 5;
             $hotel->timezone = '';
-            $hotel->currency_id = 1;
+            $hotel->currency_id = 2;
 
             if ($hotel->save()) {
                 print_r($hotel->attributes);
