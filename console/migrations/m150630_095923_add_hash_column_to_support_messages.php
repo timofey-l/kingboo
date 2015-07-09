@@ -13,8 +13,8 @@ class m150630_095923_add_hash_column_to_support_messages extends Migration
 
     public function down()
     {
-        $this->dropColumn('{{%support_messages}}', 'hash');
         $this->dropIndex('hash_unique', '{{%support_messages}}');
+        $this->dropColumn('{{%support_messages}}', 'hash');
     }
 
     /*
