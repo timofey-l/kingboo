@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\ITDesignUploadImageBehavior;
 use Yii;
 
 /**
@@ -52,14 +53,14 @@ class RoomImage extends \yii\db\ActiveRecord
     {
         return [
             'image' => [
-                'class' => \mongosoft\file\UploadImageBehavior::className(),
+                'class' => ITDesignUploadImageBehavior::className(),
                 'attribute' => 'image',
                 'instanceByName' => true,
                 'scenarios' => ['insert', 'update', 'default'],
 //                'placeholder' => '@app/web/images/noimage.png',
                 'path' => '@common/uploads/room/{room_id}',
-                'path' => '@common/uploads/room/{room_id}',
                 'url' => '@web/uploads/room/{room_id}',
+                'imageResize' => ['width' => 1200, 'height' => 1200, 'quality' => 100],
                 'thumbs' => [
                     'thumb' => ['width' => 255, 'height' => 123, 'quality' => 100],
                     'preview' => ['width' => 600, 'height' => 352, 'quality' => 100],

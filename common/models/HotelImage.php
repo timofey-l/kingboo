@@ -46,6 +46,7 @@ class HotelImage extends \yii\db\ActiveRecord
                 'scenarios' => ['insert', 'update', 'default'],
 //                'placeholder' => '@app/web/images/noimage.png',
                 'path' => '@common/uploads/hotel/{hotel_id}',
+                'imageResize' => ['width' => 1200, 'height' => 1200, 'quality' => 100],
                 'url' => '@web/uploads/hotel/{hotel_id}',
                 'thumbs' => [
                     'thumb' => ['width' => 90, 'height' => 90, 'quality' => 100],
