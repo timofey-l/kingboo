@@ -17,11 +17,10 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Add price rules using buttons above.' => 'Добавьте правила формирования цен используя кнопки выше',
-    'Price rules not defined' => 'Правила формирования цен не определены',
     'Add price rule' => '@@Добавить правило@@',
     'Nothing was found' => '@@Ничего не найдено@@',
     'Add discount' => 'Добавить скидку',
+    'Add price rules using buttons above.' => 'Добавьте правила формирования цен используя кнопки выше',
     'Additive' => 'Аддитивная',
     'Are you sure you want to deactivate this price rule?' => 'Вы действительно хотите деактивировать это правило?',
     'Back to price rules' => 'Вернуться к правилам форм. цен',
@@ -44,6 +43,7 @@ return [
     'Minimum discount bound' => 'Ограничение минимальной суммы',
     'Options' => 'Параметры',
     'Price rules' => 'Правила формирования цен',
+    'Price rules not defined' => 'Правила формирования цен не определены',
     'Promo code' => 'Промо код',
     'Rooms' => 'Номера',
     'Status' => 'Статус',

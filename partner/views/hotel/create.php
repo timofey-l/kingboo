@@ -13,8 +13,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="hotel-create">
     <?= \yii\helpers\Html::a(
-        '<i class="fa fa-arrow-left"></i> ' . \Yii::t('partner_hotel', 'Back to hotel view'),
-        ['view', 'id' => $hotel->id],
+        '<i class="fa fa-arrow-left"></i> ' . \Yii::t('partner_hotel', 'Back to main page'),
+        ['/site/index'],
         ['class' => 'btn btn-default']) ?>
     <br/>
     <br/>

@@ -76,7 +76,7 @@ class HotelController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($id)
+    public function actionCreate()
     {
         $model = new Hotel();
         $model->partner_id = Yii::$app->user->id;    
@@ -86,7 +86,6 @@ class HotelController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'hotel' => Hotel::findOne($id),
             ]);
         }
     }

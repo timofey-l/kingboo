@@ -17,5 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Back to main page' => 'Вернуться на главную',
     'Back to hotel view' => 'Вернуться к отелю',
 ];
