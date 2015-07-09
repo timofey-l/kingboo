@@ -32,8 +32,8 @@
         <div class="" ng-repeat="image in images">
             <div href="{{image.image}}" class="hotel-image">
                 <img ng-src="{{image.thumb}}">
+                <a class="fa fa-close img-del text-red" ng-click="delete(image)"></a>
             </div>
-            <a class="fa fa-close img-del text-red" ng-click="delete(image)"></a>
         </div>
     </div>
     
