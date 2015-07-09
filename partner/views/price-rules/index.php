@@ -29,6 +29,14 @@ $this->params['breadcrumbs'][] = $this->title;
     'class' => 'btn btn-app'
 ]) ?>
 
+<?php if (!$price_rules): ?>
+    <br/>
+    <div class="alert alert-info alert-dismissable col-sm-12 col-md-8">
+        <h4><i class="icon fa fa-info"></i> <?= \Yii::t('partner_pricerules', 'Price rules not defined') ?></h4>
+        <?= \Yii::t('partner_pricerules', 'Add price rules using buttons above.') ?>
+    </div>
+<?php endif; ?>
+
 <?php if (count($price_rules) > 0): ?>
     <div class="box box-default">
         <div class="box-header with-border">
@@ -177,8 +185,4 @@ $this->params['breadcrumbs'][] = $this->title;
             </table>
         </div>
     </div>
-<?php else: ?>
-
-    <?= \Yii::t('partner_pricerules', 'Nothing was found') ?>
-
 <?php endif; ?>
