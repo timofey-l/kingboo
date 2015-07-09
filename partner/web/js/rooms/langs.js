@@ -68,6 +68,7 @@ LANGS.ru = {
     availability_no_count: 'Не указано количество',
     availability_stop_sale: 'Продажа остановлена',
     availability_on_sale: 'В продаже',
+    send: 'Отправить',
 };
 
 LANGS.en = {
@@ -136,6 +137,7 @@ LANGS.en = {
     availability_no_count: 'Rooms not specified',
     availability_stop_sale: 'Stop sale',
     availability_on_sale: 'On sale',
+    send: 'Send',
 };
 
 function t(v, l) {
