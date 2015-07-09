@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 /* @var $model \partner\models\LoginForm */
 
-$this->title = 'Sign In';
+$this->title = \Yii::t('partner_login', 'Sign in');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="form-box" id="login-box">
