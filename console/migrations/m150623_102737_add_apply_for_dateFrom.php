@@ -12,7 +12,7 @@ class m150623_102737_add_apply_for_dateFrom extends Migration
 
     public function down()
     {
-        $this->dropColumn('{{%price-rules}}', 'applyForCheckin');
+        $this->dropColumn('{{%price_rules}}', 'applyForCheckin');
     }
     
     /*

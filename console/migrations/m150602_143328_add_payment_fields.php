@@ -23,9 +23,9 @@ class m150602_143328_add_payment_fields extends Migration
     {
         $this->dropIndex('order_number', '{{%order}}');
 
-	    $this->dropColumn('{{%order}}', 'scid');
-	    $this->dropColumn('{{%order}}', 'shopPassword');
-	    $this->dropColumn('{{%order}}', 'shopId');
+	    $this->dropColumn('{{%partner_user}}', 'scid');
+	    $this->dropColumn('{{%partner_user}}', 'shopPassword');
+	    $this->dropColumn('{{%partner_user}}', 'shopId');
     }
     
     /*
