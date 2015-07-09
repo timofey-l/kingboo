@@ -1,17 +1,17 @@
 <?php
 /* @var $this yii\web\View */
-$this->title = 'My Yii Application';
+$this->title = 'king-boo.com';
 ?>
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1><?= Yii::t('app','Congratulations!'); ?></h1>
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+        <h1>king-boo.com</h1>
+        <p class="lead">
+            <?= \Yii::t('frontend', 'Orders and payment management system for your hotels') ?>
+        </p>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
     </div>
 
     <div class="body-content">
-        <script type="application/javascript" src="http://partner.booking.local/widget/js/tTp3aqbJ0tz5E_3ebS_pzUdXUCam8pKD"></script>
     </div>
 </div>

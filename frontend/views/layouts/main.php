@@ -41,9 +41,9 @@ $this->registerJsFile('/js/langs.js');
                 ],
             ]);
             $menuItems = [
-                ['label' => 'Home', 'url' => ['/site/index']],
-                ['label' => 'About', 'url' => ['/site/about']],
-                ['label' => 'Contact', 'url' => ['/site/contact']],
+                ['label' => \Yii::t('frontend', 'Main'), 'url' => ['/site/index']],
+//                ['label' => \Yii::t('frontend', 'About'), 'url' => ['/site/about']],
+                ['label' => \Yii::t('frontend', 'Contact us'), 'url' => ['/site/contact']],
             ];
 //            if (Yii::$app->user->isGuest) {
 //                $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
@@ -73,8 +73,7 @@ $this->registerJsFile('/js/langs.js');
 
     <footer class="footer">
         <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-left">&copy; <a href="http://itdesign.ru">IT Design Studio</a> <?= date('Y') ?></p>
         </div>
     </footer>
 
