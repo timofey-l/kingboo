@@ -58,7 +58,7 @@ class ContactForm extends Model
             ->setFrom([$this->email => $this->name])
 //            ->setFrom(\Yii::$app->params['email.from'])
             ->setSubject($this->subject)
-            ->setTextBody($this->body . "\n" . "Email: " . $this->email . '('. $this->name .')')
+            ->setTextBody($this->body)
             ->send();
     }
 }
