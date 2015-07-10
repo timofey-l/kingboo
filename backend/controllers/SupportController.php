@@ -53,9 +53,6 @@ class SupportController extends Controller
     public function actionThread($id)
     {
         $model = SupportMessage::findOne($id);
-        if (!$model || $model->author != \Yii::$app->user->id || $model->parent_id) {
-            throw new ForbiddenHttpException('Access forbidden');
-        }
 
         $newMessage = new SupportMessage();
         if ($newMessage->load(\Yii::$app->request->post())) {

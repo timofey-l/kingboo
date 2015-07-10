@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use partner\models\PartnerUser;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -101,6 +102,10 @@ class SupportMessage extends ActiveRecord
         return static::find()
             ->where(['parent_id' => $this->id, 'unread' => 1])
             ->count();
+    }
+
+    public function getPartner() {
+        return $this->hasOne(PartnerUser::className(), ['id' => 'author']);
     }
 
     public function getParent() {

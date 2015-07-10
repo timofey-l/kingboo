@@ -11,11 +11,12 @@ $this->title = \Yii::t('support', 'Support message #{n}', ['n' => $model->id]);
 
 <div class="panel panel-solid panel-primary">
     <div class="panel-heading">
-        <h3 class="panel-title"><?= \Yii::t('support', 'User message') ?>
+        <h3 class="panel-title">
+            <?= \yii\helpers\Html::encode($model->title) ?>
 
-        <div class="pull-right">
-            <?= (new DateTime($model->created_at))->format(\Yii::t('support', 'd/m/Y H:i:s')) ?>
-        </div>
+            <div class="pull-right">
+                <?= (new DateTime($model->created_at))->format(\Yii::t('support', 'd/m/Y H:i:s')) ?>
+            </div>
         </h3>
     </div>
     <div class="panel-body">
