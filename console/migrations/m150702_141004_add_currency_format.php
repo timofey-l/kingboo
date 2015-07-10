@@ -9,21 +9,12 @@ class m150702_141004_add_currency_format extends Migration
     {
         $this->addColumn('{{%currencies}}', 'format', Schema::TYPE_STRING . ' NOT NULL');
 
-        //rub
-        if ($m = \common\models\Currency::findOne(['code' => 'RUB'])) {
-            $m->format = '{value}{symbol}';
-            $m->save();
-        }
-        //usd
-        if ($m = \common\models\Currency::findOne(['code' => 'USD'])) {
-            $m->format = '{symbol}{value}';
-            $m->save();
-        }
-        //eur
-        if ($m = \common\models\Currency::findOne(['code' => 'EUR'])) {
-            $m->format = '{symbol}{value}';
-            $m->save();
-        }
+        $this->truncateTable('{{%currencies}}');
+        $this->batchInsert('{{%currencies}}', ['name_ru', 'name_en', 'code', 'symbol', 'format'], [
+            ['USD', 'USD', 'USD', '$', '{symbol}{value}'],
+            ['Евро', 'Euro', 'EUR', '&euro;', '{symbol}{value}'],
+            ['Российский рубль', 'Russian Ruble', 'RUB', '&#8381;', '{value}{symbol}'],
+        ]);
 
     }
 

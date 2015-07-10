@@ -9,10 +9,32 @@ use partner\models\PartnerUser;
 use Yii;
 use yii\console\Controller;
 use backend\models\BackendUser;
+use yii\console\Exception;
 use yii\helpers\Inflector;
 
 class AdminController extends Controller
 {
+    public function actionChangeAdminPassword($id)
+    {
+        $admin = BackendUser::findOne($id);
+        if (!$admin) {
+            throw new Exception('User not found');
+        }
+
+        echo "User id: {$admin->id} \n";
+        echo "User email: {$admin->email} \n";
+        echo "User name: {$admin->username} \n";
+
+        echo "Enter new user password (Ctrl + C to exit): ";
+        $password = trim(fgets(STDIN));
+        $admin->password = $password;
+        if ($admin->save()) {
+            echo "\nPassword updated.\n";
+        } else {
+            echo "\nError while updating password\n";
+        }
+    }
+
     public function actionAddAdmin()
     {
         echo "Adding new admin.\n\n";
