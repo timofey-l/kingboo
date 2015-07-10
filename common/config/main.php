@@ -3,6 +3,7 @@ return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'language'=>'ru-RU',
     'name' => 'king-boo.com',
+    'bootstrap' => ['log'],
     'components' => [
         'assetManager' => [
             'linkAssets' => true,
@@ -14,7 +15,24 @@ return [
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
         ],
-
+        'log' => [
+            'targets' => [
+                [
+                    'class' => 'yii\log\DbTarget',
+                    'levels' => ['error', 'warning'],
+                ],
+                [
+                    'class' => 'yii\log\EmailTarget',
+                    'levels' => ['error'],
+                    'categories' => ['*'],
+                    'message' => [
+                        'from' => ['errors@king-boo.com'],
+                        'to' => ['timofeylyzhenkov@gmial.com', 'mn@itdesign.ru'],
+                        'subject' => 'Errors at king-boo.com',
+                    ],
+                ],
+            ],
+        ],
 //        'authManager' => [
 //            'class' => 'yii\rbac\PhpManager',
 //            'defaultRoles' => ['client', 'admin'],
