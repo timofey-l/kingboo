@@ -198,16 +198,13 @@ class AdminController extends Controller
     }
 
 	public function actionTest() {
-		$price_info = BookingHelper::calcRoomPrice([
-			'roomId' => 1,
-			'dateFrom' => '2015-04-28',
-			'dateTo' => '2015-05-01',
-			'adults' => 1,
-			'children' => 0,
-			'kids' => 0,
-		]);
-
-		var_dump($price_info);
+        Yii::$app->mailer->compose()
+            ->setFrom('robot@king-boo.com')
+            ->setTo(\Yii::$app->params['adminEmail'])
+            ->setSubject('Message subject')
+            ->setTextBody('Plain text content')
+            ->setHtmlBody('<b>HTML content</b>')
+            ->send();
 	}
 
 }

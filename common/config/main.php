@@ -10,6 +10,11 @@ return [
         'cache' => [
 			'class' => 'yii\caching\FileCache',
 		],
+
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+        ],
+
 //        'authManager' => [
 //            'class' => 'yii\rbac\PhpManager',
 //            'defaultRoles' => ['client', 'admin'],
