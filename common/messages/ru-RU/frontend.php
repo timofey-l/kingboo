@@ -17,8 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Thank you for contacting us. We will respond to you as soon as possible.' => 'Спасибо за сообщение! Мы обязательно Вам ответим!',
-    'There was an error sending email.' => 'Произошла ошибка при отправке электронного письма.',
     'Age' => '@@Возраст@@',
     'Enter name' => '@@Введите имя@@',
     'Enter surname' => '@@Введите фамилию@@',
@@ -64,7 +62,9 @@ return [
     'Submit' => 'Отправить',
     'Sum to pay now:' => 'Сумма для оплаты сейчас',
     'Surname' => 'Фамилия',
+    'Thank you for contacting us. We will respond to you as soon as possible.' => 'Спасибо за сообщение! Мы обязательно Вам ответим!',
     'The rooms that you chose were booked. <br/><br/>To complete the booking you need to pay.<br/><br/>Otherwise, booking will be canceled within {t} hours.' => 'Выбранные Вами номера забронированны. <br/><br/>Для завершения процедуры бронирования необходимо произвести оплату.<br/><br/>В противном случае через {t} часа бронь аннулируется.',
+    'There was an error sending email.' => 'Произошла ошибка при отправке электронного письма.',
     'Total sum:' => 'Общая сумма:',
     'Verification Code' => 'Проверочный код',
     '{n, plural, =1{photo} other{# photos}}' => '{n, plural, =1{фото} other{# фото}}',
