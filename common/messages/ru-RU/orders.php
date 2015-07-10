@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Address' => 'Адрес',
+    'Address' => 'Обращение',
     'Adults' => 'Взрослых',
     'Checked' => '',
     'Children' => 'Дети 7-12 лет',
