@@ -199,22 +199,14 @@ class AdminController extends Controller
     }
 
 	public function actionTest($id = 1) {
-
+        /** @var Order $order */
         $order = Order::findOne($id);
 
         if (!$order) {
             echo "Order #{$id} not found!\n";
         } else {
-            Yii::$app->mailer->compose([
-                'html' => 'orderCreatedToPartner-html',
-                'text' => 'orderCreatedToPartner-text',
-            ], [
-                'order' => $order,
-            ])
-                ->setFrom(\Yii::$app->params['email.from'])
-                ->setTo(\Yii::$app->params['adminEmail'])
-                ->setSubject(\Yii::t('mail_orders', 'New order on site king-boo.com'))
-                ->send();
+            $order->sendEmailToClient();
+            $order->sendEmailToPartner();
         }
 
 

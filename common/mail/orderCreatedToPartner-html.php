@@ -2,8 +2,12 @@
 
 /* @var $this yii\web\View */
 /* @var $order common\models\Order */
+/* @var $lang string */
 
-$lang = $order->lang;
+if (!isset($lang)) {
+    $lang = $order->hotel->partner->lang;
+}
+$translate_category = 'mails_order';
 
 ?>
 
@@ -13,4 +17,8 @@ $lang = $order->lang;
     <p><?= \Yii::t('mails_order', 'You can open order to manage it by <a href="{url}">clicking here</a>.', ['url' => \yii\helpers\Url::to('@partner_web').'/orders/view?id='.$order->id]) ?></p>
     <p><?= \Yii::t('mails_order', 'Order details') ?>:</p>
     <p><?= $this->render('_order-html', ['order' => $order]) ?></p>
+
+    <p></p>
+
+    <p><?= \Yii::t($translate_category, 'Best regards, team of king-boo.com', [], $lang) ?></p>
 </div>

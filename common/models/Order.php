@@ -148,7 +148,41 @@ class Order extends ActiveRecord
 					break;
 			}
 		}
+
+        // отправка писем о совершении заказа
+        if ($insert) {
+            $this->sendEmailToClient();
+            $this->sendEmailToPartner();
+
+        }
 	}
+
+    public function sendEmailToClient() {
+        \Yii::$app->mailer->compose([
+            'html' => 'orderCreatedToClient-html',
+            'text' => 'orderCreatedToClient-text',
+        ], [
+            'order' => $this,
+        ])
+            ->setFrom(\Yii::$app->params['email.from'])
+            ->setTo([$this->contact_email => $this->contact_name . ' ' . $this->contact_surname])
+            ->setSubject(\Yii::t('mails_order', 'Order on site king-boo.com'))
+            ->send();
+    }
+
+    public function sendEmailToPartner()
+    {
+        \Yii::$app->mailer->compose([
+            'html' => 'orderCreatedToPartner-html',
+            'text' => 'orderCreatedToPartner-text',
+        ], [
+            'order' => $this,
+        ])
+            ->setFrom(\Yii::$app->params['email.from'])
+            ->setTo($this->hotel->partner->email)
+            ->setSubject(\Yii::t('mails_order', 'New order on site king-boo.com'))
+            ->send();
+    }
 
 	public function beforeSave($insert) {
 		if (parent::beforeSave($insert)) {
