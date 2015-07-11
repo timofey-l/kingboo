@@ -25,10 +25,4 @@ return [
     'Room facilities ' => '',
     'Support' => '',
     'Types of food' => '',
-    'Manage clients' => '@@@@',
-    'Manage countries ' => '@@@@',
-    'Manage currencies ' => '@@@@',
-    'Manage partners' => '@@@@',
-    'Manage types of food ' => '@@@@',
-    'Manage users' => '@@@@',
 ];

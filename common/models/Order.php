@@ -163,6 +163,7 @@ class Order extends ActiveRecord
             'text' => 'orderCreatedToClient-text',
         ], [
             'order' => $this,
+            'lang' => $this->lang,
         ])
             ->setFrom(\Yii::$app->params['email.from'])
             ->setTo([$this->contact_email => $this->contact_name . ' ' . $this->contact_surname])
@@ -177,6 +178,7 @@ class Order extends ActiveRecord
             'text' => 'orderCreatedToPartner-text',
         ], [
             'order' => $this,
+            'lang' => $this->hotel->partner->lang,
         ])
             ->setFrom(\Yii::$app->params['email.from'])
             ->setTo($this->hotel->partner->email)

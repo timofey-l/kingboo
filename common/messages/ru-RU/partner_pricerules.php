@@ -17,8 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Add price rule' => '@@Добавить правило@@',
-    'Nothing was found' => '@@Ничего не найдено@@',
     'Add discount' => 'Добавить скидку',
     'Add price rules using buttons above.' => 'Добавьте правила формирования цен используя кнопки выше',
     'Additive' => 'Аддитивная',

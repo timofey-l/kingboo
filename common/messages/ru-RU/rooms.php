@@ -39,8 +39,6 @@ return [
     'Title Ru' => '',
     'Update' => '',
     'Update {modelClass}: ' => '',
-    'Description' => '@@Описание@@',
-    'Title' => '@@Название@@',
     'Active' => 'Активен',
     'Adults' => 'Взрослые',
     'Children' => 'Дети',

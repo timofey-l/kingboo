@@ -20,8 +20,6 @@ return [
     'ID' => '',
     'Parent ID' => '',
     'Unread admin' => '',
-    'New messages' => '@@Новые сообщения@@',
-    'Send new message' => '@@Отправить новое сообщения@@',
     'All messages' => 'Все сообщения',
     'Author' => 'Автор',
     'Cancel' => 'Отмена',

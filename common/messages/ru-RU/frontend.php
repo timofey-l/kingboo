@@ -17,13 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Age' => '@@Возраст@@',
-    'Enter name' => '@@Введите имя@@',
-    'Enter surname' => '@@Введите фамилию@@',
-    'Gender' => '@@Пол@@',
-    'Guests information' => '@@Информация о гостях@@',
-    '{n, plural, =1{one guest} other{# guests}}' => '@@{n, plural, =1{один гость} one{# гость} few{# гостя} many{# гостей} other{# гостей}}@@',
-    '{n, plural, =1{one night} few{# nights} many{# nights} other{# nights}}' => '@@{n, plural, =1{одна ночь} one{# ночь} few{# ночи} many{# ночей} other{# ночей}}@@',
     '* If you have' => '* Если имеется',
     'Adults' => 'Взрослых',
     'Arrival date' => 'Дата заезда',

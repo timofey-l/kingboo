@@ -17,11 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Geo coordinates' => '@@Координаты@@',
-    'Hotels' => '@@Отели@@',
-    'Other information' => '@@Прочая информация@@',
-    'Update' => '@@Редактировать@@',
-    'Update {modelClass}: ' => '@@@@',
     'Address' => 'Адрес',
     'Allow partial pay' => 'Позволить частичную оплату',
     'Are you sure you want to delete this item?' => 'Вы действительно хотите удалить этот элемент?',

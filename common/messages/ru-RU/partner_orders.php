@@ -17,8 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'ID' => '@@@@',
-    'Set all as viewed' => '@@Отметить как прочитанные@@',
     '(partial pay {percents}%)' => '(частичная оплата {percents}%)',
     'Adults' => 'Взрослые',
     'Adults: {n}' => 'Взрослых: {n}',

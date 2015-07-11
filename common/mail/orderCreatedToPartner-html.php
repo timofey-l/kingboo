@@ -7,8 +7,6 @@
 if (!isset($lang)) {
     $lang = $order->hotel->partner->lang;
 }
-$translate_category = 'mails_order';
-
 ?>
 
 <div>
@@ -20,5 +18,5 @@ $translate_category = 'mails_order';
 
     <p></p>
 
-    <p><?= \Yii::t($translate_category, 'Best regards, team of king-boo.com', [], $lang) ?></p>
+    <p><?= \Yii::t('mails_order', 'Best regards, team of king-boo.com', [], $lang) ?></p>
 </div>
