@@ -17,7 +17,7 @@ if (!isset($lang)) {
     <p><?= \Yii::t('mails_order', 'The rooms are now booked, but the booking will be canceled if payment is not received within 24 hours.', []) ?></p>
     <p><?= \Yii::t('mails_order', 'To make a payment, please click the link below <br/><a href="{url}">{url}</a>', ['url' => 'http://king-boo.com/payment/'.$order->payment_url], $lang) ?></p>
     <p><?= \Yii::t('mails_order', 'Order details') ?>:</p>
-    <p><?= $this->render('_order-html', ['order' => $order]) ?></p>
+    <p><?= $this->render('_order-html', ['order' => $order, 'lang' => $lang]) ?></p>
     <p></p>
     <p><?= \Yii::t('mails_order', 'Best regards, team of king-boo.com', [], $lang) ?></p>
 </div>

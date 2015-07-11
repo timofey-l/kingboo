@@ -3,7 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $order common\models\Order */
 
-$lang = $order->lang;
+//$lang = $order->lang;
 
 /** @var \common\models\Currency $currency */
 $currency = $order->hotel->currency;
