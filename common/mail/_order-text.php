@@ -23,13 +23,10 @@ $currency = $order->hotel->currency;
     <?= \yii\helpers\Html::encode($order->contact_email) ?>
     <?= \yii\helpers\Html::encode($order->contact_phone) ?>
 
-<?= \Yii::t($translate_category, 'Numbers', [], $lang) ?>:
-    <?php foreach ($order->orderItems as $index => $item): ?>
-        <?php /** @var \common\models\OrderItem $item */ ?>
+<?= \Yii::t($translate_category, 'Numbers', [], $lang) ?>:<?php foreach ($order->orderItems as $index => $item): ?><?php /** @var \common\models\OrderItem $item */ ?>
 <?= $index ?>. <?= $item->room->{'title_' . $lang} ?>
         <?= \Yii::t($translate_category, 'Sum', [], $lang) ?>: <?= $currency->getFormatted($item->sum) ?>
-        <?= \Yii::t($translate_category, 'Adults: <b>{n}</b>', ['n' => $item->adults], $lang) ?>
-        <?= \Yii::t($translate_category, 'Children 7-12 y.o.: <b>{n}</b>', ['n' => $item->children], $lang) ?>
-        <?= \Yii::t($translate_category, 'Children 0-6 y.o.: <b>{n}</b>', ['n' => $item->kids], $lang) ?>
-    <?php endforeach; ?>
-</table>
+        <?= \Yii::t($translate_category, 'Adults: {n}', ['n' => $item->adults], $lang) ?>
+        <?= \Yii::t($translate_category, 'Children 7-12 y.o.: {n}', ['n' => $item->children], $lang) ?>
+        <?= \Yii::t($translate_category, 'Children 0-6 y.o.: {n}', ['n' => $item->kids], $lang) ?>
+<?php endforeach; ?>

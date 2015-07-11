@@ -9,9 +9,21 @@ $translate_category = 'mails_order';
 /** @var \common\models\Currency $currency */
 $currency = $order->hotel->currency;
 
+$this->registerCss("
+    .orderTable {
+
+    }
+    .orderTable td {
+        padding: 0.2em;
+        border: 1px solid #cccccc;
+    }
+
+
+", [], 'table')
+
 ?>
 
-<table>
+<table class="orderTable">
     <tr>
         <td colspan="2"><?= \Yii::t($translate_category, 'Check-in date', [], $lang) ?></td>
         <td><?= (new \DateTime($order->dateFrom))->format(\Yii::t($translate_category,'d.m.Y', [], $lang)) ?></td>
