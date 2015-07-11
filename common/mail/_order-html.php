@@ -45,6 +45,14 @@ $td_value = "vertical-align: top; text-align:left; font-weight: bold; border-lef
     </tr>
     <tr>
         <td style="<?= $td . $td_label ?>">
+            <?= \Yii::t($translate_category, 'Status', [], $lang) ?>
+        </td>
+        <td style="<?= $td . $td_value ?>" colspan="4">
+            <?= \common\models\Order::getOrderStatusTitle($order->status) ?>
+        </td>
+    </tr>
+    <tr>
+        <td style="<?= $td . $td_label ?>">
             <?= \Yii::t($translate_category, 'Hotel', [], $lang) ?>
         </td>
         <td style="<?= $td . $td_value ?>" colspan="4">
@@ -70,13 +78,13 @@ $td_value = "vertical-align: top; text-align:left; font-weight: bold; border-lef
     <?php foreach ($order->orderItems as $index => $item): ?>
         <?php /** @var \common\models\OrderItem $item */ ?>
         <tr>
-            <td style="<?= $td."font-size: 200%; font-weight: bold" ?>" rowspan="2"><?= $index+1 ?></td>
+            <td style="<?= $td.";font-size: 150%; " ?>" rowspan="2"><?= $index+1 ?></td>
             <td style="<?= $td ?>"><?= $item->room->{'title_' . $lang} ?></td>
             <td style="<?= $td . $td_label ?>"><?= \Yii::t($translate_category, 'Sum', [], $lang) ?></td>
             <td style="<?= $td . $td_value ?>"><?= $currency->getFormatted($item->sum) ?></td>
         </tr>
         <tr>
-            <td style="<?= $td ?>" colspan="3">
+            <td style="<?= $td . $td_label . "text-align:left;" ?>" colspan="3">
                 <?= \Yii::t($translate_category, 'Adults: <b>{n}</b>', ['n' => $item->adults], $lang) ?>
                 &nbsp;&nbsp;&nbsp;
                 <?= \Yii::t($translate_category, 'Children 7-12 y.o.: <b>{n}</b>', ['n' => $item->children], $lang) ?>
