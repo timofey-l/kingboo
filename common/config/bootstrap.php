@@ -5,4 +5,4 @@ Yii::setAlias('backend', dirname(dirname(__DIR__)) . '/backend');
 Yii::setAlias('partner', dirname(dirname(__DIR__)) . '/partner');
 Yii::setAlias('console', dirname(dirname(__DIR__)) . '/console');
 
-Yii::setAlias('@partner', 'http://partner.king-boo.com');
+Yii::setAlias('@partner_web', 'http://partner.king-boo.com');
