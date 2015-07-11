@@ -3,6 +3,7 @@ namespace console\controllers;
 
 use common\components\BookingHelper;
 use common\models\Hotel;
+use common\models\Order;
 use common\models\Room;
 use Faker\Factory;
 use partner\models\PartnerUser;
@@ -197,14 +198,26 @@ class AdminController extends Controller
 
     }
 
-	public function actionTest() {
-        Yii::$app->mailer->compose()
-            ->setFrom('robot@king-boo.com')
-            ->setTo(\Yii::$app->params['adminEmail'])
-            ->setSubject('Message subject')
-            ->setTextBody('Plain text content')
-            ->setHtmlBody('<b>HTML content</b>')
-            ->send();
+	public function actionTest($id = 1) {
+
+        $order = Order::findOne($id);
+
+        if (!$order) {
+            echo "Order #{$id} not found!\n";
+        } else {
+            Yii::$app->mailer->compose([
+                'html' => 'orderCreatedToPartner-html',
+                'text' => 'orderCreatedToPartner-text',
+            ], [
+                'order' => $order,
+            ])
+                ->setFrom(\Yii::$app->params['email.from'])
+                ->setTo(\Yii::$app->params['adminEmail'])
+                ->setSubject(\Yii::t('mail_orders', 'New order on site king-boo.com'))
+                ->send();
+        }
+
+
 	}
 
 }

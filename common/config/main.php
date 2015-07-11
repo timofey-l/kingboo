@@ -24,7 +24,6 @@ return [
                 [
                     'class' => 'yii\log\EmailTarget',
                     'levels' => ['error'],
-                    'categories' => ['*'],
                     'message' => [
                         'from' => ['errors@king-boo.com'],
                         'to' => ['timofeylyzhenkov@gmial.com', 'mn@itdesign.ru'],
