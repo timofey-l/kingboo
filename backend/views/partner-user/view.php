@@ -41,6 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'shopId',
 			'shopPassword',
 			'scid',
+			'lang',
 		],
 	]) ?>
 

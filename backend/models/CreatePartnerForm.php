@@ -16,6 +16,7 @@ class CreatePartnerForm extends Model
 	public $shopId;
 	public $shopPassword;
 	public $scid;
+    public $lang;
 
 	public function rules()
 	{
@@ -33,7 +34,7 @@ class CreatePartnerForm extends Model
 			['password', 'required', 'on' => 'create'],
 			['password', 'string', 'min' => 6, 'on' => 'create'],
 
-			[['shopId', 'shopPassword', 'scid'], 'string'],
+			[['shopId', 'shopPassword', 'scid', 'lang'], 'string'],
 		];
 	}
 
@@ -56,6 +57,7 @@ class CreatePartnerForm extends Model
 			$partner = new PartnerUser();
 			$partner->username = $this->username;
 			$partner->email = $this->email;
+            $partner->lang = $this->lang;
 			$partner->setPassword($this->password);
 			$partner->generateAuthKey(); // for "remember me"
 			if ($partner->save()) {

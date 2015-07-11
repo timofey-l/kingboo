@@ -24,6 +24,8 @@ use yii\widgets\ActiveForm;
 
 	<?= $form->field($model, 'scid')->textInput(['autocomplete' => 'off']) ?>
 
+	<?= $form->field($model, 'lang')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Lang::find()->all(), 'url', 'name')) ?>
+
     <div class="form-group">
         <?= Html::submitButton(Yii::t('backend_models', 'Create')) ?>
     </div>
