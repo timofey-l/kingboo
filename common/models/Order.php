@@ -163,7 +163,7 @@ class Order extends ActiveRecord
             'text' => 'orderCreatedToClient-text',
         ], [
             'order' => $this,
-            'lang' => Lang::findOne(['url' => $this->lang])->locale,
+            'lang' => Lang::findOne(['url' => $this->lang])->local,
         ])
             ->setFrom(\Yii::$app->params['email.from'])
             ->setTo([$this->contact_email => $this->contact_name . ' ' . $this->contact_surname])
@@ -178,7 +178,7 @@ class Order extends ActiveRecord
             'text' => 'orderCreatedToPartner-text',
         ], [
             'order' => $this,
-            'lang' => Lang::findOne(['url' => $this->hotel->partner->lang])->locale,
+            'lang' => Lang::findOne(['url' => $this->hotel->partner->lang])->local,
         ])
             ->setFrom(\Yii::$app->params['email.from'])
             ->setTo($this->hotel->partner->email)

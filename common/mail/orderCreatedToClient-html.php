@@ -9,7 +9,6 @@ if (!isset($lang)) {
 }
 
 ?>
-<pre><?= $lang ?></pre>
 <div>
     <p><?= \Yii::t('mails_order', 'Hello, {name}!', ['name' => $order->contact_name . ' ' . $order->contact_surname], $lang) ?></p>
     <p><?= \Yii::t('mails_order', 'You made a order on the site <a href="http://king-boo.com">king-boo.com</a>.', [], $lang) ?></p>
