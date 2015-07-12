@@ -17,10 +17,10 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Adults: <b>{n}</b>' => '',
-    'Children 0-6 y.o.: <b>{n}</b>' => '',
-    'Children 7-12 y.o.: <b>{n}</b>' => '',
-    'Status' => '',
+    'Adults: <b>{n}</b>' => 'Взрослых: <b>{n}</b>',
+    'Children 0-6 y.o.: <b>{n}</b>' => 'Детей 0-6 лет: <b>{n}</b>',
+    'Children 7-12 y.o.: <b>{n}</b>' => 'Детей 7-12 лет: <b>{n}</b>',
+    'Status' => 'Статус',
     'Adults: {n}' => 'Взрослых: {n}',
     'Best regards, team of king-boo.com' => 'C уважением, команда king-boo.com',
     'Check-in date' => 'Дата заезда',
