@@ -155,8 +155,8 @@ class Order extends ActiveRecord
             $this->orderCreated();
         }
 
-        if (!$insert && !in_array('status', array_keys($changedAttrs))) {
-            $this->orderSatusChanged(['status' => ArrayHelper::getValue($changedAttrs, 'status')]);
+        if (!$insert && array_key_exists('status', $changedAttrs)) {
+            $this->orderStatusChanged(['status' => ArrayHelper::getValue($changedAttrs, 'status')]);
         }
 	}
 
@@ -178,7 +178,7 @@ class Order extends ActiveRecord
             'oldStatus' => ArrayHelper::getValue($params, 'status'),
             'order' => $this,
             'lang' => $this->hotel->partner->lang,
-            'local' => Lang::findOne(['url' => $this->hotel->partner->lang]),
+            'local' => Lang::findOne(['url' => $this->hotel->partner->lang])->local,
         ])
             ->setFrom(\Yii::$app->params['email.from'])
             ->setTo([$this->hotel->partner->email])
