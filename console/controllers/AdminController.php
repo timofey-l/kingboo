@@ -205,11 +205,14 @@ class AdminController extends Controller
         if (!$order) {
             echo "Order #{$id} not found!\n";
         } else {
-            $order->sendEmailToClient();
-            $order->sendEmailToPartner();
+            if ($order->status == Order::OS_WAITING_PAY) {
+                $order->status = Order::OS_PAYED;
+                $order->save();
+            } else {
+                $order->status = Order::OS_WAITING_PAY;
+                $order->save();
+            }
         }
-
-
 	}
 
 }

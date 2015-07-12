@@ -7,6 +7,7 @@ use partner\models\PartnerUser;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%order}}".
@@ -151,11 +152,44 @@ class Order extends ActiveRecord
 
         // отправка писем о совершении заказа
         if ($insert) {
-            $this->sendEmailToClient();
-            $this->sendEmailToPartner();
+            $this->orderCreated();
+        }
 
+        if (!$insert && !in_array('status', array_keys($changedAttrs))) {
+            $this->orderSatusChanged(['status' => ArrayHelper::getValue($changedAttrs, 'status')]);
         }
 	}
+
+    public function orderStatusChanged($params = []) {
+        // отправляем письмо клиенту
+        \Yii::$app->mailer->compose('orderStatusChangedClient-html', [
+            'oldStatus' => ArrayHelper::getValue($params, 'status'),
+            'order' => $this,
+            'lang' => $this->lang,
+            'local' => Lang::findOne(['url' => $this->lang])->local,
+        ])
+            ->setFrom(\Yii::$app->params['email.from'])
+            ->setTo([$this->contact_email => $this->contact_name . ' ' . $this->contact_surname])
+            ->setSubject(\Yii::t('mails_order', 'Your order\'s #{n} status was changed', ['n' => $this->number]))
+            ->send();
+
+        // отправляем письмо партнёру
+        \Yii::$app->mailer->compose('orderStatusChangedPartner-html',[
+            'oldStatus' => ArrayHelper::getValue($params, 'status'),
+            'order' => $this,
+            'lang' => $this->hotel->partner->lang,
+            'local' => Lang::findOne(['url' => $this->hotel->partner->lang]),
+        ])
+            ->setFrom(\Yii::$app->params['email.from'])
+            ->setTo([$this->hotel->partner->email])
+            ->setSubject(\Yii::t('mails_order', 'Order\'s #{n} status was changed', ['n' => $this->partner_number]))
+            ->send();
+    }
+
+    public function orderCreated() {
+        $this->sendEmailToClient();
+        $this->sendEmailToPartner();
+    }
 
     public function sendEmailToClient() {
         \Yii::$app->mailer->compose([
