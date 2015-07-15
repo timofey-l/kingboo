@@ -64,8 +64,8 @@ class PaymentController extends \yii\web\Controller
 				'paymentType'    => $pay_type,
 				'partner'        => $partner,
 				'order'          => $order,
-                'failUrl'        => 'https://king-boo.com/payment/success',
-                'successUrl'     => 'https://king-boo.com/payment/fail',
+                'shopFailURL'    => 'https://king-boo.com/payment/success',
+                'shopSuccessURL' => 'https://king-boo.com/payment/fail',
 
 			]));
 		} else {
