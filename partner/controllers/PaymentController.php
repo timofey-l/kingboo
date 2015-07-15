@@ -80,13 +80,14 @@ class PaymentController extends \yii\web\Controller
             ]);
         }
 
-
+        /** @var Order $order */
         $order = Order::findOne(['number' => $req->post('orderNumber')]);
 
         $pay->paymentDatetime = $req->post('paymentDatetime');
 
         if ($pay->save()) {
             $order->status = Order::OS_PAYED;
+            $order->payment_url = '';
             $order->save();
         }
 
