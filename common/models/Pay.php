@@ -42,8 +42,8 @@ class Pay extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['checked', 'payed', 'invoiceId', 'customerNumber', 'orderSumCurrencyPaycash', 'orderSumBankPaycash', 'shopSumCurrencyPaycash', 'shopSumBankPaycash', 'paymentType'], 'integer'],
-            [['order_number', 'invoiceId', 'orderCreatedDatetime', 'paymentDatetime', 'orderSumAmount', 'orderSumCurrencyPaycash', 'orderSumBankPaycash', 'shopSumAmount', 'shopSumCurrencyPaycash', 'shopSumBankPaycash', 'paymentPayerCode', 'paymentType'], 'required'],
+            [['checked', 'payed', 'invoiceId', 'orderSumCurrencyPaycash', 'orderSumBankPaycash', 'shopSumCurrencyPaycash', 'shopSumBankPaycash', 'paymentType'], 'integer'],
+            [['order_number', 'invoiceId', 'orderCreatedDatetime', 'orderSumAmount', 'orderSumCurrencyPaycash', 'orderSumBankPaycash', 'shopSumAmount', 'shopSumCurrencyPaycash', 'shopSumBankPaycash', 'paymentPayerCode', 'paymentType'], 'required'],
             [['orderCreatedDatetime', 'paymentDatetime', 'shopId'], 'safe'],
             [['orderSumAmount', 'shopSumAmount'], 'number'],
             [['postParams', 'shopId', 'customerNumber', 'order_number'], 'string'],
