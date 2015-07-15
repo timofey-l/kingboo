@@ -42,11 +42,11 @@ class Pay extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['checked', 'payed', 'order_number', 'invoiceId', 'customerNumber', 'orderSumCurrencyPaycash', 'orderSumBankPaycash', 'shopSumCurrencyPaycash', 'shopSumBankPaycash', 'paymentType'], 'integer'],
-            [['order_number', 'invoiceId', 'customerNumber', 'orderCreatedDatetime', 'paymentDatetime', 'orderSumAmount', 'orderSumCurrencyPaycash', 'orderSumBankPaycash', 'shopSumAmount', 'shopSumCurrencyPaycash', 'shopSumBankPaycash', 'paymentPayerCode', 'paymentType'], 'required'],
+            [['checked', 'payed', 'invoiceId', 'customerNumber', 'orderSumCurrencyPaycash', 'orderSumBankPaycash', 'shopSumCurrencyPaycash', 'shopSumBankPaycash', 'paymentType'], 'integer'],
+            [['order_number', 'invoiceId', 'orderCreatedDatetime', 'paymentDatetime', 'orderSumAmount', 'orderSumCurrencyPaycash', 'orderSumBankPaycash', 'shopSumAmount', 'shopSumCurrencyPaycash', 'shopSumBankPaycash', 'paymentPayerCode', 'paymentType'], 'required'],
             [['orderCreatedDatetime', 'paymentDatetime', 'shopId'], 'safe'],
             [['orderSumAmount', 'shopSumAmount'], 'number'],
-            [['postParams', 'shopId'], 'string'],
+            [['postParams', 'shopId', 'customerNumber', 'order_number'], 'string'],
             [['paymentPayerCode'], 'string', 'max' => 255]
         ];
     }
