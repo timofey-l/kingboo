@@ -4,7 +4,6 @@ namespace partner\controllers;
 
 use Yii;
 use common\components\YandexHelper;
-use common\helpers\DebugHelper;
 use common\models\Order;
 use common\models\Pay;
 use common\models\PayLog;
@@ -66,6 +65,8 @@ class PaymentController extends \yii\web\Controller
         // ищем уже созданную запись об оплате при запросе "check"
         /** @var Pay $pay */
         $pay = Pay::findOne([
+            'checked' => 1,
+            'payed' => 0,
             'order_number' => $req->post('orderNumber'),
             'invoiceId' => $req->post('invoiceId'),
             'shopId' => $req->post('shopId'),
@@ -84,7 +85,8 @@ class PaymentController extends \yii\web\Controller
         $order = Order::findOne(['number' => $req->post('orderNumber')]);
 
         $pay->paymentDatetime = $req->post('paymentDatetime');
-
+        $pay->postParams = serialize($req->post());
+        $pay->payed = 1;
         if ($pay->save()) {
             $order->status = Order::OS_PAYED;
             $order->payment_url = '';
@@ -129,6 +131,8 @@ class PaymentController extends \yii\web\Controller
         $payLog->postParams = serialize($req->post());
         $payLog->serverParams = serialize($_SERVER);
         $payLog->save();
+
+        $pay->postParams = serialize($req->post());
 
         /** @var Order $order */
         $order = Order::findOne(['number' => $pay->order_number]);

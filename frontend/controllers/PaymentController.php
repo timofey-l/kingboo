@@ -64,10 +64,27 @@ class PaymentController extends \yii\web\Controller
 				'paymentType'    => $pay_type,
 				'partner'        => $partner,
 				'order'          => $order,
+                'failUrl'        => 'https://king-boo.com/payment/success',
+                'successUrl'     => 'https://king-boo.com/payment/fail',
+
 			]));
 		} else {
 			throw new BadRequestHttpException('Wrong order status');
 		}
 	}
+
+    public function actionSuccess() {
+        return $this->render('success', [
+            'pay' =>  null,
+            'order' => null,
+        ]);
+    }
+
+    public function actionFail() {
+        return $this->render('fail', [
+            'pay' => null,
+            'order' => null,
+        ]);
+    }
 
 }
