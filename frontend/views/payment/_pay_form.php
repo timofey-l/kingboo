@@ -10,5 +10,7 @@
 	<input type="hidden" name="orderNumber" value="<?= $order->number ?>"/>
 	<input type="hidden" name="scp_phone" value="<?= $order->contact_phone ?>"/>
 	<input type="hidden" name="scp_email" value="<?= $order->contact_email ?>"/>
+	<input type="hidden" name="shopSuccessUrl" value="<?= $shopSuccessURL ?>"/>
+	<input type="hidden" name="shopFailUrl" value="<?= $shopFailURL ?>"/>
 
 </form>
