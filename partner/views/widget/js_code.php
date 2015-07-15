@@ -48,7 +48,7 @@
 		},
 		{
 			test: function() { return true; },
-			url: 'http://partner.booking.local/js/widget/widget.js'
+			url: 'http://partner.king-boo.com/js/widget/widget.js'
 		}
 	];
 
@@ -71,7 +71,7 @@
 	}
 
 
-		document.write('<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css"><link rel="stylesheet" href="http://partner.booking.local/widget/css/<?= $code ?>"><div id="widget_<?= $code ?>" style="display: none;"></div>');
+		document.write('<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css"><link rel="stylesheet" href="http://partner.king-boo.com/widget/css/<?= $code ?>"><div id="widget_<?= $code ?>" style="display: none;"></div>');
 		preLoadWidgetLibs(function(){
 			var params = <?= $widget_params ?>;
 			var el = document.getElementById('widget_<?= $code ?>');
