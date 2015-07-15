@@ -9,3 +9,8 @@
 <pre>
 	<?= var_export($_SERVER, true) ?>
 </pre>
+<?php if (isset($message)): ?>
+    <pre>
+        <?= $message ?>
+    </pre>
+<?php endif; ?>

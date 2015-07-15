@@ -26,52 +26,52 @@ class YandexHelper
 
     public static $pay_type = [
         [
-            'code'     => 'PC',
+            'code' => 'PC',
             'title_ru' => 'Оплата из кошелька в Яндекс.Деньгах',
             'title_en' => 'Payment from Yandex.Money purse',
         ],
         [
-            'code'     => 'AC',
+            'code' => 'AC',
             'title_ru' => 'Оплата с произвольной банковской карты',
             'title_en' => 'Payment by any bank card',
         ],
         [
-            'code'     => 'MC',
+            'code' => 'MC',
             'title_ru' => 'Платеж со счета мобильного телефона',
             'title_en' => 'Payment from the mobile phone account',
         ],
         [
-            'code'     => 'GP',
+            'code' => 'GP',
             'title_ru' => 'Оплата наличными через кассы и терминалы',
             'title_en' => ' Cash payments via cash offices and terminals',
         ],
         [
-            'code'     => 'WM',
+            'code' => 'WM',
             'title_ru' => 'Оплата из кошелька в системе WebMoney',
             'title_en' => 'Payment from  WebMoney system purse',
         ],
         [
-            'code'     => 'SB',
+            'code' => 'SB',
             'title_ru' => 'Оплата через Сбербанк: оплата по SMS или Сбербанк Онлайн',
             'title_en' => 'Sberbank payments: payment via SMS or Sberbank Online',
         ],
         [
-            'code'     => 'MP',
+            'code' => 'MP',
             'title_ru' => 'Оплата через мобильный терминал (mPOS)',
             'title_en' => 'Payment via mobile terminal (mPOS)',
         ],
         [
-            'code'     => 'AB',
+            'code' => 'AB',
             'title_ru' => 'Оплата через Альфа-Клик',
             'title_en' => 'Payment via Alfa-Click',
         ],
         [
-            'code'     => 'MA',
+            'code' => 'MA',
             'title_ru' => 'Оплата через MasterPass',
             'title_en' => 'Payment via MasterPass',
         ],
         [
-            'code'     => 'PB',
+            'code' => 'PB',
             'title_ru' => 'Оплата через Промсвязьбанк',
             'title_en' => 'Payment via Promsvyazbank',
         ],
@@ -98,7 +98,7 @@ class YandexHelper
      * Получение заголовка по id типа оплаты
      *
      * @param integer $id
-     * @param bool    $lang
+     * @param bool $lang
      * @return mixed
      */
     public static function getPayTypeTitle($id, $lang = false)
@@ -123,6 +123,6 @@ class YandexHelper
         $hashArray[] = ArrayHelper::getValue($params, 'invoiceId', '');
         $hashArray[] = ArrayHelper::getValue($params, 'customerNumber', '');
         $hashArray[] = $partner->shopPassword;
-        return md5(implode(';', $hashArray)) == $params['md5'];
+        return strtolower(md5(implode(';', $hashArray))) == strtolower($params['md5']);
     }
 }

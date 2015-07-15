@@ -24,6 +24,7 @@ use Yii;
  * @property string $paymentPayerCode
  * @property integer $paymentType
  * @property string $postParams
+ * @property string $shopId
  */
 class Pay extends \yii\db\ActiveRecord
 {
@@ -43,9 +44,9 @@ class Pay extends \yii\db\ActiveRecord
         return [
             [['checked', 'payed', 'order_number', 'invoiceId', 'customerNumber', 'orderSumCurrencyPaycash', 'orderSumBankPaycash', 'shopSumCurrencyPaycash', 'shopSumBankPaycash', 'paymentType'], 'integer'],
             [['order_number', 'invoiceId', 'customerNumber', 'orderCreatedDatetime', 'paymentDatetime', 'orderSumAmount', 'orderSumCurrencyPaycash', 'orderSumBankPaycash', 'shopSumAmount', 'shopSumCurrencyPaycash', 'shopSumBankPaycash', 'paymentPayerCode', 'paymentType'], 'required'],
-            [['orderCreatedDatetime', 'paymentDatetime'], 'safe'],
+            [['orderCreatedDatetime', 'paymentDatetime', 'shopId'], 'safe'],
             [['orderSumAmount', 'shopSumAmount'], 'number'],
-            [['postParams'], 'string'],
+            [['postParams', 'shopId'], 'string'],
             [['paymentPayerCode'], 'string', 'max' => 255]
         ];
     }
