@@ -64,7 +64,7 @@ $widgets = $dataProvider->getModels();
 						<p>
 							<?= \Yii::t('partner_widget','Copy this code and insert in the place where widget should be located.') ?>
 						</p>
-						<?= Html::textarea('widget' . $widget->id, '<script type="application/javascript" src="http://partner.booking.local/widget/js/' . $widget->hash_code . '"></script>',[
+						<?= Html::textarea('widget' . $widget->id, '<script type="application/javascript" src="http://partner.king-boo.com/widget/js/' . $widget->hash_code . '"></script>',[
 							'class' => 'form-control',
 							'style' => 'font-family: Menlo, Monaco, Consolas, "Courier New", monospace;',
 							'rows' => 5,
