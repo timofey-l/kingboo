@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Order;
+use common\models\Pay;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 
@@ -64,8 +65,8 @@ class PaymentController extends \yii\web\Controller
 				'paymentType'    => $pay_type,
 				'partner'        => $partner,
 				'order'          => $order,
-                'shopFailURL'    => 'https://king-boo.com/payment/success',
-                'shopSuccessURL' => 'https://king-boo.com/payment/fail',
+                'shopFailURL'    => 'https://king-boo.com/payment/fail',
+                'shopSuccessURL' => 'https://king-boo.com/payment/success',
 
 			]));
 		} else {
@@ -73,17 +74,21 @@ class PaymentController extends \yii\web\Controller
 		}
 	}
 
-    public function actionSuccess() {
+    public function actionSuccess($orderNumber, $invoiceId) {
+    	$order = Order::findOne(['number' => $orderNumber]);
+    	$pay = Pay::findOne(['invoiceId' => $invoiceId]);
         return $this->render('success', [
-            'pay' =>  null,
-            'order' => null,
+            'pay' =>  $pay,
+            'order' => $order,
         ]);
     }
 
-    public function actionFail() {
+    public function actionFail($orderNumber, $invoiceId) {
+    	$order = Order::findOne(['number' => $orderNumber]);
+    	$pay = Pay::findOne(['invoiceId' => $invoiceId]);
         return $this->render('fail', [
-            'pay' => null,
-            'order' => null,
+            'pay' => $pay,
+            'order' => $order,
         ]);
     }
 
