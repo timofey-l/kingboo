@@ -12,7 +12,7 @@ class WidgetController extends Controller
 
 	public function actionJs($code) {
 		\Yii::$app->response->format = Response::FORMAT_RAW;
-		\Yii::$app->response->headers->set('Content-Type', 'application/javascript');
+		\Yii::$app->response->headers->set('Content-Type', 'application/x-javascript');
 		$this->layout = false;
 		$widget = Widget::findOne(['hash_code' => $code]);
 		if ($widget  !== null) {

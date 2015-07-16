@@ -41,8 +41,8 @@ class CreatePartnerForm extends Model
 	public function scenarios()
 	{
 		return [
-			'create' => ['email', 'username', 'password', 'shopId', 'shopPassword', 'scid'],
-			'update' => ['email', 'username', 'password', 'shopId', 'shopPassword', 'scid'],
+			'create' => ['email', 'username', 'password', 'shopId', 'shopPassword', 'scid', 'lang'],
+			'update' => ['email', 'username', 'password', 'shopId', 'shopPassword', 'scid', 'lang'],
 		];
 	}
 

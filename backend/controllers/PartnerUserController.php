@@ -115,6 +115,7 @@ class PartnerUserController extends Controller
 			$partner->shopId = $model->shopId;
 			$partner->shopPassword = $model->shopPassword;
 			$partner->scid = $model->scid;
+            $partner->lang = $model->lang;
 
 			if ($model->password != '') {
 				$partner->setPassword($model->password);
@@ -128,6 +129,7 @@ class PartnerUserController extends Controller
 			$model->scid = $partner->scid;
 			$model->shopId = $partner->shopId;
 			$model->shopPassword = $partner->shopPassword;
+            $model->lang = $partner->lang;
 
 			return $this->render('update', [
 				'model' => $model,

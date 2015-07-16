@@ -98,12 +98,14 @@ class Widget extends \yii\db\ActiveRecord
 			$widget_params[$k] = $v['value'];
 		}
 
-		$this->compiled_js = Minifier::minify($view->renderFile('@partner/views/widget/js_code.php', [
-			'params' => $params,
-			'code' => $this->hash_code,
-			'widget' => $this,
-			'widget_params' => json_encode($widget_params),//Json::encode($widget_params),
-		]));
+        $code = $view->renderFile('@partner/views/widget/js_code.php', [
+            'params' => $params,
+            'code' => $this->hash_code,
+            'widget' => $this,
+            'widget_params' => json_encode($widget_params),//Json::encode($widget_params),
+        ]);
+
+		//$this->compiled_js = Minifier::minify($code);
 
 		$buffer = $view->renderFile('@partner/views/widget/css_code.php', [
 			'params' => $params,
