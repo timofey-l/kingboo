@@ -115,7 +115,7 @@ function initWidget(el, config) {
         .append($('<div class="bw__countContainer bw__children"></div>').append($childrenLabel).append($children))
         .append($('<div class="bw__countContainer bw__kids"></div>').append($kidsLabel).append($kids));
 
-    var $form  = $('<form name="' + el.id + '" action="'+config.url+'" method="GET"></form>')
+    var $form  = $('<form name="' + el.id + '" action="'+config.submitUrl+'" method="GET"></form>')
         .append($datesContainer).append($countsContainer);
     var $submitButton = $('<button type="submit" class="bw__submitButton" data-bw-translate="lang_book_button"></button>').html(config.lang.submit || "Check");
     var $buttonContainer = $('<div class="bw__buttonContainer"></div>').append($submitButton);

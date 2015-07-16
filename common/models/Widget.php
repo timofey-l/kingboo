@@ -94,6 +94,7 @@ class Widget extends \yii\db\ActiveRecord
 
         $widget_params = [
             'partnerUrl' => 'http://' . $_SERVER['HTTP_HOST'] . '/',
+            'submitUrl' => 'http://king-boo.com/hotel/' . $this->hotel->name . '/',
         ];
         foreach (Json::decode($this->params) as $k => $v) {
             $widget_params[$k] = $v['value'];
@@ -129,6 +130,10 @@ class Widget extends \yii\db\ActiveRecord
         parent::beforeSave($insert);
         $this->compile();
         return true;
+    }
+
+    public function getHotel() {
+        return $this->hasOne(Hotel::className(), ['id' => 'hotel_id']);
     }
 
 }
