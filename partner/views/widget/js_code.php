@@ -1,5 +1,5 @@
 (function () {
-	function loadScript(src, cb) {
+   function loadScript(src, cb) {
 		var s,
 			r,
 			t;
@@ -24,6 +24,8 @@
 				loadScript('https://code.jquery.com/ui/1.11.3/jquery-ui.min.js', function(){
 					callback();
 				});
+			} else {
+			    callback();
 			}
 		};
 		if (typeof jQuery == 'undefined') {
@@ -80,4 +82,3 @@
 			});
 		});
 	})();
-

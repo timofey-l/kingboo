@@ -22,26 +22,26 @@ use yii\web\View;
 class Widget extends \yii\db\ActiveRecord
 {
 
-	public static $defaultParams = [
-		'borderColor' => [
-			'type' => 'color',
-			'value' => '#aaaaaa',
-			'title_ru' => 'Цвет рамки',
-			'title_en' => 'Border color',
-		],
-		'borderWidth' => [
-			'type' => 'integer',
-			'value' => '2',
-			'title_ru' => 'Ширина рамки',
-			'title_en' => 'Border width',
-		],
-		'showTitle' => [
-			'type' => 'boolean',
-			'value' => 1,
-			'title_ru' => 'Показывать заголовок',
-			'title_en' => 'Show title',
-		],
-	];
+    public static $defaultParams = [
+        'borderColor' => [
+            'type' => 'color',
+            'value' => '#aaaaaa',
+            'title_ru' => 'Цвет рамки',
+            'title_en' => 'Border color',
+        ],
+        'borderWidth' => [
+            'type' => 'integer',
+            'value' => '2',
+            'title_ru' => 'Ширина рамки',
+            'title_en' => 'Border width',
+        ],
+        'showTitle' => [
+            'type' => 'boolean',
+            'value' => 1,
+            'title_ru' => 'Показывать заголовок',
+            'title_en' => 'Show title',
+        ],
+    ];
 
     /**
      * @inheritdoc
@@ -80,23 +80,24 @@ class Widget extends \yii\db\ActiveRecord
         ];
     }
 
-	/**
-	 * Компиляция javascript и css для виджета
-	 *
-	 * @return bool
-	 * @throws \Exception
-	 * @internal param $id
-	 */
-	public function compile() {
-		$view = new View();
-		$params = Json::decode($this->params);
+    /**
+     * Компиляция javascript и css для виджета
+     *
+     * @return bool
+     * @throws \Exception
+     * @internal param $id
+     */
+    public function compile()
+    {
+        $view = new View();
+        $params = Json::decode($this->params);
 
-		$widget_params = [
-			'partnerUrl' => 'http://'.$_SERVER['HTTP_HOST'].'/',
-		];
-		foreach(Json::decode($this->params) as $k => $v) {
-			$widget_params[$k] = $v['value'];
-		}
+        $widget_params = [
+            'partnerUrl' => 'http://' . $_SERVER['HTTP_HOST'] . '/',
+        ];
+        foreach (Json::decode($this->params) as $k => $v) {
+            $widget_params[$k] = $v['value'];
+        }
 
         $code = $view->renderFile('@partner/views/widget/js_code.php', [
             'params' => $params,
@@ -105,27 +106,29 @@ class Widget extends \yii\db\ActiveRecord
             'widget_params' => json_encode($widget_params),//Json::encode($widget_params),
         ]);
 
-		//$this->compiled_js = Minifier::minify($code);
+        $this->compiled_js = $code;
+        $this->compiled_js = Minifier::minify($this->compiled_js);
 
-		$buffer = $view->renderFile('@partner/views/widget/css_code.php', [
-			'params' => $params,
-			'code' => $this->hash_code,
-			'widget' => $this,
-		]);
-		$buffer = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $buffer);
-		$buffer = str_replace(': ', ':', $buffer);
-		$buffer = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $buffer);
-		$this->compiled_css = $buffer;
+        $buffer = $view->renderFile('@partner/views/widget/css_code.php', [
+            'params' => $params,
+            'code' => $this->hash_code,
+            'widget' => $this,
+        ]);
+        $buffer = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $buffer);
+        $buffer = str_replace(': ', ':', $buffer);
+        $buffer = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $buffer);
+        $this->compiled_css = $buffer;
 
 
-		return true;
+        return true;
 //		return $widget->save();
-	}
+    }
 
-	public function beforeSave($insert) {
-		parent::beforeSave($insert);
-		$this->compile($this->id);
-		return true;
-	}
+    public function beforeSave($insert)
+    {
+        parent::beforeSave($insert);
+        $this->compile();
+        return true;
+    }
 
 }

@@ -12,13 +12,13 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'partner\controllers',
     'components' => [
-	    'view' => [
-		    'theme' => [
-			    'pathMap' => [
-				    '@app/views' => '@app/adminTheme2'
-			    ],
-		    ],
-	    ],
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@app/views' => '@app/adminTheme2'
+                ],
+            ],
+        ],
         'user' => [
             'identityClass' => 'partner\models\PartnerUser',
             'enableAutoLogin' => true,
@@ -41,11 +41,11 @@ return [
 //            'enableStrictParsing' => true,
             'class' => 'common\components\LangUrlManager',
             'rules' => [
-	            // Widgets
-	            'GET widget/js/<code:[\d\w]+>' => 'widget/js',
-	            'GET widget/css/<code:[\d\w]+>' => 'widget/css',
+                // Widgets
+                'GET widget/js/<code:[\d\w\-]+>' => 'widget/js',
+                'GET widget/css/<code:[\d\w\-]+>' => 'widget/css',
 
-	            // REST for rooms
+                // REST for rooms
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'rooms'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'roomprices'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'roomimages'],
