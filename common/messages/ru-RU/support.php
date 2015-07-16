@@ -19,7 +19,10 @@
 return [
     'ID' => '',
     'Parent ID' => '',
+    'Title En' => '',
+    'Title Ru' => '',
     'Unread admin' => '',
+    'Yandex Code' => '',
     'All messages' => 'Все сообщения',
     'Author' => 'Автор',
     'Cancel' => 'Отмена',

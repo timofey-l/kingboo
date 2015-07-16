@@ -8,7 +8,7 @@
 ?>
 
 <div>
-	<h1><?= \Yii::t('frontend', 'The error occurred during the payment process!', []) ?></h1>
+	<h3 class="text-danger"><?= \Yii::t('frontend', 'The error occurred during the payment process!', []) ?></h3>
 	<p>
 		<?= \Yii::t('frontend', 'Try again later, by choosing a different payment method', []) ?>
 	</p>

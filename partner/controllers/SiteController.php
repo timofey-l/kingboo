@@ -3,8 +3,10 @@ namespace partner\controllers;
 
 use common\models\Hotel;
 use common\models\Order;
+use common\models\PayMethod;
 use common\models\SupportMessage;
 use partner\models\PartnerUser;
+use partner\models\ProfileForm;
 use Yii;
 use partner\models\LoginForm;
 use partner\models\PasswordResetRequestForm;
@@ -212,28 +214,44 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionTest()
-    {
-        $hotel = \common\models\Hotels::findOne([
-            'name' => 'Test hotel',
-            'partner_id' => 1,
-        ]);
 
-        if ($hotel === null) {
-            $hotel = new \common\models\Hotels();
-            $hotel->name = 'Test hotel';
-            $hotel->partner_id = 1;
-            $hotel->address = "Test addess street 777";
-            $hotel->lng = 1.4;
-            $hotel->lat = 3.3;
-            $hotel->description = "The best test hotel ever!";
-            $hotel->category = 3;
-            $hotel->timezone = 'Europe/Minsk';
-            $hotel->save();
+    public function actionProfile() {
+        $user = PartnerUser::findOne(\Yii::$app->user->id);
+        $model = new ProfileForm();
+        $model->payMethods = $user->payMethods;
+        $model->scid = $user->scid;
+        $model->shopId = $user->shopId;
+        $model->shopPassword = $user->shopPassword;
+
+        if ($model->load(\Yii::$app->request->post())) {
+            $user->scid = $model->scid;
+            $user->shopId = $model->shopId;
+            $user->shopPassword = $model->shopPassword;
+
+            // password
+            if ($model->password !== '') {
+                $user->password = $model->password;
+            }
+
+            if (count($model->payMethods)) {
+                // удаляем имеющиеся методы оплаты
+                foreach ($user->payMethods as $payMethod) {
+                    $user->unlink('payMethods', $payMethod);
+                }
+
+                // добавляем отмеченные
+                foreach ($model->payMethods as $payMethod) {
+                    $user->link('payMethods', PayMethod::findOne([(int)$payMethod]));
+                }
+            }
+            if ($user->save()) {
+                \Yii::$app->session->setFlash('success', \Yii::t('partner_profile', 'Profile successfully saved'));
+                return $this->redirect('/');
+            };
         }
 
-        var_dump($hotel->food);
-
-
+        return $this->render('profile', [
+            'user' => $model,
+        ]);
     }
 }

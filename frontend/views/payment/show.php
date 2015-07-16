@@ -7,6 +7,8 @@
 /** @var \common\models\Hotel $hotel */
 $hotel = $order->hotel;
 
+$l = \common\models\Lang::$current->url;
+
 $this->title = \Yii::t('frontend', 'Order payment');
 
 $this->registerJs("
@@ -81,66 +83,15 @@ $this->registerJs("
 				<?= \Yii::t('frontend','Pay options') ?>
 			</div>
 			<div class="panel-body">
-				<div class="radio">
-					<label>
-						<input type="radio" name="payType" id="" value="PC" checked>
-						Оплата из кошелька в Яндекс.Деньгах
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio" name="payType" id="" value="AC" checked>
-						Оплата с произвольной банковской карты.
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio" name="payType" id="" value="MC" checked>
-						Платеж со счета мобильного телефона.
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio" name="payType" id="" value="GP" checked>
-						Оплата наличными через кассы и терминалы.
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio" name="payType" id="" value="WM" checked>
-						Оплата из кошелька в системе WebMoney.
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio" name="payType" id="" value="SB" checked>
-						Оплата через Сбербанк: оплата по SMS или Сбербанк Онлайн.
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio" name="payType" id="" value="MP" checked>
-						Оплата через мобильный терминал (mPOS).
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio" name="payType" id="" value="AB" checked>
-						Оплата через Альфа-Клик.
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio" name="payType" id="" value="МА" checked>
-						Оплата через MasterPass.
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio" name="payType" id="" value="PB" checked>
-						Оплата через Промсвязьбанк.
-					</label>
-				</div>
+                <?php foreach($hotel->partner->payMethods as $index => $payMethod): ?>
+                    <?php /** @var \common\models\PayMethod $payMethod */ ?>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="payType" value="<?= $payMethod->yandex_code ?>" <?= $index == 0 ? "checked" : "" ?>>
+                            <?= $payMethod->{'title_' . $l} ?>
+                        </label>
+                    </div>
+                <?php endforeach; ?>
 			</div>
 			<div class="panel-footer" style="text-align: center;">
 				<button class="btn btn-warning" id="goToPayBtn">

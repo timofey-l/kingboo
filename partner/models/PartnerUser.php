@@ -1,6 +1,7 @@
 <?php
 namespace partner\models;
 
+use common\models\PayMethod;
 use common\models\User;
 use Yii;
 
@@ -45,6 +46,11 @@ class PartnerUser extends User
     public function getHotels()
     {
         return $this->hasMany('\common\models\Hotel', ['partner_id' => 'id']);
+    }
+
+    public function getPayMethods() {
+        return $this->hasMany(PayMethod::className(), ['id' => 'pay_method_id'])
+            ->viaTable('partner_payMethods', ['partner_id' => 'id']);
     }
 
 }

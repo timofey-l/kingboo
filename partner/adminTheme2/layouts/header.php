@@ -91,13 +91,14 @@ $orders = \common\models\Order::findNew();
                 </li>
                 <?php endif; ?>
 
-                <li class="dropdown user user-menu">
+                <li class="user user-menu">
                     <?= Html::a(
-                        \Yii::t('main', 'Sign out'),
+                        \Yii::t('main', 'Sign out') . '&nbsp;&nbsp;<i class="fa fa-sign-out"></i>',
                         ['/site/logout'],
                         ['data-method' => 'post', 'class' => 'dropdown-toggle']
                     ) ?>
                 </li>
+
                 <!-- User Account: style can be found in dropdown.less -->
 
             </ul>

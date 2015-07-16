@@ -17,6 +17,11 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'The error occurred during the payment process!' => 'При выполнении оплаты произошла ошибка!',
+    'Try again' => 'Попробовать снова',
+    'Try again later, by choosing a different payment method' => 'Попробуйте снова позже, выбрав иной способ оплаты',
+    'Your order #{n} has been paid.' => 'Ваш заказ №{n} был оплачен.',
+    'Thank you for your payment!' => '@@@@',
     '* If you have' => '* Если имеется',
     'Adults' => 'Взрослых',
     'Arrival date' => 'Дата заезда',

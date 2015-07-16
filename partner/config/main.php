@@ -41,6 +41,8 @@ return [
 //            'enableStrictParsing' => true,
             'class' => 'common\components\LangUrlManager',
             'rules' => [
+                'profile' => 'site/profile',
+
                 // Widgets
                 'GET widget/js/<code:[\d\w\-]+>' => 'widget/js',
                 'GET widget/css/<code:[\d\w\-]+>' => 'widget/css',

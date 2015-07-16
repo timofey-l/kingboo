@@ -109,6 +109,12 @@ $l = \common\models\Lang::$current->url;
             </li>
         </ul>
 
+        <ul class="sidebar-menu">
+            <?= Html::tag('li', Html::a('<i class="fa fa-user"></i>' . \Yii::t('partner_profile', 'Profile'), ['site/profile']), [
+                'class' => ($this->context->id == 'site' && $this->context->action->id == 'profile' ? "active" : ""),
+            ]) ?>
+        </ul>
+
     </section>
 
 </aside>
