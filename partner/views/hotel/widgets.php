@@ -67,6 +67,7 @@ $widgets = $dataProvider->getModels();
 						<?= Html::textarea('widget' . $widget->id, '<script type="application/javascript" src="http://partner.king-boo.com/widget/js/' . $widget->hash_code . '"></script>',[
 							'class' => 'form-control',
 							'style' => 'font-family: Menlo, Monaco, Consolas, "Courier New", monospace;',
+							'readonly' => 'readonly',
 							'rows' => 5,
 						]) ?>
 					</div>

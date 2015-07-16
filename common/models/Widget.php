@@ -94,7 +94,7 @@ class Widget extends \yii\db\ActiveRecord
 
         $widget_params = [
             'partnerUrl' => 'http://' . $_SERVER['HTTP_HOST'] . '/',
-            'submitUrl' => 'http://king-boo.com/hotel/' . $this->hotel->name . '/',
+            'submitUrl' => 'http://king-boo.com/hotel/' . $this->hotel->name . '#search',
         ];
         foreach (Json::decode($this->params) as $k => $v) {
             $widget_params[$k] = $v['value'];

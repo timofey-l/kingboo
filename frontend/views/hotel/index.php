@@ -97,7 +97,7 @@ $this->registerCssFile($datepicker . '/datepicker3.css', ['depends' => [\fronten
     </div>
 </div>
 
-<h2><?= Yii::t('frontend', 'Search') ?></h2>
+<h2 id="search"><?= Yii::t('frontend', 'Search') ?></h2>
 
 <div ng-app="roomsSearch" ng-controller="searchCtrl" ng-init="search.hotelId = <?= $model->id ?>;">
     <div class="row well">
