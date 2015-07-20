@@ -93,4 +93,10 @@ class Currency extends \yii\db\ActiveRecord
         ];
         return str_replace(array_keys($replace), array_values($replace), $this->format);
     }
+
+    public static function getByISOCode($code) {
+        return static::find()
+            ->andWhere(['iso_code' => (string)$code])
+            ->one();
+    }
 }

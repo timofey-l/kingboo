@@ -87,15 +87,21 @@ $l = \common\models\Lang::$current->url;
 
 	    <ul class="sidebar-menu">
 		    <li>
-			    <?= Html::tag('li', Html::a(\Yii::t('partner_orders','Orders'), ['orders/index']), [
+			    <?= Html::tag('li', Html::a('<i class="fa fa-shopping-cart"></i>' . \Yii::t('partner_orders','Orders'), ['orders/index']), [
 				    'class' => $this->context->id == 'orders' ? "active" : "",
 			    ]) ?>
 		    </li>
 	    </ul>
 
         <ul class="sidebar-menu">
+            <?= Html::tag('li', Html::a('<i class="fa fa-money"></i>' . \Yii::t('partner_pays', 'Incoming payments'), ['pays/index']), [
+                'class' => ($this->context->id == 'site' && $this->context->action->id == 'pays' ? "active" : ""),
+            ]) ?>
+        </ul>
+
+        <ul class="sidebar-menu">
             <li>
-                <?= Html::tag('li', Html::a(\Yii::t('partner_support', 'Support'), ['support/index']), [
+                <?= Html::tag('li', Html::a('<i class="fa fa-question"></i>' . \Yii::t('partner_support', 'Support'), ['support/index']), [
                     'class' => $this->context->id == 'support' ? "active" : "",
                 ]) ?>
             </li>
@@ -103,7 +109,7 @@ $l = \common\models\Lang::$current->url;
 
         <ul class="sidebar-menu">
             <li>
-                <?= Html::tag('li', Html::a(\Yii::t('partner_pricerules', 'Discounts'), ['price-rules/index']), [
+                <?= Html::tag('li', Html::a('<i class="fa">% </i>' . \Yii::t('partner_pricerules', 'Discounts'), ['price-rules/index']), [
                     'class' => $this->context->id == 'price-rules' ? "active" : "",
                 ]) ?>
             </li>
