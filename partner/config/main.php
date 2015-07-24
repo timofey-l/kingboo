@@ -42,6 +42,9 @@ return [
             'class' => 'common\components\LangUrlManager',
             'rules' => [
                 'profile' => 'site/profile',
+                'signup' => 'site/signup',
+                'request-password-reset' => 'site/request-password-reset',
+                'signin' => 'site/login',
 
                 // Widgets
                 'GET widget/js/<code:[\d\w\-]+>' => 'widget/js',

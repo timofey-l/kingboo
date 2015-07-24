@@ -1,4 +1,5 @@
 <?php
+use dmstr\widgets\Alert;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
@@ -6,7 +7,7 @@ use yii\bootstrap\ActiveForm;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \common\models\LoginForm */
 
-$this->title = 'Sign In';
+$this->title = \Yii::t('partner_login', 'Sign In');
 
 $fieldOptions1 = [
     'options' => ['class' => 'form-group has-feedback'],
@@ -17,12 +18,14 @@ $fieldOptions2 = [
     'options' => ['class' => 'form-group has-feedback'],
     'inputTemplate' => "{input}<span class='glyphicon glyphicon-lock form-control-feedback'></span>"
 ];
+
 ?>
 
 <div class="login-box">
     <div class="login-logo">
-        <a href="#">king-boo.com</a>
+        <a href="/">king-boo.com</a>
     </div>
+    <?= Alert::widget() ?>
     <!-- /.login-logo -->
     <div class="login-box-body">
         <p class="login-box-msg"><?= \Yii::t('partner_login', 'Sign in to start your session') ?></p>
@@ -62,9 +65,11 @@ $fieldOptions2 = [
 <!--        </div>-->
         <!-- /.social-auth-links -->
 
-<!--        <a href="#">I forgot my password</a><br>-->
-<!--        <a href="register.html" class="text-center">Register a new membership</a>-->
-
+        <?= Html::a(\Yii::t('partner_login', 'I forgot my password'), ['site/request-password-reset'],[]) ?>
+        <br>
+        <?= Html::a(\Yii::t('partner_login', 'Sign up'), ['site/signup'], [
+            'class' => 'text-center'
+        ]) ?>
     </div>
     <!-- /.login-box-body -->
 </div><!-- /.login-box -->

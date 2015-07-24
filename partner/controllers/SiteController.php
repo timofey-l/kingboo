@@ -34,7 +34,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error', 'signup', 'request-password-reset'],
                         'allow' => true,
                     ],
                     [
@@ -79,7 +79,7 @@ class SiteController extends Controller
             ->limit(5)
             ->all();
 
-        $messages =SupportMessage::find()
+        $messages = SupportMessage::find()
             ->where([
                 'author' => \Yii::$app->user->id,
                 'parent_id' => null
@@ -89,7 +89,7 @@ class SiteController extends Controller
             ->all();
 
         $newMessagesCount = SupportMessage::find()
-            ->joinWith(['parent' => function($q){
+            ->joinWith(['parent' => function ($q) {
                 $q->from('support_messages p');
             }])
             ->where([
@@ -166,9 +166,16 @@ class SiteController extends Controller
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
+
+                Yii::$app->mailer->compose()
+                    ->setFrom(\Yii::$app->params['email.from'])
+                    ->setTo($user->email)
+                    ->setSubject('Message subject')
+                    ->setTextBody('Plain text content')
+                    ->send();
+
+                \Yii::$app->getSession()->setFlash('success', \Yii::t('partner_login', 'Confirmation code was sent to your email.'));
+                return $this->goHome();
             }
         }
 
@@ -215,7 +222,8 @@ class SiteController extends Controller
     }
 
 
-    public function actionProfile() {
+    public function actionProfile()
+    {
         $user = PartnerUser::findOne(\Yii::$app->user->id);
         $model = new ProfileForm();
         $model->payMethods = $user->payMethods;
