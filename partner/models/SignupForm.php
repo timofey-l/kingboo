@@ -50,4 +50,11 @@ class SignupForm extends Model
 
         return null;
     }
+
+    public function attributeLabels() {
+        return [
+            'email' => 'Email',
+            'password' => 'Пароль',
+        ];
+    }
 }

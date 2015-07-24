@@ -17,6 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'New order on site king-boo.com' => 'Новый заказ на сайте king-boo.com',
-    'Order on site king-boo.com' => '@@@@',
+    'Best regards, team of king-boo.com' => 'С наилучшими пожеланиями, команда king-boo.com',
+    'Dear visitor!' => 'Дорогой посетитель',
+    'You left registration request on partner.king-boo.com. To continue, please, follow the link below:' => 'Вы начали регистрацию на сайте partner.king-boo.com. Для продолжения, пожалуйста, перейдите по ссылке ниже:',
 ];
