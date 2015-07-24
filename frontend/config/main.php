@@ -33,6 +33,8 @@ return [
             'showScriptName' => false,
             'class' => 'common\components\LangUrlManager',
             'rules' => [
+                'http://abc.itdesign.ru' => 'hotel/index',
+                'http://abc2.itdesign.ru' => 'hotel/index',
                 '/' => 'site/index',
                 '/signup' => 'site/signup',
                 '/login' => 'site/login',

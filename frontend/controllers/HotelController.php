@@ -145,8 +145,16 @@ class HotelController extends \yii\web\Controller
 	 * @return string
 	 * @throws \yii\web\HttpException
 	 */
-	public function actionIndex($name)
+	public function actionIndex($name = false)
 	{
+        if ($name === false && \Yii::$app->request->hostInfo == 'http://abc.itdesign.ru/') {
+            $name = 'loceanica';
+        }
+        
+        if ($name === false && \Yii::$app->request->hostInfo == 'http://abc2.itdesign.ru/') {
+            $name = 'loceanica';
+        }
+	
 		$model = Hotel::findOne(['name' => $name]);
 
 		if (is_null($model)) {

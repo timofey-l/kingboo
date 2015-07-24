@@ -11,7 +11,7 @@ use frontend\widgets\Alert;
 
 AppAsset::register($this);
 
-Yii::$app->assetManager->publish('@bower');
+//Yii::$app->assetManager->publish('@bower');
 
 $this->registerJsFile('/js/langs.js');
 
@@ -34,7 +34,7 @@ $this->registerJsFile('/js/langs.js');
     <div class="wrap">
         <?php
             NavBar::begin([
-                'brandLabel' => \Yii::$app->name,
+                'brandLabel' => str_replace(['https://', 'http://'], '', \Yii::$app->request->hostInfo),
                 'brandUrl' => \yii\helpers\Url::to(['site/index']),
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',

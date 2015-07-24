@@ -2,17 +2,19 @@
 namespace frontend\controllers;
 
 use Yii;
+use \DateTime;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use common\models\Hotel;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-
+use frontend\models\BookingParams;
 /**
  * Site controller
  */
@@ -63,6 +65,55 @@ class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
+    }
+    
+    public function _beforeAction($action) {
+        parent::beforeAction($action);
+        if (preg_match('@(?<host>https?)://(?<domain>.+)@', \Yii::$app->request->hostInfo, $m)) {
+            if ($m['domain'] == 'abc.itdesign.ru' && $action->id == 'index') {
+                
+                $model = Hotel::findOne(['name' => 'loceanica']);
+    
+                if (is_null($model)) {
+                    throw new \yii\web\HttpException(404, 'The requested hotel does not exist.');
+                }
+                $req = \Yii::$app->request;
+                $dateFrom = new DateTime($req->get('dateFrom', date('Y-m-d')));
+                $dateTo = new DateTime($req->get('dateTo', date('Y-m-d')));
+
+                $now = new DateTime();
+
+                // проверяем, если переданная дата_с меньше сегодняшней, то устанавливаем на сегодня
+                if ($now->diff($dateFrom)->invert) {
+                    $dateFrom = $now;
+                }
+
+                // проверяем дата_по
+                if ($dateFrom->diff($dateTo)->invert) {
+                    $dateTo = clone $dateFrom;
+                    $dateTo->add(new \DateInterval('P7D'));
+                }
+
+                $adults = (int)$req->get('adults', 1);
+                $children = (int)$req->get('children', 0);
+                $kids = (int)$req->get('kids', 0);
+
+                $bookParams = new BookingParams([
+                    'dateFrom' => $dateFrom->format('Y-m-d'),
+                    'dateTo'   => $dateTo->format('Y-m-d'),
+                    'adults'   => in_array($adults, range(1, 10)) ? $adults : 1,
+                    'children' => in_array($children, range(1, 5)) ? $children : 0,
+                    'kids'     => in_array($kids, range(1, 5)) ? $kids : 0,
+                ]);
+
+                return $this->render('@frontend/views/hotel/index', [
+                    'model'      => $model,
+                    'bookParams' => $bookParams,
+                ]);
+            }
+        }
+        
+        return true;
     }
 
     public function actionIndex()

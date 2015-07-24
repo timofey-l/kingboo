@@ -20,6 +20,7 @@ return [
             ],
         ],
         'user' => [
+            'class' => 'partner\components\User',
             'identityClass' => 'partner\models\PartnerUser',
             'enableAutoLogin' => true,
         ],
@@ -45,6 +46,7 @@ return [
                 'signup' => 'site/signup',
                 'request-password-reset' => 'site/request-password-reset',
                 'signin' => 'site/login',
+                'confirm-email' => 'site/confirm-email',
 
                 // Widgets
                 'GET widget/js/<code:[\d\w\-]+>' => 'widget/js',

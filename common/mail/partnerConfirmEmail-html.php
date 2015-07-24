@@ -4,13 +4,8 @@
 
 ?>
 
-<p><?= \Yii::t('mails_signup', 'Hello!') ?></p>
-<p><?= \Yii::t('mails_sugn_up', 'You left ') ?></p>
+<p><?= \Yii::t('mails_signup', 'Dear visitor!') ?></p>
+<p><?= \Yii::t('mails_signup', 'You left registration request on partner.king-boo.com. To continue, please, follow the link below:') ?></p>
+<p><a href="<?= $link ?>"><?= $link ?></a></p>
 
-
-Hello!
-You left registration request on partner.king-boo.com.
-To continue, please, follow the link below:
-[link]
-
-Best regards, team of king-boo.com
+<p><?= \Yii::t('mails_signup', 'Best regards, team of king-boo.com') ?></p>

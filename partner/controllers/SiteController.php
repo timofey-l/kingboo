@@ -34,7 +34,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'signup', 'request-password-reset'],
+                        'actions' => ['login', 'error', 'signup', 'request-password-reset', 'reset-password', 'confirm-email'],
                         'allow' => true,
                     ],
                     [
@@ -125,6 +125,10 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
+            $user = $model->getUser();
+            if ($user && !$user->checked) {
+                 Yii::$app->session->setFlash('warning', \Yii::t('partner_login', 'You shoould confirm email address to continue'));
+            }
             return $this->render('login', [
                 'model' => $model,
             ]);
@@ -167,11 +171,17 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
 
-                Yii::$app->mailer->compose()
+                Yii::$app->mailer->compose(
+                    [
+                        'html' => 'partnerConfirmEmail-text.php',
+                        'text' => 'partnerConfirmEmail-html.php',
+                    ], [
+                        'link' => 'https://partner.king-boo.com/confirm-email?code=' . md5($user->password_hash.$user->created_at)
+                    ]
+                )
                     ->setFrom(\Yii::$app->params['email.from'])
                     ->setTo($user->email)
-                    ->setSubject('Message subject')
-                    ->setTextBody('Plain text content')
+                    ->setSubject(\Yii::t('partner_login', 'Email confirmation for site partner.king-boo.com'))
                     ->send();
 
                 \Yii::$app->getSession()->setFlash('success', \Yii::t('partner_login', 'Confirmation code was sent to your email.'));
@@ -261,5 +271,24 @@ class SiteController extends Controller
         return $this->render('profile', [
             'user' => $model,
         ]);
+    }
+    
+    public function actionConfirmEmail($code) {
+        $query = new \yii\db\Query;
+        $query->select('id')
+            ->from('{{%partner_user}}')
+            ->where(['MD5(CONCAT(password_hash,created_at))' => $code, 'checked' => 0]);
+        $user_code = $query->one();
+        $user = PartnerUser::findOne($user_code['id']);
+        $user->checked = 1;
+        $user->save();
+        if ($user_code) {
+            if (Yii::$app->user->login($user, 3600 * 24 * 30)) {
+                return $this->redirect('/');
+            }
+        } else {
+            \Yii::$app->session->setFlash('warning', \Yii::t('partner_login', 'User not found'));
+            return $this->redirect(['site/login']);
+        }
     }
 }
