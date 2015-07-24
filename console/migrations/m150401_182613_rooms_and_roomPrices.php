@@ -22,7 +22,7 @@ class m150401_182613_rooms_and_roomPrices extends Migration
             'adults' => Schema::TYPE_INTEGER . ' NOT NULL DEFAULT 0',
             'children' => Schema::TYPE_INTEGER . ' NOT NULL DEFAULT 0',
             'total' => Schema::TYPE_INTEGER . ' NOT NULL DEFAULT 0',
-            'active' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT 1',
+            'active' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT TRUE',
         ], $tableOptions);
 
         $this->createTable('{{%room_price}}', [

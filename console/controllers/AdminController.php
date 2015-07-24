@@ -120,8 +120,9 @@ class AdminController extends Controller
 
         $partner = new PartnerUser();
         $partner->username = 'L\'Oceanica';
-        $partner->email = 'pr@loceanicahotel.com';
+        $partner->email = 'office@itdesign.ru';
         $partner->password = "loceanica";
+        $partner->checked = true;
         print_r($partner->attributes);
         if ($partner->save()) {
             $hotel = new Hotel();

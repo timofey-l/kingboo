@@ -7,7 +7,7 @@ class m150623_102737_add_apply_for_dateFrom extends Migration
 {
     public function up()
     {
-        $this->addColumn('{{%price_rules}}', 'applyForCheckIn', Schema::TYPE_BOOLEAN . " NOT NULL DEFAULT 0");
+        $this->addColumn('{{%price_rules}}', 'applyForCheckIn', Schema::TYPE_BOOLEAN . " NOT NULL DEFAULT FALSE");
     }
 
     public function down()

@@ -25,8 +25,8 @@ class m150610_082705_add_price_rules_table extends Migration
 
             'counter' => Schema::TYPE_INTEGER . ' NOT NULL',
 
-            'additive' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT 0',
-            'active' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT 0',
+            'additive' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT FALSE',
+            'active' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT FALSE',
 
             'minSum' => Schema::TYPE_DOUBLE . ' DEFAULT NULL',
             'maxSum' => Schema::TYPE_DOUBLE . ' DEFAULT NULL',

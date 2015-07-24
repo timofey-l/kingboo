@@ -7,7 +7,7 @@ class m150603_190425_add_viewed_order_flag extends Migration
 {
     public function up()
     {
-		$this->addColumn("{{%order}}", 'viewed', Schema::TYPE_BOOLEAN . " NOT NULL DEFAULT 0");
+		$this->addColumn("{{%order}}", 'viewed', Schema::TYPE_BOOLEAN . " NOT NULL DEFAULT FALSE");
     }
 
     public function down()

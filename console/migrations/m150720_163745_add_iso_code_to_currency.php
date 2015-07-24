@@ -7,7 +7,7 @@ class m150720_163745_add_iso_code_to_currency extends Migration
 {
     public function up()
     {
-        $this->addColumn('{{%currencies}}', 'iso_code', Schema::TYPE_STRING . ' NOT NULL');
+        $this->addColumn('{{%currencies}}', 'iso_code', Schema::TYPE_STRING );
 
         $this->update('{{%currencies}}', ['iso_code' => '840'], ['code'=>'USD']);
         $this->update('{{%currencies}}', ['iso_code' => '643'], ['code'=>'RUB']);

@@ -7,8 +7,8 @@ class m150603_143954_order_dates_field_modify extends Migration
 {
     public function up()
     {
-	    $this->alterColumn('{{%order}}', 'created_at', Schema::TYPE_DATETIME . ' NOT NULL');
-	    $this->alterColumn('{{%order}}', 'updated_at', Schema::TYPE_DATETIME . ' NOT NULL');
+	    $this->alterColumn('{{%order}}', 'created_at', Schema::TYPE_DATETIME );
+	    $this->alterColumn('{{%order}}', 'updated_at', Schema::TYPE_DATETIME );
     }
 
     public function down()

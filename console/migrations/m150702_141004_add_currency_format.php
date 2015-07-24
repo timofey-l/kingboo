@@ -7,7 +7,7 @@ class m150702_141004_add_currency_format extends Migration
 {
     public function up()
     {
-        $this->addColumn('{{%currencies}}', 'format', Schema::TYPE_STRING . ' NOT NULL');
+        $this->addColumn('{{%currencies}}', 'format', Schema::TYPE_STRING);
 
         $this->truncateTable('{{%currencies}}');
         $this->batchInsert('{{%currencies}}', ['name_ru', 'name_en', 'code', 'symbol', 'format'], [

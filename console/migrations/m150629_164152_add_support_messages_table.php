@@ -14,7 +14,7 @@ class m150629_164152_add_support_messages_table extends Migration
 
         $this->createTable('{{%support_messages}}', [
             'id' => Schema::TYPE_PK,
-            'unread' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT 0',
+            'unread' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT FALSE',
             'created_at' => Schema::TYPE_DATETIME . ' NOT NULL',
             'updated_at' => Schema::TYPE_DATETIME . ' NOT NULL',
             'text' => Schema::TYPE_TEXT . ' NOT NULL',

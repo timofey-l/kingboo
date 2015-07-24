@@ -16,7 +16,7 @@ class m150525_091907_add_order_tables extends Migration
 		    'id' => Schema::TYPE_PK,
 		    'created_at' => Schema::TYPE_DATE,
 		    'updated_at' => Schema::TYPE_DATE,
-		    'number' => Schema::TYPE_STRING . '(15) NOT NULL',
+		    'number' => Schema::TYPE_STRING . '(32) NOT NULL',
 		    'status' => Schema::TYPE_INTEGER . ' NOT NULL',
 
 		    'contact_email' => Schema::TYPE_STRING . ' NOT NULL',
@@ -28,8 +28,8 @@ class m150525_091907_add_order_tables extends Migration
 		    'dateFrom' => Schema::TYPE_DATE . ' NOT NULL',
 		    'dateTo' => Schema::TYPE_DATE . ' NOT NULL',
 		    'sum' => Schema::TYPE_FLOAT . ' NOT NULL',
-		    'partial_pay' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT 0',
-		    'partial_pay_percent' => Schema::TYPE_BOOLEAN . ' NOT NULL',
+		    'partial_pay' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT FALSE',
+		    'partial_pay_percent' => Schema::TYPE_INTEGER . ' NOT NULL',
 		    'pay_sum' => Schema::TYPE_FLOAT . ' NOT NULL',
 	    ], $tableOptions);
 

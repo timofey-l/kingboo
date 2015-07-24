@@ -15,7 +15,7 @@ class m150424_151305_rel_room_facility extends Migration
             'room_id' => Schema::TYPE_INTEGER . ' NOT NULL',
             'facility_id' => Schema::TYPE_INTEGER . ' NOT NULL',
         ], $tableOptions);
-        $this->addPrimaryKey('PK', '{{%rel_room_facility}}', ['room_id', 'facility_id'], true);
+        $this->createIndex('uniq', '{{%rel_room_facility}}', ['room_id', 'facility_id'], true);
     }
 
     public function down()

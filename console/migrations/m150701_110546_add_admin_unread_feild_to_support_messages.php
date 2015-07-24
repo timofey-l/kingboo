@@ -7,7 +7,7 @@ class m150701_110546_add_admin_unread_feild_to_support_messages extends Migratio
 {
     public function up()
     {
-        $this->addColumn('{{%support_messages}}', 'unread_admin', Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT 0');
+        $this->addColumn('{{%support_messages}}', 'unread_admin', Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT FALSE');
     }
 
     public function down()

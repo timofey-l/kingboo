@@ -12,7 +12,7 @@ class m150521_064519_partial_pay_add extends Migration
 		    $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
 	    }
 
-	    $this->addColumn('{{%hotel}}', 'allow_partial_pay', Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT 0');
+	    $this->addColumn('{{%hotel}}', 'allow_partial_pay', Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT FALSE');
 	    $this->addColumn('{{%hotel}}', 'partial_pay_percent', Schema::TYPE_INTEGER . ' NOT NULL DEFAULT 100');
     }
 

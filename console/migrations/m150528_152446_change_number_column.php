@@ -7,7 +7,7 @@ class m150528_152446_change_number_column extends Migration
 {
     public function up()
     {
-	    $this->alterColumn('{{%order}}', 'number', Schema::TYPE_STRING . '(32) NOT NULL');
+	    //$this->alterColumn('{{%order}}', 'number', Schema::TYPE_STRING . ' NOT NULL');
     }
 
     public function down()

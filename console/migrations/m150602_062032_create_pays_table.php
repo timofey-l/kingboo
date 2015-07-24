@@ -15,8 +15,8 @@ class m150602_062032_create_pays_table extends Migration
 	    $this->createTable('{{%pays}}', [
 		    'id' => Schema::TYPE_PK,
 
-		    'checked' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT 0',
-		    'payed' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT 0',
+		    'checked' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT FALSE',
+		    'payed' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT FALSE',
 
 		    'order_number' => Schema::TYPE_INTEGER . ' NOT NULL',
 		    'invoiceId' => Schema::TYPE_BIGINT . ' NOT NULL',

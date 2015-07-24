@@ -20,8 +20,8 @@ class m150424_134510_room_facilities extends Migration
             'order' => Schema::TYPE_INTEGER . ' NOT NULL DEFAULT 0',
         ], $tableOptions);
 
-        $this->createIndex('nameRu', '{{%room_facilities}}', ['name_ru'], true);
-        $this->createIndex('nameEn', '{{%room_facilities}}', ['name_en'], true);
+        //$this->createIndex('nameRu', '{{%room_facilities}}', ['name_ru'], true);
+        //$this->createIndex('nameEn', '{{%room_facilities}}', ['name_en'], true);
         
         $this->batchInsert('{{%room_facilities}}', ['name_ru', 'name_en', 'important', 'order'],[
             ['ковровое покрытие', 'carpet floor', 0, 10],
