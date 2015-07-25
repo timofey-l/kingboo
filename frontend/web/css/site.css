@@ -255,3 +255,53 @@ ul.hotel-facilities  li:before {
 .partial-pay {
     margin-right: 20px;
 }
+
+.collapsable {
+    max-height: 443px;
+}
+
+/*.info-container .collapsable {*/
+    /*position: relative;*/
+    /*transition: all 1s easy-in-out;*/
+/*}*/
+
+/*.info-container .collapse-switch {*/
+    /*display: none;*/
+/*}*/
+
+/*.info-container .collapsable.active {*/
+    /*height: 443px;*/
+    /*overflow: hidden;*/
+
+    /*transition: all 1s easy-in-out;*/
+/*}*/
+
+.info-container {
+    position: relative;
+}
+.info-container .shadow-bottom {
+    display: block;
+    opacity:0;
+    width: 100%;
+    position: absolute;
+    height: 20px;
+    background: url(/img/header_shadow.png);
+    background-repeat:no-repeat;
+    background-size: 100% 100%;
+    bottom: -3px;
+    left:0;
+    transition: all 200ms ease-in-out;
+}
+
+.info-container .shadow-top {
+    display: block;
+    opacity:0;
+    width: 100%;
+    position: absolute;
+    height: 20px;
+    background: url(/img/header_shadow_top.png);
+    background-repeat:no-repeat;
+    background-size: 100% 100%;
+    top: -3px;
+    transition: all 200ms ease-in-out;
+}

@@ -40,7 +40,7 @@ apt-get install language-pack-ru
 apt-get -y install apache2
 service apache2 stop
 a2enmod rewrite
-apt-get -y install php5 php5-pgsql php5-curl php5-mysql php5-sqlite php5-xdebug php5-intl php5-apcu php5-readline php5-mcrypt
+apt-get -y install php5 php5-pgsql php5-curl php5-mysql php5-sqlite php5-xdebug php5-intl php5-apcu php5-readline php5-mcrypt php5-imagick php5-gd
 php5enmod mcrypt
 sed -i "s/display_startup_errors = Off/display_startup_errors = On/g" ${php_config_file}
 sed -i "s/display_errors = Off/display_errors = On/g" ${php_config_file}

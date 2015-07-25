@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "20c8eef9dbe41235a5dc51d9866b03ae",
+    "hash": "dc8dcd2c71c822abadca98e44b8695de",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
-            "version": "v2.1.2",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/almasaeed2010/AdminLTE.git",
-                "reference": "406de4e708e84ed0abbc08b09870828254a6b2ef"
+                "reference": "a6c2500da3cb4a333ca436f4f78cf09dd00ca9ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/almasaeed2010/AdminLTE/zipball/406de4e708e84ed0abbc08b09870828254a6b2ef",
-                "reference": "406de4e708e84ed0abbc08b09870828254a6b2ef",
+                "url": "https://api.github.com/repos/almasaeed2010/AdminLTE/zipball/a6c2500da3cb4a333ca436f4f78cf09dd00ca9ba",
+                "reference": "a6c2500da3cb4a333ca436f4f78cf09dd00ca9ba",
                 "shasum": ""
             },
             "type": "library",
@@ -44,7 +44,7 @@
                 "theme",
                 "web"
             ],
-            "time": "2015-06-08 22:41:48"
+            "time": "2015-07-08 21:18:12"
         },
         {
             "name": "bower-asset/angular",
@@ -186,16 +186,16 @@
         },
         {
             "name": "bower-asset/colorbox",
-            "version": "1.6.1",
+            "version": "1.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jackmoore/colorbox.git",
-                "reference": "7c13e71cb12bb7291a674ca09f78de0c823aad8f"
+                "reference": "a45037ca10d0543795b706bf529cacdf89b3da48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jackmoore/colorbox/zipball/7c13e71cb12bb7291a674ca09f78de0c823aad8f",
-                "reference": "7c13e71cb12bb7291a674ca09f78de0c823aad8f",
+                "url": "https://api.github.com/repos/jackmoore/colorbox/zipball/a45037ca10d0543795b706bf529cacdf89b3da48",
+                "reference": "a45037ca10d0543795b706bf529cacdf89b3da48",
                 "shasum": ""
             },
             "require": {
@@ -344,6 +344,37 @@
             ]
         },
         {
+            "name": "bower-asset/jquery-mousewheel",
+            "version": "3.1.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jquery/jquery-mousewheel.git",
+                "reference": "67289b6b2aa0066d7d78a5807f520387135ffb22"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jquery/jquery-mousewheel/zipball/67289b6b2aa0066d7d78a5807f520387135ffb22",
+                "reference": "67289b6b2aa0066d7d78a5807f520387135ffb22",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.2.2"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "./jquery.mousewheel.js",
+                "bower-asset-ignore": [
+                    "*.json",
+                    "*.markdown",
+                    "*.txt",
+                    ".*",
+                    "!LICENSE.txt",
+                    "Gruntfile.js",
+                    "test"
+                ]
+            }
+        },
+        {
             "name": "bower-asset/jquery-ui",
             "version": "1.11.4",
             "source": {
@@ -421,6 +452,49 @@
             ]
         },
         {
+            "name": "bower-asset/malihu-custom-scrollbar-plugin",
+            "version": "3.0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/malihu/malihu-custom-scrollbar-plugin.git",
+                "reference": "728a92de311a274e8c81ce9c2ff4c3d71d247d8a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/malihu/malihu-custom-scrollbar-plugin/zipball/728a92de311a274e8c81ce9c2ff4c3d71d247d8a",
+                "reference": "728a92de311a274e8c81ce9c2ff4c3d71d247d8a",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.6",
+                "bower-asset/jquery-mousewheel": ">=3.0.6"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "./jquery.mCustomScrollbar.js",
+                    "./jquery.mCustomScrollbar.css",
+                    "./mCSB_buttons.png"
+                ],
+                "bower-asset-ignore": [
+                    "*.md",
+                    ".*",
+                    "*.txt",
+                    "*.json",
+                    "*.html",
+                    "/examples",
+                    "/source-files",
+                    "/js"
+                ]
+            },
+            "description": "Highly customizable custom scrollbar jQuery plugin, featuring vertical/horizontal scrollbars, scrolling momentum, mouse-wheel, keyboard and touch support, user defined callbacks etc.",
+            "keywords": [
+                "custom-scrollbar",
+                "jquery",
+                "scrollbar"
+            ]
+        },
+        {
             "name": "bower-asset/moment",
             "version": "2.10.3",
             "source": {
@@ -487,16 +561,16 @@
         },
         {
             "name": "bower-asset/swiper",
-            "version": "v3.0.8",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nolimits4web/Swiper.git",
-                "reference": "7de949b42547ee28b430df31185b6617cd0a4c4a"
+                "reference": "65c378912c789d843d8dfc19bd099d31a94f6720"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nolimits4web/Swiper/zipball/7de949b42547ee28b430df31185b6617cd0a4c4a",
-                "reference": "7de949b42547ee28b430df31185b6617cd0a4c4a",
+                "url": "https://api.github.com/repos/nolimits4web/Swiper/zipball/65c378912c789d843d8dfc19bd099d31a94f6720",
+                "reference": "65c378912c789d843d8dfc19bd099d31a94f6720",
                 "shasum": ""
             },
             "type": "bower-asset-library",
@@ -711,16 +785,16 @@
         },
         {
             "name": "dmstr/yii2-adminlte-asset",
-            "version": "2.1.3",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dmstr/yii2-adminlte-asset.git",
-                "reference": "c5d2ea94209a2b087348ea9ee8fda11eedf943b6"
+                "reference": "49c69eab422ada4295ece97279e5dd50e37d34be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dmstr/yii2-adminlte-asset/zipball/c5d2ea94209a2b087348ea9ee8fda11eedf943b6",
-                "reference": "c5d2ea94209a2b087348ea9ee8fda11eedf943b6",
+                "url": "https://api.github.com/repos/dmstr/yii2-adminlte-asset/zipball/49c69eab422ada4295ece97279e5dd50e37d34be",
+                "reference": "49c69eab422ada4295ece97279e5dd50e37d34be",
                 "shasum": ""
             },
             "require": {
@@ -761,7 +835,7 @@
                 "extension",
                 "yii2"
             ],
-            "time": "2015-06-25 01:41:38"
+            "time": "2015-06-17 03:09:25"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -1065,16 +1139,16 @@
         },
         {
             "name": "yiisoft/yii2",
-            "version": "2.0.4",
+            "version": "2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "726867caee3f23aa7a6975c801e64b6021e14f86"
+                "reference": "ea8c13b9f5cd437bd7bf73cad8a3457a155f3727"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/726867caee3f23aa7a6975c801e64b6021e14f86",
-                "reference": "726867caee3f23aa7a6975c801e64b6021e14f86",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/ea8c13b9f5cd437bd7bf73cad8a3457a155f3727",
+                "reference": "ea8c13b9f5cd437bd7bf73cad8a3457a155f3727",
                 "shasum": ""
             },
             "require": {
@@ -1149,7 +1223,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2015-05-10 20:09:47"
+            "time": "2015-07-11 02:37:59"
         },
         {
             "name": "yiisoft/yii2-bootstrap",

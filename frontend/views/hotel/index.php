@@ -1,5 +1,8 @@
 <?php
 /* @var $this yii\web\View */
+use yii\bootstrap\BootstrapAsset;
+use yii\helpers\Html;
+
 /* @var $model common\models\Hotel */
 /* @var $bookParams \frontend\models\BookingParams */
 $l = \common\models\Lang::$current->url;
@@ -33,14 +36,60 @@ $datepicker = $assetManager->publish('@vendor/almasaeed2010/adminlte/plugins/dat
 $this->registerJsFile($datepicker . '/bootstrap-datepicker.js', ['depends' => [\yii\bootstrap\BootstrapAsset::className(), \yii\bootstrap\BootstrapPluginAsset::className()]]);
 $this->registerJsFile($datepicker . '/locales/bootstrap-datepicker.' . $l . '.js', ['depends' => [\yii\bootstrap\BootstrapAsset::className(), \yii\bootstrap\BootstrapPluginAsset::className()]]);
 $this->registerCssFile($datepicker . '/datepicker3.css', ['depends' => [\frontend\assets\GalleryAsset::className()]]);
+
+// custom scrolbars
+$customSB = $assetManager->publish('@bower/malihu-custom-scrollbar-plugin')[1];
+$this->registerJsFile($customSB.'/jquery.mCustomScrollbar.concat.min.js', ['depends' => [BootstrapAsset::className()]]);
+$this->registerCssFile($customSB.'/jquery.mCustomScrollbar.min.css');
+
+// сворачивание описания отеля
+$js = <<<Javascript
+console.log($(".collapsable"));
+$(".collapsable").mCustomScrollbar({
+    scrollButtons:{enable:true},
+    theme:"dark-3",
+    callbacks: {
+        onOverflowY:function(){
+            $('.shadow-bottom').css('opacity', 1);
+        },
+        whileScrolling: function() {
+            if (this.mcs.topPct == 0) {
+                if ($('.shadow-top').css('opacity') != 0) {
+                    $('.shadow-top').css('opacity', 0);
+                }
+            }
+            if (this.mcs.topPct == 100) {
+                if ($('.shadow-bottom').css('opacity') != 0) {
+                    $('.shadow-bottom').css('opacity', 0);
+                }
+            }
+            if (this.mcs.topPct > 0 && this.mcs.topPct < 100) {
+                if ($('.shadow-top').css('opacity') == 0) {
+                    $('.shadow-top').css('opacity', 1);
+                }
+                if ($('.shadow-bottom').css('opacity') == 0) {
+                    $('.shadow-bottom').css('opacity', 1);
+                }
+            }
+        }
+    }
+    //scrollbarPosition:"outside"
+});
+Javascript;
+
+$this->registerJs($js);
 ?>
+<div class="device-xs visible-xs"></div>
+<div class="device-sm visible-sm"></div>
+<div class="device-md visible-md"></div>
+<div class="device-lg visible-lg"></div>
 
 <script>
-	var dateFrom = "<?= $bookParams->dateFrom ?>";
-	var dateTo = "<?= $bookParams->dateTo ?>";
-	var adults = <?= $bookParams->adults ?>;
-	var children = <?= $bookParams->children ?>;
-	var kids = <?= $bookParams->kids ?>;
+    var dateFrom = "<?= $bookParams->dateFrom ?>";
+    var dateTo = "<?= $bookParams->dateTo ?>";
+    var adults = <?= $bookParams->adults ?>;
+    var children = <?= $bookParams->children ?>;
+    var kids = <?= $bookParams->kids ?>;
 </script>
 
 <h1><?= $model->{'title_' . $l} ?></h1>
@@ -55,7 +104,7 @@ $this->registerCssFile($datepicker . '/datepicker3.css', ['depends' => [\fronten
 </div>
 
 <div class="row">
-    <div class="col-md-6 col-sm-9 images-container">
+    <div class="col-md-6 col-sm-12 images-container">
         <!-- Slider main container -->
         <div class="big-image" id="hotelImagesBig">
             <div class="big-image-div"></div>
@@ -81,19 +130,21 @@ $this->registerCssFile($datepicker . '/datepicker3.css', ['depends' => [\fronten
 
         </div>
     </div>
-    <div class="col-md-6 col-sm-3">
-        <ul class="hotel-facilities row">
-            <?php foreach ($model->facilities as $f): ?>
-                <li class="col-xs-6 col-sm-12 col-md-6">
-                    <?= $f->{'name_' . $l} ?>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
     <div class="col-md-6 col-sm-12 info-container">
-        <div class="info-description">
-            <?= $model->{'description_' . $l} ?>
+        <div class="collapsable">
+            <ul class="hotel-facilities row">
+                <?php foreach ($model->facilities as $f): ?>
+                    <li class="col-xs-6 col-sm-3 col-md-6">
+                        <?= $f->{'name_' . $l} ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+            <div class="info-description">
+                <?= str_replace("\n", "<br>", Html::encode($model->{'description_' . $l})) ?>
+            </div>
         </div>
+        <div class="shadow-top" style="opacity: 0;"></div>
+        <div class="shadow-bottom"></div>
     </div>
 </div>
 
@@ -114,6 +165,7 @@ $this->registerCssFile($datepicker . '/datepicker3.css', ['depends' => [\fronten
         </div>
         <div class="col-md-2 col-xs-3">
             <label for="adults"><?= Yii::t('frontend', 'Adults') ?></label>
+
             <div class="input-group">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button" ng-click="search.adults = search.adults - 1">
@@ -130,6 +182,7 @@ $this->registerCssFile($datepicker . '/datepicker3.css', ['depends' => [\fronten
         </div>
         <div class="col-md-2 col-xs-3">
             <label for="children"><?= Yii::t('frontend', 'Children') ?></label>
+
             <div class="input-group">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button" ng-click="search.children = search.children - 1">
@@ -146,6 +199,7 @@ $this->registerCssFile($datepicker . '/datepicker3.css', ['depends' => [\fronten
         </div>
         <div class="col-md-2 col-xs-3">
             <label for="kids"><?= Yii::t('frontend', 'Kids') ?></label>
+
             <div class="input-group">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button" ng-click="search.kids = search.kids - 1">
@@ -171,22 +225,22 @@ $this->registerCssFile($datepicker . '/datepicker3.css', ['depends' => [\fronten
     <div class="row result-item well" ng-repeat="r in results">
         <div class="col-md-3">
             <div class="gallery thumbnail">
-	            <div class="swiper-container" id="{{'hotel-room-' + r.id}}" data-room-id="{{ r.id }}">
-		            <div class="swiper-wrapper">
-			            <!-- Slides -->
-			            <a class="swiper-slide"
-			                 ng-style="{'background-image':'url('+i.preview+')'}"
-			                 href="{{ i.image }}"
-			                 rel="{{ 'hotelImages' + r.id }}"
-			                 ng-repeat="i in r.images">
-			            </a>
-		            </div>
-		            <div class="swiper-pagination"></div>
+                <div class="swiper-container" id="{{'hotel-room-' + r.id}}" data-room-id="{{ r.id }}">
+                    <div class="swiper-wrapper">
+                        <!-- Slides -->
+                        <a class="swiper-slide"
+                           ng-style="{'background-image':'url('+i.preview+')'}"
+                           href="{{ i.image }}"
+                           rel="{{ 'hotelImages' + r.id }}"
+                           ng-repeat="i in r.images">
+                        </a>
+                    </div>
+                    <div class="swiper-pagination"></div>
 
-		            <div class="swiper-button-prev"></div>
-		            <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
 
-	            </div>
+                </div>
             </div>
         </div>
         <div class="col-md-7 info">
@@ -196,17 +250,18 @@ $this->registerCssFile($datepicker . '/datepicker3.css', ['depends' => [\fronten
             <div class="row">
                 <div class="description">{{r['description_' + LANG]}}</div>
             </div>
-		        <div class="room-facilities row">
+            <div class="room-facilities row">
 			        <span class="label label-default" ng-repeat="f in r.facilities">
 				        {{f['name_' + LANG]}}
 			        </span>
-		        </div>
+            </div>
         </div>
         <div class="col-md-2 price">
             {{ r.price }}&nbsp;{{ r.sum_currency.code }}
-	        <br/>
-	        <br/>
-	        <div class="btn btn-success" ng-click="goBooking(r)"><?= Yii::t('frontend', 'Booking') ?></div>
+            <br/>
+            <br/>
+
+            <div class="btn btn-success" ng-click="goBooking(r)"><?= Yii::t('frontend', 'Booking') ?></div>
         </div>
     </div>
 </div>

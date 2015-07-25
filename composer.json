@@ -31,7 +31,8 @@
         "bower-asset/swiper": "*",
         "bower-asset/moment": "*",
         "bower-asset/jquery": "*",
-        "bower-asset/jquery-minicolors": "*"
+        "bower-asset/jquery-minicolors": "*",
+        "bower-asset/malihu-custom-scrollbar-plugin": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
