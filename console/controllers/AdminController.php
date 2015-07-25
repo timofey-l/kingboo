@@ -17,6 +17,7 @@ class AdminController extends Controller
 {
     public function actionChangeAdminPassword($id)
     {
+        /** @var BackendUser $admin */
         $admin = BackendUser::findOne($id);
         if (!$admin) {
             throw new Exception('User not found');
@@ -29,6 +30,7 @@ class AdminController extends Controller
         echo "Enter new user password (Ctrl + C to exit): ";
         $password = trim(fgets(STDIN));
         $admin->password = $password;
+        $admin->generateAuthKey();
         if ($admin->save()) {
             echo "\nPassword updated.\n";
         } else {
@@ -123,6 +125,7 @@ class AdminController extends Controller
         $partner->email = 'office@itdesign.ru';
         $partner->password = "loceanica";
         $partner->checked = true;
+        $partner->generateAuthKey();
         print_r($partner->attributes);
         if ($partner->save()) {
             $hotel = new Hotel();
