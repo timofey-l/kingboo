@@ -181,6 +181,7 @@ roomsManageControllers.controller('RoomAddCtrl',
         adults: 0,
         children: 0,
         total: 0,
+        amount: 1,
         hotel_id: $rootScope.hotelId
     };
 

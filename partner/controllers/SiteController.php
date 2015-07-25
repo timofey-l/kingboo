@@ -173,8 +173,8 @@ class SiteController extends Controller
 
                 Yii::$app->mailer->compose(
                     [
-                        'html' => 'partnerConfirmEmail-text.php',
-                        'text' => 'partnerConfirmEmail-html.php',
+                        'html' => 'partnerConfirmEmail-html.php',
+                        'text' => 'partnerConfirmEmail-text.php',
                     ], [
                         'link' => 'https://partner.king-boo.com/confirm-email?code=' . md5($user->password_hash.$user->created_at)
                     ]

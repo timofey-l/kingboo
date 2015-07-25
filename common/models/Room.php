@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use \common\components\ListPriceType;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%room}}".
@@ -20,6 +21,7 @@ use \common\components\ListPriceType;
  * @property integer $active
  * @property integer $price_type
  * @property Hotel   $hotel
+ * @property integer $amount
  */
 class Room extends \yii\db\ActiveRecord
 {
@@ -71,7 +73,7 @@ class Room extends \yii\db\ActiveRecord
             }, 'whenClient' => "function (attribute, value) {
                 return !$('#room-description_ru').val();
             }"],
-            [['hotel_id', 'adults', 'children', 'total', 'active'], 'integer'],
+            [['hotel_id', 'adults', 'children', 'total', 'active', 'amount'], 'integer'],
             [['price_type'], 'integer', 'min' => 1, 'max' => 2],
             [['description_ru', 'description_en'], 'string'],
             [['title_ru', 'title_en'], 'string', 'max' => 255]
@@ -104,6 +106,7 @@ class Room extends \yii\db\ActiveRecord
 			'total'          => Yii::t('rooms', 'Total'),
 			'price_type'     => Yii::t('rooms', 'Price type'),
 			'active'         => Yii::t('rooms', 'Active'),
+			'amount'         => Yii::t('rooms', 'Amount'),
 		];
 	}
 
@@ -143,6 +146,36 @@ class Room extends \yii\db\ActiveRecord
         return $a;
     }
 
+    public function afterSave($insert)
+    {
+        if ($insert) {
+            // заполняем количество на год вперед
+            $attributes = [
+                'date',
+                'room_id',
+                'count',
+                'stop_sale',
+            ];
 
+            $rows = [];
+            $default_row = [
+                date('Y-m-d'),
+                $this->id,
+                $this->amount,
+                0,
+            ];
+            $date = new \DateTime();
+            for ($i = 0; $i <= 365; $i++) {
+                $row = $default_row;
+                $row[0] = $date->format('Y-m-d');
+                $rows[] = $row;
+                $date->modify('+1 day');
+            }
+
+            \Yii::$app->db->createCommand()
+                ->batchInsert(RoomAvailability::tableName(), $attributes, $rows)
+                ->execute();
+        }
+    }
 
 }

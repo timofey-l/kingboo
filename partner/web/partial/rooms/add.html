@@ -79,7 +79,15 @@
                         </div><!-- /descriptions -->
                     </div>                
                 </div><!-- /.row -->
-
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group"  ng-class="getClasses('price_type')">
+                            <label for="price_type">{{t('room_amount')}}</label>
+                            <input type="number" class="form-control" ng-model="room.amount" name="amount"
+                                   id="amount" placeholder="" required integer min="0">
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group" ng-class="getClasses('adults')">
@@ -137,7 +145,7 @@
                                 </label>
                             </div>
                         </div>
-                    </div>                
+                    </div>
                 </div><!-- /.row -->
             </div>
         </div><!-- /.row -->
