@@ -1,4 +1,6 @@
 <?php
+use frontend\components\HotelUrlRule;
+
 $params = array_merge(
     require(__DIR__ . '/../../common/config/params.php'),
     require(__DIR__ . '/../../common/config/params-local.php'),
@@ -33,8 +35,9 @@ return [
             'showScriptName' => false,
             'class' => 'common\components\LangUrlManager',
             'rules' => [
-                'http://abc.itdesign.ru' => 'hotel/index',
-                'http://abc2.itdesign.ru' => 'hotel/index',
+                [
+                    'class' => HotelUrlRule::className(),
+                ],
                 '/' => 'site/index',
                 '/signup' => 'site/signup',
                 '/login' => 'site/login',

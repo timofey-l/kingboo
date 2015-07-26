@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\SluggableBehavior;
 
 /**
  * This is the model class for table "{{%hotel}}".
@@ -70,13 +71,24 @@ class Hotel extends \yii\db\ActiveRecord
             }"],
 			[['partner_id', 'category', 'currency_id'], 'integer'],
 			[['lng', 'lat'], 'number'],
-			[['description_ru', 'description_en'], 'string'],
+			[['description_ru', 'description_en', 'domain'], 'string'],
 			[['name', 'address', 'timezone', 'title_ru', 'title_en'], 'string', 'max' => 255],
 			[['lng', 'lat'], 'default', 'value' => 0],
 			[['allow_partial_pay'], 'integer', 'max' => 1, 'min' => 0],
 			['partial_pay_percent', 'integer', 'min' => self::MIN_PART_PAY, 'max' => 100],
 		];
 	}
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => SluggableBehavior::className(),
+                'attribute' => 'name',
+                'slugAttribute' => 'name',
+            ],
+        ];
+    }
 
 	/**
 	 * @inheritdoc
@@ -86,7 +98,7 @@ class Hotel extends \yii\db\ActiveRecord
 		return [
 			'id'                  => Yii::t('hotels', 'ID'),
 			'partner_id'          => Yii::t('hotels', 'Partner ID'),
-			'name'                => Yii::t('hotels', 'Name'),
+			'name'                => Yii::t('hotels', 'URL'),
 			'address'             => Yii::t('hotels', 'Address'),
 			'lng'                 => Yii::t('hotels', 'Lng'),
 			'lat'                 => Yii::t('hotels', 'Lat'),
@@ -99,6 +111,7 @@ class Hotel extends \yii\db\ActiveRecord
 			'title_en'            => Yii::t('hotels', 'Title En'),
 			'allow_partial_pay'   => Yii::t('hotels', 'Allow partial pay'),
 			'partial_pay_percent' => Yii::t('hotels', 'Percents to pay'),
+			'domain'              => Yii::t('hotels', 'Domain'),
 		];
 	}
 
