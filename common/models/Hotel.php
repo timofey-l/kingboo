@@ -76,6 +76,8 @@ class Hotel extends \yii\db\ActiveRecord
 			[['lng', 'lat'], 'default', 'value' => 0],
 			[['allow_partial_pay'], 'integer', 'max' => 1, 'min' => 0],
 			['partial_pay_percent', 'integer', 'min' => self::MIN_PART_PAY, 'max' => 100],
+            ['name', 'unique'],
+            ['domain', 'unique'],
 		];
 	}
 
