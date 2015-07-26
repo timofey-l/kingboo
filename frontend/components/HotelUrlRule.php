@@ -30,6 +30,12 @@ class HotelUrlRule extends UrlRule
     public function parseRequest($manager, $request)
     {
         $hostInfo = $request->getHostInfo();
+        $pathInfo = $request->pathInfo;
+
+        if ($pathInfo) {
+            return [$pathInfo, $request->get()];
+        }
+
         // пробуем определить частичный URL
         if (preg_match('%^(?<protocol>https?)://(?<name>[^.]+)\..+$%', $hostInfo, $m)) {
             $hotel = Hotel::find()->where(['name' => $m['name']])->one();
@@ -40,6 +46,7 @@ class HotelUrlRule extends UrlRule
                 return false;
             }
         }
+
         // пробуем найти домен
         if (preg_match('%^(?<protocol>https?)://(?<domain>.+)$%', $hostInfo, $m)) {
             $hotel = Hotel::find()->where(['domain' => $m['domain']])->one();
