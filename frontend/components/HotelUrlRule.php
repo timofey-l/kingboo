@@ -33,6 +33,13 @@ class HotelUrlRule extends UrlRule
         $pathInfo = $request->pathInfo;
 
         if ($pathInfo) {
+            //payment url
+            if (preg_match('%payment/(?<id>[0-9a-zA-Z\-_]{64})$%', $pathInfo, $m_path)) {
+                $params = [
+                    'id' => $m_path['id'],
+                ];
+                return ['payment/show', $params];
+            }
             return [$pathInfo, $request->get()];
         }
 
