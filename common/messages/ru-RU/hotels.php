@@ -17,6 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Domain' => 'Домен',
+    'URL' => 'URL',
     'Address' => 'Адрес',
     'Allow partial pay' => 'Позволить частичную оплату',
     'Are you sure you want to delete this item?' => 'Вы действительно хотите удалить этот элемент?',
@@ -42,13 +44,11 @@ return [
     'Lng' => 'Долгота',
     'Manage photos' => 'Управление фотографиями',
     'Manage rooms' => 'Управление номерами',
-    'Name' => 'Название',
     'Name En' => 'Имя En',
     'Name Ru' => 'Имя Ru',
     'No photos' => 'Нет фотографий',
     'Order' => 'Заказ',
     'Partner ID' => 'ID партнера',
-    'Payment types' => 'Типы оплаты',
     'Percents to pay' => 'Проценты оплаты',
     'Reset' => 'Сброс',
     'Rooms' => 'Номера',
