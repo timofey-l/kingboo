@@ -20,7 +20,7 @@ class HotelUrlRule extends UrlRule
     {
         if ($route === 'hotel/view') {
             if (isset($params['name'])) {
-                return "http://" . $params['name'] . '.' .  $_SERVER['SERVER_NAME'];
+                return "http://" . $params['name'] . '.' . $_SERVER['SERVER_NAME'];
             } else {
                 return false;
             }
@@ -34,47 +34,48 @@ class HotelUrlRule extends UrlRule
         $pathInfo = $request->pathInfo;
 
         // пробуем определить частичный URL
-        if (preg_match('%^(?<protocol>https?)://(?<name>[^.]+)\.'.\Yii::$app->params['mainDomain'].'$%', $hostInfo, $m)) {
-            $hotel = Hotel::find()->where(['name' => $m['name']])->one();
-            if ($hotel) {
+        if ($request->serverName != \Yii::$app->params['mainDomain'])
+            if (preg_match('%^(?<protocol>https?)://(?<name>[^.]+)\.' . \Yii::$app->params['mainDomain'] . '$%', $hostInfo, $m)) {
+                $hotel = Hotel::find()->where(['name' => $m['name']])->one();
+                if ($hotel) {
 
-                if ($pathInfo) {
-                    //payment url
-                    if (preg_match('%payment/(?<id>[0-9a-zA-Z\-_]{64})$%', $pathInfo, $m_path)) {
-                        $params = [
-                            'id' => $m_path['id'],
-                        ];
-                        return ['payment/show', $params];
+                    if ($pathInfo) {
+                        //payment url
+                        if (preg_match('%payment/(?<id>[0-9a-zA-Z\-_]{64})$%', $pathInfo, $m_path)) {
+                            $params = [
+                                'id' => $m_path['id'],
+                            ];
+                            return ['payment/show', $params];
+                        }
+                        return [$pathInfo, $request->get()];
                     }
-                    return [$pathInfo, $request->get()];
+
+                    $params['name'] = $hotel->name;
+                    return ['hotel/index', $params];
+                } else {
+                    throw new ForbiddenHttpException('Hotel not found!');
                 }
+            } elseif (preg_match('%^(?<protocol>https?)://(?<domain>.+)$%', $hostInfo, $m)) {
+                $hotel = Hotel::find()->where(['domain' => $m['domain']])->one();
+                if ($hotel) {
 
-                $params['name'] = $hotel->name;
-                return ['hotel/index', $params];
-            } else {
-                throw new ForbiddenHttpException('Hotel not found!');
-            }
-        } elseif (preg_match('%^(?<protocol>https?)://(?<domain>.+)$%', $hostInfo, $m)) {
-            $hotel = Hotel::find()->where(['domain' => $m['domain']])->one();
-            if ($hotel) {
-
-                if ($pathInfo) {
-                    //payment url
-                    if (preg_match('%payment/(?<id>[0-9a-zA-Z\-_]{64})$%', $pathInfo, $m_path)) {
-                        $params = [
-                            'id' => $m_path['id'],
-                        ];
-                        return ['payment/show', $params];
+                    if ($pathInfo) {
+                        //payment url
+                        if (preg_match('%payment/(?<id>[0-9a-zA-Z\-_]{64})$%', $pathInfo, $m_path)) {
+                            $params = [
+                                'id' => $m_path['id'],
+                            ];
+                            return ['payment/show', $params];
+                        }
+                        return [$pathInfo, $request->get()];
                     }
-                    return [$pathInfo, $request->get()];
-                }
 
-                $params['name'] = $hotel->name;
-                return ['hotel/index', $params];
-            } else {
-                throw new ForbiddenHttpException('Hotel not found!');
+                    $params['name'] = $hotel->name;
+                    return ['hotel/index', $params];
+                } else {
+                    throw new ForbiddenHttpException('Hotel not found!');
+                }
             }
-        }
 
         return false;
     }
