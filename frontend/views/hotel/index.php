@@ -14,6 +14,10 @@ $this->title = $model->{'title_' . $l};
 $this->params['embedded'] = $embedded;
 $this->params['no_desc'] = $no_desc;
 
+$this->registerCss($model->css, [
+    'depends' => BootstrapAsset::className(),
+]);
+
 // underscore.js
 $this->registerJsFile($assetManager->publish('@bower/underscore')[1] . '/underscore-min.js');
 

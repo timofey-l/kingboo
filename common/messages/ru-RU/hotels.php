@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Frame on site' => 'Фрейм на сайт',
+    'Custom CSS' => 'Стили CSS',
     'Address' => 'Адрес',
     'Allow partial pay' => 'Позволить частичную оплату',
     'Are you sure you want to delete this item?' => 'Вы действительно хотите удалить этот элемент?',
@@ -33,6 +33,7 @@ return [
     'Domain' => 'Домен',
     'Edit' => 'Редактировать',
     'Facilities' => 'Особенности отеля',
+    'Frame on site' => 'Фрейм на сайт',
     'Group ID' => 'ID группы',
     'Hotel ID' => 'ID отеля',
     'ID' => 'ID',

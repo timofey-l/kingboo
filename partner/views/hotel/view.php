@@ -37,6 +37,7 @@ if (preg_match('%partner\.(?<server>.+)$%', $hostInfo, $m)) {
         <?= Html::a('<span class="fa fa-institution"></span>' . Yii::t('hotels', 'Rooms'), ['rooms', 'id' => $model->id], ['class' => 'btn btn-app']) ?>
         <?= Html::a('<span class="fa fa-camera"></span>' . Yii::t('hotels', 'Images'), ['images', 'id' => $model->id], ['class' => 'btn btn-app']) ?>
         <?= Html::a('<span class="fa fa-code"></span>' . Yii::t('hotels', 'Frame on site'), ['iframe', 'id' => $model->id], ['class' => 'btn btn-app']) ?>
+        <?= Html::a('<span class="fa fa-code"></span>' . Yii::t('hotels', 'Custom CSS'), ['css', 'id' => $model->id], ['class' => 'btn btn-app']) ?>
         <?= Html::a('<span class="fa fa-trash-o"></span>' . Yii::t('hotels', 'Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-app bg-red',
             'data' => [

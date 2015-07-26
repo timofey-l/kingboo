@@ -65,6 +65,11 @@ $l = \common\models\Lang::$current->url;
                                 'title' => Yii::t('hotels', 'Frame on site'),
                                 'icon' => 'code',
                             ],
+                            [
+                                'url' => ['hotel/css'],
+                                'title' => Yii::t('hotels', 'Custom CSS'),
+                                'icon' => 'code',
+                            ],
                         ]
                     ?>
 

@@ -5,6 +5,7 @@ namespace partner\controllers;
 use common\models\Widget;
 use Yii;
 use common\models\Hotel;
+use yii\base\DynamicModel;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
@@ -26,7 +27,7 @@ class HotelController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['view', 'update', 'delete', 'rooms', 'images', 'facilities', 'iframe'],
+                        'actions' => ['view', 'update', 'delete', 'rooms', 'images', 'facilities', 'iframe', 'css'],
                         'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
@@ -42,7 +43,7 @@ class HotelController extends Controller
                         }
                     ],
                     [
-                        'actions' => ['index', 'create', 'widgets', 'widget-create', 'delete-widget', 'update-widget', 'iframe'],
+                        'actions' => ['index', 'create', 'widgets', 'widget-create', 'delete-widget', 'update-widget', ],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -316,5 +317,36 @@ class HotelController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
         return $this->render('iframe', ['hotel' => $hotel]);
+    }
+
+    public function actionCss($id) {
+        $hotel = Hotel::findOne($id);
+        if (!$hotel) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        if (\Yii::$app->request->method == "POST") {
+            $less = \Yii::$app->request->post('less', false);
+            if (\Yii::$app->request->validateCsrfToken()) {
+                $hotel->less = $less;
+                $lessc = new \lessc;
+                try {
+                    $css = $lessc->compile($hotel->less);
+                } catch (\Exception $e) {
+
+                }
+                $hotel->css = $css;
+                if ($hotel->save(false)) {
+                    \Yii::$app->session->setFlash('success', \Yii::t('partner_css', 'Your code was successfully saved'));
+                    return $this->redirect(['hotel/css', 'id' => $id]);
+                } else {
+                    \Yii::$app->session->setFlash('danger', \Yii::t('partner_css', 'Code save failure'));
+                }
+            }
+        }
+
+        return $this->render('css', [
+            'hotel' => $hotel,
+        ]);
     }
 }
