@@ -5,6 +5,7 @@ namespace partner\controllers;
 use common\models\Order;
 use yii\helpers\Json;
 use yii\web\BadRequestHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\web\Request;
 use yii\web\Response;
 
@@ -33,7 +34,10 @@ class OrdersController extends \yii\web\Controller
 
     public function actionView($id)
     {
-	    $order = Order::findOne($id);
+		$order = Order::findOne($id);
+		if ($order->hotel->partner->id !== \Yii::$app->user->id) {
+			throw new ForbiddenHttpException();
+		}
 	    if (!$order) {
 		    throw new BadRequestHttpException('Wrong order_id');
 	    }
@@ -81,7 +85,10 @@ class OrdersController extends \yii\web\Controller
 	}
 
     public function actionViewed($id) {
-        $order = Order::findOne($id);
+		$order = Order::findOne($id);
+		if ($order->hotel->partner->id !== \Yii::$app->user->id) {
+			throw new ForbiddenHttpException();
+		}
         if (!$order) {
             throw new BadRequestHttpException('Wrong order_id');
         }

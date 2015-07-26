@@ -12,11 +12,12 @@ class PaysController extends Controller
 
     public function actionIndex() {
         $dataProvider = new ActiveDataProvider([
-            'query' => Pay::find([
-                'shopId' => \Yii::$app->user->identity->shopId,
-                'payed' => 1,
-            ])
-            ->orderBy(['paymentDatetime' => SORT_DESC]),
+            'query' => Pay::find()
+                ->where([
+                    'shopId' => \Yii::$app->user->identity->shopId,
+                    'payed' => 1,
+                ])
+                ->orderBy(['paymentDatetime' => SORT_DESC]),
 
         ]);
 
