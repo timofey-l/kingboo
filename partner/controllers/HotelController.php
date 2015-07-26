@@ -26,7 +26,7 @@ class HotelController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['view', 'update', 'delete', 'rooms', 'images', 'facilities'],
+                        'actions' => ['view', 'update', 'delete', 'rooms', 'images', 'facilities', 'iframe'],
                         'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
@@ -42,7 +42,7 @@ class HotelController extends Controller
                         }
                     ],
                     [
-                        'actions' => ['index', 'create', 'widgets', 'widget-create', 'delete-widget', 'update-widget'],
+                        'actions' => ['index', 'create', 'widgets', 'widget-create', 'delete-widget', 'update-widget', 'iframe'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -308,5 +308,13 @@ class HotelController extends Controller
             'hotel' => $hotel,
         ]);
 
+    }
+
+    public function actionIframe($id) {
+        $hotel = Hotel::findOne($id);
+        if (!$hotel) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+        return $this->render('iframe', ['hotel' => $hotel]);
     }
 }

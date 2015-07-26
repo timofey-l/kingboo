@@ -60,6 +60,11 @@ $l = \common\models\Lang::$current->url;
                                 'title' => Yii::t('partner_widget', 'Widgets'),
                                 'icon' => 'th',
                             ],
+                            [
+                                'url' => ['hotel/iframe'],
+                                'title' => Yii::t('hotels', 'Frame on site'),
+                                'icon' => 'code',
+                            ],
                         ]
                     ?>
 

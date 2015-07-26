@@ -1,6 +1,11 @@
 function goWithPOST(url, data, formName) {
+    var form_target = "";
+    if (typeof EMBEDDED != 'undefined' && EMBEDDED == 1) {
+        form_target = 'target="_blank"';
+    }
+
     var formString = "";
-    formString += '<form style="display:block;position:absolute; width: 0px; height:0px; top:0; left:0;" action="' + url + '" method="POST">';
+    formString += '<form ' + form_target + ' style="display:block;position:absolute; width: 0px; height:0px; top:0; left:0;" action="' + url + '" method="POST">';
     for (var fieldName in data) {
         formString += '<input type="hidden" name="' + formName + '[' + fieldName + ']" value="' + data[fieldName] + '" />';
     }

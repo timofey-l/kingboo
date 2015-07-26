@@ -2,6 +2,8 @@
     var searchApp = angular.module('roomsSearch', []);
 
     searchApp.controller('searchCtrl', ['$scope', '$http', function ($scope, $http) {
+        $('[ng-app]').css('display', 'block');
+
         $scope.t = t;
         $scope.LANG = LANG;
         $scope.search = {

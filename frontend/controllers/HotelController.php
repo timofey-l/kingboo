@@ -192,6 +192,8 @@ class HotelController extends \yii\web\Controller
 		return $this->render('index', [
 			'model'      => $model,
 			'bookParams' => $bookParams,
+			'embedded'   => \Yii::$app->request->get('embedded', 0),
+			'no_desc'   => \Yii::$app->request->get('no_desc', 0),
 		]);
 	}
 

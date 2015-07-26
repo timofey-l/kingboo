@@ -10,6 +10,8 @@ $this->title = 'king-boo.com';
             <?= \Yii::t('frontend', 'Orders and payment management system for your hotels') ?>
         </p>
 
+        <iframe src="http://loceanica.local?embedded=1&no_desc=1" frameborder="0" style="width: 100%; height: 600px;" ></iframe>
+
     </div>
 
     <div class="body-content">

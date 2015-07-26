@@ -11,6 +11,9 @@ $assetManager = Yii::$app->assetManager;
 
 $this->title = $model->{'title_' . $l};
 
+$this->params['embedded'] = $embedded;
+$this->params['no_desc'] = $no_desc;
+
 // underscore.js
 $this->registerJsFile($assetManager->publish('@bower/underscore')[1] . '/underscore-min.js');
 
@@ -39,8 +42,8 @@ $this->registerCssFile($datepicker . '/datepicker3.css', ['depends' => [\fronten
 
 // custom scrolbars
 $customSB = $assetManager->publish('@bower/malihu-custom-scrollbar-plugin')[1];
-$this->registerJsFile($customSB.'/jquery.mCustomScrollbar.concat.min.js', ['depends' => [BootstrapAsset::className()]]);
-$this->registerCssFile($customSB.'/jquery.mCustomScrollbar.min.css');
+$this->registerJsFile($customSB . '/jquery.mCustomScrollbar.concat.min.js', ['depends' => [BootstrapAsset::className()]]);
+$this->registerCssFile($customSB . '/jquery.mCustomScrollbar.min.css');
 
 // сворачивание описания отеля
 $js = <<<Javascript
@@ -92,65 +95,68 @@ $this->registerJs($js);
     var kids = <?= $bookParams->kids ?>;
 </script>
 
-<h1><?= $model->{'title_' . $l} ?></h1>
-<div class="hotel_stars">
-    <?php foreach (range(1, 5) as $i): ?>
-        <?php if ($i <= $model->category) : ?>
-            &#x2605;
-        <?php else: ?>
-            &#x2606;
-        <?php endif ?>
-    <?php endforeach; ?>
-</div>
+<div class="<?= $no_desc == 1 ? 'hidden' : '' ?>">
+    <h1><?= $model->{'title_' . $l} ?></h1>
 
-<div class="row">
-    <div class="col-md-6 col-sm-12 images-container">
-        <!-- Slider main container -->
-        <div class="big-image" id="hotelImagesBig">
-            <div class="big-image-div"></div>
-        </div>
-        <div class="swiper-container" id="hotel-images-container">
-            <!-- Additional required wrapper -->
-            <div class="swiper-wrapper">
-                <!-- Slides -->
-                <?php foreach ($model->images as $image): /* @var $image \common\models\RoomImage */ ?>
-                    <div class="swiper-slide"
-                         style="background-image: url('<?= $image->getThumbUploadUrl('image', 'preview') ?>');"
-                         data-big-preview="<?= $image->getThumbUploadUrl('image', 'bigPreview') ?>">
-                        <a href="<?= $image->getUploadUrl('image') ?>" rel="hotelImages"></a>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-            <!-- If we need pagination -->
-            <div class="swiper-pagination"></div>
-
-            <!-- If we need navigation buttons -->
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-
-        </div>
+    <div class="hotel_stars">
+        <?php foreach (range(1, 5) as $i): ?>
+            <?php if ($i <= $model->category) : ?>
+                &#x2605;
+            <?php else: ?>
+                &#x2606;
+            <?php endif ?>
+        <?php endforeach; ?>
     </div>
-    <div class="col-md-6 col-sm-12 info-container">
-        <div class="collapsable">
-            <ul class="hotel-facilities row">
-                <?php foreach ($model->facilities as $f): ?>
-                    <li class="col-xs-6 col-sm-3 col-md-6">
-                        <?= $f->{'name_' . $l} ?>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-            <div class="info-description">
-                <?= str_replace("\n", "<br>", Html::encode($model->{'description_' . $l})) ?>
+
+    <div class="row">
+        <div class="col-md-6 col-sm-12 images-container">
+            <!-- Slider main container -->
+            <div class="big-image" id="hotelImagesBig">
+                <div class="big-image-div"></div>
+            </div>
+            <div class="swiper-container" id="hotel-images-container">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <?php foreach ($model->images as $image): /* @var $image \common\models\RoomImage */ ?>
+                        <div class="swiper-slide"
+                             style="background-image: url('<?= $image->getThumbUploadUrl('image', 'preview') ?>');"
+                             data-big-preview="<?= $image->getThumbUploadUrl('image', 'bigPreview') ?>">
+                            <a href="<?= $image->getUploadUrl('image') ?>" rel="hotelImages"></a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <!-- If we need pagination -->
+                <div class="swiper-pagination"></div>
+
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+
             </div>
         </div>
-        <div class="shadow-top" style="opacity: 0;"></div>
-        <div class="shadow-bottom"></div>
+        <div class="col-md-6 col-sm-12 info-container">
+            <div class="collapsable">
+                <ul class="hotel-facilities row">
+                    <?php foreach ($model->facilities as $f): ?>
+                        <li class="col-xs-6 col-sm-3 col-md-6">
+                            <?= $f->{'name_' . $l} ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+                <div class="info-description">
+                    <?= str_replace("\n", "<br>", Html::encode($model->{'description_' . $l})) ?>
+                </div>
+            </div>
+            <div class="shadow-top" style="opacity: 0;"></div>
+            <div class="shadow-bottom"></div>
+        </div>
     </div>
 </div>
 
-<h2 id="search"><?= Yii::t('frontend', 'Search') ?></h2>
 
-<div ng-app="roomsSearch" ng-controller="searchCtrl" ng-init="search.hotelId = <?= $model->id ?>;">
+<div ng-app="roomsSearch" ng-controller="searchCtrl" ng-init="search.hotelId = <?= $model->id ?>;" style="display: none;">
+    <h2 id="search"><?= Yii::t('frontend', 'Search') ?></h2>
     <div class="row well">
         <div class="input-daterange" id="datepicker">
             <div class="form-group col-md-2 col-sm-6">

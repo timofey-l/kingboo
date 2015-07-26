@@ -17,8 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Domain' => 'Домен',
-    'URL' => 'URL',
+    'Frame on site' => 'Фрейм на сайт',
     'Address' => 'Адрес',
     'Allow partial pay' => 'Позволить частичную оплату',
     'Are you sure you want to delete this item?' => 'Вы действительно хотите удалить этот элемент?',
@@ -31,6 +30,7 @@ return [
     'Description' => 'Описание',
     'Description En' => 'Описание En',
     'Description Ru' => 'Описание Ru',
+    'Domain' => 'Домен',
     'Edit' => 'Редактировать',
     'Facilities' => 'Особенности отеля',
     'Group ID' => 'ID группы',
@@ -58,5 +58,6 @@ return [
     'Title' => 'Название',
     'Title En' => 'Название En',
     'Title Ru' => 'Название Ru',
+    'URL' => 'URL',
     'View' => 'Просмотр',
 ];

@@ -1,10 +1,12 @@
 <?php
-use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use frontend\widgets\Alert;
+use yii\base\View;
+use yii\bootstrap\Nav;
+use yii\bootstrap\NavBar;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
+use yii\widgets\Breadcrumbs;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -15,6 +17,11 @@ AppAsset::register($this);
 
 $this->registerJsFile('/js/langs.js');
 
+if (ArrayHelper::getValue($this->params, 'embedded', 0) == 0) {
+    $this->registerCss(".wrap > .container { padding: 70px 15px 20px;}");
+} else {
+    $this->registerJs('var EMBEDDED = true;', \yii\web\View::POS_HEAD);
+}
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -30,54 +37,47 @@ $this->registerJsFile('/js/langs.js');
     <?php $this->head() ?>
 </head>
 <body>
-    <?php $this->beginBody() ?>
-    <div class="wrap">
-        <?php
-            NavBar::begin([
-                'brandLabel' => str_replace(['https://', 'http://'], '', \Yii::$app->request->hostInfo),
-                'brandUrl' => \yii\helpers\Url::to(['site/index']),
-                'options' => [
-                    'class' => 'navbar-inverse navbar-fixed-top',
-                ],
-            ]);
-            $menuItems = [
-                ['label' => \Yii::t('frontend', 'Main'), 'url' => ['/site/index']],
-//                ['label' => \Yii::t('frontend', 'About'), 'url' => ['/site/about']],
-                ['label' => \Yii::t('frontend', 'Contact us'), 'url' => ['/site/contact']],
-            ];
-//            if (Yii::$app->user->isGuest) {
-//                $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-//                $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-//            } else {
-//                $menuItems[] = [
-//                    'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
-//                    'url' => ['/site/logout'],
-//                    'linkOptions' => ['data-method' => 'post']
-//                ];
-//            }
-            echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-right'],
-                'items' => $menuItems,
-            ]);
-            NavBar::end();
-        ?>
+<?php $this->beginBody() ?>
+<div class="wrap">
+    <?php
+    if (ArrayHelper::getValue($this->params, 'embedded', 0) == 0) {
+        NavBar::begin([
+            'brandLabel' => str_replace(['https://', 'http://'], '', \Yii::$app->request->hostInfo),
+            'brandUrl' => \yii\helpers\Url::to(['site/index']),
+            'options' => [
+                'class' => 'navbar-inverse navbar-fixed-top',
+            ],
+        ]);
+        $menuItems = [
+            ['label' => \Yii::t('frontend', 'Main'), 'url' => ['/site/index']],
+            ['label' => \Yii::t('frontend', 'Contact us'), 'url' => ['/site/contact']],
+        ];
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-right'],
+            'items' => $menuItems,
+        ]);
+        NavBar::end();
+    }
+    ?>
 
-        <div class="container">
+    <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
         <?= $content ?>
-        </div>
     </div>
-
+</div>
+<?php if (ArrayHelper::getValue($this->params, 'embedded', 0) == 0): ?>
     <footer class="footer">
         <div class="container">
-        <p class="pull-left">&copy; <a href="http://itdesign.ru">IT Design Studio</a> <?= date('Y') ?></p>
+            <p class="pull-left">&copy; <a href="http://itdesign.ru">IT Design Studio</a> <?= date('Y') ?></p>
         </div>
     </footer>
+<?php endif ?>
 
-    <?php $this->endBody() ?>
+
+<?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>
