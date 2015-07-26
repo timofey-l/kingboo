@@ -8,6 +8,8 @@ use yii\helpers\Html;
 /* @var $exception Exception */
 
 $this->title = $name;
+
+$this->params['embedded'] = 1;
 ?>
 <div class="site-error">
 
