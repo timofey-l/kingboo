@@ -2,7 +2,7 @@
     var searchApp = angular.module('roomsSearch', []);
 
     searchApp.controller('searchCtrl', ['$scope', '$http', function ($scope, $http) {
-        $('[ng-app]').css('display', 'block');
+        $('[ng-app]').fadeIn('slow');
 
         $scope.t = t;
         $scope.LANG = LANG;
