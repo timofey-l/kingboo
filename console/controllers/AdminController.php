@@ -67,6 +67,7 @@ class AdminController extends Controller
         $user->email = $email;
         $user->username = $username;
         $user->password = $password;
+        $user->generateAuthKey();
 
         if ($user->save()) {
             echo "User successfully created.\n";
