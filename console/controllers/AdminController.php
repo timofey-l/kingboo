@@ -116,7 +116,7 @@ class AdminController extends Controller
 
     public function actionGenerateLoceanica() {
         //delete existing partners
-        foreach (PartnerUser::find()->all() as $partner) {
+        foreach (PartnerUser::find()->where(['username' => 'L\'Oceanica', 'email' => 'office@itdesign.ru'])->all() as $partner) {
             $partner->delete();
         }
 
@@ -155,6 +155,7 @@ class AdminController extends Controller
                 $room->total = 3;
                 $room->active = 1;
                 $room->price_type = 2;
+                $room->amount = 10;
                 $room->save();
 
                 $room = new Room();
@@ -168,6 +169,7 @@ class AdminController extends Controller
                 $room->total = 4;
                 $room->active = 1;
                 $room->price_type = 2;
+                $room->amount = 10;
                 $room->save();
 
                 $room = new Room();
@@ -181,6 +183,7 @@ class AdminController extends Controller
                 $room->total = 4;
                 $room->active = 1;
                 $room->price_type = 1;
+                $room->amount = 10;
                 $room->save();
 
                 $room = new Room();
@@ -194,6 +197,7 @@ class AdminController extends Controller
                 $room->total = 6;
                 $room->active = 1;
                 $room->price_type = 1;
+                $room->amount = 10;
                 $room->save();
             } else {
                 print_r($hotel->errors);
@@ -202,7 +206,7 @@ class AdminController extends Controller
 
     }
 
-	public function actionTest($id = 1) {
+    public function actionTest($id = 1) {
         /** @var Order $order */
         $order = Order::findOne($id);
 
