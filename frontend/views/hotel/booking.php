@@ -1,5 +1,7 @@
 <?php
 /* @var $this yii\web\View */
+use yii\bootstrap\BootstrapAsset;
+
 /* @var $room \common\models\Room */
 /* @var $hotel \common\models\Hotel */
 /* @var $bookingParams \frontend\models\BookingParams */
@@ -9,6 +11,12 @@ $l = \common\models\Lang::$current->url;
 $assetManager = \Yii::$app->assetManager;
 //$bower = \Yii::$app->assetManager->getPublishedUrl('@bower');
 
+$this->params['embedded'] = $embedded;
+$this->params['no_desc'] = $no_desc;
+
+$this->registerCss($hotel->css, [
+	'depends' => BootstrapAsset::className(),
+]);
 
 //Подключаем colorbox
 $colorbox = $assetManager->publish('@bower/colorbox')[1];

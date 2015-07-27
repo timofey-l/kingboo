@@ -19,6 +19,8 @@ class PaymentController extends \yii\web\Controller
 
         return $this->render('show', [
 	        'order' => $order,
+			'embedded'   => \Yii::$app->request->get('embedded', 0),
+			'no_desc'   => \Yii::$app->request->get('no_desc', 0),
         ]);
     }
 

@@ -9,6 +9,13 @@ $hotel = $order->hotel;
 
 $l = \common\models\Lang::$current->url;
 
+$this->params['embedded'] = $embedded;
+$this->params['no_desc'] = $no_desc;
+
+$this->registerCss($order->hotel->css, [
+	'depends' => BootstrapAsset::className(),
+]);
+
 $this->title = \Yii::t('frontend', 'Order payment');
 
 $this->registerJs("

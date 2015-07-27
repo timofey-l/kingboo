@@ -93,6 +93,8 @@ class HotelController extends \yii\web\Controller
 			return $this->render('booking_error', [
 				'orderForm' => $orderForm,
 				'orderItem' => $orderItem,
+				'embedded'   => \Yii::$app->request->get('embedded', 0),
+				'no_desc'   => \Yii::$app->request->get('no_desc', 0),
 			]);
 		} else {
 			$bookingParams = new BookingParams();
@@ -134,6 +136,8 @@ class HotelController extends \yii\web\Controller
 				'orderForm'     => $orderForm,
 				'items'         => $items,
 				'price'         => BookingHelper::calcRoomPrice($bookingParams->toArray()),
+				'embedded'   => \Yii::$app->request->get('embedded', 0),
+				'no_desc'   => \Yii::$app->request->get('no_desc', 0),
 			]);
 		}
 	}
