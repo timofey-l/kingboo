@@ -79,9 +79,13 @@ $this->registerCss('
 
                     <?= $form->field($model, 'address')->textInput(['maxlength' => 255]) ?>
 
+                    <?= $form->field($model, 'contact_email')->textInput(['maxlength' => 255]) ?>
+
+                    <?= $form->field($model, 'contact_phone')->textInput(['maxlength' => 255]) ?>
+
                     <?= $form->field($model, 'currency_id')->dropDownList(Currency::getOptions('code',true)) ?>
                     
-                    <?= $form->field($model, 'category')->dropDownList([1,2,3,4,5]) ?>
+                    <?= $form->field($model, 'category')->dropDownList([1=>1,2=>2,3=>3,4=>4,5=>5]) ?>
 
                     <?= $form->field($model, 'timezone')->dropDownList(array_combine(DateTimeZone::listIdentifiers(),DateTimeZone::listIdentifiers())) ?>
 

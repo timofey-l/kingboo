@@ -317,7 +317,7 @@ roomsManageControllers.controller('PricesCtrl',
             locale: getLocale('date'),
             startDate: moment(),
             endDate: moment().add(15,'days'),
-            dateLimit: { days: 30 },
+            dateLimit: { days: 365 },
             opens: 'right'
         },
         function(start, end, label) {

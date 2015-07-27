@@ -53,4 +53,20 @@ class PartnerUser extends User
             ->viaTable('partner_payMethods', ['partner_id' => 'id']);
     }
 
+    public function sendConfirmEmail() {
+        \Yii::$app->mailer->compose(
+            [
+                'html' => 'partnerConfirmEmail-html.php',
+                'text' => 'partnerConfirmEmail-text.php',
+            ], [
+                'link' => 'https://partner.king-boo.com/confirm-email?code=' . md5($this->password_hash.$this->created_at),
+                'resendCode' => 'https://partner.king-boo.com/confirm-email?code=' . md5($this->email,$this->password_hash),
+            ]
+        )
+            ->setFrom(\Yii::$app->params['email.from'])
+            ->setTo($this->email)
+            ->setSubject(\Yii::t('partner_login', 'Email confirmation for site partner.king-boo.com'))
+            ->send();
+    }
+
 }

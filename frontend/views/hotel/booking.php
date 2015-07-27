@@ -1,6 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 use yii\bootstrap\BootstrapAsset;
+use yii\helpers\Html;
 
 /* @var $room \common\models\Room */
 /* @var $hotel \common\models\Hotel */
@@ -17,6 +18,9 @@ $this->params['no_desc'] = $no_desc;
 $this->registerCss($hotel->css, [
 	'depends' => BootstrapAsset::className(),
 ]);
+
+$fa = $assetManager->publish('@bower/fontawesome')[1];
+$this->registerCssFile($fa.'/css/font-awesome.min.css');
 
 //Подключаем colorbox
 $colorbox = $assetManager->publish('@bower/colorbox')[1];
@@ -106,7 +110,11 @@ $this->title = \Yii::t('frontend', 'Room booking');
 			</h3>
 
 			<div>
-				<?= $hotel->address ?>
+				<i class="fa fa-map-marker"></i> <?= $hotel->address ?>
+                <br>
+                <i class="fa fa-mobile"></i> <span class="phone"><?= Html::encode($hotel->contact_phone) ?></span>
+				<br>
+                <i class="fa fa-envelope-o"></i> <a class="email" href="mailto:<?= $hotel->contact_email ?>"><?= Html::encode($hotel->contact_email) ?></a>
 			</div>
 			<div class="hotel-facilities">
 				<?php foreach ($hotel->facilities as $f): ?>

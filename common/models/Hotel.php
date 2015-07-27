@@ -12,6 +12,8 @@ use yii\behaviors\SluggableBehavior;
  * @property integer $partner_id
  * @property string  $name
  * @property string  $address
+ * @property string  $contact_email
+ * @property string  $contact_phone
  * @property string  $lng
  * @property string  $lat
  * @property string  $description_ru
@@ -72,7 +74,7 @@ class Hotel extends \yii\db\ActiveRecord
 			[['partner_id', 'category', 'currency_id'], 'integer'],
 			[['lng', 'lat'], 'number'],
 			[['description_ru', 'description_en', 'domain'], 'string'],
-			[['name', 'address', 'timezone', 'title_ru', 'title_en'], 'string', 'max' => 255],
+			[['name', 'address', 'timezone', 'title_ru', 'title_en', 'contact_email', 'contact_phone'], 'string', 'max' => 255],
 			[['lng', 'lat'], 'default', 'value' => 0],
 			[['allow_partial_pay'], 'integer', 'max' => 1, 'min' => 0],
 			['partial_pay_percent', 'integer', 'min' => self::MIN_PART_PAY, 'max' => 100],
@@ -114,6 +116,8 @@ class Hotel extends \yii\db\ActiveRecord
 			'allow_partial_pay'   => Yii::t('hotels', 'Allow partial pay'),
 			'partial_pay_percent' => Yii::t('hotels', 'Percents to pay'),
 			'domain'              => Yii::t('hotels', 'Domain'),
+			'contact_email'       => Yii::t('hotels', 'Contact email'),
+			'contact_phone'       => Yii::t('hotels', 'Contact phone'),
 		];
 	}
 

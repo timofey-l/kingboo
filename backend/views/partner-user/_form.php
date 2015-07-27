@@ -14,6 +14,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'email')->textInput() ?>
 
+    <?= $form->field($model, 'checked')->checkbox() ?>
+
     <?= $form->field($model, 'username')->textInput() ?>
 
     <?= $form->field($model, 'password')->passwordInput() ?>

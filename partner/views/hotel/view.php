@@ -111,13 +111,17 @@ if (preg_match('%partner\.(?<server>.+)$%', $hostInfo, $m)) {
                             'category',
                             [
                                 'attribute' => 'name',
-                                'value' => '<a href="http://' . $model->name . '.' . $server . '">http://' . $model->name . '.' . $server . '</a>',
-                                'format' => 'html',
+                                'value' => '<a target="_blank"
+ href="http://' . $model->name . '.' . $server . '">http://' . $model->name . '.' . $server . '</a>',
+                                'format' => 'raw',
                             ],
+                            'domain',
                             'title_' . $l,
                             'description_' . $l,
 //                            'currency',
                             'address',
+                            'contact_email',
+                            'contact_phone',
                         ],
                     ]) ?>
                 </div>

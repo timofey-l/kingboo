@@ -17,7 +17,9 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Confirmation code was sent to your email.' => 'Код подтверждения был выслан на Ваш email',
+    'Confirmation code was sent to your email. <br><a href="{url}" class="btn btn-link">Resend</a>' => '',
+    'User not found!' => '',
+    'Confirmation code was sent to your email.' => '@@Код подтверждения был выслан на Ваш email@@',
     'Email confirmation for site partner.king-boo.com' => 'Подтверждение email на сайте partner.king-boo.com',
     'I forgot my password' => 'Я забыл пароль',
     'Password reset for partner.king-boo.com' => 'Сброс пароля на сайте partner.king-boo.com',
@@ -26,12 +28,12 @@ return [
     'Request password reset' => 'Запрос сброса пароля',
     'Send' => 'Отправить',
     'Sign In' => 'Вход',
+    'Sign in' => 'Вход',
+    'Sign in to start your session' => 'Выполните вход для работы с сервисом',
     'Sign up' => 'Регистрация',
+    'Signup' => 'Зарегистрироваться',
     'There is no user with such email.' => 'Пользователя с таким адресом не найдено.',
     'This email address has already been taken.' => 'Этот адрес уже занят.',
     'User not found' => 'Пользователь не найден',
     'You shoould confirm email address to continue' => 'Для продолжения необходимо подтвердить адрес',
-    'Sign in' => 'Вход',
-    'Sign in to start your session' => 'Выполните вход для работы с сервисом',
-    'Signup' => 'Зарегистрироваться',
 ];

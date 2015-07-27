@@ -34,7 +34,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'signup', 'request-password-reset', 'reset-password', 'confirm-email'],
+                        'actions' => ['login', 'error', 'signup', 'request-password-reset', 'reset-password', 'confirm-email', 'resend-cofirm-email'],
                         'allow' => true,
                     ],
                     [
@@ -170,21 +170,11 @@ class SiteController extends Controller
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
-
-                Yii::$app->mailer->compose(
-                    [
-                        'html' => 'partnerConfirmEmail-html.php',
-                        'text' => 'partnerConfirmEmail-text.php',
-                    ], [
-                        'link' => 'https://partner.king-boo.com/confirm-email?code=' . md5($user->password_hash.$user->created_at)
-                    ]
-                )
-                    ->setFrom(\Yii::$app->params['email.from'])
-                    ->setTo($user->email)
-                    ->setSubject(\Yii::t('partner_login', 'Email confirmation for site partner.king-boo.com'))
-                    ->send();
-
-                \Yii::$app->getSession()->setFlash('success', \Yii::t('partner_login', 'Confirmation code was sent to your email.'));
+                /** @var PartnerUser $user */
+                $user->sendConfirmEmail();
+                $hash = md5($user->email.$user->password_hash);
+                $url = "http://partner.king-boo.com/site/resend-confirm-email?hash=" . $hash;
+                \Yii::$app->getSession()->setFlash('success', \Yii::t('partner_login', 'Confirmation code was sent to your email. <br><a href="{url}" class="btn btn-link">Resend</a>', ['url' => $url]));
                 return $this->goHome();
             }
         }
@@ -290,5 +280,25 @@ class SiteController extends Controller
             \Yii::$app->session->setFlash('warning', \Yii::t('partner_login', 'User not found'));
             return $this->redirect(['site/login']);
         }
+    }
+
+    public function actionResendConfirmEmail($hash)
+    {
+        $query = new \yii\db\Query;
+        $user_id = $query->select('id')
+            ->from('{{%partner_user}}')
+            ->where(['MD5(CONCAT(email, password_hash))' => $hash])
+            ->one();
+        $user = PartnerUser::findOne($user_id['id']);
+        if ($user) {
+            /** @var PartnerUser $user */
+            $user->sendConfirmEmail();
+            $hash = md5($user->email.$user->password_hash);
+            $url = "http://partner.king-boo.com/site/resend-confirm-email?hash=" . $hash;
+            \Yii::$app->getSession()->setFlash('success', \Yii::t('partner_login', 'Confirmation code was sent to your email. <br><a href="{url}" class="btn btn-link">Resend</a>', ['url' => $url]));
+        } else {
+            \Yii::$app->session->setFlash('warning', \Yii::t('partner_login', 'User not found!'));
+        }
+        return $this->redirect('login');
     }
 }

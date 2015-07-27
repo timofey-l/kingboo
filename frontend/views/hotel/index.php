@@ -100,16 +100,28 @@ $this->registerJs($js);
 </script>
 
 <div class="<?= $no_desc == 1 ? 'hidden' : '' ?>">
-    <h1><?= $model->{'title_' . $l} ?></h1>
-
-    <div class="hotel_stars">
-        <?php foreach (range(1, 5) as $i): ?>
-            <?php if ($i <= $model->category) : ?>
-                &#x2605;
-            <?php else: ?>
-                &#x2606;
-            <?php endif ?>
-        <?php endforeach; ?>
+    <div class="row">
+        <div class="col-sm-6">
+            <h2><?= $model->{'title_' . $l} ?></h2>
+            <div class="hotel_stars">
+                <?php foreach (range(1, 5) as $i): ?>
+                    <?php if ($i <= $model->category) : ?>
+                        &#x2605;
+                    <?php else: ?>
+                        &#x2606;
+                    <?php endif ?>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <div class="col-sm-6 text-right">
+            <br>
+            <span class="address"><?= Html::encode($model->address) ?></span>
+            <br>
+            <span class="phone"><?= Html::encode($model->contact_phone) ?></span>
+            <br>
+            <span class="email"><?= Html::encode($model->contact_email) ?></span>
+            <br>
+        </div>
     </div>
 
     <div class="row">
@@ -231,7 +243,9 @@ $this->registerJs($js);
         </div>
 
     </div>
-
+    <div class="alert alert-warning" role="alert" ng-show="!results || results.length === 0">
+        <?= \Yii::t('frontend', '<b>Rooms not found.</b> Please check information in form above');?>
+    </div>
     <div class="row result-item well" ng-repeat="r in results">
         <div class="col-md-3">
             <div class="gallery thumbnail">
