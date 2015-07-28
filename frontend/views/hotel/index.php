@@ -2,6 +2,7 @@
 /* @var $this yii\web\View */
 use yii\bootstrap\BootstrapAsset;
 use yii\helpers\Html;
+use yii\web\View;
 
 /* @var $model common\models\Hotel */
 /* @var $bookParams \frontend\models\BookingParams */
@@ -85,6 +86,13 @@ $(".collapsable").mCustomScrollbar({
 Javascript;
 
 $this->registerJs($js);
+
+// проверяем возможность забронировать
+if (!$this->context->checkBookingPossibility($model)) {
+    $this->registerJs("const BOOKING_AVAILIBLE = false;", View::POS_HEAD);
+} else {
+    $this->registerJs("const BOOKING_AVAILIBLE = true;", View::POS_HEAD);
+}
 ?>
 <div class="device-xs visible-xs"></div>
 <div class="device-sm visible-sm"></div>
@@ -244,7 +252,7 @@ $this->registerJs($js);
 
     </div>
     <div class="alert alert-warning" role="alert" ng-show="!results || results.length === 0">
-        <?= \Yii::t('frontend', '<b>Rooms not found.</b> Please check information in form above');?>
+        <?= \Yii::t('frontend', '<b>No rooms available for this period.</b> Please, select other days.');?>
     </div>
     <div class="row result-item well" ng-repeat="r in results">
         <div class="col-md-3">
@@ -285,7 +293,7 @@ $this->registerJs($js);
             <br/>
             <br/>
 
-            <div class="btn btn-success" ng-click="goBooking(r)"><?= Yii::t('frontend', 'Booking') ?></div>
+            <div class="btn btn-success" ng-disabled="window.BOOKING_AVAILIBLE === false" ng-click="goBooking(r)"><?= Yii::t('frontend', 'Booking') ?></div>
         </div>
     </div>
 </div>

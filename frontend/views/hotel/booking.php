@@ -61,6 +61,53 @@ window.inputBlur = function(e) {
 }
 ");
 
+// опции бронирования
+$this->registerJs("
+    $('.orderOptions > div input[type=checkbox]').on('change', function(){
+        if ($(this).prop('disabled')) return;
+        var parent = $(this).parent().parent().parent().parent();
+        var chechbox = this;
+        if ($(this).is(':checked')) {
+            var disable = {};
+            $.each($(this).data('disable').split(' '), function(i, el){
+                disable[el] = true;
+            });
+            parent.find('input[type=checkbox]').each(function(index, el){
+                if (chechbox == el) return;
+                $.each($(el).data('disable').split(' '), function(i, elem){
+                    if ($(el).is('checked')) {
+                        disable[elem] = disable[elem] && true;
+                    }
+                });
+            });
+            $.each(disable, function(i, el){
+                if (el) {
+                    $(i).prop('disabled', true);
+                    $(i).prop('checked', false);
+                }
+            });
+        } else {
+            var enable = {};
+            $.each($(this).data('disable').split(' '), function(i, el){
+                enable[el] = true;
+            });
+            parent.find('input[type=checkbox]').each(function(index, el){
+                if (chechbox == el) return;
+                $.each($(el).data('disable').split(' '), function(i, elem){
+                    if ($(el).is(':checked')) {
+                        enable[elem] = enable[elem] && false;
+                    }
+                });
+            });
+            $.each(enable, function(i, el){
+                if (el) {
+                    $(i).prop('disabled', false);
+                }
+            });
+        }
+    });
+");
+
 $this->title = \Yii::t('frontend', 'Room booking');
 ?>
 
@@ -315,16 +362,58 @@ $this->title = \Yii::t('frontend', 'Room booking');
 
 <div class="row">
 	<div class="col-md-12">
-		<?= \yii\helpers\Html::submitButton(\Yii::t('frontend', 'Go to payment'), [
-			'class' => 'btn btn-primary btn-lg pull-right'
-		]) ?>
-		<?php if ($hotel->allow_partial_pay)
-			echo $form->field($orderForm, 'partial_pay', ['options' => ['class' => 'pull-right partial-pay']])
-			->checkbox()
-			->label(\Yii::t('frontend', 'I want to pay {p}% ({s}) now and the rest at check-in.', [
-				'p' => $orderForm->partial_pay_percent,
-				's' => number_format($orderForm->sum * (1 - $orderForm->partial_pay_percent / 100), 2, '.', ' ') . '&nbsp;' . $hotel->currency->code
-			])) ?>
+        <table class="pull-right">
+            <tbody>
+                <tr>
+                    <td class="orderOptions">
+                        <?php // частичная оплата при подключенной яндекскассе ?>
+                        <?php if ($hotel->allow_partial_pay &&
+                            ((trim($hotel->partner->shopPassword) != ''
+                                || trim($hotel->partner->shopId) != ''
+                                || trim($hotel->partner->scid) != '' )))
+                            echo $form->field($orderForm, 'partial_pay', [
+                                'enableClientValidation' => false])
+                                ->checkbox([
+                                    'class' => 'partial-pay',
+                                    'data-uncheck' => '.checkin_fullpay',
+                                    'data-disable' => '.checkin_fullpay',
+                                ])
+                                ->label(\Yii::t('frontend', 'I want to pay {p}% ({s}) now and the rest at check-in.', [
+                                    'p' => $orderForm->partial_pay_percent,
+                                    's' => number_format($orderForm->sum * (1 - $orderForm->partial_pay_percent / 100), 2, '.', ' ') . '&nbsp;' . $hotel->currency->code
+                                ])) ?>
+
+                        <?php // возможность оплаты при ?>
+                        <?php if ($hotel->partner->allow_payment_via_bank_transfer): ?>
+                            <?= $form->field($orderForm, 'payment_via_bank_transfer',[
+                                'enableClientValidation' => false
+                            ])
+                                ->checkbox([
+                                    'class' => 'payment_via_bank_transfer',
+                                    'data-uncheck' => '.checkin_fullpay',
+                                    'data-disable' => '.checkin_fullpay',
+                                ])
+                                ->label(\Yii::t('frontend', 'I want to pay via bank transfer'))?>
+                        <?php endif; ?>
+
+                        <?php // полная оплата при соответствующей отметке ?>
+                        <?php if ($hotel->partner->allow_checkin_fullpay): ?>
+                            <?= $form->field($orderForm, 'checkin_fullpay', [
+                                'enableClientValidation' => false])
+                                ->checkbox([
+                                    'class' => 'checkin_fullpay',
+                                    'data-uncheck' => '.payment_via_bank_transfer .partial-pay',
+                                    'data-disable' => '.payment_via_bank_transfer .partial-pay',
+                                ])
+                                ->label(\Yii::t('frontend', 'I want to make full payment at check in')) ?>
+                        <?php endif; ?>
+                    </td>
+                    <td><?= \yii\helpers\Html::submitButton(\Yii::t('frontend', 'Next'), [
+                            'class' => 'btn btn-primary btn-lg '
+                        ]) ?></td>
+                </tr>
+            </tbody>
+        </table>
 	</div>
 </div>
 

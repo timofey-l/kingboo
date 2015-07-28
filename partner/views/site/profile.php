@@ -69,6 +69,21 @@ $this->registerJs("$('input[type=checkbox]').iCheck({
             </div>
         </div>
     </div>
+    <div class="col-sm-12 col-md-6">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title"><?= \Yii::t('partner_profile', 'Other') ?></h3>
+            </div>
+            <div class="box-body">
+                <?= $form->field($user, 'allow_checkin_fullpay')->checkbox([
+                    'class' => 'iCheck',
+                ])?>
+                <?= $form->field($user, 'allow_payment_via_bank_transfer')->checkbox([
+                    'class' => 'iCheck',
+                ])?>
+            </div>
+        </div>
+    </div>
 </div>
 
 

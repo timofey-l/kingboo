@@ -10,8 +10,10 @@ use common\models\OrderItem;
 use common\models\Room;
 use DateTime;
 use frontend\models\BookingParams;
+use partner\models\PartnerUser;
 use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\web\Response;
 
 
@@ -36,6 +38,24 @@ class HotelController extends \yii\web\Controller
 //		return parent::beforeAction($action);
 //	}
 
+    /**
+     * При оформлении заказа и выборе полной оплаты на месте
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionBookingComplete($id) {
+        $order = Order::findOne(['payment_url' => $id]);
+
+        if ($order === null || $order->status !== Order::OS_CHECKIN_FULLPAY) {
+            throw new NotFoundHttpException(\Yii::t('frontend', 'Page was not found!'));
+        }
+
+        return $this->render('booking-complete', [
+            'order' => $order,
+        ]);
+    }
+
 	/**
 	 * Страница оформления заказа
 	 * (переход со страницы поиска)
@@ -46,7 +66,8 @@ class HotelController extends \yii\web\Controller
 	 */
 	public function actionBooking()
 	{
-		$orderForm = new Order();
+        /** @var Order $orderForm */
+        $orderForm = new Order();
 		if ($orderForm->load(\Yii::$app->request->post())) {
 
 			$orderItem = new OrderItem();
@@ -86,6 +107,11 @@ class HotelController extends \yii\web\Controller
 				$orderItem->order_id = $orderForm->id;
 				$orderItem->sum = $orderForm->sum;
 				if ($orderItem->save()) {
+                    if ($orderForm->checkin_fullpay == 1 && $orderForm->hotel->partner->allow_checkin_fullpay) {
+                        $orderForm->status = Order::OS_CHECKIN_FULLPAY;
+                        $orderForm->save(false);
+                        return $this->redirect(['hotel/booking-complete', 'id' => $orderForm->payment_url]);
+                    }
 					return $this->redirect(['payment/show', 'id' => $orderForm->payment_url]);
 				}
 			}
@@ -107,8 +133,11 @@ class HotelController extends \yii\web\Controller
 			/** @var Hotel $hotel */
 			$hotel = Hotel::findOne($bookingParams->hotelId);
 
+            if (!$this->checkBookingPossibility($hotel)) {
+                throw new ForbiddenHttpException(\Yii::t('frontend', 'Booking is not availible!'));
+            }
 
-			$orderForm->dateFrom = $bookingParams->dateFrom;
+            $orderForm->dateFrom = $bookingParams->dateFrom;
 			$orderForm->dateTo = $bookingParams->dateTo;
 			$orderForm->sum = BookingHelper::calcRoomPrice($bookingParams->toArray());
 			$orderForm->partial_pay_percent = $hotel->partial_pay_percent;
@@ -142,6 +171,16 @@ class HotelController extends \yii\web\Controller
 		}
 	}
 
+    public function checkBookingPossibility($hotel)
+    {
+        /** @var PartnerUser $partner */
+        $partner = $hotel->partner;
+        if ($partner)
+            return !((trim($partner->shopPassword) == ''
+                || trim($partner->shopId) == ''
+                || trim($partner->scid) == '') && (!$partner->allow_checkin_fullpay && !$partner->allow_payment_via_bank_transfer));
+    }
+
 	/**
 	 * Страница поиска, куда клиенты приходят с виджета
 	 *
@@ -151,15 +190,11 @@ class HotelController extends \yii\web\Controller
 	 */
 	public function actionIndex($name = false)
 	{
-        if ($name === false && \Yii::$app->request->hostInfo == 'http://abc.itdesign.ru/') {
-            $name = 'loceanica';
+        $model = Hotel::findOne(['name' => $name]);
+
+        if (!$this->checkBookingPossibility($model)) {
+            \Yii::$app->session->setFlash('danger', \Yii::t('frontend', 'Booking is not availible!'));
         }
-        
-        if ($name === false && \Yii::$app->request->hostInfo == 'http://abc2.itdesign.ru/') {
-            $name = 'loceanica';
-        }
-	
-		$model = Hotel::findOne(['name' => $name]);
 
 		if (is_null($model)) {
 			throw new \yii\web\HttpException(404, 'The requested hotel does not exist.');

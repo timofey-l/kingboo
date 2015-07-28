@@ -42,6 +42,9 @@
 
         // переход к бронированию
         $scope.goBooking = function(r) {
+            if (!window.BOOKING_AVAILIBLE) {
+                return false;
+            }
             var data = _.clone($scope.search);
             data.roomId = r.id;
             var l = '';

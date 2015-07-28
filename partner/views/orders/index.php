@@ -146,6 +146,10 @@ updateGroup();
 							$statusClass .= ' label-success';
 							$statusText = \Yii::t('partner_orders', 'Payed');
 							break;
+						case \common\models\Order::OS_CHECKIN_FULLPAY:
+							$statusClass .= ' label-success';
+							$statusText = \Yii::t('partner_orders', 'Full pay at check in');
+							break;
 					}?>
 				<tr class="<?= !$order->viewed ? "new_order":"" ?> id<?= $order->id ?>" data-orderid="<?= $order->id ?>">
                     <td>

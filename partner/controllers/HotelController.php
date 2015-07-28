@@ -65,6 +65,7 @@ class HotelController extends Controller
      */
     public function actionView($id)
     {
+        SiteController::checkYandexKassa();
         $hotel = $this->findModel($id);
         return $this->render('view', [
             'model' => $hotel,

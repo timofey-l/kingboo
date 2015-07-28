@@ -17,6 +17,9 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Enable full payment at check in option' => '',
+    'Enable payment via bank transfer' => '',
+    'Other' => '',
     'Apply' => 'Применить',
     'Cancel' => 'Отмена',
     'Password' => 'Пароль',

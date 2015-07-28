@@ -70,6 +70,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
+        self::checkYandexKassa();
         $partner = PartnerUser::findOne(\Yii::$app->user->id);
         $hotels = $partner->hotels;
         $orders = Order::find()
@@ -230,11 +231,15 @@ class SiteController extends Controller
         $model->scid = $user->scid;
         $model->shopId = $user->shopId;
         $model->shopPassword = $user->shopPassword;
+        $model->allow_checkin_fullpay = $user->allow_checkin_fullpay;
+        $model->allow_payment_via_bank_transfer = $user->allow_payment_via_bank_transfer;
 
         if ($model->load(\Yii::$app->request->post())) {
             $user->scid = $model->scid;
             $user->shopId = $model->shopId;
             $user->shopPassword = $model->shopPassword;
+            $user->allow_checkin_fullpay = $model->allow_checkin_fullpay;
+            $user->allow_payment_via_bank_transfer = $model->allow_payment_via_bank_transfer;
 
             // password
             if ($model->password !== '') {
@@ -300,5 +305,21 @@ class SiteController extends Controller
             \Yii::$app->session->setFlash('warning', \Yii::t('partner_login', 'User not found!'));
         }
         return $this->redirect('login');
+    }
+
+    public static function checkYandexKassa() {
+        /** @var PartnerUser $partner */
+        $partner = PartnerUser::findOne(\Yii::$app->user->id);
+        if (trim($partner->shopPassword) == ''
+            || trim($partner->shopId) == ''
+            || trim($partner->scid) == '' ) {
+            \Yii::$app->session->setFlash('warning', \Yii::t('partner','<b>Yandex.Money is not configured.</b><br>Your customers can not make online payments.<br>For integration with Yandex.Money, please, enter the required settings on the <a href="/profile">Profile page</a>.'));
+
+            // если еще и не включена "Позволить полную оплату при заселении"
+            // сообщаем о неработоспособности системы бронирования
+            if (!$partner->allow_checkin_fullpay && !$partner->allow_payment_via_bank_transfer) {
+                \Yii::$app->session->setFlash('danger', \Yii::t('partner','<b>Your clients can not make reservation!</b><br>The full payment at check in option is not activated, and  integration with Yandex.Money is not configured.'));
+            }
+        }
     }
 }

@@ -5,6 +5,17 @@ use common\models\PayMethod;
 use common\models\User;
 use Yii;
 
+/**
+ * Class PartnerUser
+ * @package partner\models
+ *
+ * @property string $shopId
+ * @property string $scid
+ * @property string $shopPassword
+ *
+ * @property integer $allow_checkin_full_pay
+ * @property integer $allow_payment_via_bank_transfer
+ */
 class PartnerUser extends User
 {
 

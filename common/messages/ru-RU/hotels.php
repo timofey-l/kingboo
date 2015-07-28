@@ -17,7 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Custom CSS' => 'Стили CSS',
+    'Contact email' => 'Контактный Email',
+    'Contact phone' => 'Контактный телефон',
     'Address' => 'Адрес',
     'Allow partial pay' => 'Позволить частичную оплату',
     'Are you sure you want to delete this item?' => 'Вы действительно хотите удалить этот элемент?',
@@ -26,6 +27,7 @@ return [
     'Create' => 'Создать',
     'Create {modelClass}' => 'Создать {modelClass}',
     'Currency' => 'Валюта',
+    'Custom CSS' => 'Стили CSS',
     'Delete' => 'Удалить',
     'Description' => 'Описание',
     'Description En' => 'Описание En',

@@ -17,6 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Full pay at check in' => 'Полная оплата при заселении',
     '(partial pay {percents}%)' => '(частичная оплата {percents}%)',
     'Adults' => 'Взрослые',
     'Adults: {n}' => 'Взрослых: {n}',

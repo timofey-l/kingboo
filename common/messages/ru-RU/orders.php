@@ -39,6 +39,8 @@ return [
     'Shop Sum Currency Paycash' => '@@@@',
     'Address' => 'Обращение',
     'Adults' => 'Взрослых',
+    'Allow full payment at checkin' => 'Разрешить оплату при заселении',
+    'Allow payment via bank transfer' => 'Разрешить оплату банковским переводом',
     'Children' => 'Дети 7-12 лет',
     'Created At' => 'Дата создания',
     'Date From' => 'Дата заезда',
@@ -58,6 +60,7 @@ return [
     'Sum' => 'Сумма',
     'Surname' => 'Фамилия',
     'cancelled' => 'аннулирован',
+    'checkin full pay' => 'полная оплата при заезде',
     'payed' => 'оплачен',
     'waiting for pay' => 'ожидает оплаты',
 ];
