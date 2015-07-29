@@ -33,6 +33,7 @@ use yii\helpers\ArrayHelper;
  * @property boolean $viewed
  * @property string $payment_url
  * @property string $partner_number
+ * @property string $additional_info
  * @property integer $checkin_fullpay
  * @property integer $payment_via_bank_transfer
  */
@@ -106,7 +107,8 @@ class Order extends ActiveRecord
             [['partner_number'], 'string'],
             [['number'], 'unique'],
             [['lang'], 'string', 'max' => 3],
-            [['contact_email', 'contact_phone', 'contact_name', 'contact_surname'], 'string', 'max' => 255]
+            [['contact_email', 'contact_phone', 'contact_name', 'contact_surname'], 'string', 'max' => 255],
+            ['additional_info', 'string'],
         ];
     }
 
@@ -135,6 +137,7 @@ class Order extends ActiveRecord
             'code' => \Yii::t('orders', 'Promo code'),
             'checkin_fullpay' => \Yii::t('orders', 'Full payment at checkin'),
             'payment_via_bank_transfer' => \Yii::t('orders', 'Payment via bank transfer'),
+            'additional_info' => \Yii::t('orders', 'Additional information'),
         ];
     }
 

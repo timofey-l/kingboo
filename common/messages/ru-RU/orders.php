@@ -17,6 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Additional information' => 'Дополнительная информация',
     'Post Params' => '',
     'Room ID' => '',
     'Server Params' => '',

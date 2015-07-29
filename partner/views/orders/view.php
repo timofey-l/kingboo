@@ -90,13 +90,17 @@ $('#printButton').click(function(){
 
 				<strong><?= \Yii::t('partner_orders','Phone') ?>:</strong>
 				<br/>
-				<?= $order->contact_phone ?>
+				<?= Html::encode($order->contact_phone) ?>
 				<br/>
 
 				<strong><?= \Yii::t('partner_orders','Email') ?>:</strong>
 				<br/>
-				<?= $order->contact_email ?>
-
+				<?= Html::encode($order->contact_email) ?>
+                <br>
+                <br>
+                <strong><?= \Yii::t('orders', 'Additional information', []) ?>:</strong>
+                <br>
+                <?= Html::encode($order->additional_info) ?>
 			</address>
 		</div><!-- /.col -->
 		<div class="col-sm-4 invoice-col">

@@ -253,7 +253,15 @@ $this->title = \Yii::t('frontend', 'Room booking');
                             ]) ?>
 						</div>
 					</div>
-				</div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <?= $form->field($orderForm, 'additional_info')->textarea([
+                                'rows' => 3,
+                            ]) ?>
+                        </div>
+                    </div>
+
+                </div>
 			</div>
 		</div>
 	</div>
