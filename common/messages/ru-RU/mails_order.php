@@ -17,9 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Status of order #{n} was changed to "{new_status}".' => 'Статус заказа №{n} был изменен на "{new_status}".',
-    'Status of your order #{n} was changed to "{new_status}".' => 'Статус Вашего заказа №{n} был изменен на "{new_status}".',
-    'Your order\'s #{n} status was changed' => 'Статус Вашего заказа №{n} был изменен.',
+    'The rooms are booked now. On arrival you will need to pay the full cost of the order - {sum}.' => 'Номера забронированы. При заселении Вам необходимо будет выполнить',
     'Adults: <b>{n}</b>' => 'Взрослых: <b>{n}</b>',
     'Adults: {n}' => 'Взрослых: {n}',
     'Best regards, team of king-boo.com' => 'C уважением, команда king-boo.com',
@@ -30,9 +28,11 @@ return [
     'Children 7-12 y.o.: <b>{n}</b>' => 'Детей 7-12 лет: <b>{n}</b>',
     'Children 7-12 y.o.: {n}' => 'Дети 7-12 лет: {n}',
     'Contact information' => 'Контактная информация',
+    'Dear, {name}!' => 'Уважаемый(ая), {name}!',
     'Hello!' => 'Здравствуйте!',
     'Hello, {name}!' => 'Здравствуйте, {name}!',
     'Hotel' => 'Отель',
+    'Hotel information' => 'Информация об отеле',
     'New order on site king-boo.com' => 'Новый заказ на сайте king-boo.com',
     'Nights: {n}' => 'Ночей: {n}',
     'Order #{n} has been made on site <a href="http://king-boo.com">king-boo.com</a>.' => 'Заказ №{n} был совершен на сайте <a href="http://king-boo.com">king-boo.com</a>.',
@@ -45,6 +45,8 @@ return [
     'Pay sum' => 'Сумма оплаты',
     'Rooms' => 'Номера',
     'Status' => 'Статус',
+    'Status of order #{n} was changed to "{new_status}".' => 'Статус заказа №{n} был изменен на "{new_status}".',
+    'Status of your order #{n} was changed to "{new_status}".' => 'Статус Вашего заказа №{n} был изменен на "{new_status}".',
     'Sum' => 'Сумма',
     'The rooms are now booked, but the booking will be canceled if payment is not received within 24 hours.' => 'Номера сейчас забронированы, но бронь будет аннулирована, если оплата не поступит в течение 24 часов.',
     'To make a payment, please click the link below <br/><a href="{url}">{url}</a>' => 'Для оплаты, пожалуйста, перейдите по ссылке ниже <br/><a href="{url}">{url}</a>',
@@ -53,5 +55,6 @@ return [
 {url}',
     'You can open order to manage it by <a href="{url}">clicking here</a>.' => 'Вы можете перейти к управлению заказом <a href="{url}">нажав на ссылку</a>.',
     'You made a order on the site <a href="http://king-boo.com">king-boo.com</a>.' => 'Вы совершили заказ на сайте <a href="http://king-boo.com">king-boo.com</a>.',
+    'Your order\'s #{n} status was changed' => 'Статус Вашего заказа №{n} был изменен.',
     'd/m/Y' => 'd.m.Y',
 ];

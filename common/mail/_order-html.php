@@ -1,12 +1,17 @@
 <?php
 
 /* @var $this yii\web\View */
+use common\models\Hotel;
+
 /* @var $order common\models\Order */
 
 //$lang = $order->lang;
 
 /** @var \common\models\Currency $currency */
 $currency = $order->hotel->currency;
+
+/** @var Hotel $hotel */
+$hotel = $order->hotel;
 
 $td = "border: 0px solid #eeeeee; padding: 5px;";
 
@@ -17,6 +22,18 @@ $td_value = "vertical-align: top; text-align:left; font-weight: bold; border-lef
 ?>
 
 <table style="border-collapse: collapse;">
+    <tr>
+        <td style="<?=$td . $td_label ?>">
+            <?= \Yii::t('mails_order', 'Hotel information') ?>
+        </td>
+        <td colspan="4" style="<?= $td . $td_value ?>">
+            <?= $hotel->address ?>
+            <br>
+            <?= $hotel->contact_email ?>
+            <br>
+            <?= $hotel->contact_phone ?>
+        </td>
+    </tr>
     <tr>
         <td style="<?= $td . $td_label ?>"
             style="<?= $td ?>"><?= \Yii::t('mails_order', 'Check-in date', [], $local) ?></td>

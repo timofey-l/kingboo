@@ -11,7 +11,7 @@ if (!isset($lang)) {
 }
 ?>
 <div>
-    <p><?= \Yii::t('mails_order', 'Hello, {name}!', ['name' => $order->contact_name . ' ' . $order->contact_surname], $local) ?></p>
+    <p><?= \Yii::t('mails_order', 'Dear, {name}!', ['name' => $order->contact_name . ' ' . $order->contact_surname], $local) ?></p>
 
     <p><?= \Yii::t('mails_order', 'Status of your order #{n} was changed to "{new_status}".', ['new_status' => \common\models\Order::getOrderStatusTitle($order->status), 'n' => $order->number], $local) ?></p>
 

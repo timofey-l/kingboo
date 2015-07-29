@@ -217,6 +217,7 @@ class Order extends ActiveRecord
 
     public function orderStatusChanged($params = [])
     {
+
         // отправляем письмо клиенту
         \Yii::$app->mailer->compose('orderStatusChangedClient-html', [
             'oldStatus' => ArrayHelper::getValue($params, 'status'),

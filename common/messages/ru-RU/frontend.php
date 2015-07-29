@@ -17,8 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'I want to pay via bank transfer' => 'Я хочу оплатить банковским переводом',
-    'Booking is completed' => 'Бронирование завершено',
     '<b>Rooms not found.</b> Please check information in form above' => '@@<b>Номера не найдены.</b> Пожалуйста, проверьте информацию в форме выше@@',
     'Go to payment' => '@@Перейти к оплате@@',
     'Thank you for your payment!' => '@@@@',
@@ -28,6 +26,7 @@ return [
     'Arrival date' => 'Дата заезда',
     'Body' => 'Текст',
     'Booking' => 'Забронировать',
+    'Booking is completed' => 'Бронирование завершено',
     'Booking is not availible!' => 'Бронирование не возможно!',
     'Children' => 'Детей 7-12 лет',
     'Contact information' => 'Контактная информация',
@@ -41,8 +40,10 @@ return [
     'Guest surname' => 'Фамилия гостя',
     'Guests: {n}' => 'Гостей: {n}',
     'I want to make full payment at check in' => 'Я хочу оплатить всю сумму при заселении',
+    'I want to pay via bank transfer' => 'Я хочу оплатить банковским переводом',
     'I want to pay {p}% ({s}) now and the rest at check-in.' => 'Я хочу заплатить {p}% ({s}) сейчас, а оставшуюся часть при заселении',
     'If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.' => 'Если у вас есть деловое предложение или другие вопросы, пожалуйста, заполните следующую форму, чтобы связаться с нами. Спасибо.',
+    'Information for payment via bank transfer' => 'Информация для оплаты через банковский перевод',
     'Kids' => 'Дети 0-6 лет',
     'Main' => 'Главная',
     'Name' => 'Имя',
