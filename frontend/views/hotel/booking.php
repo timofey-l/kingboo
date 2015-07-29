@@ -388,7 +388,7 @@ $this->title = \Yii::t('frontend', 'Room booking');
                                 ])
                                 ->label(\Yii::t('frontend', 'I want to pay {p}% ({s}) now and the rest at check-in.', [
                                     'p' => $orderForm->partial_pay_percent,
-                                    's' => number_format($orderForm->sum * (1 - $orderForm->partial_pay_percent / 100), 2, '.', ' ') . '&nbsp;' . $hotel->currency->code
+                                    's' => number_format($orderForm->sum * ( $orderForm->partial_pay_percent / 100), 2, '.', ' ') . '&nbsp;' . $hotel->currency->code
                                 ])) ?>
 
                         <?php // возможность оплаты при ?>

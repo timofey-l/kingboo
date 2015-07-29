@@ -97,7 +97,7 @@ class HotelController extends \yii\web\Controller
 
 			if ($orderForm->partial_pay && $hotel->allow_partial_pay) {
 				$orderForm->partial_pay_percent = $hotel->partial_pay_percent;
-				$orderForm->pay_sum = (float)(round($orderForm->sum * (1 - $orderForm->partial_pay_percent / 100) * 100) / 100);
+				$orderForm->pay_sum = (float)(round($orderForm->sum * ($orderForm->partial_pay_percent / 100) * 100) / 100);
 			} else {
 				$orderForm->pay_sum = $orderForm->sum;
 				$orderForm->partial_pay_percent = 100;
