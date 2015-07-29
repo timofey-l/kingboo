@@ -1,5 +1,7 @@
 <?php
 
+use common\models\Order;
+use \DateTime;
 use \yii\helpers\Html;
 use \common\components\ListAddressType;
 /* @var $this yii\web\View */
@@ -34,6 +36,25 @@ $('#printButton').click(function(){
         '<i class="fa fa-eye"></i> ' . \Yii::t('partner_orders', 'Set as viewed'),
         ['viewed', 'id' => $order->id],
         ['class' => 'btn btn-warning']) ?>
+<?php endif; ?>
+<?php if($order->status != Order::OS_PAYED && $order->status !== Order::OS_CANCELED && $order->payment_via_bank_transfer): ?>
+	<?= \yii\helpers\Html::a(
+		'<i class="fa fa-check"></i> ' . \Yii::t('partner_orders', 'Set as payed'),
+		['payed', 'id' => $order->id],
+		['class' => 'btn btn-success']) ?>
+<?php endif; ?>
+
+<?php if($order->status != Order::OS_CANCELED && (new DateTime($order->dateFrom))->diff(new DateTime())->invert): ?>
+    <?= \yii\helpers\Html::a(
+        '<i class="fa fa-trash"></i> ' . \Yii::t('partner_orders', 'Cancel order'),
+        ['cancel', 'id' => $order->id],
+        [
+            'class' => 'btn btn-danger',
+            'data'  => [
+                'confirm' => Yii::t('partner_orders', 'Are you sure you want to cancel this order?'),
+                'method'  => 'post',
+            ],
+        ]) ?>
 <?php endif; ?>
 
 <style>
@@ -119,6 +140,9 @@ $('#printButton').click(function(){
 			<strong><?= \Yii::t('partner_orders','Pay status') ?></strong>:
 			<br/>
 			<?= \common\models\Order::getOrderStatusTitle($order->status) ?>
+			<?php if($order->payment_via_bank_transfer): ?>
+                <br>(<?= \Yii::t('partner_orders', 'bank transfer', []) ?>)
+			<?php endif; ?>
 
 		</div><!-- /.col -->
 	</div>

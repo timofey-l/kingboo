@@ -17,7 +17,10 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Full pay at check in' => 'Полная оплата при заселении',
+    'Are you sure you want to cancel this order?' => 'Вы действительно хотите аннулировать тот заказ?',
+    'Cancel order' => 'Отменить заказ',
+    'Set as payed' => 'Отметить как оплачен',
+    'bank transfer' => 'банковский перевод',
     '(partial pay {percents}%)' => '(частичная оплата {percents}%)',
     'Adults' => 'Взрослые',
     'Adults: {n}' => 'Взрослых: {n}',
@@ -31,6 +34,7 @@ return [
     'Date' => 'Дата',
     'Dates range' => 'Диапазон дат',
     'Email' => 'Email',
+    'Full pay at check in' => 'Полная оплата при заселении',
     'H:i:s' => 'H:i:s',
     'Hotel' => 'Отель',
     'Kids' => 'Дети 0-6',
