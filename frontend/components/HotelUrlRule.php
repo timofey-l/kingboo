@@ -48,6 +48,8 @@ class HotelUrlRule extends UrlRule
                                 'id' => $m_path['id'],
                             ];
                             return ['payment/show', $params];
+                        } elseif (preg_match('%payment/(?<action>\w+)$%', $pathInfo, $m_path)) {
+                            return ['payment/'.$m_path['action'], []];
                         }
                         return [$pathInfo, $request->get()];
                     }
