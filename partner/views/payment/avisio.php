@@ -1,2 +1,2 @@
 <?= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" ?>
-<checkOrderResponse performedDatetime="<?= date(\DateTime::W3C) ?>" code="<?= $code ?>" invoiceId="<?= $post['invoiceId'] ?>" shopId="<?= $post['shopId'] ?>" message="<?= $message ?>" />
+<paymentAvisoResponse performedDatetime="<?= date(\DateTime::W3C) ?>" code="<?= $code ?>" invoiceId="<?= $post['invoiceId'] ?>" shopId="<?= $post['shopId'] ?>" message="<?= $message ?>" />
