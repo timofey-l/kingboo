@@ -88,8 +88,8 @@ class PaymentController extends \yii\web\Controller
 	}
 
 	public function actionFail() {
-		$orderNumber = \Yii::$app->request->post('orderNumber');
-		$invoiceId = \Yii::$app->request->post('invoiceId');
+		$orderNumber = \Yii::$app->request->post('ordernumber');
+		$invoiceId = \Yii::$app->request->post('invoiceid');
 		if (!$orderNumber || !$invoiceId) {
 			throw new BadRequestHttpException('Wrong parameters');
 		}
