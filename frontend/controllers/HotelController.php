@@ -107,6 +107,10 @@ class HotelController extends \yii\web\Controller
 				$orderItem->order_id = $orderForm->id;
 				$orderItem->sum = $orderForm->sum;
 				if ($orderItem->save()) {
+					// посылаем письма только после добавления номра, иначе его в письмах не будет
+					$orderForm->sendEmailToClient();
+					$orderForm->sendEmailToPartner();
+
                     if ($orderForm->checkin_fullpay == 1 && $orderForm->hotel->partner->allow_checkin_fullpay) {
                         $orderForm->status = Order::OS_CHECKIN_FULLPAY;
                         $orderForm->save(false);

@@ -182,8 +182,8 @@ class Order extends ActiveRecord
 
     public function orderCreated()
     {
-        $this->sendEmailToClient();
-        $this->sendEmailToPartner();
+//        $this->sendEmailToClient();
+//        $this->sendEmailToPartner();
     }
 
     public function sendEmailToClient()
