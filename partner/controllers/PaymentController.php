@@ -122,6 +122,7 @@ class PaymentController extends \yii\web\Controller
         $pay->order_number = $req->post('orderNumber');
         $pay->paymentType = YandexHelper::getIdByCode($req->post('paymentType'));
         $pay->orderSumAmount = $req->post('orderSumAmount');
+        $pay->paymentDatetime = '';
 
         $pay->checked = 1;
         $pay->payed = 0;

@@ -9,20 +9,22 @@ use yii\web\NotFoundHttpException;
 
 class PaymentController extends \yii\web\Controller
 {
-    public function actionShow($id)
-    {
-	    $order = Order::findOne(['payment_url' => $id]);
+	var $enableCsrfValidation = false;
 
-	    if ($order === null || $order->status !== Order::OS_WAITING_PAY) {
-		    throw new NotFoundHttpException(\Yii::t('frontend', 'Page was not found!'));
-	    }
+	public function actionShow($id)
+	{
+		$order = Order::findOne(['payment_url' => $id]);
 
-        return $this->render('show', [
-	        'order' => $order,
+		if ($order === null || $order->status !== Order::OS_WAITING_PAY) {
+			throw new NotFoundHttpException(\Yii::t('frontend', 'Page was not found!'));
+		}
+
+		return $this->render('show', [
+			'order' => $order,
 			'embedded'   => \Yii::$app->request->get('embedded', 0),
 			'no_desc'   => \Yii::$app->request->get('no_desc', 0),
-        ]);
-    }
+		]);
+	}
 
 	/**
 	 * Получение формы для оплаты, что бы перейти по ней с браузера пользователя
@@ -67,8 +69,8 @@ class PaymentController extends \yii\web\Controller
 				'paymentType'    => $pay_type,
 				'partner'        => $partner,
 				'order'          => $order,
-                'shopFailURL'    => 'https://king-boo.com/payment/fail',
-                'shopSuccessURL' => 'https://king-boo.com/payment/success',
+				'shopFailURL'    => 'https://'.$order->hotel->name.'.king-boo.com/payment/fail',
+				'shopSuccessURL' => 'https://'.$order->hotel->name.'.king-boo.com/payment/success',
 
 			]));
 		} else {
@@ -76,22 +78,27 @@ class PaymentController extends \yii\web\Controller
 		}
 	}
 
-    public function actionSuccess($orderNumber, $invoiceId) {
-    	$order = Order::findOne(['number' => $orderNumber]);
-    	$pay = Pay::findOne(['invoiceId' => $invoiceId]);
-        return $this->render('success', [
-            'pay' =>  $pay,
-            'order' => $order,
-        ]);
-    }
+	public function actionSuccess($orderNumber, $invoiceId) {
+		$order = Order::findOne(['number' => $orderNumber]);
+		$pay = Pay::findOne(['invoiceId' => $invoiceId]);
+		return $this->render('success', [
+			'pay' =>  $pay,
+			'order' => $order,
+		]);
+	}
 
-    public function actionFail($orderNumber, $invoiceId) {
-    	$order = Order::findOne(['number' => $orderNumber]);
-    	$pay = Pay::findOne(['invoiceId' => $invoiceId]);
-        return $this->render('fail', [
-            'pay' => $pay,
-            'order' => $order,
-        ]);
-    }
+	public function actionFail() {
+		$orderNumber = \Yii::$app->request->post('orderNumber');
+		$invoiceId = \Yii::$app->request->post('invoiceId');
+		if (!$orderNumber || !$invoiceId) {
+			throw new BadRequestHttpException('Wrong parameters');
+		}
+		$order = Order::findOne(['number' => $orderNumber]);
+		$pay = Pay::findOne(['invoiceId' => $invoiceId]);
+		return $this->render('fail', [
+			'pay' => $pay,
+			'order' => $order,
+		]);
+	}
 
 }
