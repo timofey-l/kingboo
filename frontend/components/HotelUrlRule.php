@@ -33,11 +33,11 @@ class HotelUrlRule extends UrlRule
         $hostInfo = $request->getHostInfo();
         $pathInfo = $request->pathInfo;
 
-        $domain = substr($request->hostInfo, 7);
+        $domain = substr($request->hostInfo, 8);
 
         // пробуем определить частичный URL
         if ($domain != \Yii::$app->params['mainDomain'])
-            if (preg_match('%^(?<protocol>https?)://(?<name>[^.]+)\.' . \Yii::$app->params['mainDomain'] . '$%', $hostInfo, $m)) {
+            if (preg_match('%^(?<protocol>https?)://(?<name>[^.]+)\.' . \Yii::$app->params['hotelsDomain'] . '$%', $hostInfo, $m)) {
                 $hotel = Hotel::find()->where(['name' => $m['name']])->one();
                 if ($hotel) {
 
