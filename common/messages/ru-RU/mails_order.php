@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'The rooms are booked now. On arrival you will need to pay the full cost of the order - {sum}.' => 'Номера забронированы. При заселении Вам необходимо будет выполнить',
+    'Booking is successfully complete. You need to make the full payment at check in  - {sum}.' => 'Номера забронированы. При заселении Вам необходимо будет оплатить полную стоимость заказа - {sum}',
     'Adults: <b>{n}</b>' => 'Взрослых: <b>{n}</b>',
     'Adults: {n}' => 'Взрослых: {n}',
     'Best regards, team of king-boo.com' => 'C уважением, команда king-boo.com',

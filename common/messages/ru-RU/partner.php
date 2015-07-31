@@ -18,6 +18,6 @@
  */
 return [
     '<b>Yandex.Money is not configured.</b><br>Your customers can not make online payments.<br>For integration with Yandex.Money, please, enter the required settings on the <a href="/profile">Profile page</a>.' => '<b>Яндекс.Касса не настроена.</b><br>Ваши клиенты не смогут оплатить заказы онлайн.<br>Для интеграции с Яндекс.Кассой введите необходимые параметры на странице <a href="/profile">Профиля</a>',
-    '<b>Your clients can not make reservation!</b><br>The full payment at check in option is not activated, and  integration with Yandex.Money is not configured.' => '<b>Ваши клиенты не могут выполнять бронирование!</b><br>Отключена возможность полной оплаты при заселении, возможность оплаты банковским переводом, а так же не настроена интеграция с Яндекс.Кассой.<br>Включить необходимые опции можно в <a href="/profile">Профиле</a>',
+    '<b>Your clients can not make reservation!</b><br>Payment at check in and payment via bank transfer are not active, and integration with Yandex.Money is not configured.<br>You can activate the required options in <a href="/profile">Profile</a>' => '<b>Ваши клиенты не могут выполнять бронирование!</b><br>Отключена возможность полной оплаты при заселении, возможность оплаты банковским переводом, а так же не настроена интеграция с Яндекс.Кассой.<br>Включить необходимые опции можно в <a href="/profile">Профиле</a>',
     'dd/mm/yyyy' => 'dd.mm.yyyy',
 ];

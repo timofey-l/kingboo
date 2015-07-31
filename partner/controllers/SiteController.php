@@ -318,7 +318,7 @@ class SiteController extends Controller
             // если еще и не включена "Позволить полную оплату при заселении"
             // сообщаем о неработоспособности системы бронирования
             if (!$partner->allow_checkin_fullpay && !$partner->allow_payment_via_bank_transfer) {
-                \Yii::$app->session->setFlash('danger', \Yii::t('partner','<b>Your clients can not make reservation!</b><br>The full payment at check in option is not activated, and  integration with Yandex.Money is not configured.'));
+                \Yii::$app->session->setFlash('danger', \Yii::t('partner','<b>Your clients can not make reservation!</b><br>Payment at check in and payment via bank transfer are not active, and integration with Yandex.Money is not configured.<br>You can activate the required options in <a href="/profile">Profile</a>'));
             }
         }
     }
