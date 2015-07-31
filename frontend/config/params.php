@@ -1,4 +1,4 @@
 <?php
 return [
-    'mainDomain' => 'king-boo.com',
+    'mainDomain' => 'www.king-boo.com',
 ];
