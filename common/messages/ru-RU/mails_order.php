@@ -17,10 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Booking is successfully complete. You need to make the full payment at check in  - {sum}.' => 'Номера забронированы. При заселении Вам необходимо будет оплатить полную стоимость заказа - {sum}',
+    'To make a payment, please open the link below in your browser: 
+{url}' => '@@Для оплаты, пожалуйста, откройте ссылку в вашем браузере:
+{url}@@',
     'Adults: <b>{n}</b>' => 'Взрослых: <b>{n}</b>',
     'Adults: {n}' => 'Взрослых: {n}',
     'Best regards, team of king-boo.com' => 'C уважением, команда king-boo.com',
+    'Booking is successfully complete. You need to make the full payment at check in  - {sum}.' => 'Номера забронированы. При заселении Вам необходимо будет оплатить полную стоимость заказа - {sum}',
     'Check-in date' => 'Дата заезда',
     'Check-out date' => 'Дата выезда',
     'Children 0-6 y.o.: <b>{n}</b>' => 'Детей 0-6 лет: <b>{n}</b>',
@@ -50,9 +53,6 @@ return [
     'Sum' => 'Сумма',
     'The rooms are now booked, but the booking will be canceled if payment is not received within 24 hours.' => 'Номера сейчас забронированы, но бронь будет аннулирована, если оплата не поступит в течение 24 часов.',
     'To make a payment, please click the link below <br/><a href="{url}">{url}</a>' => 'Для оплаты, пожалуйста, перейдите по ссылке ниже <br/><a href="{url}">{url}</a>',
-    'To make a payment, please open the link below in your browser: 
-{url}' => 'Для оплаты, пожалуйста, откройте ссылку в вашем браузере:
-{url}',
     'You can open order to manage it by <a href="{url}">clicking here</a>.' => 'Вы можете перейти к управлению заказом <a href="{url}">нажав на ссылку</a>.',
     'You made a order on the site <a href="http://king-boo.com">king-boo.com</a>.' => 'Вы совершили заказ на сайте <a href="http://king-boo.com">king-boo.com</a>.',
     'Your order\'s #{n} status was changed' => 'Статус Вашего заказа №{n} был изменен.',

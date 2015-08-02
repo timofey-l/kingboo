@@ -42,7 +42,7 @@ if (ArrayHelper::getValue($this->params, 'embedded', 0) == 0) {
     <?php
     if (ArrayHelper::getValue($this->params, 'embedded', 0) == 0) {
         NavBar::begin([
-            'brandLabel' => str_replace(['https://', 'http://'], '', \Yii::$app->request->hostInfo),
+            'brandLabel' => isset($this->params['appName']) ? $this->params['appName'] : str_replace(['https://', 'http://'], '', \Yii::$app->request->hostInfo),
             'brandUrl' => \yii\helpers\Url::to(['site/index']),
             'options' => [
                 'class' => 'navbar-inverse navbar-fixed-top',

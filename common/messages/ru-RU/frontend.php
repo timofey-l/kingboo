@@ -17,6 +17,9 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Address' => 'Адрес',
+    'Phone' => 'Телефон',
+    'To contact the hotel, please fill out the form below. Thank you.' => 'Чтобы связаться с администрацией отеля, пожалуйста, заполните форму ниже. Спасибо.',
     '<b>Rooms not found.</b> Please check information in form above' => '@@<b>Номера не найдены.</b> Пожалуйста, проверьте информацию в форме выше@@',
     'Go to payment' => '@@Перейти к оплате@@',
     'Thank you for your payment!' => '@@@@',

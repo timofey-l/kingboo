@@ -17,5 +17,14 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Congratulations!' => 'Поздравляем!',
+    'Are you sure you want to delete this item?' => '',
+    'Create' => '',
+    'Create Log' => '',
+    'Delete' => '',
+    'Logs' => '',
+    'Reset' => '',
+    'Search' => '',
+    'Update' => '',
+    'Update {modelClass}: ' => '',
+    'Congratulations!' => '@@Поздравляем!@@',
 ];

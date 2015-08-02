@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\components\HotelUrlRule;
 use Yii;
 use \DateTime;
 use common\models\LoginForm;
@@ -20,6 +21,8 @@ use frontend\models\BookingParams;
  */
 class SiteController extends Controller
 {
+    var $_hotel = null;
+
     /**
      * @inheritdoc
      */
@@ -67,52 +70,11 @@ class SiteController extends Controller
         ];
     }
     
-    public function _beforeAction($action) {
+    public function beforeAction($action) {
         parent::beforeAction($action);
-        if (preg_match('@(?<host>https?)://(?<domain>.+)@', \Yii::$app->request->hostInfo, $m)) {
-            if ($m['domain'] == 'abc.itdesign.ru' && $action->id == 'index') {
-                
-                $model = Hotel::findOne(['name' => 'loceanica']);
-    
-                if (is_null($model)) {
-                    throw new \yii\web\HttpException(404, 'The requested hotel does not exist.');
-                }
-                $req = \Yii::$app->request;
-                $dateFrom = new DateTime($req->get('dateFrom', date('Y-m-d')));
-                $dateTo = new DateTime($req->get('dateTo', date('Y-m-d')));
-
-                $now = new DateTime();
-
-                // проверяем, если переданная дата_с меньше сегодняшней, то устанавливаем на сегодня
-                if ($now->diff($dateFrom)->invert) {
-                    $dateFrom = $now;
-                }
-
-                // проверяем дата_по
-                if ($dateFrom->diff($dateTo)->invert) {
-                    $dateTo = clone $dateFrom;
-                    $dateTo->add(new \DateInterval('P7D'));
-                }
-
-                $adults = (int)$req->get('adults', 1);
-                $children = (int)$req->get('children', 0);
-                $kids = (int)$req->get('kids', 0);
-
-                $bookParams = new BookingParams([
-                    'dateFrom' => $dateFrom->format('Y-m-d'),
-                    'dateTo'   => $dateTo->format('Y-m-d'),
-                    'adults'   => in_array($adults, range(1, 10)) ? $adults : 1,
-                    'children' => in_array($children, range(1, 5)) ? $children : 0,
-                    'kids'     => in_array($kids, range(1, 5)) ? $kids : 0,
-                ]);
-
-                return $this->render('@frontend/views/hotel/index', [
-                    'model'      => $model,
-                    'bookParams' => $bookParams,
-                ]);
-            }
+        if (HotelUrlRule::$current !== null) {
+            $this->_hotel = HotelUrlRule::$current;
         }
-        
         return true;
     }
 
@@ -148,16 +110,22 @@ class SiteController extends Controller
     {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
+            $email = Yii::$app->params['adminEmail'];
+            if ($this->_hotel !== null) {
+                $email = $this->_hotel->partner->email;
+            }
+            if ($model->sendEmail($email)) {
                 Yii::$app->session->setFlash('success', \Yii::t('frontend', 'Thank you for contacting us. We will respond to you as soon as possible.'));
             } else {
                 Yii::$app->session->setFlash('error', \Yii::t('frontend', 'There was an error sending email.'));
             }
 
+
             return $this->refresh();
         } else {
             return $this->render('contact', [
                 'model' => $model,
+                'hotel' => $this->_hotel,
             ]);
         }
     }

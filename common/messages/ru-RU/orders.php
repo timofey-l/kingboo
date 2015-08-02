@@ -17,7 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Additional information' => 'Дополнительная информация',
     'Post Params' => '',
     'Room ID' => '',
     'Server Params' => '',
@@ -40,6 +39,7 @@ return [
     'Shop Sum Amount' => '@@@@',
     'Shop Sum Bank Paycash' => '@@@@',
     'Shop Sum Currency Paycash' => '@@@@',
+    'Additional information' => 'Дополнительная информация',
     'Address' => 'Обращение',
     'Adults' => 'Взрослых',
     'Children' => 'Дети 7-12 лет',

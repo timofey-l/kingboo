@@ -9,6 +9,8 @@ class HotelUrlRule extends UrlRule
 {
     public $connectionID = 'db';
 
+    public static $current = null;
+
     public function init()
     {
         if ($this->name === null) {
@@ -40,7 +42,7 @@ class HotelUrlRule extends UrlRule
             if (preg_match('%^(?<protocol>https?)://(?<name>[^.]+)\.' . \Yii::$app->params['hotelsDomain'] . '$%', $hostInfo, $m)) {
                 $hotel = Hotel::find()->where(['name' => $m['name']])->one();
                 if ($hotel) {
-
+                    static::$current = $hotel;
                     if ($pathInfo) {
                         //payment url
                         if (preg_match('%payment/(?<id>[0-9a-zA-Z\-_]{64})$%', $pathInfo, $m_path)) {
@@ -62,7 +64,7 @@ class HotelUrlRule extends UrlRule
             } elseif (preg_match('%^(?<protocol>https?)://(?<domain>.+)$%', $hostInfo, $m)) {
                 $hotel = Hotel::find()->where(['domain' => $m['domain']])->one();
                 if ($hotel) {
-
+                    static::$current = $hotel;
                     if ($pathInfo) {
                         //payment url
                         if (preg_match('%payment/(?<id>[0-9a-zA-Z\-_]{64})$%', $pathInfo, $m_path)) {
