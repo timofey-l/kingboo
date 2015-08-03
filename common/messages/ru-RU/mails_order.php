@@ -38,7 +38,7 @@ return [
     'Hotel information' => 'Информация об отеле',
     'New order on site king-boo.com' => 'Новый заказ на сайте king-boo.com',
     'Nights: {n}' => 'Ночей: {n}',
-    'Order #{n} has been made on site <a href="http://king-boo.com">king-boo.com</a>.' => 'Заказ №{n} был совершен на сайте <a href="http://king-boo.com">king-boo.com</a>.',
+    'Order #{n} has been made on site <a href="https://king-boo.com">king-boo.com</a>.' => 'Заказ №{n} был совершен на сайте <a href="https://king-boo.com">king-boo.com</a>.',
     'Order #{n} has been made on site king-boo.com.' => 'Заказ №{n} был совершен на сайте king-boo.com.',
     'Order details' => 'Детали заказа',
     'Order number: {n}' => 'Номер заказа: {n}',
@@ -54,7 +54,7 @@ return [
     'The rooms are now booked, but the booking will be canceled if payment is not received within 24 hours.' => 'Номера сейчас забронированы, но бронь будет аннулирована, если оплата не поступит в течение 24 часов.',
     'To make a payment, please click the link below <br/><a href="{url}">{url}</a>' => 'Для оплаты, пожалуйста, перейдите по ссылке ниже <br/><a href="{url}">{url}</a>',
     'You can open order to manage it by <a href="{url}">clicking here</a>.' => 'Вы можете перейти к управлению заказом <a href="{url}">нажав на ссылку</a>.',
-    'You made a order on the site <a href="http://king-boo.com">king-boo.com</a>.' => 'Вы совершили заказ на сайте <a href="http://king-boo.com">king-boo.com</a>.',
+    'You made a order on the site <a href="https://king-boo.com">king-boo.com</a>.' => 'Вы совершили заказ на сайте <a href="https://king-boo.com">king-boo.com</a>.',
     'Your order\'s #{n} status was changed' => 'Статус Вашего заказа №{n} был изменен.',
     'd/m/Y' => 'd.m.Y',
 ];

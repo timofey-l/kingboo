@@ -22,7 +22,7 @@ class HotelUrlRule extends UrlRule
     {
         if ($route === 'hotel/view') {
             if (isset($params['name'])) {
-                return "http://" . $params['name'] . '.' . $_SERVER['SERVER_NAME'];
+                return "https://" . $params['name'] . '.' . $_SERVER['SERVER_NAME'];
             } else {
                 return false;
             }

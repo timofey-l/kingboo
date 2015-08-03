@@ -73,7 +73,7 @@
 	}
 
 
-		document.write('<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css"><link rel="stylesheet" href="http://partner.king-boo.com/widget/css/<?= $code ?>"><div id="widget_<?= $code ?>" style="display: none;"></div>');
+		document.write('<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css"><link rel="stylesheet" href="https://partner.king-boo.com/widget/css/<?= $code ?>"><div id="widget_<?= $code ?>" style="display: none;"></div>');
 		preLoadWidgetLibs(function(){
 			var params = <?= $widget_params ?>;
 			var el = document.getElementById('widget_<?= $code ?>');

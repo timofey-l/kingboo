@@ -174,7 +174,7 @@ class SiteController extends Controller
                 /** @var PartnerUser $user */
                 $user->sendConfirmEmail();
                 $hash = md5($user->email.$user->password_hash);
-                $url = "http://partner.king-boo.com/site/resend-confirm-email?hash=" . $hash;
+                $url = "https://partner.king-boo.com/site/resend-confirm-email?hash=" . $hash;
                 \Yii::$app->getSession()->setFlash('success', \Yii::t('partner_login', 'Confirmation code was sent to your email. <br><a href="{url}" class="btn btn-link">Resend</a>', ['url' => $url]));
                 return $this->goHome();
             }
@@ -299,7 +299,7 @@ class SiteController extends Controller
             /** @var PartnerUser $user */
             $user->sendConfirmEmail();
             $hash = md5($user->email.$user->password_hash);
-            $url = "http://partner.king-boo.com/site/resend-confirm-email?hash=" . $hash;
+            $url = "https://partner.king-boo.com/site/resend-confirm-email?hash=" . $hash;
             \Yii::$app->getSession()->setFlash('success', \Yii::t('partner_login', 'Confirmation code was sent to your email. <br><a href="{url}" class="btn btn-link">Resend</a>', ['url' => $url]));
         } else {
             \Yii::$app->session->setFlash('warning', \Yii::t('partner_login', 'User not found!'));
