@@ -15,6 +15,11 @@ use Yii;
  *
  * @property integer $allow_checkin_full_pay
  * @property integer $allow_payment_via_bank_transfer
+ *
+ * @property boolean $private_person
+ * @property string  $company_name
+ * @property string  $phone
+ * @property string  $demo_expire
  */
 class PartnerUser extends User
 {
@@ -80,4 +85,20 @@ class PartnerUser extends User
             ->send();
     }
 
+    /**
+     * Возвращет true если пробный период закончен. False в противном случае
+     * @return int
+     */
+    public function getDemoExpired() {
+        return (new \DateTime())->diff(new \DateTime($this->demo_expire))->invert;
+    }
+
+    /**
+     * Возвращает количество дней между сегодняшней датой и датой истечения пробного периода
+     * false - если срок прошел
+     * @return mixed
+     */
+    public function getDemoLeft() {
+        return !$this->getDemoExpired() ? (new \DateTime())->diff(new \DateTime($this->demo_expire))->days : false;
+    }
 }

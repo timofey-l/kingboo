@@ -1,10 +1,17 @@
 <?php
+use common\components\PrimaApi;
+
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'language'=>'ru-RU',
     'name' => 'king-boo.com',
     'bootstrap' => ['log'],
     'components' => [
+        'primaApi' => [
+            'class' => PrimaApi::className(),
+            'apiLogin' => 'king-boo',
+            'apiPassword' => 'VsY5fbjd5jM',
+        ],
         'assetManager' => [
             'linkAssets' => true,
         ],
