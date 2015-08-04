@@ -51,7 +51,7 @@ $this->registerJs("$('input[type=checkbox]').iCheck({
         <div class="col-sm-12 col-md-6">
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title"><?= \Yii::t('partner_profile', 'Password') ?></h3>
+                    <h3 class="box-title"><?= \Yii::t('partner_profile', 'Password change') ?></h3>
                 </div>
                 <div class="box-body">
                     <?= $form->field($user, 'password')->label(false) ?>

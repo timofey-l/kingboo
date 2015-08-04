@@ -24,7 +24,7 @@ return [
     'Yandex Kassa' => '@@Яндекс Касса@@',
     'Apply' => 'Применить',
     'Cancel' => 'Отмена',
-    'Password' => 'Пароль',
+    'Password change' => 'Смена пароля',
     'Payment methods' => 'Способы оплаты',
     'Profile' => 'Профиль',
     'Profile settings' => 'Настройки профиля',
