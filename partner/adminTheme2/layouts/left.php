@@ -91,9 +91,6 @@ $l = \common\models\Lang::$current->url;
 		    ?>
 	    </ul>
 
-	    <ul class="sidebar-menu">
-		    <li class="header"></li>
-	    </ul>
 
 	    <ul class="sidebar-menu">
 		    <li>

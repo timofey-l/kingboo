@@ -32,63 +32,61 @@ $this->registerJs("$('input[type=checkbox]').iCheck({
 ?>
 
 <?php $form = \yii\bootstrap\ActiveForm::begin() ?>
-<div class="row">
-    <div class="col-sm-12 col-md-6">
-        <div class="box box-default">
-            <div class="box-header with-border">
-                <h3 class="box-title"><?= \Yii::t('partner_profile', 'Yandex Kassa') ?></h3>
-            </div>
-            <div class="box-body">
-                <?= $form->field($user, 'shopId') ?>
-                <?= $form->field($user, 'scid') ?>
-                <?= $form->field($user, 'shopPassword') ?>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-12 col-md-6">
-        <div class="box box-default">
-            <div class="box-header with-border">
-                <h3 class="box-title"><?= \Yii::t('partner_profile', 'Payment methods') ?></h3>
-            </div>
-            <div class="box-body">
-                <?= $form->field($user, 'payMethods')->checkboxList(ArrayHelper::map(PayMethod::find()->all(), 'id', 'title_' . $l), [
-                    'itemOptions' => [
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><?= \Yii::t('partner_profile', 'Payment options') ?></h3>
+                </div>
+                <div class="box-body">
+                    <?= $form->field($user, 'allow_checkin_fullpay')->checkbox([
                         'class' => 'iCheck',
-                    ]
-                ])->label(false) ?>
+                    ]) ?>
+                    <?= $form->field($user, 'allow_payment_via_bank_transfer')->checkbox([
+                        'class' => 'iCheck',
+                    ]) ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><?= \Yii::t('partner_profile', 'Password') ?></h3>
+                </div>
+                <div class="box-body">
+                    <?= $form->field($user, 'password')->label(false) ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><?= \Yii::t('partner_profile', 'Yandex.Money payment setup') ?></h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            <?= $form->field($user, 'shopId') ?>
+                            <?= $form->field($user, 'scid') ?>
+                            <?= $form->field($user, 'shopPassword') ?>
+                        </div>
+                        <div class="col-sm-12 col-md-8">
+                            <?= $form->field($user, 'payMethods')->checkboxList(ArrayHelper::map(PayMethod::find()->all(), 'id', 'title_' . $l), [
+                                'itemOptions' => [
+                                    'class' => 'iCheck',
+                                ]
+                            ])->label(false) ?>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-12 col-md-6">
-        <div class="box box-default">
-            <div class="box-header with-border">
-                <h3 class="box-title"><?= \Yii::t('partner_profile', 'Password') ?></h3>
-            </div>
-            <div class="box-body">
-                <?= $form->field($user, 'password')->label(false) ?>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-12 col-md-6">
-        <div class="box box-default">
-            <div class="box-header with-border">
-                <h3 class="box-title"><?= \Yii::t('partner_profile', 'Other') ?></h3>
-            </div>
-            <div class="box-body">
-                <?= $form->field($user, 'allow_checkin_fullpay')->checkbox([
-                    'class' => 'iCheck',
-                ])?>
-                <?= $form->field($user, 'allow_payment_via_bank_transfer')->checkbox([
-                    'class' => 'iCheck',
-                ])?>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <?= Html::submitButton(\Yii::t('partner_profile', 'Apply'), ['class' => 'btn btn-success']) ?>
-&nbsp;
-<?= Html::a(\Yii::t('partner_profile', 'Cancel'),['/'], ['class' => 'btn btn-default']) ?>
+    &nbsp;
+<?= Html::a(\Yii::t('partner_profile', 'Cancel'), ['/'], ['class' => 'btn btn-default']) ?>
 
 <?php \yii\bootstrap\ActiveForm::end() ?>

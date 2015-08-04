@@ -30,7 +30,7 @@ if (in_array(Yii::$app->controller->action->id, ['login', 'error', 'signup', 're
 		    var LANG = '<?= \common\models\Lang::$current->url ?>';
 	    </script>
     </head>
-    <body class="skin-blue">
+    <body class="skin-blue-light">
     <?php $this->beginBody() ?>
     <div class="wrapper">
 

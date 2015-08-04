@@ -18,6 +18,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\Session;
 
 /**
  * Site controller
@@ -66,6 +67,59 @@ class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeAction($action)
+    {
+        if (parent::beforeAction($action)) {
+            $this->updateMessagesToUser();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Обновляет сообщения, которые выводятся пользователю
+     */
+    public function updateMessagesToUser()
+    {
+        /** @var Session $session */
+        $session = \Yii::$app->getSession();
+        /** @var PartnerUser $partner */
+        $partner = PartnerUser::findOne(\Yii::$app->user->id);
+        $messages = $session->get('messagesToUser', []);
+        $setArray = [
+            [
+                'id' => 'yandexMoney',
+                'type' => 'warning',
+                'condition' => $showYandexMoneyNotConfigured = trim($partner->shopPassword) == '' || trim($partner->shopId) == '' || trim($partner->scid) == '',
+                'text' => \Yii::t('partner', '<b>Yandex.Money is not configured.</b><br>Your customers can not make online payments.<br>For integration with Yandex.Money, please, enter the required settings on the <a href="/profile">Profile page</a>.')
+            ],
+            [
+                'id' => 'bookingUnavailible',
+                'type' => 'danger',
+                'condition' => ( $showYandexMoneyNotConfigured = trim($partner->shopPassword) == '' || trim($partner->shopId) == '' || trim($partner->scid) == '') && (!$partner->allow_checkin_fullpay && !$partner->allow_payment_via_bank_transfer),
+                'text' => \Yii::t('partner', '<b>Your clients can not make reservation!</b><br>Payment at check in and payment via bank transfer are not active, and integration with Yandex.Money is not configured.<br>You can activate the required options in <a href="/profile">Profile</a>'),
+            ]
+        ];
+
+        foreach ($setArray as $k => $message) {
+            if ($message['condition']) {
+                if (!isset($messages[$message['id']])) {
+                    \Yii::$app->session->setFlash($message['type'], $message['text']);
+                    $messages[$message['id']] = $message;
+                }
+            } else {
+                if (isset($messages[$message['id']])) {
+                    unset($messages[$message['id']]);
+                }
+            }
+        }
+        $session->set('messagesToUser', $messages);
     }
 
     public function actionIndex()
@@ -128,7 +182,7 @@ class SiteController extends Controller
         } else {
             $user = $model->getUser();
             if ($user && !$user->checked) {
-                 Yii::$app->session->setFlash('warning', \Yii::t('partner_login', 'You shoould confirm email address to continue'));
+                Yii::$app->session->setFlash('warning', \Yii::t('partner_login', 'You shoould confirm email address to continue'));
             }
             return $this->render('login', [
                 'model' => $model,
@@ -173,7 +227,7 @@ class SiteController extends Controller
             if ($user = $model->signup()) {
                 /** @var PartnerUser $user */
                 $user->sendConfirmEmail();
-                $hash = md5($user->email.$user->password_hash);
+                $hash = md5($user->email . $user->password_hash);
                 $url = "http://partner.king-boo.com/site/resend-confirm-email?hash=" . $hash;
                 \Yii::$app->getSession()->setFlash('success', \Yii::t('partner_login', 'Confirmation code was sent to your email. <br><a href="{url}" class="btn btn-link">Resend</a>', ['url' => $url]));
                 return $this->goHome();
@@ -253,8 +307,10 @@ class SiteController extends Controller
                 }
 
                 // добавляем отмеченные
-                foreach ($model->payMethods as $payMethod) {
-                    $user->link('payMethods', PayMethod::findOne([(int)$payMethod]));
+                if ($model->payMethods) {
+                    foreach ($model->payMethods as $payMethod) {
+                        $user->link('payMethods', PayMethod::findOne([(int)$payMethod]));
+                    }
                 }
             }
             if ($user->save()) {
@@ -267,8 +323,9 @@ class SiteController extends Controller
             'user' => $model,
         ]);
     }
-    
-    public function actionConfirmEmail($code) {
+
+    public function actionConfirmEmail($code)
+    {
         $query = new \yii\db\Query;
         $query->select('id')
             ->from('{{%partner_user}}')
@@ -298,7 +355,7 @@ class SiteController extends Controller
         if ($user) {
             /** @var PartnerUser $user */
             $user->sendConfirmEmail();
-            $hash = md5($user->email.$user->password_hash);
+            $hash = md5($user->email . $user->password_hash);
             $url = "http://partner.king-boo.com/site/resend-confirm-email?hash=" . $hash;
             \Yii::$app->getSession()->setFlash('success', \Yii::t('partner_login', 'Confirmation code was sent to your email. <br><a href="{url}" class="btn btn-link">Resend</a>', ['url' => $url]));
         } else {
@@ -307,18 +364,21 @@ class SiteController extends Controller
         return $this->redirect('login');
     }
 
-    public static function checkYandexKassa() {
+    public static function checkYandexKassa()
+    {
+        return;
         /** @var PartnerUser $partner */
         $partner = PartnerUser::findOne(\Yii::$app->user->id);
         if (trim($partner->shopPassword) == ''
             || trim($partner->shopId) == ''
-            || trim($partner->scid) == '' ) {
-            \Yii::$app->session->setFlash('warning', \Yii::t('partner','<b>Yandex.Money is not configured.</b><br>Your customers can not make online payments.<br>For integration with Yandex.Money, please, enter the required settings on the <a href="/profile">Profile page</a>.'));
+            || trim($partner->scid) == ''
+        ) {
+            \Yii::$app->session->setFlash('warning', \Yii::t('partner', '<b>Yandex.Money is not configured.</b><br>Your customers can not make online payments.<br>For integration with Yandex.Money, please, enter the required settings on the <a href="/profile">Profile page</a>.'));
 
             // если еще и не включена "Позволить полную оплату при заселении"
             // сообщаем о неработоспособности системы бронирования
             if (!$partner->allow_checkin_fullpay && !$partner->allow_payment_via_bank_transfer) {
-                \Yii::$app->session->setFlash('danger', \Yii::t('partner','<b>Your clients can not make reservation!</b><br>Payment at check in and payment via bank transfer are not active, and integration with Yandex.Money is not configured.<br>You can activate the required options in <a href="/profile">Profile</a>'));
+                \Yii::$app->session->setFlash('danger', \Yii::t('partner', '<b>Your clients can not make reservation!</b><br>Payment at check in and payment via bank transfer are not active, and integration with Yandex.Money is not configured.<br>You can activate the required options in <a href="/profile">Profile</a>'));
             }
         }
     }
