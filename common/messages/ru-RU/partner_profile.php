@@ -17,12 +17,14 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Enable full payment at check in option' => '',
-    'Enable payment via bank transfer' => '',
-    'Other' => '',
+    'Enable full payment at check in option' => 'Включить возможность полной оплаты при заселении',
+    'Enable payment via bank transfer' => 'Включить возможность оплаты через банковский перевод',
+    'Payment options' => 'Варианты оплаты',
+    'Yandex.Money payment setup' => 'Настройка оплаты через Яндекс.Деньги',
+    'Yandex Kassa' => '@@Яндекс Касса@@',
     'Apply' => 'Применить',
     'Cancel' => 'Отмена',
-    'Password' => 'Пароль',
+    'Password change' => 'Смена пароля',
     'Payment methods' => 'Способы оплаты',
     'Profile' => 'Профиль',
     'Profile settings' => 'Настройки профиля',
@@ -30,5 +32,4 @@ return [
     'Shop identifier (shopId)' => 'Идентификатор магазина (shopId)',
     'Shop password (shopPassword)' => 'Пароль магазина (shopPassword)',
     'Showcase identifier (scid)' => 'Идентификатор витрины (scid)',
-    'Yandex Kassa' => 'Яндекс Касса',
 ];

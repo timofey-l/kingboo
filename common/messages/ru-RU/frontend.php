@@ -17,14 +17,12 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Address' => 'Адрес',
-    'Phone' => 'Телефон',
-    'To contact the hotel, please fill out the form below. Thank you.' => 'Чтобы связаться с администрацией отеля, пожалуйста, заполните форму ниже. Спасибо.',
     '<b>Rooms not found.</b> Please check information in form above' => '@@<b>Номера не найдены.</b> Пожалуйста, проверьте информацию в форме выше@@',
     'Go to payment' => '@@Перейти к оплате@@',
     'Thank you for your payment!' => '@@@@',
     '* If you have' => '* Если имеется',
     '<b>No rooms available for this period.</b> Please, select other days.' => '<b>На указанные даты свободные номера отсутствуют.</b> Пожалуйста, попробуйте другие даты',
+    'Address' => 'Адрес',
     'Adults' => 'Взрослых',
     'Arrival date' => 'Дата заезда',
     'Body' => 'Текст',
@@ -60,6 +58,7 @@ return [
     'Page was not found!' => 'Страница не найдена!',
     'Pay' => 'Оплатить',
     'Pay options via Yandex.Money' => 'Варианты оплаты через Яндекс.Кассу',
+    'Phone' => 'Телефон',
     'Phone number' => 'Номер телефона',
     'Promo code' => 'Промо код',
     'Room booking' => 'Бронирование номера',
@@ -72,6 +71,7 @@ return [
     'The error occurred during the payment process!' => 'При выполнении оплаты произошла ошибка!',
     'The rooms that you chose were booked. <br/><br/>To complete the booking you need to pay.<br/><br/>Otherwise, booking will be canceled within {t} hours.' => 'Выбранные Вами номера забронированны. <br/><br/>Для завершения процедуры бронирования необходимо произвести оплату.<br/><br/>В противном случае через {t} часа бронь аннулируется.',
     'There was an error sending email.' => 'Произошла ошибка при отправке электронного письма.',
+    'To contact the hotel, please fill out the form below. Thank you.' => 'Чтобы связаться с администрацией отеля, пожалуйста, заполните форму ниже. Спасибо.',
     'Total sum:' => 'Общая сумма:',
     'Try again' => 'Попробовать снова',
     'Try again later, by choosing a different payment method' => 'Попробуйте снова позже, выбрав иной способ оплаты',
