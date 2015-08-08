@@ -4,6 +4,7 @@
 
 use common\models\Lang;
 use common\models\PayMethod;
+use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
@@ -82,11 +83,38 @@ $this->registerJs("$('input[type=checkbox]').iCheck({
                 </div>
             </div>
         </div>
+
+        <div class="col-sm-12 col-md-6">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><?= \Yii::t('partner_profile', 'Configuration of IP telephony') ?></h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <?php if($partner->prima_login == ''): ?>
+                            <div class="alert alert-info alert-dismissable ">
+                                <i class="icon fa fa-info"></i>
+                                <?= \Yii::t('partner_profile', 'Setting of these parameters will allow your customers to make calls directly from the website.', []) ?>
+                            </div>
+                            <?php endif; ?>
+
+                            <?= $form->field($user, 'phone') ?>
+                            <?= $form->field($user, 'company_name') ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="form-group">
+                <?= Html::submitButton(\Yii::t('partner_profile', 'Apply'), ['class' => 'btn btn-success']) ?>
+                &nbsp;
+                <?= Html::a(\Yii::t('partner_profile', 'Cancel'), ['/'], ['class' => 'btn btn-default']) ?>
+            </div>
+        </div>
+
     </div>
 
-
-<?= Html::submitButton(\Yii::t('partner_profile', 'Apply'), ['class' => 'btn btn-success']) ?>
-    &nbsp;
-<?= Html::a(\Yii::t('partner_profile', 'Cancel'), ['/'], ['class' => 'btn btn-default']) ?>
 
 <?php \yii\bootstrap\ActiveForm::end() ?>

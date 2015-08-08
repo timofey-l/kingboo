@@ -35,7 +35,7 @@ class HotelUrlRule extends UrlRule
         $hostInfo = $request->getHostInfo();
         $pathInfo = $request->pathInfo;
 
-        $domain = substr($request->hostInfo, 8);
+        $domain = substr($request->hostInfo, 7);
 
         // пробуем определить частичный URL
         if ($domain != \Yii::$app->params['mainDomain'])

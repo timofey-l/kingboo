@@ -1,11 +1,13 @@
 <?php
 namespace partner\controllers;
 
+use common\components\PrimaApi;
 use common\models\Hotel;
 use common\models\Order;
 use common\models\PayMethod;
 use common\models\SupportMessage;
 use partner\models\PartnerUser;
+use partner\models\PrimaRegForm;
 use partner\models\ProfileForm;
 use Yii;
 use partner\models\LoginForm;
@@ -18,7 +20,6 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use yii\web\Session;
 
 /**
  * Site controller
@@ -87,6 +88,9 @@ class SiteController extends Controller
      */
     public function updateMessagesToUser()
     {
+        if (\Yii::$app->user->isGuest) {
+            return;
+        }
         /** @var Session $session */
         $session = \Yii::$app->getSession();
         /** @var PartnerUser $partner */
@@ -227,8 +231,8 @@ class SiteController extends Controller
             if ($user = $model->signup()) {
                 /** @var PartnerUser $user */
                 $user->sendConfirmEmail();
-                $hash = md5($user->email . $user->password_hash);
-                $url = "http://partner.king-boo.com/site/resend-confirm-email?hash=" . $hash;
+                $hash = md5($user->email.$user->password_hash);
+                $url = "https://partner.king-boo.com/site/resend-confirm-email?hash=" . $hash;
                 \Yii::$app->getSession()->setFlash('success', \Yii::t('partner_login', 'Confirmation code was sent to your email. <br><a href="{url}" class="btn btn-link">Resend</a>', ['url' => $url]));
                 return $this->goHome();
             }
@@ -276,6 +280,9 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionRegisterVoip() {
+
+    }
 
     public function actionProfile()
     {
@@ -287,6 +294,16 @@ class SiteController extends Controller
         $model->shopPassword = $user->shopPassword;
         $model->allow_checkin_fullpay = $user->allow_checkin_fullpay;
         $model->allow_payment_via_bank_transfer = $user->allow_payment_via_bank_transfer;
+
+        if ($model->company_name != '') {
+            $primaReg = new PrimaRegForm();
+            if ($primaReg->load(\Yii::$app->request->post()) && \Yii::$app->request->isAjax) {
+
+            };
+
+            $primaReg->name = $user->company_name;
+            $primaReg->phone = $user->phone;
+        }
 
         if ($model->load(\Yii::$app->request->post())) {
             $user->scid = $model->scid;
@@ -320,7 +337,10 @@ class SiteController extends Controller
         }
 
         return $this->render('profile', [
+            'partner' => PartnerUser::findOne(\Yii::$app->user->id),
             'user' => $model,
+            'primaUser' => $user,
+            'primaReg' => isset($primaReg) ? $primaReg : null,
         ]);
     }
 
@@ -355,8 +375,8 @@ class SiteController extends Controller
         if ($user) {
             /** @var PartnerUser $user */
             $user->sendConfirmEmail();
-            $hash = md5($user->email . $user->password_hash);
-            $url = "http://partner.king-boo.com/site/resend-confirm-email?hash=" . $hash;
+            $hash = md5($user->email.$user->password_hash);
+            $url = "https://partner.king-boo.com/site/resend-confirm-email?hash=" . $hash;
             \Yii::$app->getSession()->setFlash('success', \Yii::t('partner_login', 'Confirmation code was sent to your email. <br><a href="{url}" class="btn btn-link">Resend</a>', ['url' => $url]));
         } else {
             \Yii::$app->session->setFlash('warning', \Yii::t('partner_login', 'User not found!'));
