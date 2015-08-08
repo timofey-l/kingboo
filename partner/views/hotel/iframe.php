@@ -140,14 +140,14 @@ updateView();
                     <br><br>
                     <label class="basic-domain">
                         <input type="radio" checked name="domain" class="iradio"
-                               value="https://<?= $hotel->name ?>.<?= $server ?>" onchange="updateView()">
-                        https://<?= $hotel->name ?>.<?= $server ?>
+                               value="http://<?= $hotel->name ?>.<?= $server ?>" onchange="updateView()">
+                        http://<?= $hotel->name ?>.<?= $server ?>
                     </label>
                     <?php if ($hotel->domain): ?>
                         <br>
                         <label class="custom-domain">
-                            <input type="radio" name="domain" class="iradio" value="https://<?= $hotel->domain ?>" onchange="updateView()">
-                            https://<?= $hotel->domain ?>
+                            <input type="radio" name="domain" class="iradio" value="http://<?= $hotel->domain ?>" onchange="updateView()">
+                            http://<?= $hotel->domain ?>
                         </label>
                     <?php endif; ?>
                 </div>

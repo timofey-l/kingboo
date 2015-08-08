@@ -337,6 +337,7 @@ class SiteController extends Controller
         }
 
         return $this->render('profile', [
+            'partner' => PartnerUser::findOne(\Yii::$app->user->id),
             'user' => $model,
             'primaUser' => $user,
             'primaReg' => isset($primaReg) ? $primaReg : null,

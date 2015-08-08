@@ -22,7 +22,7 @@ class HotelUrlRule extends UrlRule
     {
         if ($route === 'hotel/view') {
             if (isset($params['name'])) {
-                return "https://" . $params['name'] . '.' . $_SERVER['SERVER_NAME'];
+                return "http://" . $params['name'] . '.' . $_SERVER['SERVER_NAME'];
             } else {
                 return false;
             }
@@ -35,7 +35,7 @@ class HotelUrlRule extends UrlRule
         $hostInfo = $request->getHostInfo();
         $pathInfo = $request->pathInfo;
 
-        $domain = substr($request->hostInfo, 8);
+        $domain = substr($request->hostInfo, 7);
 
         // пробуем определить частичный URL
         if ($domain != \Yii::$app->params['mainDomain'])

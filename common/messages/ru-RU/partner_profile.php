@@ -17,19 +17,24 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Enable full payment at check in option' => 'Включить возможность полной оплаты при заселении',
-    'Enable payment via bank transfer' => 'Включить возможность оплаты через банковский перевод',
-    'Payment options' => 'Варианты оплаты',
-    'Yandex.Money payment setup' => 'Настройка оплаты через Яндекс.Деньги',
+    'Setting of these parameters will allow your customers to make calls directly from the website.' => 'Установка этих параметров позволит Вашим клиентам совершать звонки прямо с сайта.',
+    'Cell phone number' => 'Номер мобильного телефона',
+    'Configuration of IP telephony' => 'Настройка IP телефонии',
+    'Name of the legal person' => 'Название юр. лица.',
+    'Password' => 'Пароль',
     'Yandex Kassa' => '@@Яндекс Касса@@',
     'Apply' => 'Применить',
     'Cancel' => 'Отмена',
+    'Enable full payment at check in option' => 'Включить возможность полной оплаты при заселении',
+    'Enable payment via bank transfer' => 'Включить возможность оплаты через банковский перевод',
     'Password change' => 'Смена пароля',
     'Payment methods' => 'Способы оплаты',
+    'Payment options' => 'Варианты оплаты',
     'Profile' => 'Профиль',
     'Profile settings' => 'Настройки профиля',
     'Profile successfully saved' => 'Профиль успешно сохранён',
     'Shop identifier (shopId)' => 'Идентификатор магазина (shopId)',
     'Shop password (shopPassword)' => 'Пароль магазина (shopPassword)',
     'Showcase identifier (scid)' => 'Идентификатор витрины (scid)',
+    'Yandex.Money payment setup' => 'Настройка оплаты через Яндекс.Деньги',
 ];

@@ -112,7 +112,7 @@ if (preg_match('%partner\.(?<server>.+)$%', $hostInfo, $m)) {
                             [
                                 'attribute' => 'name',
                                 'value' => '<a target="_blank"
- href="https://' . $model->name . '.' . $server . '">https://' . $model->name . '.' . $server . '</a>',
+ href="http://' . $model->name . '.' . $server . '">http://' . $model->name . '.' . $server . '</a>',
                                 'format' => 'raw',
                             ],
                             'domain',
