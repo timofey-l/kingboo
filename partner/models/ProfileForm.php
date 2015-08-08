@@ -5,6 +5,8 @@ use yii\base\Model;
 
 class ProfileForm extends Model
 {
+    var $phone;
+    var $company_name;
 
     var $password;
     var $payMethods;
@@ -17,7 +19,7 @@ class ProfileForm extends Model
 
     public function rules() {
         return [
-            [['scid', 'shopId', 'shopPassword'], 'string'],
+            [['scid', 'shopId', 'shopPassword', 'phone', 'company_name'], 'string'],
             ['password', 'string', 'max' => 32],
             ['payMethods', 'each' , 'rule' => ['integer']],
             [['allow_checkin_fullpay', 'allow_payment_via_bank_transfer'], 'integer'],
@@ -33,6 +35,8 @@ class ProfileForm extends Model
             'shopPassword' => \Yii::t('partner_profile', 'Shop password (shopPassword)'),
             'allow_checkin_fullpay' => \Yii::t('partner_profile', 'Enable full payment at check in option'),
             'allow_payment_via_bank_transfer' => \Yii::t('partner_profile', 'Enable payment via bank transfer'),
+            'phone' => \Yii::t('partner_profile', 'Cell phone number'),
+            'company_name' => \Yii::t('partner_profile', 'Name of the legal person'),
         ];
     }
 

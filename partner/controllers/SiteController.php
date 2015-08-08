@@ -1,11 +1,13 @@
 <?php
 namespace partner\controllers;
 
+use common\components\PrimaApi;
 use common\models\Hotel;
 use common\models\Order;
 use common\models\PayMethod;
 use common\models\SupportMessage;
 use partner\models\PartnerUser;
+use partner\models\PrimaRegForm;
 use partner\models\ProfileForm;
 use Yii;
 use partner\models\LoginForm;
@@ -86,6 +88,9 @@ class SiteController extends Controller
      */
     public function updateMessagesToUser()
     {
+        if (\Yii::$app->user->isGuest) {
+            return;
+        }
         /** @var Session $session */
         $session = \Yii::$app->getSession();
         /** @var PartnerUser $partner */
@@ -275,6 +280,9 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionRegisterVoip() {
+
+    }
 
     public function actionProfile()
     {
@@ -286,6 +294,16 @@ class SiteController extends Controller
         $model->shopPassword = $user->shopPassword;
         $model->allow_checkin_fullpay = $user->allow_checkin_fullpay;
         $model->allow_payment_via_bank_transfer = $user->allow_payment_via_bank_transfer;
+
+        if ($model->company_name != '') {
+            $primaReg = new PrimaRegForm();
+            if ($primaReg->load(\Yii::$app->request->post()) && \Yii::$app->request->isAjax) {
+
+            };
+
+            $primaReg->name = $user->company_name;
+            $primaReg->phone = $user->phone;
+        }
 
         if ($model->load(\Yii::$app->request->post())) {
             $user->scid = $model->scid;
@@ -320,6 +338,8 @@ class SiteController extends Controller
 
         return $this->render('profile', [
             'user' => $model,
+            'primaUser' => $user,
+            'primaReg' => isset($primaReg) ? $primaReg : null,
         ]);
     }
 

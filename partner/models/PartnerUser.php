@@ -19,6 +19,7 @@ use Yii;
  * @property boolean $private_person
  * @property string  $company_name
  * @property string  $phone
+ * @property string  $prima_login
  * @property string  $demo_expire
  */
 class PartnerUser extends User

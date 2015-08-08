@@ -4,6 +4,7 @@
 
 use common\models\Lang;
 use common\models\PayMethod;
+use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
@@ -79,6 +80,23 @@ $this->registerJs("$('input[type=checkbox]').iCheck({
 
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><?= \Yii::t('partner_profile', 'Configuration of IP telephony') ?></h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            <?php $primaForm = ActiveForm::begin(['options' => ['data-pjax' => 1]]) ?>
+                            <?= $primaForm->field($primaReg, 'phone') ?>
+                            <?= $primaForm->field($primaReg, 'name') ?>
+                            <?php ActiveForm::end(); ?>
+                        </div>
                 </div>
             </div>
         </div>
