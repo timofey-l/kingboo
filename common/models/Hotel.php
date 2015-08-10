@@ -125,7 +125,7 @@ class Hotel extends \yii\db\ActiveRecord
     public function attributeHints()
     {
         return [
-            'name' => Yii::t('hotels', 'Create and enter the address of your hotel in system king.boo.com. Ex. palm_beach_hotel')
+            'name' => Yii::t('hotels', 'Create and enter the address of your hotel in system king.boo.com. <br>Ex. palm_beach_hotel')
         ];
     }
 

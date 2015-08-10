@@ -74,9 +74,13 @@ $this->registerCss('
                 </div>
                 <div class="box-body">
                     <?= $form->field($model, 'name')->textInput(['maxlength' => 255,
-                        'data-toggle' => 'tooltip',
-                        'data-placement' => "bottom",
-                        'title' => $model->attributeHints()['name'],
+                        'data-toggle' => 'popover',
+                        'data-trigger' => 'hover focus',
+                        'data-html' => 'true',
+                        'data-container' => "body",
+                        'title' => \Yii::t('hotels', 'Hotel\'s url in king-boo.com system'),
+                        'data-placement' => "auto right",
+                        'data-content' => $model->attributeHints()['name'],
                     ]) ?>
 
                     <?= $form->field($model, 'domain')->textInput(['maxlength' => 255]) ?>

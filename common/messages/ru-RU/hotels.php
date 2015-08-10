@@ -63,5 +63,5 @@ return [
     'Title Ru' => 'Название Ru',
     'URL' => 'URL',
     'View' => 'Просмотр',
-    'Create and enter the address of your hotel in system king.boo.com. Ex. palm_beach_hotel' => 'Придумайте и введите адрес Вашего отеля в системе king.boo.com. Напр. palm_beach_hotel',
+    'Create and enter the address of your hotel in system king.boo.com. <br>Ex. palm_beach_hotel' => 'Придумайте и введите адрес Вашего отеля в системе king.boo.com.<br> Напр. palm_beach_hotel',
 ];
