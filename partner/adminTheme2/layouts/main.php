@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+$assetManager = \Yii::$app->assetManager;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -16,6 +17,9 @@ if (in_array(Yii::$app->controller->action->id, ['login', 'error', 'signup', 're
     $this->params['adminlte'] = $adminlte->baseUrl;
     $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
     $directoryAsset = $adminlte->baseUrl;
+
+    $bootstrap_js = $assetManager->publish('@bower/bootstrap/js')[1];
+    $this->registerJsFile($bootstrap_js . "/tooltip.js", ['depends' => [dmstr\web\AdminLteAsset::className()]]);
     ?>
     <?php $this->beginPage() ?>
     <!DOCTYPE html>

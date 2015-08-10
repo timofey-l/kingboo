@@ -24,7 +24,7 @@ return [
     'I forgot my password' => 'Я забыл пароль',
     'Password reset for partner.king-boo.com' => 'Сброс пароля на сайте partner.king-boo.com',
     'Please fill out the following fields to sign up:' => 'Пожалуйста, заполните следующие поля для регистрации:',
-    'Please fill out your email. A link to reset password will be sent there.' => 'Пожалуйста, ввдеите свой Email. На этот адрес быдет выслана ссылка для сброса пароля.',
+    'Please fill out your email. A link to reset password will be sent there.' => 'Пожалуйста, введите свой е-mail, на него будет отправлена ссылка для создания нового пароля.',
     'Request password reset' => 'Запрос сброса пароля',
     'Send' => 'Отправить',
     'Sign In' => 'Вход',

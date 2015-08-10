@@ -122,6 +122,13 @@ class Hotel extends \yii\db\ActiveRecord
 		];
 	}
 
+    public function attributeHints()
+    {
+        return [
+            'name' => Yii::t('hotels', 'Create and enter the address of your hotel in system king.boo.com. Ex. palm_beach_hotel')
+        ];
+    }
+
 	public function getRooms()
 	{
 		return $this->hasMany('\common\models\Room', ['hotel_id' => 'id']);

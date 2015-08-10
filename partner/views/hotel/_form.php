@@ -73,7 +73,11 @@ $this->registerCss('
                     <h3 class="box-title"><?= Yii::t('hotels', 'Common information') ?></h3>
                 </div>
                 <div class="box-body">
-                    <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
+                    <?= $form->field($model, 'name')->textInput(['maxlength' => 255,
+                        'data-toggle' => 'tooltip',
+                        'data-placement' => "bottom",
+                        'title' => $model->attributeHints()['name'],
+                    ]) ?>
 
                     <?= $form->field($model, 'domain')->textInput(['maxlength' => 255]) ?>
 
