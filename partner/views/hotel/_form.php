@@ -78,7 +78,7 @@ $this->registerCss('
                         'data-trigger' => 'hover focus',
                         'data-html' => 'true',
                         'data-container' => "body",
-                        'title' => \Yii::t('hotels', 'Hotel\'s url in king-boo.com system'),
+//                        'title' => \Yii::t('hotels', 'Hotel\'s url in king-boo.com system'),
                         'data-placement' => "auto right",
                         'data-content' => $model->attributeHints()['name'],
                     ]) ?>
