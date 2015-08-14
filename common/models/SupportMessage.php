@@ -80,7 +80,7 @@ class SupportMessage extends ActiveRecord
             'unread_admin' => Yii::t('support', 'Unread admin'),
             'created_at' => Yii::t('support', 'Created At'),
             'updated_at' => Yii::t('support', 'Updated At'),
-            'text' => Yii::t('support', 'Text'),
+            'text' => Yii::t('support', 'Your message'),
             'author' => Yii::t('support', 'Author'),
             'parent_id' => Yii::t('support', 'Parent ID'),
             'title' => Yii::t('support', 'Title'),

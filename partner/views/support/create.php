@@ -9,7 +9,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('partner_support', 'Support 
 $this->params['breadcrumbs'][] = \Yii::t('partner_support', 'New message');
 ?>
 <?= \yii\helpers\Html::a(
-    '<i class="fa fa-arrow-left"></i> ' . \Yii::t('partner_support', 'Back to all messages'),
+    '<i class="fa fa-arrow-left"></i> ' . \Yii::t('partner_support', 'Back to list of messages'),
     ['index'],
     ['class' => 'btn btn-default']) ?>
 

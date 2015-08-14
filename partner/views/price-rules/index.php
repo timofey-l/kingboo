@@ -1,7 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 /** @var \common\models\PriceRules[] $price_rules */
-$this->title = \Yii::t('partner_pricerules', 'Price rules');
+$this->title = \Yii::t('partner_pricerules', 'Discounts');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -31,9 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php if (!$price_rules): ?>
     <br/>
-    <div class="alert alert-info alert-dismissable col-sm-12 col-md-8">
-        <h4><i class="icon fa fa-info"></i> <?= \Yii::t('partner_pricerules', 'Price rules not defined') ?></h4>
-        <?= \Yii::t('partner_pricerules', 'Add price rules using buttons above.') ?>
+    <div class="callout callout-info">
+        <h4><i class="icon fa fa-info"></i> <?= \Yii::t('partner_pricerules', 'No discounts have been created yet') ?></h4>
+        <?= \Yii::t('partner_pricerules', 'Use the button above to create a new discount.') ?>
     </div>
 <?php endif; ?>
 

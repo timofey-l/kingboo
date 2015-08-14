@@ -18,7 +18,7 @@ $tickets = $dataProvider->getModels();
         ['class' => 'btn btn-success']) ?>
     <br/>
     <br/>
-    <div class="alert alert-info alert-dismissable col-sm-8 col-md-6">
+    <div class="callout callout-info">
         <h4><i class="icon fa fa-info"></i> <?= \Yii::t('partner_support', 'Dialogs are absent') ?></h4>
         <?= \Yii::t('partner_support', 'Press upper button to start dialog.') ?>
     </div>

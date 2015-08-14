@@ -57,6 +57,11 @@ body {
     font-style: italic;
 }
 
+/* Revriten bootstripe add admin-lte styles */
+.help-block {
+    font-size: smaller;
+}
+
 /* add sorting icons to gridview sort links */
 a.asc:after, a.desc:after {
     position: relative;

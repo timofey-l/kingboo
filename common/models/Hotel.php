@@ -104,7 +104,7 @@ class Hotel extends \yii\db\ActiveRecord
 			'id'                  => Yii::t('hotels', 'ID'),
 			'partner_id'          => Yii::t('hotels', 'Partner ID'),
 			'name'                => Yii::t('hotels', 'URL'),
-			'address'             => Yii::t('hotels', 'Address'),
+			'address'             => Yii::t('hotels', 'Hotel address'),
 			'lng'                 => Yii::t('hotels', 'Lng'),
 			'lat'                 => Yii::t('hotels', 'Lat'),
 			'currency_id'         => Yii::t('hotels', 'Currency'),
@@ -114,9 +114,9 @@ class Hotel extends \yii\db\ActiveRecord
 			'description_en'      => Yii::t('hotels', 'Description En'),
 			'title_ru'            => Yii::t('hotels', 'Title Ru'),
 			'title_en'            => Yii::t('hotels', 'Title En'),
-			'allow_partial_pay'   => Yii::t('hotels', 'Allow partial pay'),
+			'allow_partial_pay'   => Yii::t('hotels', 'Allow partial advance payment'),
 			'partial_pay_percent' => Yii::t('hotels', 'Percents to pay'),
-			'domain'              => Yii::t('hotels', 'Domain'),
+			'domain'              => Yii::t('hotels', 'Domain name of your hotel'),
 			'contact_email'       => Yii::t('hotels', 'Contact email'),
 			'contact_phone'       => Yii::t('hotels', 'Contact phone'),
 		];
@@ -124,9 +124,24 @@ class Hotel extends \yii\db\ActiveRecord
 
     public function attributeHints()
     {
-        return [
-            'name' => Yii::t('hotels', 'Create and enter the address of your hotel in system king.boo.com. <br>Ex. palm_beach_hotel')
+        return [];
+    }
+
+    public function attributePopover($key=false)
+    {
+    	$a = [
+            'name' => Yii::t('hotels', 'Create and enter the address of your hotel in system king.boo.com. Ex. palm-beach-hotel.'),
+            'domain' => Yii::t('hotels', 'Fill in this field, if you want to register already existing personal domain of your hotel in king.boo system. If you still don’t have but want to register personal domain name for your hotel, please, apply for registration'),
         ];
+    	if ($key) {
+    		if (isset($a[$key])) {
+    			return $a[$key];
+    		} else {
+    			return '';
+    		}
+    	} else {
+        	return $a;
+    	}
     }
 
 	public function getRooms()

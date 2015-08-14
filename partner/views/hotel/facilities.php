@@ -45,6 +45,11 @@ $this->params['breadcrumbs'][] = Yii::t('hotels', 'Facilities');
                         </div>
                         <div id="collapse<?= $k ?>" class="panel-collapse collapse">
                             <div class="box-body">
+                                <?php if ($descriptions[$k]) { ?>
+                                <div class="row">
+                                    <div class="col-sm-12"><?= $descriptions[$k] ?></div>
+                                </div>
+                                <?php } ?>
                                 <div class="row">
                                 <?php
                                     foreach ($facilities[$k] as $f) {

@@ -73,17 +73,25 @@ $this->registerCss('
                     <h3 class="box-title"><?= Yii::t('hotels', 'Common information') ?></h3>
                 </div>
                 <div class="box-body">
-                    <?= $form->field($model, 'name')->textInput(['maxlength' => 255,
+                    <?= $form->field($model, 'name')->textInput([
+                        'maxlength' => 255,
                         'data-toggle' => 'popover',
                         'data-trigger' => 'hover focus',
                         'data-html' => 'true',
                         'data-container' => "body",
-//                        'title' => \Yii::t('hotels', 'Hotel\'s url in king-boo.com system'),
                         'data-placement' => "auto right",
-                        'data-content' => $model->attributeHints()['name'],
+                        'data-content' => $model->attributePopover('name'),
                     ]) ?>
 
-                    <?= $form->field($model, 'domain')->textInput(['maxlength' => 255]) ?>
+                    <?= $form->field($model, 'domain')->textInput([
+                        'maxlength' => 255,
+                        'data-toggle' => 'popover',
+                        'data-trigger' => 'hover focus',
+                        'data-html' => 'true',
+                        'data-container' => "body",
+                        'data-placement' => "auto right",
+                        'data-content' => $model->attributePopover('domain'),
+                    ]) ?>
 
                     <?= $form->field($model, 'address')->textInput(['maxlength' => 255]) ?>
 
@@ -107,6 +115,7 @@ $this->registerCss('
 		                </label>
 		                <div class="partial_pay_container <?= $model->allow_partial_pay ? "" : "hide" ?>">
 							<div class="partial_pay_value">
+                                <?= Yii::t('hotels', 'Specify the minimum amount of partial advance payment') ?>: 
 								<span id="partial_pay_value">
 									<?= $model->partial_pay_percent ?>
 								</span>%
@@ -128,7 +137,7 @@ $this->registerCss('
         <div class="col-sm-6">
             <div class="box box-info">
                 <div class="box-header">
-                    <h3 class="box-title"><?= Yii::t('hotels', 'Title') ?></h3>
+                    <h3 class="box-title"><?= Yii::t('hotels', 'Hotel name') ?></h3>
                 </div>
                 <div class="box-body">
 
@@ -169,7 +178,7 @@ $this->registerCss('
             </div>
             <div class="box box-info">
                 <div class="box-header">
-                    <h3 class="box-title"><?= Yii::t('hotels', 'Description') ?></h3>
+                    <h3 class="box-title"><?= Yii::t('hotels', 'Hotel description') ?></h3>
                 </div>
                 <div class="box-body">
 

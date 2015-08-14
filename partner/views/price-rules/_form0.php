@@ -1,6 +1,7 @@
 <?php
 
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
 
 /** @var \common\models\PriceRules $model */
 /** @var \common\models\Room[] $rooms */
@@ -43,6 +44,15 @@ $dateFormat = \Yii::t('partner', 'dd/mm/yyyy');
         'id' => 'PriceRuleForm',
     ],
 ]); ?>
+
+<?php if (!$hotels): ?>
+    <br/>
+    <div class="callout callout-danger">
+        <h4><i class="icon fa fa-info"></i> <?= \Yii::t('pricerules', 'Discounts addition is forbidden') ?></h4>
+        <?= \Yii::t('pricerules', 'Add discounts only after hotel and rooms registration.') ?>
+    </div>
+<?php endif; ?>
+
 <div class="row">
     <div class="col-sm-12">
         <div class="box box-primary">
@@ -53,7 +63,10 @@ $dateFormat = \Yii::t('partner', 'dd/mm/yyyy');
             </div>
             <div class="box-body">
                 <?php foreach ($hotels as $index => $hotel): ?>
-                    <?php /** @var \common\models\Hotel $hotel */ ?>
+                    <?php 
+                        if (!$hotel->rooms) continue;
+                        /** @var \common\models\Hotel $hotel */ 
+                    ?>
 
                     <h3><?= $hotel->{'title_' . $l} ?></h3>
 
@@ -79,10 +92,22 @@ $dateFormat = \Yii::t('partner', 'dd/mm/yyyy');
 
 <div class="row">
     <div class="col-sm-6">
+        <div class="box box-primary"><!-- Тип скидки -->
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    1. <?= \Yii::t('partner_pricerules', 'Type of the discount') ?>
+                </h3>
+            </div>
+            <div class="box-body">
+                <?= $form->field($model, 'additive')->checkbox([
+                    'class' => 'iCheck',
+                ]) ?>
+            </div>
+        </div>
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    <?= \Yii::t('partner_pricerules', 'Discount value') ?>
+                    2. <?= \Yii::t('partner_pricerules', 'Size of the discount') ?>
                 </h3>
             </div>
             <div class="box-body">
@@ -94,54 +119,63 @@ $dateFormat = \Yii::t('partner', 'dd/mm/yyyy');
                         <div class="radio">
                             <label>
                                 <input type="radio" name="PriceRuleBasic[valueType]" value="0" checked/>
-                                <?= \Yii::t('partner_pricerules', 'percents') ?>
+                                %
                             </label>
                         </div>
                         <div class="radio">
                             <label>
                                 <input type="radio" name="PriceRuleBasic[valueType]" value="1"/>
-                                <?= \Yii::t('partner_pricerules', 'sum') ?>
+                                <?= \Yii::t('partner_pricerules', 'promo action') ?>
                             </label>
                         </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <p class="help-block" style="margin-top: -10px;">
+                        <?= Yii::t('pricerules', 'Discount in % is calculated as a percentage of the total package price. For promoaction a fixed amount is deducted from any reservation order.') ?>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">
-                    <?= \Yii::t('partner_pricerules', 'Options') ?>
-                </h3>
-            </div>
-            <div class="box-body">
-                <?= $form->field($model, 'additive')->checkbox([
-                    'class' => 'iCheck',
-                ]) ?>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-sm-6">
         <div class="box box-default">
             <div class="box-header with-border">
                 <h3 class="box-title">
                     <input type="checkbox" class="iCheck" name="bookingRange"/>
-                    <?= \Yii::t('partner_pricerules', 'Booking date range') ?>
+                    3. <?= \Yii::t('partner_pricerules', 'Early booking discount') ?>
                 </h3>
             </div>
             <div class="box-body">
-                <?= $form->field($model, 'dateFromB', ['template' => '{input}'])->hiddenInput() ?>
-                <?= $form->field($model, 'dateToB', ['template' => '{input}'])->hiddenInput() ?>
+                <?= Html::activeHiddenInput($model, 'dateFromB'); ?>
+                <?= Html::activeHiddenInput($model, 'dateToB'); ?>
+                <label class="control-label"><?= Yii::t('partner_pricerules', 'Dates') ?></label>
                 <div class="input-daterange input-group" data-provide="datepicker"
                      data-date-format="<?= $dateFormat ?>">
                     <input type="text" data-input="dateFromB" class="form-control" value="" disabled/>
                     <span class="input-group-addon"><?= \Yii::t('partner_pricerules', 'to') ?></span>
                     <input type="text" data-input="dateToB" class="form-control" value="" disabled/>
                 </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p class="help-block">
+                        <?= Yii::t('pricerules', 'The period of the early booking discount validity (Attn: specify here the period when reservation should be made for early booking discount be valid, NOT the real stay in the hotel period!).') ?>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    <input type="checkbox" class="iCheck" name="checkCode"/>
+                    4. <?= \Yii::t('partner_pricerules', 'Promotional code discount') ?>
+                </h3>
+            </div>
+            <div class="box-body">
+                <?= $form->field($model, 'code', [
+                    'inputOptions' => [
+                        'disabled' => 'disabled'
+                    ]
+                ]) ?>
             </div>
         </div>
     </div>
@@ -150,13 +184,14 @@ $dateFormat = \Yii::t('partner', 'dd/mm/yyyy');
             <div class="box-header with-border">
                 <h3 class="box-title">
                     <input type="checkbox" class="iCheck" name="livingRange"/>
-                    <?= \Yii::t('partner_pricerules', 'Living date range') ?>
+                    5. <?= \Yii::t('partner_pricerules', 'Discount for reservation period') ?>
                 </h3>
             </div>
             <div class="box-body">
-                <?= $form->field($model, 'dateFrom', ['template' => '{input}'])->hiddenInput() ?>
-                <?= $form->field($model, 'dateTo', ['template' => '{input}'])->hiddenInput() ?>
-                <div class="input-daterange input-group" data-provide="datepicker"
+                <?= Html::activeHiddenInput($model, 'dateFrom'); ?>
+                <?= Html::activeHiddenInput($model, 'dateTo'); ?>
+                <label class="control-label"><?= Yii::t('partner_pricerules', 'Dates') ?></label>
+                <div class="input-daterange input-group" data-provide="datepicker" 
                      data-date-format="<?= $dateFormat ?>">
                     <input type="text" data-input="dateFrom" class="form-control" value="" disabled/>
                     <span class="input-group-addon"><?= \Yii::t('partner_pricerules', 'to') ?></span>
@@ -168,16 +203,11 @@ $dateFormat = \Yii::t('partner', 'dd/mm/yyyy');
                 ]) ?>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-sm-6">
         <div class="box box-default">
             <div class="box-header with-border">
                 <h3 class="box-title">
                     <input type="checkbox" class="iCheck" name="minSum"/>
-                    <?= \Yii::t('partner_pricerules', 'Minimum discount bound') ?>
+                    6. <?= \Yii::t('partner_pricerules', 'Set the minimum discount') ?>
                 </h3>
             </div>
             <div class="box-body">
@@ -188,38 +218,15 @@ $dateFormat = \Yii::t('partner', 'dd/mm/yyyy');
                 ]) ?>
             </div>
         </div>
-    </div>
-    <div class="col-sm-6">
         <div class="box box-default">
             <div class="box-header with-border">
                 <h3 class="box-title">
                     <input type="checkbox" class="iCheck" name="maxSum"/>
-                    <?= \Yii::t('partner_pricerules', 'Maximum discount bound') ?>
+                    7. <?= \Yii::t('partner_pricerules', 'Set the maximum discount') ?>
                 </h3>
             </div>
             <div class="box-body">
                 <?= $form->field($model, 'maxSum', [
-                    'inputOptions' => [
-                        'disabled' => 'disabled'
-                    ]
-                ]) ?>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="row">
-    <div class="col-sm-6">
-        <div class="box box-default">
-            <div class="box-header with-border">
-                <h3 class="box-title">
-                    <input type="checkbox" class="iCheck" name="checkCode"/>
-                    <?= \Yii::t('partner_pricerules', 'Check code') ?>
-                </h3>
-            </div>
-            <div class="box-body">
-                <?= $form->field($model, 'code', [
                     'inputOptions' => [
                         'disabled' => 'disabled'
                     ]

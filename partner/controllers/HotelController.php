@@ -180,6 +180,7 @@ class HotelController extends Controller
             
         } else {//Вывод формы
             $groups = \common\components\ListFacilitiesType::options();
+            $descriptions = \common\components\ListFacilitiesType::descriptions();
             $checked = $hotel->facilityArray();
             $facilities = [];
             foreach ($groups as $k=>$gr) {
@@ -189,6 +190,7 @@ class HotelController extends Controller
             return $this->render('facilities', [ 
                 'model' => $this->findModel($id),
                 'groups' => $groups,
+                'descriptions' => $descriptions,
                 'facilities' => $facilities,
             ]);
         }

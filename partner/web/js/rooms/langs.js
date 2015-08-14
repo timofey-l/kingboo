@@ -27,12 +27,15 @@ LANGS.ru = {
     room_adults_title: "Взрослых",
     room_children_title: "Детей",
     room_total_title: "Всего",
+    room_adults_title_1: "взрослых",
+    room_children_title_1: "детей",
+    room_total_title_1: "всего",
     room_price_type_title : "Тип стоимости",
 
     room_list_empty: "Номера отсутствуют!",
 
     room_list_title: "Список номеров",
-    room_edit_title: "Редактирование номера",
+    room_edit_title: "Настройка параметров номера",
     room_save : "Сохранить",
     room_null_text: "Такого номера не найдено.",
     room_cancel : "Отмена",
@@ -53,7 +56,7 @@ LANGS.ru = {
     photo_delete_confirm : 'Вы уверены, что хотите удалить фотографию?\n' +
     'В случае продолжения фотография будет удалена безвозвратно!\n',
 
-    room_facilities : 'Особенности номера',
+    room_facilities : 'Описание номера',
 
     availability_dates: 'Выбранные даты',
     availability_count: 'Количество свободных номеров на выбранный период:',
@@ -70,6 +73,7 @@ LANGS.ru = {
     availability_on_sale: 'В продаже',
     send: 'Отправить',
     room_amount: 'Количество доступных номеров',
+    room_maximum_allowed: 'Максимальное количество:',
 };
 
 LANGS.en = {
@@ -98,12 +102,15 @@ LANGS.en = {
     room_adults_title: "Adults",
     room_children_title: "Children",
     room_total_title: "Total",
+    room_adults_title_1: "adults",
+    room_children_title_1: "children",
+    room_total_title_1: "total",
     room_price_type_title : "Price type",
 
     room_list_empty: "Rooms are absent!",
 
     room_list_title: "Rooms list",
-    room_edit_title: "Edit room",
+    room_edit_title: "Room settings",
     room_save : "Save",
     room_null_text: "Cannot find room.",
     room_cancel : "Cancel",
@@ -123,7 +130,7 @@ LANGS.en = {
     image_add : "Add photo",
     photo_delete_confirm : 'Are you sure want to delete this photo?\n',
     
-    room_facilities : 'Facilities',
+    room_facilities : 'Room description',
 
     availability_dates: 'Selected dates',
     availability_count: 'Number of available rooms for selected period:',
@@ -140,6 +147,7 @@ LANGS.en = {
     availability_on_sale: 'On sale',
     send: 'Send',
     room_amount: 'Amount of availible rooms',
+    room_maximum_allowed: 'Maximum allowed:',
 };
 
 function t(v, l) {

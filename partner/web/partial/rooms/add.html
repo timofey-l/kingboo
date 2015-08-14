@@ -89,23 +89,26 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-sm-12"><b>{{t('room_maximum_allowed')}}</b></div>
+                </div>
+                <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group" ng-class="getClasses('adults')">
-                            <label for="adults">{{t('room_adults_title')}}</label>
+                            <label for="adults">{{t('room_adults_title_1')}}</label>
                             <input type="number" class="form-control" ng-model="room.adults" name="adults"
                                    id="adults" placeholder="" required integer min="1">
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group" ng-class="getClasses('children')">
-                            <label for="children">{{t('room_children_title')}}</label>
+                            <label for="children">{{t('room_children_title_1')}}</label>
                             <input type="number" class="form-control" ng-model="room.children" name="children"
                                    id="children" placeholder="" required integer min="0">
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group" ng-class="getClasses('total')">
-                            <label for="total">{{t('room_total_title')}}</label>
+                            <label for="total">{{t('room_total_title_1')}}</label>
                             <input type="number" class="form-control"
                                    ng-model="room.total" name="total"
                                    id="total" placeholder="" required

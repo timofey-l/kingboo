@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Hotel */
 
-$this->title = Yii::t('hotels', 'Create {modelClass}', [
+$this->title = Yii::t('hotels', 'Register new hotel', [
     'modelClass' => 'Hotel',
-]);
+]); 
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="hotel-create">

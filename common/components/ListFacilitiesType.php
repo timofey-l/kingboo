@@ -15,31 +15,41 @@ class ListFacilitiesType
     static $_options = [
         [
             'id' => 1,
+            'description_ru' => '',
+            'description_en' => '',
             'name_ru' => 'Услуги',
-            'name_en' => 'Facilities'
+            'name_en' => 'Facilities',
         ],
         [
             'id' => 2,
+            'description_ru' => '',
+            'description_en' => '',
             'name_ru' => 'Категория',
-            'name_en' => 'Category'
+            'name_en' => 'Category',
         ],
         [
             'id' => 3,
+            'description_ru' => '',
+            'description_en' => '',
             'name_ru' => 'Спорт',
-            'name_en' => 'Sport'
+            'name_en' => 'Sport',
         ],
         [
             'id' => 4,
-            'name_ru' => 'Типы оплаты',
-            'name_en' => 'Payment types'
+            'description_ru' => 'Указанными средствами можно расплатиться непосредственно при заселении. Выбранные способы не имеют отношения к настройкам онлайн оплаты на сайте отеля.',
+            'description_en' => 'The specified options are for payment directly at check in and are not related to the online payment settings on the hotel website.',
+            'name_ru' => 'В отеле принимают оплату',
+            'name_en' => 'The hotel accepts the following',
         ],
         [
             'id' => 5,
+            'description_ru' => '',
+            'description_en' => '',
             'name_ru' => 'Пляж',
-            'name_en' => 'Beach'
+            'name_en' => 'Beach',
         ]
     ];
-    
+
     public static function getOptions() {
         return self::$_options;
     }
@@ -57,6 +67,19 @@ class ListFacilitiesType
         return $result;
     }
     
+    /**
+    * Возвращает descriptions для использования в селектах array(id=>name) с учетом языка
+    * 
+    */
+    public static function descriptions($lang = false) {
+        $description = $lang ? 'description_' . $lang : 'description_' . Lang::$current->url;
+        $result = [];
+        foreach (self::$_options as $v) {
+            $result[$v['id']] = $v[$description];
+        }
+        return $result;
+    }
+
     /**
     * Если $lang=false возвращает массив по $id
     * Если $lang пропущен, возвращает запись на текущем языке

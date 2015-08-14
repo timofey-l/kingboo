@@ -47,4 +47,5 @@ return [
     'User message' => 'Сообщение пользователя',
     'Your message' => 'Ваше сообщение',
     'd/m/Y H:i:s' => 'd.m.Y H:i:s',
+    'Your message' => 'Ваше сообщение',
 ];
