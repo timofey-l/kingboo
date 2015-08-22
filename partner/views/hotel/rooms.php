@@ -27,8 +27,8 @@ $this->title = $hotel_title;
 $this->params['breadcrumbs'][] = ['label' => $hotel_title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('hotels', 'Rooms'), 'url' => ['rooms', 'id' => $model->id]];
 
-//echo \common\helpers\DebugHelper::grid(new \common\models\RoomFacilities());
-//echo 'res='.\common\components\BookingHelper::isPriceSet(['date'=>'2015-06-02','roomId'=>3]);
+//echo \common\helpers\DebugHelper::grid(new \common\models\Room());
+//echo 'res='.\common\components\BookingHelper::priceSetStatistic(['beginDate'=>'2015-09-01','endDate'=>'2015-09-30','roomId'=>3]).'<br>';
 
 ?>
 <script type="text/javascript">

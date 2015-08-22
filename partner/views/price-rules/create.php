@@ -8,13 +8,13 @@ $this->title = \Yii::t('partner_pricerules', 'Create {price_rule}', [
     'price_rule' => strtolower($model->title),
 ]);
 
-$this->params['breadcrumbs'][] = ['url' => ['index'], 'label' => \Yii::t('partner_pricerules', 'Price rules')];
+$this->params['breadcrumbs'][] = ['url' => ['index'], 'label' => \Yii::t('partner_pricerules', 'Discounts')];
 $this->params['breadcrumbs'][] = $this->title;
 
 
 ?>
 <?= \yii\helpers\Html::a(
-    '<i class="fa fa-arrow-left"></i> ' . \Yii::t('partner_pricerules', 'Back to price rules'),
+    '<i class="fa fa-arrow-left"></i> ' . \Yii::t('partner_pricerules', 'Back to discount list'),
     ['index'],
     ['class' => 'btn btn-default']) ?>
 <br/>

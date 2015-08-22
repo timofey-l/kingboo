@@ -331,6 +331,8 @@ roomsManageControllers.controller('PricesCtrl',
         $scope.priceLoading = true;
         $scope.titles = null;
         $('#daterange').trigger('change');
+        $scope.filter.startDate = $('#daterange').data('daterangepicker').startDate;
+        $scope.filter.endDate = $('#daterange').data('daterangepicker').endDate;
         f = {
             startDate: $scope.filter.startDate.format('YYYY-MM-DD'),
             endDate: $scope.filter.endDate.format('YYYY-MM-DD'),

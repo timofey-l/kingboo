@@ -64,4 +64,5 @@ return [
     'Set the maximum discount' => 'Ограничение по максимальному размеру скидки',
     'promo action' => 'промоакция',
     'Dates' => 'Даты',
+    'Back to discount list' => 'Вернуться к списку скидок',
 ];

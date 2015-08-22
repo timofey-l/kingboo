@@ -34,10 +34,11 @@ if (preg_match('%partner\.(?<server>.+)$%', $hostInfo, $m)) {
     <p>
         <?= Html::a('<span class="fa fa-edit"></span>' . Yii::t('hotels', 'Edit'), ['update', 'id' => $model->id], ['class' => 'btn btn-app']) ?>
         <?= Html::a('<span class="fa fa-check-square-o"></span>' . Yii::t('hotels', 'Facilities'), ['facilities', 'id' => $model->id], ['class' => 'btn btn-app']) ?>
-        <?= Html::a('<span class="fa fa-institution"></span>' . Yii::t('hotels', 'Rooms'), ['rooms', 'id' => $model->id], ['class' => 'btn btn-app']) ?>
+        <?= Html::a('<span class="fa fa-hotel"></span>' . Yii::t('hotels', 'Rooms'), ['rooms', 'id' => $model->id], ['class' => 'btn btn-app']) ?>
         <?= Html::a('<span class="fa fa-camera"></span>' . Yii::t('hotels', 'Images'), ['images', 'id' => $model->id], ['class' => 'btn btn-app']) ?>
+        <?= Html::a('<span class="fa fa-th"></span>' . Yii::t('partner_widget', 'Widgets'), ['widgets', 'id' => $model->id], ['class' => 'btn btn-app']) ?>
         <?= Html::a('<span class="fa fa-code"></span>' . Yii::t('hotels', 'Frame on site'), ['iframe', 'id' => $model->id], ['class' => 'btn btn-app']) ?>
-        <?= Html::a('<span class="fa fa-code"></span>' . Yii::t('hotels', 'Custom CSS'), ['css', 'id' => $model->id], ['class' => 'btn btn-app']) ?>
+        <?= Html::a('<span class="fa fa-css3"></span>' . Yii::t('hotels', 'Custom CSS'), ['css', 'id' => $model->id], ['class' => 'btn btn-app']) ?>
         <?= Html::a('<span class="fa fa-trash-o"></span>' . Yii::t('hotels', 'Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-app bg-red',
             'data' => [
@@ -62,7 +63,7 @@ if (preg_match('%partner\.(?<server>.+)$%', $hostInfo, $m)) {
                             <h4>
                                 <i class="icon fa fa-info"></i> <?= \Yii::t('hotels', 'No photos') ?>
                             </h4>
-                            <?= Html::a(\Yii::t('partner_orders', 'Please add some photos to hotel.'), ['images', 'id' => $model->id]) ?>
+                            <?= Html::a(\Yii::t('hotels', 'Add hotel photos'), ['images', 'id' => $model->id]) ?>
                         </div>
                     <?php endif; ?>
                     <?php if ($model->images): ?>

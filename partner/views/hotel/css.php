@@ -61,7 +61,8 @@ $this->params['breadcrumbs'][] = Yii::t('hotels', 'Custom CSS');
     <div class="col-md-6">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title"><?= \Yii::t('partner_css', 'Compiled css code (after last save)', []) ?></h3>
+                <h3 class="box-title"><?= \Yii::t('partner_css', 'CSS code', []) ?></h3>
+                <p><?= \Yii::t('partner_css', 'compiled after last save', []) ?></p>
                 <div class="box-tools pull-right">
                     <span class="label label-danger"><?= \Yii::t('partner_css', 'read only', []) ?></span>
                 </div>

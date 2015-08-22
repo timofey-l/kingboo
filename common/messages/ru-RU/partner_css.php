@@ -19,6 +19,8 @@
 return [
     'Code save failure' => 'Ошибка сохранения кода',
     'Compiled css code (after last save)' => 'Скомпилированный CSS код (после последнего сохранения)',
+    'CSS code' => 'CSS код',
+    'compiled after last save' => 'скомпилирован после последнего сохранения',
     'LESS code' => 'LESS код',
     'Save' => 'Сохранить',
     'Your code was successfully saved' => 'Код успешно сохранён.',

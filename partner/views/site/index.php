@@ -193,7 +193,7 @@ $this->registerCssFile($colorbox . '/example1/colorbox.css', [], 'colorbox');
                         <?php if (!$messages): ?>
                             <div class="text-center">
                             <?= \yii\helpers\Html::a(
-                                '<i class="fa fa-comments-o"></i> ' . \Yii::t('partner_support', 'Start new dialog'),
+                                '<i class="fa fa-comments-o"></i> ' . \Yii::t('partner_support', 'Submit a request'),
                                 ['/support/create'],
                                 [
                                     'class' => 'btn btn-app'

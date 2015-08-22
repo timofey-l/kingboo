@@ -1,5 +1,5 @@
 <?php
-use partner\widgets\MessagesToUser;
+use partner\widgets\SystemMessages;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -29,7 +29,7 @@ $orders = \common\models\Order::findNew();
                 <!-- Messages: style can be found in dropdown.less-->
 
 
-                <?= MessagesToUser::widget([
+                <?= SystemMessages::widget([
                     'faIcon' => 'exclamation-circle',
                     'labelType' => 'danger',
                     'width' => 300,

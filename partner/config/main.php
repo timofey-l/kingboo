@@ -9,7 +9,7 @@ $params = array_merge(
 return [
     'id' => 'app-partner',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'automaticSystemMessages'],
     'controllerNamespace' => 'partner\controllers',
     'components' => [
         'view' => [
@@ -68,6 +68,9 @@ return [
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
             ]
+        ],
+        'automaticSystemMessages' => [
+            'class' => 'partner\components\PartnerAutomaticSystemMessages',
         ],
     ],
     'params' => $params,

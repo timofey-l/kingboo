@@ -76,54 +76,10 @@ class SiteController extends Controller
     public function beforeAction($action)
     {
         if (parent::beforeAction($action)) {
-            $this->updateMessagesToUser();
             return true;
         } else {
             return false;
         }
-    }
-
-    /**
-     * Обновляет сообщения, которые выводятся пользователю
-     */
-    public function updateMessagesToUser()
-    {
-        if (\Yii::$app->user->isGuest) {
-            return;
-        }
-        /** @var Session $session */
-        $session = \Yii::$app->getSession();
-        /** @var PartnerUser $partner */
-        $partner = PartnerUser::findOne(\Yii::$app->user->id);
-        $messages = $session->get('messagesToUser', []);
-        $setArray = [
-            [
-                'id' => 'yandexMoney',
-                'type' => 'warning',
-                'condition' => $showYandexMoneyNotConfigured = trim($partner->shopPassword) == '' || trim($partner->shopId) == '' || trim($partner->scid) == '',
-                'text' => \Yii::t('partner', '<b>Yandex.Money is not configured.</b><br>Your customers can not make online payments.<br>For integration with Yandex.Money, please, enter the required settings on the <a href="/profile">Profile page</a>.')
-            ],
-            [
-                'id' => 'bookingUnavailible',
-                'type' => 'danger',
-                'condition' => ( $showYandexMoneyNotConfigured = trim($partner->shopPassword) == '' || trim($partner->shopId) == '' || trim($partner->scid) == '') && (!$partner->allow_checkin_fullpay && !$partner->allow_payment_via_bank_transfer),
-                'text' => \Yii::t('partner', '<b>Your clients can not make reservation!</b><br>Payment at check in and payment via bank transfer are not active, and integration with Yandex.Money is not configured.<br>You can activate the required options in <a href="/profile">Profile</a>'),
-            ]
-        ];
-
-        foreach ($setArray as $k => $message) {
-            if ($message['condition']) {
-                if (!isset($messages[$message['id']])) {
-                    \Yii::$app->session->setFlash($message['type'], $message['text']);
-                    $messages[$message['id']] = $message;
-                }
-            } else {
-                if (isset($messages[$message['id']])) {
-                    unset($messages[$message['id']]);
-                }
-            }
-        }
-        $session->set('messagesToUser', $messages);
     }
 
     public function actionIndex()

@@ -29,4 +29,5 @@ return [
     'Dialogs are absent' => 'Диалоги отсутствуют',
     'Press upper button to start dialog.' => 'Нажмите на кнопку выше для начала общения.',
     'Back to list of messages' => 'Вернуться к списку сообщений',
+    'Submit a request' => 'Задать вопрос в службу поддержки',
 ];

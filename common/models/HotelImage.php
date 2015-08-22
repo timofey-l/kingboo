@@ -89,4 +89,20 @@ class HotelImage extends \yii\db\ActiveRecord
         return $this->hasOne(Hotel::className(), ['id' => 'hotel_id']);
     }
 
+    public function afterDelete() {
+        parent::afterDelete();
+        // Сигнал для системы сообщений
+        \Yii::$app->automaticSystemMessages->setDataUpdated();
+    }
+
+    public function afterSave($insert, $changedAttributes) {
+        parent::afterSave($insert, $changedAttributes);
+        if ($insert) {
+            // Сигнал для системы сообщений
+            \Yii::$app->automaticSystemMessages->setDataUpdated();
+        }
+    }
+
+
+
 }

@@ -146,8 +146,17 @@ class Room extends \yii\db\ActiveRecord
         return $a;
     }
 
-    public function afterSave($insert)
+    public function getLangAttribute($attr, $lang = false) {
+        $name = $lang ? $attr . '_' . $lang : $attr . '_' . Lang::$current->url;
+        if (!isset($this->$name)) {
+            return false;
+        }
+        return $this->$name;
+    }
+
+    public function afterSave($insert, $changedAttributes)
     {
+        parent::afterSave($insert, $changedAttributes);
         if ($insert) {
             // заполняем количество на год вперед
             $attributes = [
@@ -175,7 +184,16 @@ class Room extends \yii\db\ActiveRecord
             \Yii::$app->db->createCommand()
                 ->batchInsert(RoomAvailability::tableName(), $attributes, $rows)
                 ->execute();
+
+            // Сигнал для системы сообщений
+            \Yii::$app->automaticSystemMessages->setDataUpdated();
         }
+    }
+
+    public function afterDelete() {
+        parent::afterDelete();
+        // Сигнал для системы сообщений
+        \Yii::$app->automaticSystemMessages->setDataUpdated();
     }
 
 }

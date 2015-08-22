@@ -54,6 +54,20 @@ class Hotel extends \yii\db\ActiveRecord
 		return true;
 	}
 
+    public function afterDelete() {
+        parent::afterDelete();
+        // Сигнал для системы сообщений
+        \Yii::$app->automaticSystemMessages->setDataUpdated();
+    }
+
+    public function afterSave($insert, $changedAttributes) {
+    	parent::afterSave($insert, $changedAttributes);
+    	if ($insert) {
+            // Сигнал для системы сообщений
+            \Yii::$app->automaticSystemMessages->setDataUpdated();
+    	}
+    }
+
 	/**
 	 * @inheritdoc
 	 */
@@ -190,5 +204,13 @@ class Hotel extends \yii\db\ActiveRecord
 	{
 		return $this->hasOne('\partner\models\PartnerUser', ['id' => 'partner_id']);
 	}
+
+    public function getLangAttribute($attr, $lang = false) {
+        $name = $lang ? $attr . '_' . $lang : $attr . '_' . Lang::$current->url;
+        if (!isset($this->$name)) {
+            return false;
+        }
+        return $this->$name;
+    }
 
 }

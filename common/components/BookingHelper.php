@@ -125,9 +125,45 @@ class BookingHelper
         }
 
         if ($result === null) {
-            throw new \Exception("Room is not availible");
+            throw new \Exception("Room is not available");
         } else {
             return $result;
         }
     }
+
+    /**
+     * Проверяет установлена сколько процентов цен установлено на указанный период
+     * Возвращает число от 0 до 1
+     *
+     * roomId - id номера
+     * beginDate - дата в формате 'YYYY-MM-DD'
+     * endDate - дата в формате 'YYYY-MM-DD'
+     */
+    public static function priceSetStatistic($params)
+    {
+        $room = Room::findOne($params['roomId']);
+        if ($room === null) {
+            throw new \Exception('Room not found');
+        }
+
+        // получаем тип прайса
+        $priceType = ListPriceType::getById($room->price_type);
+        if ($priceType === false) {
+            throw new \Exception('Price type not found');
+        }
+
+        // загружаем калькулятор и запускаем проверку
+        if (class_exists($priceType['class'])) {
+            $result = $priceType['class']::priceSetStatistic($room, $params);
+        } else {
+            throw new \Exception("Price calc class ({$priceType['class']}) not found");
+        }
+
+        if ($result === null) {
+            throw new \Exception("Room is not available");
+        } else {
+            return $result;
+        }
+    }
+
 }

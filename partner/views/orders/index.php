@@ -96,7 +96,7 @@ updateGroup();
 
 
 <?php if (!$orders): ?>
-    <div class="alert alert-info alert-dismissable col-sm-8 col-md-6">
+    <div class="callout callout-info">
         <h4><i class="icon fa fa-info"></i> <?= \Yii::t('partner_orders', 'Orders are absent') ?></h4>
         <?= \Yii::t('partner_orders', 'No orders have been made yet.') ?>
     </div>

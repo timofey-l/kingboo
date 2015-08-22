@@ -21,6 +21,8 @@ use Yii;
  * @property string  $phone
  * @property string  $prima_login
  * @property string  $demo_expire
+ * 
+ * @property text  $system_info
  */
 class PartnerUser extends User
 {
@@ -41,6 +43,12 @@ class PartnerUser extends User
             };
         }
         return true;
+    }
+
+    public function afterSave($insert, $changedAttributes) {
+        parent::afterSave($insert, $changedAttributes);
+        // Сигнал для системы сообщений
+        \Yii::$app->automaticSystemMessages->setDataUpdated();
     }
 
     public function getUser()

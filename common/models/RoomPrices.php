@@ -64,4 +64,20 @@ class RoomPrices extends \yii\db\ActiveRecord
     public function getCurrency() {
         return $this->hasOne(Currency::className(), ['id' => 'price_currency']);
     }
+
+    public function afterDelete() {
+        parent::afterDelete();
+        // Сигнал для системы сообщений
+        \Yii::$app->automaticSystemMessages->setDataUpdated();
+    }
+
+    public function afterSave($insert, $changedAttributes) {
+        parent::afterSave($insert, $changedAttributes);
+        if ($insert) {
+            // Сигнал для системы сообщений
+            \Yii::$app->automaticSystemMessages->setDataUpdated();
+        }
+    }
+
+
 }

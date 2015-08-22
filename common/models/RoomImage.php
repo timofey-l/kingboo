@@ -87,4 +87,20 @@ class RoomImage extends \yii\db\ActiveRecord
     public function getRoom() {
         return $this->hasOne(Room::className(), ['id' => 'room_id']);
     }
+
+    public function afterDelete() {
+        parent::afterDelete();
+        // Сигнал для системы сообщений
+        \Yii::$app->automaticSystemMessages->setDataUpdated();
+    }
+
+    public function afterSave($insert, $changedAttributes) {
+        parent::afterSave($insert, $changedAttributes);
+        if ($insert) {
+            // Сигнал для системы сообщений
+            \Yii::$app->automaticSystemMessages->setDataUpdated();
+        }
+    }
+
+
 }

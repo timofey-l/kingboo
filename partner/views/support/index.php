@@ -13,7 +13,7 @@ $tickets = $dataProvider->getModels();
 
 <?php if (!$tickets): ?>
     <?= \yii\helpers\Html::a(
-        '<i class="fa fa-comments-o"></i> ' . \Yii::t('partner_support', 'Start new dialog'),
+        '<i class="fa fa-comments-o"></i> ' . \Yii::t('partner_support', 'Submit a request'),
         ['create'],
         ['class' => 'btn btn-success']) ?>
     <br/>

@@ -22,7 +22,7 @@ $widgets = $dataProvider->getModels();
             <?= Html::a('<i class="fa fa-plus-circle"></i> ' . Yii::t('partner_widget', 'Create Widget'), ['widget-create', 'id'=>$hotel_id], ['class' => 'btn btn-success']) ?>
             <br/>
             <br/>
-        <div class="alert alert-info alert-dismissable col-sm-8 col-md-6">
+        <div class="callout callout-info">
             <h4><i class="icon fa fa-info"></i> <?= \Yii::t('partner_widget', 'Widgets are absent') ?></h4>
             <?= \Yii::t('partner_widget', 'Press upper button to create new widget.') ?>
         </div>

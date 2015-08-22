@@ -23,7 +23,7 @@ $l = \common\models\Lang::$current->url;
 
             <li class="treeview active">
                 <a href="#">
-                    <i class="fa fa-share"></i> <span><?= $hotel->name ?></span>
+                    <i class="fa fa-building"></i> <span><?= $hotel->name ?></span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
@@ -33,7 +33,7 @@ $l = \common\models\Lang::$current->url;
                             [
                                 'url' => ['hotel/view'],
                                 'title' => Yii::t('hotels', 'View'),
-                                'icon' => 'building',
+                                'icon' => 'eye',
                             ],
                             [
                                 'url' => ['hotel/update'],
@@ -48,7 +48,7 @@ $l = \common\models\Lang::$current->url;
                             [
                                 'url' => ['hotel/rooms'],
                                 'title' => Yii::t('hotels', 'Rooms'),
-                                'icon' => 'institution',
+                                'icon' => 'hotel',
                             ],
                             [
                                 'url' => ['hotel/images'],
@@ -68,7 +68,7 @@ $l = \common\models\Lang::$current->url;
                             [
                                 'url' => ['hotel/css'],
                                 'title' => Yii::t('hotels', 'Custom CSS'),
-                                'icon' => 'code',
+                                'icon' => 'css3',
                             ],
                         ]
                     ?>
@@ -85,7 +85,14 @@ $l = \common\models\Lang::$current->url;
 
             <?php 
                     } else {
-                        echo Html::tag('li', Html::a($hotel->name, ['hotel/view', 'id' => $hotel->id]));
+                        ?>
+                        <li>
+                        <a href="<?= \yii\helpers\URL::toRoute(['hotel/view', 'id' => $hotel->id]) ?>">
+                            <i class="fa fa-building-o"></i> <span><?= $hotel->name ?></span>
+                            <i class="fa fa-angle-right pull-right"></i>
+                        </a>
+                        </li>
+                        <?php
                     }
                 }
 		    ?>

@@ -85,4 +85,39 @@ class FixedPriceCalculator
 
         return ($price && $price['price'] > 0);
     }
+
+    /**
+     * Проверяет установлена сколько процентов цен установлено на указанный период
+     * Возвращает число от 0 до 1
+     *
+     * @param Room  $room   Объект комнаты
+     * @param array $params Параметры формирования цены
+     *
+     * @return float
+     */
+    public static function priceSetStatistic($room, $params)
+    {
+        $beginDate = ArrayHelper::getValue($params, 'beginDate', false);
+        $endDate = ArrayHelper::getValue($params, 'endDate', false);
+
+        $count = RoomPrices::find()
+            ->where(['room_id' => $room->id])
+            ->andWhere(['>=', 'date', $beginDate])
+            ->andWhere(['<=', 'date', $endDate])
+            ->count();
+        if (!$count) {
+            $count = 0;
+        }
+
+        $bd = \DateTime::createFromFormat('Y-m-d', $beginDate);
+        $ed = \DateTime::createFromFormat('Y-m-d', $endDate);
+        $d = $ed->diff($bd);
+        $n = $d->days;
+        if ($n == 0) {
+            return 1;
+        }
+
+        return round($count / ($n + 1), 2);
+    }
+
 }
