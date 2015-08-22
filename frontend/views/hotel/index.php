@@ -133,6 +133,7 @@ if (!$this->context->checkBookingPossibility($model)) {
     </div>
 
     <div class="row">
+        <?php if (count($model->images)): ?>
         <div class="col-md-6 col-sm-12 images-container">
             <!-- Slider main container -->
             <div class="big-image" id="hotelImagesBig">
@@ -159,6 +160,7 @@ if (!$this->context->checkBookingPossibility($model)) {
 
             </div>
         </div>
+        <?php endif; ?>
         <div class="col-md-6 col-sm-12 info-container">
             <div class="collapsable">
                 <ul class="hotel-facilities row">
@@ -255,7 +257,7 @@ if (!$this->context->checkBookingPossibility($model)) {
         <?= \Yii::t('frontend', '<b>No rooms available for this period.</b> Please, select other days.');?>
     </div>
     <div class="row result-item well" ng-repeat="r in results">
-        <div class="col-md-3">
+        <div class="col-md-3" ng-show="r.images.length > 0">
             <div class="gallery thumbnail">
                 <div class="swiper-container" id="{{'hotel-room-' + r.id}}" data-room-id="{{ r.id }}">
                     <div class="swiper-wrapper">
