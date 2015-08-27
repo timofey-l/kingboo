@@ -32,7 +32,7 @@ class m150824_053524_add_billing_tables extends Migration
         ]);
 
         // expenses
-        $this->createTable('{{%billing_expeses}}', [
+        $this->createTable('{{%billing_expenses}}', [
             'id' => Schema::TYPE_PK,
             'sum' => Schema::TYPE_FLOAT . ' NOT NULL',
             'date' => Schema::TYPE_DATETIME . ' NOT NULL',
@@ -47,6 +47,39 @@ class m150824_053524_add_billing_tables extends Migration
             'partner_id' => Schema::TYPE_INTEGER . ' NOT NULL',
             'balance' => Schema::TYPE_FLOAT . ' DEFAULT 0',
         ]);
+
+        // account services
+        $this->createTable('{{%billing_account_services}}', [
+            'id' => Schema::TYPE_PK,
+            'account_id' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'service_id' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'add_date' => Schema::TYPE_DATETIME . ' NOT NULL',
+            'end_date' => Schema::TYPE_DATETIME . ' NOT NULL',
+            'active' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT FALSE',
+        ]);
+
+        // invoices
+        $this->createTable('{{%billing_invoices}}', [
+            'id' => Schema::TYPE_PK,
+            'account_id' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'sum' => Schema::TYPE_FLOAT . ' NOT NULL DEFAULT 0',
+            'currency' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'created_at' => Schema::TYPE_DATETIME,
+            'payed' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT FALSE',
+            'system' => Schema::TYPE_INTEGER . ' DEFAULT 0',
+        ]);
+
+        // Yandex Kassa pays
+        $this->createTable('{{%billing_pays_yandex}}', [
+            'id' => Schema::TYPE_PK,
+            'invoiceId' => Schema::TYPE_BIGINT . ' NOT NULL',
+            'payed' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT FALSE',
+            'checked' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT FALSE',
+            'billing_invoice_id' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'check_post_dump' => Schema::TYPE_TEXT,
+            'avisio_post_dump' => Schema::TYPE_TEXT,
+        ]);
+
     }
 
     public function down()
