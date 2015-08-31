@@ -5,7 +5,11 @@
 return [
     'components' => [
         'db' => [
-            'dsn' => 'mysql:host=localhost;dbname=yii2_advanced_tests',
+//            'dsn' => 'mysql:host=localhost;dbname=yii2_advanced_tests',
+            'dsn' => 'pgsql:host=localhost;dbname=kingboo_test',
+            'username' => 'kingboo',
+            'password' => 'kingboo',
+            'charset' => 'utf8',
         ],
         'mailer' => [
             'useFileTransport' => true,

@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\db\Query;
 
 /**
  * This is the model class for table "{{%billing_account}}".
@@ -63,5 +64,24 @@ class BillingAccount extends \yii\db\ActiveRecord
         } else {
             return $this->balance;
         }
+    }
+
+    public function getIncomes()
+    {
+        return $this->hasMany(BillingIncome::className(), ['account_id' => 'id']);
+    }
+
+    public function getExpenses()
+    {
+        return $this->hasMany(BillingExpense::className(), ['account_id' => 'id']);
+    }
+
+    public function updateBalance()
+    {
+        $totalIncome = 0;
+        $totalIncome = (new Query())
+            ->from(BillingIncome::tableName())
+            ->sum('sum');
+
     }
 }
