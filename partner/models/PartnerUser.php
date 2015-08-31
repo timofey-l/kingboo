@@ -3,6 +3,7 @@ namespace partner\models;
 
 use common\models\PayMethod;
 use common\models\User;
+use common\models\BillingAccount;
 use Yii;
 
 /**
@@ -21,8 +22,10 @@ use Yii;
  * @property string  $phone
  * @property string  $prima_login
  * @property string  $demo_expire
- * 
+ *
  * @property text  $system_info
+ *
+ * @property BillingAccount $billing
  */
 class PartnerUser extends User
 {
@@ -47,8 +50,21 @@ class PartnerUser extends User
 
     public function afterSave($insert, $changedAttributes) {
         parent::afterSave($insert, $changedAttributes);
+
+        // создание аккаунта в биллинге
+        if ($insert) {
+            $billingAccount = new BillingAccount;
+            $billingAccount->partner_id = $this->id;
+            $billingAccount->save();
+        }
+
         // Сигнал для системы сообщений
         \Yii::$app->automaticSystemMessages->setDataUpdated();
+    }
+
+    public function getBilling()
+    {
+        return $this->hasOne(\common\models\BillingAccount::className(), ['partner_id' => 'id']);
     }
 
     public function getUser()
@@ -70,7 +86,7 @@ class PartnerUser extends User
 
     public function getHotels()
     {
-        return $this->hasMany('\common\models\Hotel', ['partner_id' => 'id']);
+        return $this->hasMany(\common\models\Hotel::className(), ['partner_id' => 'id']);
     }
 
     public function getPayMethods() {

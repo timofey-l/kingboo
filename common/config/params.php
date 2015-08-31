@@ -4,4 +4,12 @@ return [
     'email.from' => ['no-reply@king-boo.com' => 'king-boo.com'],
     'supportEmail' => 'timofeylyzhenkov@gmail.com',
     'user.passwordResetTokenExpire' => 3600,
+
+    'yandex' => [
+        'demo' => false,
+        'shopId' => '',
+        'scid' => '',
+        'shopPassword' => '',
+
+    ]
 ];

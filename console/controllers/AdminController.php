@@ -15,6 +15,7 @@ use yii\helpers\Inflector;
 
 class AdminController extends Controller
 {
+
     public function actionChangeAdminPassword($id)
     {
         /** @var BackendUser $admin */

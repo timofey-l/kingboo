@@ -125,4 +125,31 @@ class YandexHelper
         $hashArray[] = $partner->shopPassword;
         return strtolower(md5(implode(';', $hashArray))) == strtolower($params['md5']);
     }
+
+    public static function checkMd5Common($action, $params, $confParams)
+    {
+        $hashArray = [];
+        $hashArray[] = $action;
+        $hashArray[] = ArrayHelper::getValue($params, 'orderSumAmount', '');
+        $hashArray[] = ArrayHelper::getValue($params, 'orderSumCurrencyPaycash', '');
+        $hashArray[] = ArrayHelper::getValue($params, 'orderSumBankPaycash', '');
+        $hashArray[] = ArrayHelper::getValue($params, 'shopId', '');
+        $hashArray[] = ArrayHelper::getValue($params, 'invoiceId', '');
+        $hashArray[] = ArrayHelper::getValue($params, 'customerNumber', '');
+        $hashArray[] = ArrayHelper::getValue($confParams,'shopPassword', '');
+        return strtolower(md5(implode(';', $hashArray))) == strtolower(ArrayHelper::getValue($params,'md5', ''));
+    }
+
+    public static function getForm($params = false)
+    {
+        $url = \Yii::$app->params['yandex']['demo'] ? "https://demomoney.yandex.ru/eshop.xml" : "https://money.yandex.ru/eshop.xml";
+        $form = "<form action=\"{$url}\" method='post'>";
+        foreach ($params as $name => $value) {
+            $input = "<input name='{$name}' value='{$value}' type='hidden'/>";
+            $form .= $input;
+        }
+        $form .= "</form>";
+
+        return $form;
+    }
 }

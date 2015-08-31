@@ -1,6 +1,8 @@
 <?php
 
+use common\models\BillingAccount;
 use common\models\Currency;
+use partner\models\PartnerUser;
 use yii\db\Schema;
 use yii\db\Migration;
 
@@ -79,6 +81,16 @@ class m150824_053524_add_billing_tables extends Migration
             'check_post_dump' => Schema::TYPE_TEXT,
             'avisio_post_dump' => Schema::TYPE_TEXT,
         ]);
+
+
+        // добавление аккаунтов билинга к имеющимся PartnerUser
+        // валюта в рублях
+        $defaultCurrency = Currency::findOne(['code' => 'RUB']);
+        foreach (PartnerUser::find()->all() as $partner) {
+            $billing = new BillingAccount();
+            $billing->currency_id = $defaultCurrency->id;
+            $partner->link('billing', $billing);
+        }
 
     }
 

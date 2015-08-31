@@ -3,6 +3,7 @@ use partner\widgets\SystemMessages;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use partner\models\PartnerUser;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -10,6 +11,7 @@ use yii\bootstrap\NavBar;
 /** @var \common\models\SupportMessage[] $messages */
 $messages = \common\models\SupportMessage::findNew();
 $orders = \common\models\Order::findNew();
+
 ?>
 
 <header class="main-header">
@@ -101,6 +103,24 @@ $orders = \common\models\Order::findNew();
                         </ul>
                     </li>
                 <?php endif; ?>
+
+                <li class="dropdown ">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <?php
+                            echo \Yii::t('main', 'Balance: {b}', ['b' => PartnerUser::findOne(\Yii::$app->user->id)->billing->balanceString])
+                        ?>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <?= Html::a(
+                                '<i class="fa fa-money"></i>'.\Yii::t('main', 'Put money on your account'),
+                                ['/billing/pay']
+                            ) ?>
+                        </li>
+
+                    </ul>
+                </li>
+
 
                 <li class="user user-menu">
                     <?= Html::a(
