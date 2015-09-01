@@ -22,7 +22,7 @@ LANGS.ru = {
     room_table_head_update: "Редактировать",
     room_table_head_photos: "Фотографии",
     room_table_head_money: "Цены",
-    room_table_head_timetable: "Количество и доступность номеров",
+    room_table_head_timetable: "Цены и количество номеров",
 
     room_adults_title: "Взрослых",
     room_children_title: "Детей",
@@ -59,18 +59,33 @@ LANGS.ru = {
     room_facilities : 'Описание номера',
 
     availability_dates: 'Выбранные даты',
-    availability_count: 'Количество свободных номеров на выбранный период:',
+    availability_from: 'от ',
+    availability_count: 'Укажите количество свободных номеров на выбранный период:',
     availability_period: 'Выберите период',
     availability_save: 'Сохранить',
     availability_stop_sale: 'Остановить продажи',
     availability_start_sale: 'Запустить продажи',
     availability_cancel: 'Отмена',
+    availability_close: 'Закрыть',
     availability_select_period: 'Вы можете выбрать период кликнув на вторую дату в календаре.',
     availability_legend: 'Легенда',
+    availability_legend_stop_sale: 'Продажи остановлены',
     availability_no_price: 'Не указана цена',
+    availability_no_rooms: 'Нет свободных номеров',
     availability_no_count: 'Не указано количество',
-    availability_stop_sale: 'Продажа остановлена',
+    availability_partial_price: 'Цены указаны частично',
+    availability_stop_sale: 'Остановить продажи',
     availability_on_sale: 'В продаже',
+    availability_set_prices: 'Укажите цены в день на выбранный период в валюте ',
+    availability_td_info: 'Чтобы посмотреть всю информацию на день кликните на иконку i',
+    availability_info_count: 'Количество свободных номеров:',
+    availability_info_prices: 'Цены на номер:',
+    availability_info_title: 'Данные на',
+    availability_info_warning_prices_title: 'Бронирование на этот день ограничено',
+    availability_info_warning_prices: 'Не все цены проставлены',
+    availability_info_danger_prices_title: 'Бронирование на этот день невозможно',
+    availability_info_danger_prices: 'Цены не проставлены',
+    availability_tooltip_instructions: '<p>Для просмотра всей информации на интересующую дату щелкните по иконке <i class="fa fa-fw fa-info-circle text-aqua"></i>.</p><p>Для внесения изменений на заданный период щелкните по дате начала периода, а затем по дате его окончания.</p>',
     send: 'Отправить',
     room_amount: 'Количество доступных номеров',
     room_maximum_allowed: 'Максимальное количество:',
@@ -97,7 +112,7 @@ LANGS.en = {
     room_table_head_update: "Edit",
     room_table_head_photos: "Photos",
     room_table_head_money: "Prices",
-    room_table_head_timetable: "Availability",
+    room_table_head_timetable: "Prices and availability",
 
     room_adults_title: "Adults",
     room_children_title: "Children",
@@ -120,7 +135,7 @@ LANGS.en = {
     room_price_show : "Show",
 
     price_table_col_1_title : "Types",
-    price_table_col_1_description: "Adults + kids (7-11 y.o.) + children (0-6 y.o)",
+    price_table_col_1_description: "Adults + children (7-11 y.o.) + kids (0-6 y.o)",
     price_table_fixed_price: "Fixed price",
     
     edit_cancel_confirm: "Changes not saved.\nIf you leave changes will be lost.",
@@ -133,18 +148,33 @@ LANGS.en = {
     room_facilities : 'Room description',
 
     availability_dates: 'Selected dates',
-    availability_count: 'Number of available rooms for selected period:',
+    availability_from: 'from ',
+    availability_count: 'Specify number of available rooms for selected period:',
     availability_period: 'Select period',
     availability_save: 'Update',
     availability_stop_sale: 'Stop sale',
     availability_start_sale: 'Start sale',
     availability_cancel: 'Cancel',
+    availability_close: 'Close',
     availability_select_period: '',
     availability_legend: 'Legend',
+    availability_legend_stop_sale: 'Stop sale',
     availability_no_price: 'Price not specified',
+    availability_no_rooms: 'No vacant rooms',
     availability_no_count: 'Rooms not specified',
+    availability_partial_price: 'Prices specified partially',
     availability_stop_sale: 'Stop sale',
     availability_on_sale: 'On sale',
+    availability_set_prices: 'Specify prices per day for selected period in the currency ',
+    availability_td_info: 'Click icon i to look all information for this day',
+    availability_info_count: 'Number of vacant rooms:',
+    availability_info_prices: 'Prices:',
+    availability_info_title: 'Information for',
+    availability_info_warning_prices_title: 'Reservations on the specified day is  limited',
+    availability_info_warning_prices: 'Not all prices are filled out',
+    availability_info_danger_prices_title: 'Reservations on the specified day is impossible',
+    availability_info_danger_prices: 'No prices are filled out',
+    availability_tooltip_instructions: '<p>To view all information about the date click on the icon <i class="fa fa-fw fa-info-circle text-aqua"></i>.</p><p>For amending the specified period click on the first date of the period and then on the end date.</p>',
     send: 'Send',
     room_amount: 'Amount of availible rooms',
     room_maximum_allowed: 'Maximum allowed:',
@@ -192,6 +222,20 @@ locale.ru.date = {
 }
 
 locale.ru.dateFormat = 'DD.MM.YYYY';
+
+/**
+* d - десятичный знак
+* t - разделитель порядков
+*/
+locale.en.currency = {
+    d: '.',
+    t: ',',
+}
+
+locale.ru.currency = {
+    d: '.',
+    t: ' ',
+}
 
 function getLocale(v, l) {
     if (typeof l == 'undefined' && typeof window.LANG !== 'undefined') {

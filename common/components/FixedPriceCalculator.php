@@ -64,6 +64,21 @@ class FixedPriceCalculator
     }
 
     /**
+     * Цикл по всем вариантам заселения
+     * Возвращает количество вариантов и запускает для каждого варианта функцию $f с параметрами $params
+     *
+     * @param Room  $room   Объект комнаты
+     * @param f     function()
+     * @param params mixed
+     *
+     * @return int
+     */
+    public static function bookingTypes($room, $f=false, &$params=false) {
+        $f($params, 0, 0, 0);
+        return 1;
+    }
+
+    /**
      * Проверяет установлена ли цена на номер
      * Возвращает true, если цена установлена, и false, если нет
      *
@@ -84,6 +99,57 @@ class FixedPriceCalculator
             ->one();
 
         return ($price && $price['price'] > 0);
+    }
+
+    /**
+     * Возвращает объект, описывающий цену на номер в указанный день
+     * 
+     *
+     * @param Room  $room   Объект комнаты
+     * @param array $params Параметры поиска (date)
+     */
+    public static function getPrice($room, $params)
+    {
+        $date = ArrayHelper::getValue($params, 'date', false);
+
+        $price = RoomPrices::find()
+            ->where([
+                'room_id' => $room->id,
+                'date'    => $date,
+            ])
+            ->one();
+
+        $priceObj = new \stdClass();
+        $priceObj->set = ($price && $price['price'] > 0);
+        $priceObj->prices = ['default' => new \stdClass()];
+        if (!$price['price']) {
+            $priceObj->prices = [];
+        } else {
+            $priceObj->prices['default']->price = $price ? $price['price'] : 0;
+            $priceObj->prices['default']->price_currency = $price ? $price['price_currency'] : 0;
+            $priceObj->prices['default']->adults = 0;
+            $priceObj->prices['default']->children = 0;
+            $priceObj->prices['default']->kids = 0;
+        }
+
+        return $priceObj;
+    }
+
+    /**
+     * Возвращает массив с описаниями типов заселения
+     * 
+     *
+     * @param Room  $room   Объект комнаты
+     * @param array $params Параметры поиска (date)
+     */
+    public static function getPriceTitles($room, $params)
+    {
+        $a = new \stdClass();
+        $a->title = \Yii::t('pricerules', 'Price per day');
+        $a->adults = 0;
+        $a->children = 0;
+        $a->kids = 0;
+        return ["default" => $a];
     }
 
     /**

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 /** @var \yii\web\View $this */
 $l = \common\models\Lang::$current->url;
 ?>
-<aside class="main-sidebar" style="padding-top: 0px;">
+<aside class="main-sidebar">
 
     <section class="sidebar">
 

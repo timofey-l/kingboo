@@ -8,7 +8,7 @@ return [
 	'No rooms registered yet in the following hotels: {link}. Follow the links to add.' => 'Для следующих отелей нет номеров: {link}. Для добавления пройдите по ссылкам.',
 	'No photos uploded for the following hotels: {link}. Follow the links to upload.' => 'Для следующих отелей нет фотографий: {link}. Для добавления пройдите по ссылкам.',
 	'No photos uploded for the following rooms: {link}. Follow the links to upload.' => 'Для следующих номеров нет фотографий: {link}. Для добавления пройдите по ссылкам.',
-	'Over 50% of prices are missing for the next 30 days for the following rooms: {link}. Follow the links to set prices.' => 'Для следующих номеров на ближайшие 30 дней отсутствует более 50% цен: {link}. Для простановки цен пройдите по ссылкам.',
+	'Not all prices are specified for the next 30 days for the following rooms: {link}. Follow the links to set prices.' => 'Для следующих номеров на ближайшие 30 дней проставлены не все цены: {link}. Для простановки цен пройдите по ссылкам.',
 	'Please, <a href="{link}">register rooms</a> to continue.' => 'Для продолжения работы <a href="{link}">зарегистрируйте номера</a> в отеле.',
 	'No photos' => 'Нет фотографий',
 	'Please, <a href="{link}">add hotel photos</a>.' => 'Для продолжения работы <a href="{link}">добавьте фотографии отеля</a>.',

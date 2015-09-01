@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "aecf42d1a6dda2defbd97df067aaf4d8",
+    "hash": "5445194e00ea6ceeefeb332af359dd84",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
-            "version": "v2.2.0",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/almasaeed2010/AdminLTE.git",
-                "reference": "a6c2500da3cb4a333ca436f4f78cf09dd00ca9ba"
+                "reference": "81aa879d3a4489213888e24975b073c7478f0447"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/almasaeed2010/AdminLTE/zipball/a6c2500da3cb4a333ca436f4f78cf09dd00ca9ba",
-                "reference": "a6c2500da3cb4a333ca436f4f78cf09dd00ca9ba",
+                "url": "https://api.github.com/repos/almasaeed2010/AdminLTE/zipball/81aa879d3a4489213888e24975b073c7478f0447",
+                "reference": "81aa879d3a4489213888e24975b073c7478f0447",
                 "shasum": ""
             },
             "type": "library",
@@ -44,7 +44,7 @@
                 "theme",
                 "web"
             ],
-            "time": "2015-07-08 21:18:12"
+            "time": "2015-08-17 01:49:41"
         },
         {
             "name": "bower-asset/ace-builds",
@@ -152,6 +152,29 @@
             }
         },
         {
+            "name": "bower-asset/angular-sanitize",
+            "version": "v1.3.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/angular/bower-angular-sanitize.git",
+                "reference": "b4b90b7bfdc081a79bb89a4936a890c86eb02a33"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/angular/bower-angular-sanitize/zipball/b4b90b7bfdc081a79bb89a4936a890c86eb02a33",
+                "reference": "b4b90b7bfdc081a79bb89a4936a890c86eb02a33",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/angular": "1.3.5"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "./angular-sanitize.js",
+                "bower-asset-ignore": []
+            }
+        },
+        {
             "name": "bower-asset/bootstrap",
             "version": "v3.3.5",
             "source": {
@@ -243,23 +266,23 @@
         },
         {
             "name": "bower-asset/fontawesome",
-            "version": "v4.3.0",
+            "version": "v4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FortAwesome/Font-Awesome.git",
-                "reference": "41b9ed01103e6820c3cb043ba7ddab30ecd3f4c0"
+                "reference": "e554555d73a44e0a7d11b0361ad7a5325a5f551c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/41b9ed01103e6820c3cb043ba7ddab30ecd3f4c0",
-                "reference": "41b9ed01103e6820c3cb043ba7ddab30ecd3f4c0",
+                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/e554555d73a44e0a7d11b0361ad7a5325a5f551c",
+                "reference": "e554555d73a44e0a7d11b0361ad7a5325a5f551c",
                 "shasum": ""
             },
             "type": "bower-asset-library",
             "extra": {
                 "bower-asset-main": [
-                    "./css/font-awesome.css",
-                    "./fonts/*"
+                    "less/font-awesome.less",
+                    "scss/font-awesome.scss"
                 ],
                 "bower-asset-ignore": [
                     "*/.*",
@@ -577,16 +600,16 @@
         },
         {
             "name": "bower-asset/swiper",
-            "version": "v3.1.0",
+            "version": "v3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nolimits4web/Swiper.git",
-                "reference": "65c378912c789d843d8dfc19bd099d31a94f6720"
+                "reference": "78eefd9558d50496feb045c4f499f05d6a0a37eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nolimits4web/Swiper/zipball/65c378912c789d843d8dfc19bd099d31a94f6720",
-                "reference": "65c378912c789d843d8dfc19bd099d31a94f6720",
+                "url": "https://api.github.com/repos/nolimits4web/Swiper/zipball/78eefd9558d50496feb045c4f499f05d6a0a37eb",
+                "reference": "78eefd9558d50496feb045c4f499f05d6a0a37eb",
                 "shasum": ""
             },
             "type": "bower-asset-library",
@@ -992,16 +1015,16 @@
         },
         {
             "name": "mongosoft/yii2-upload-behavior",
-            "version": "0.1.5",
+            "version": "0.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mongosoft/yii2-upload-behavior.git",
-                "reference": "8868928ae53ecc8e73eca4ec873a4ea2c3ec984a"
+                "reference": "dca58ec2252d37fd941e6599735dfaf63a48c911"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mongosoft/yii2-upload-behavior/zipball/8868928ae53ecc8e73eca4ec873a4ea2c3ec984a",
-                "reference": "8868928ae53ecc8e73eca4ec873a4ea2c3ec984a",
+                "url": "https://api.github.com/repos/mongosoft/yii2-upload-behavior/zipball/dca58ec2252d37fd941e6599735dfaf63a48c911",
+                "reference": "dca58ec2252d37fd941e6599735dfaf63a48c911",
                 "shasum": ""
             },
             "require": {
@@ -1041,24 +1064,24 @@
                 "upload",
                 "yii2"
             ],
-            "time": "2015-05-25 20:44:14"
+            "time": "2015-08-27 15:48:02"
         },
         {
             "name": "rmrevin/yii2-fontawesome",
-            "version": "2.11.0",
+            "version": "2.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rmrevin/yii2-fontawesome.git",
-                "reference": "8786dbfe1edfc0b25aed9e25461ec4e4e37a1d15"
+                "reference": "51d33ec9d1d7edab2166f1d42668c1bc8d28c068"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rmrevin/yii2-fontawesome/zipball/8786dbfe1edfc0b25aed9e25461ec4e4e37a1d15",
-                "reference": "8786dbfe1edfc0b25aed9e25461ec4e4e37a1d15",
+                "url": "https://api.github.com/repos/rmrevin/yii2-fontawesome/zipball/51d33ec9d1d7edab2166f1d42668c1bc8d28c068",
+                "reference": "51d33ec9d1d7edab2166f1d42668c1bc8d28c068",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/fontawesome": "4.3.*",
+                "bower-asset/fontawesome": "4.4.*",
                 "php": ">=5.4.0",
                 "yiisoft/yii2": "2.0.*"
             },
@@ -1093,7 +1116,7 @@
                 "font",
                 "yii"
             ],
-            "time": "2015-06-29 09:47:23"
+            "time": "2015-08-15 16:50:16"
         },
         {
             "name": "swiftmailer/swiftmailer",

@@ -68,16 +68,44 @@ class RoomPrices extends \yii\db\ActiveRecord
     public function afterDelete() {
         parent::afterDelete();
         // Сигнал для системы сообщений
-        \Yii::$app->automaticSystemMessages->setDataUpdated();
+        //\Yii::$app->automaticSystemMessages->setDataUpdated();
     }
 
     public function afterSave($insert, $changedAttributes) {
         parent::afterSave($insert, $changedAttributes);
         if ($insert) {
             // Сигнал для системы сообщений
-            \Yii::$app->automaticSystemMessages->setDataUpdated();
+            //\Yii::$app->automaticSystemMessages->setDataUpdated();
         }
     }
 
+    public static function groupDelete($room, $startDate, $endDate, $adults, $children, $kids) {
+        $where = [ 'and',
+            ['room_id' => $room->id],
+            ['>=', 'date', $startDate],
+            ['<=', 'date', $endDate],
+            ['adults' => $adults],
+            ['children' => $children],
+            ['kids' => $kids],
+        ];
+        \Yii::$app->db->createCommand()->delete(self::tableName(), $where)->execute();
+        // Сигнал для системы сообщений
+        \Yii::$app->automaticSystemMessages->setDataUpdated();
+    }
+
+    public static function groupInsert($room, $startDate, $endDate, $adults, $children, $kids, $price) {
+        $prices = [];
+        $date = \DateTime::createFromFormat('Y-m-d', $startDate);
+        $to = \DateTime::createFromFormat('Y-m-d', $endDate); 
+        $currency = $room->hotel->currency->id;  
+        while ($date <= $to) {
+            $prices[] = [$date->format('Y-m-d'), $room->id, $adults, $children, $kids, $price, $currency];
+            $date->modify('+1 day');
+        }
+
+        \Yii::$app->db->createCommand()->batchInsert(self::tableName(), ['date', 'room_id', 'adults', 'children', 'kids', 'price', 'price_currency'], $prices)->execute();
+        // Сигнал для системы сообщений
+        \Yii::$app->automaticSystemMessages->setDataUpdated();
+    }
 
 }

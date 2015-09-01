@@ -37,6 +37,9 @@ class AutomaticSystemMessages extends Component {
     	return [];
     }
 
+    /**
+     * Сообщения, которые надо выводить сейчас
+     */
     public function actualMessages() {
         return $this->actualMessages;
     }
@@ -58,6 +61,7 @@ class AutomaticSystemMessages extends Component {
      * Пересчитывет сообщения
      */
     public function resetMessages() {
+        \Yii::trace('Reset messages', 'debug');
         $this->actualMessages = [];
         // Цикл по последовательностям
         foreach ($this->messages() as $key0 => $query) {

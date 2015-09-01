@@ -85,11 +85,12 @@ class Hotel extends \yii\db\ActiveRecord
 			}, 'whenClient'                   => "function (attribute, value) {
                 return !$('#hotel-title_ru').val();
             }"],
-			[['partner_id', 'category', 'currency_id'], 'integer'],
+			[['partner_id', 'category'], 'integer'],
 			[['lng', 'lat'], 'number'],
 			[['description_ru', 'description_en', 'domain'], 'string'],
 			[['name', 'address', 'timezone', 'title_ru', 'title_en', 'contact_email', 'contact_phone'], 'string', 'max' => 255],
 			[['lng', 'lat'], 'default', 'value' => 0],
+			[['currency_id'], 'integer', 'min' => 1],
 			[['allow_partial_pay'], 'integer', 'max' => 1, 'min' => 0],
 			['partial_pay_percent', 'integer', 'min' => self::MIN_PART_PAY, 'max' => 100],
             ['name', 'unique'],
