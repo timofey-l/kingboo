@@ -7,21 +7,17 @@ class m150831_135228_change_currency extends Migration
 {
     public function up()
     {
-        $this->addColumn('{{%currencies}}', 'font_awesome', Schema::TYPE_STRING);
-
         $this->truncateTable('{{%currencies}}');
-        $this->batchInsert('{{%currencies}}', ['name_ru', 'name_en', 'code', 'symbol', 'format', 'font_awesome'], [
-            ['USD', 'USD', 'USD', '<i class="fa fa-fw fa-dollar"></i>', '{symbol} {value}', 'fa-dollar'],
-            ['Евро', 'Euro', 'EUR', '<i class="fa fa-fw fa-eur"></i>', '{symbol} {value}', ' fa-eur'],
-            ['Российский рубль', 'Russian Ruble', 'RUB', '<i class="fa fa-fw fa-rub"></i>', '{value} {symbol}', 'fa-rub'],
+        $this->batchInsert('{{%currencies}}', ['id', 'name_ru', 'name_en', 'code', 'symbol', 'format'], [
+            [1, 'USD', 'USD', 'USD', '<i class="fa fa-dollar"></i>', '{symbol} {value}'],
+            [2, 'Евро', 'Euro', 'EUR', '<i class="fa fa-eur"></i>', '{symbol} {value}'],
+            [3, 'Российский рубль', 'Russian Ruble', 'RUB', '<i class="fa fa-rub"></i>', '{value} {symbol}'],
         ]);
 
     }
 
     public function down()
     {
-        $this->dropColumn('{{%currencies}}', 'font_awesome');
-
         return false;
     }
 

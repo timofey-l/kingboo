@@ -65,7 +65,7 @@ class Currency extends \yii\db\ActiveRecord
             [['name_ru', 'name_en', 'code', 'symbol', 'format'], 'required'],
             [['name_ru', 'name_en'], 'string', 'max' => 255],
             [['code'], 'string', 'max' => 3],
-            [['symbol'], 'string', 'max' => 50]
+            [['symbol'], 'string', 'max' => 50],
         ];
     }
 

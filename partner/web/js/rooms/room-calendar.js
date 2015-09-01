@@ -1,6 +1,6 @@
 roomsManageControllers.controller('AvailabilityCtrl', 
-    ['$rootScope', '$scope', '$routeParams', '$http', '$sce', 'Room', 'Availability', 
-    function ($rootScope, $scope, $routeParams, $http, $sce, Room, Availability) {
+    ['$rootScope', '$scope', '$routeParams', '$http', 'Room', 'Availability', 
+    function ($rootScope, $scope, $routeParams, $http, Room, Availability) {
 
     $scope.LANG = window.LANG;
     $scope.loading = true;
@@ -100,7 +100,7 @@ roomsManageControllers.controller('AvailabilityCtrl',
 
         // Prices
         $http.post('/roomavailability/prices/',f)
-            .success(function(data) {console.log(data);
+            .success(function(data) {//console.log(data);
                 $scope.currency = data.currency;
                 // titles
                 $scope.priceTitles = data.titles;
@@ -158,7 +158,6 @@ roomsManageControllers.controller('AvailabilityCtrl',
             } else {
                 d.minPrice = '';
             }
-            d.minPrice = $sce.trustAsHtml('' + d.minPrice);
             if (data[d.fulldate].set) {
                 d.allPricesSet = true;
             }
@@ -406,12 +405,12 @@ roomsManageControllers.controller('AvailabilityCtrl',
     $scope.cFormat = function (n,currency_id) {
         if ($scope.currencies[currency_id] == undefined) {
             var v = '' + currencyFormat(n);
-            return $sce.trustAsHtml(v);
+            return v;
         }
         var f = $scope.currencies[currency_id].format;
         var v = f.replace('{symbol}',$scope.currencies[currency_id].symbol);
         v = v.replace('{value}', currencyFormat(n));
-        return $sce.trustAsHtml(v);
+        return v;
     }
 
     window.s = $scope;

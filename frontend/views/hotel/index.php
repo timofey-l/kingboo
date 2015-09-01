@@ -28,12 +28,20 @@ $this->registerJsFile($colorbox . '/jquery.colorbox-min.js', ['depends' => [\yii
 $this->registerJsFile($colorbox . '/i18n/jquery.colorbox-' . ($l == 'en' ? 'uk' : $l) . '.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 $this->registerCssFile($colorbox . '/example1/colorbox.css', [], 'colorbox');
 
+//Font Awesome
+$this->registerCssFile($assetManager->publish('@bower/fontawesome')[1] . '/css/font-awesome.min.css', [], 'font-awesome');
+
 // Подключаем библиотеку moment.js
 $this->registerJsFile($assetManager->publish('@bower/moment/min')[1] . '/moment-with-locales.min.js');
 
 // Галлерея
 \frontend\assets\GalleryAsset::register($this);
 $this->registerCssFile('/css/gallery.css', ['depends' => [\frontend\assets\GalleryAsset::className()]], 'gallery');
+
+// angular-sanitize
+$ang_sanitize = \Yii::$app->assetManager->publish('@vendor/bower/angular-sanitize');
+$assetOptions = ['depends' => [\partner\assets\AngularAsset::className()]];
+$this->registerJsFile($ang_sanitize[1] . '/angular-sanitize.js', $assetOptions);
 
 // Приложение angular
 $this->registerJsFile('/js/search.js', ['depends' => [\frontend\assets\GalleryAsset::className()]]);
@@ -291,7 +299,7 @@ if (!$this->context->checkBookingPossibility($model)) {
             </div>
         </div>
         <div class="col-md-2 price">
-            {{ r.price }}&nbsp;{{ r.sum_currency.code }}
+            {{ r.price }}&nbsp;<span ng-bind-html="r.sum_currency.symbol"></span>
             <br/>
             <br/>
 

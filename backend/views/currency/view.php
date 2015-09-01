@@ -34,7 +34,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'code',
             'symbol',
             'format',
-            'font_awesome',
         ],
     ]) ?>
 
