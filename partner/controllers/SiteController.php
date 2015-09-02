@@ -250,6 +250,7 @@ class SiteController extends Controller
         $model->shopPassword = $user->shopPassword;
         $model->allow_checkin_fullpay = $user->allow_checkin_fullpay;
         $model->allow_payment_via_bank_transfer = $user->allow_payment_via_bank_transfer;
+        $model->currency_exchange_percent = $user->currency_exchange_percent;
 
         if ($model->company_name != '') {
             $primaReg = new PrimaRegForm();
@@ -267,6 +268,7 @@ class SiteController extends Controller
             $user->shopPassword = $model->shopPassword;
             $user->allow_checkin_fullpay = $model->allow_checkin_fullpay;
             $user->allow_payment_via_bank_transfer = $model->allow_payment_via_bank_transfer;
+            $user->currency_exchange_percent = $model->currency_exchange_percent;
 
             // password
             if ($model->password !== '') {

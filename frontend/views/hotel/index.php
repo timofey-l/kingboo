@@ -299,7 +299,7 @@ if (!$this->context->checkBookingPossibility($model)) {
             </div>
         </div>
         <div class="col-md-2 price">
-            {{ r.price }}&nbsp;<span ng-bind-html="r.sum_currency.symbol"></span>
+            <span ng-bind-html="pFormat(r)"></span>
             <br/>
             <br/>
 

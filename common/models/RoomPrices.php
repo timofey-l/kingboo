@@ -67,16 +67,10 @@ class RoomPrices extends \yii\db\ActiveRecord
 
     public function afterDelete() {
         parent::afterDelete();
-        // Сигнал для системы сообщений
-        //\Yii::$app->automaticSystemMessages->setDataUpdated();
     }
 
     public function afterSave($insert, $changedAttributes) {
         parent::afterSave($insert, $changedAttributes);
-        if ($insert) {
-            // Сигнал для системы сообщений
-            //\Yii::$app->automaticSystemMessages->setDataUpdated();
-        }
     }
 
     public static function groupDelete($room, $startDate, $endDate, $adults, $children, $kids) {
@@ -90,7 +84,21 @@ class RoomPrices extends \yii\db\ActiveRecord
         ];
         \Yii::$app->db->createCommand()->delete(self::tableName(), $where)->execute();
         // Сигнал для системы сообщений
-        \Yii::$app->automaticSystemMessages->setDataUpdated();
+        if (isset(\Yii::$app->automaticSystemMessages)) {
+            \Yii::$app->automaticSystemMessages->setDataUpdated();
+        }
+    }
+
+    public static function deleteFuturePrices($room) {
+        $where = [ 'and',
+            ['room_id' => $room->id],
+            ['>=', 'date', date('Y-m-d')],
+        ];
+        \Yii::$app->db->createCommand()->delete(self::tableName(), $where)->execute();
+        // Сигнал для системы сообщений
+        if (isset(\Yii::$app->automaticSystemMessages)) {
+            \Yii::$app->automaticSystemMessages->setDataUpdated();
+        }
     }
 
     public static function groupInsert($room, $startDate, $endDate, $adults, $children, $kids, $price) {
@@ -105,7 +113,9 @@ class RoomPrices extends \yii\db\ActiveRecord
 
         \Yii::$app->db->createCommand()->batchInsert(self::tableName(), ['date', 'room_id', 'adults', 'children', 'kids', 'price', 'price_currency'], $prices)->execute();
         // Сигнал для системы сообщений
-        \Yii::$app->automaticSystemMessages->setDataUpdated();
+        if (isset(\Yii::$app->automaticSystemMessages)) {
+            \Yii::$app->automaticSystemMessages->setDataUpdated();
+        }
     }
 
 }

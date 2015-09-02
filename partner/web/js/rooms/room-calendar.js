@@ -1,6 +1,6 @@
 roomsManageControllers.controller('AvailabilityCtrl', 
-    ['$rootScope', '$scope', '$routeParams', '$http', 'Room', 'Availability', 
-    function ($rootScope, $scope, $routeParams, $http, Room, Availability) {
+    ['$rootScope', '$scope', '$routeParams', '$http', '$sce', 'Room', 'Availability', 
+    function ($rootScope, $scope, $routeParams, $http, $sce, Room, Availability) {
 
     $scope.LANG = window.LANG;
     $scope.loading = true;
@@ -158,6 +158,7 @@ roomsManageControllers.controller('AvailabilityCtrl',
             } else {
                 d.minPrice = '';
             }
+            d.minPrice = $sce.trustAsHtml('' + d.minPrice);
             if (data[d.fulldate].set) {
                 d.allPricesSet = true;
             }
@@ -405,15 +406,14 @@ roomsManageControllers.controller('AvailabilityCtrl',
     $scope.cFormat = function (n,currency_id) {
         if ($scope.currencies[currency_id] == undefined) {
             var v = '' + currencyFormat(n);
-            return v;
+            return $sce.trustAsHtml(v);
         }
         var f = $scope.currencies[currency_id].format;
         var v = f.replace('{symbol}',$scope.currencies[currency_id].symbol);
         v = v.replace('{value}', currencyFormat(n));
-        return v;
+        return $sce.trustAsHtml(v);
     }
 
-    window.s = $scope;
 }]);
 
 /**

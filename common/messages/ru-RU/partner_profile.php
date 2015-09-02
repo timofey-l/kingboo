@@ -37,4 +37,6 @@ return [
     'Shop password (shopPassword)' => 'Пароль магазина (shopPassword)',
     'Showcase identifier (scid)' => 'Идентификатор витрины (scid)',
     'Yandex.Money payment setup' => 'Настройка оплаты через Яндекс.Деньги',
+    'Extra charge to the official exchange rate, %' => 'Надбавка к официальному курсу валют в %',
+    'If you use the online payment system, this percentage will be added to the official exchange rate at conversion from one currency into another. For example, official rate + 2%.' => 'Если вы используете систему онлайн оплаты, при конвертации из одной валюты в другую этот процент будет добавляться к официальному курсу. Например, курс ЦБ + 2%.',
 ];

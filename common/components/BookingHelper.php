@@ -49,7 +49,12 @@ class BookingHelper
 
         // вычислем сумму без скидок
         $sum = 0;
+        $currency_id = $room->hotel->currency_id;
         foreach ($priceInfo['days'] as $day => $room_price) {
+            // проверка совпадения валют, если валюта отеля с валютой цены не совпадает, возвращаем null
+            if ($currency_id != $room_price->price_currency) {
+                return null;
+            }
             $sum += $room_price->price;
         }
 

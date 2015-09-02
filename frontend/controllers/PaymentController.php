@@ -60,6 +60,10 @@ class PaymentController extends \yii\web\Controller
 		if ($order->status == Order::OS_WAITING_PAY) {
 			$this->layout = false;
 
+			// переводим в рубли
+			$pay_sum = $order->hotel->currency->convertTo($order->pay_sum, 'RUB', $order->hotel->partner->currency_exchange_percent);
+			//\Yii::trace("sum=$pay_sum, -%=".$pay_sum = $order->hotel->currency->convertTo($order->pay_sum, 'RUB'),'debug');
+
 			return base64_encode($this->render('_pay_form', [
 				'shopId'         => $partner->shopId,
 				'scid'           => $partner->scid,

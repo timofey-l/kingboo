@@ -16,6 +16,7 @@ AppAsset::register($this);
 //Yii::$app->assetManager->publish('@bower');
 
 $this->registerJsFile('/js/langs.js');
+$this->registerJsFile('/js/format.js');
 
 if (ArrayHelper::getValue($this->params, 'embedded', 0) == 0) {
     $this->registerCss(".wrap > .container { padding: 70px 15px 20px;}");

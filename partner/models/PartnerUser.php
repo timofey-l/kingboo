@@ -23,6 +23,7 @@ use Yii;
  * @property string  $demo_expire
  * 
  * @property text  $system_info
+ * @property decimal $currency_exchange_percent
  */
 class PartnerUser extends User
 {
@@ -48,7 +49,9 @@ class PartnerUser extends User
     public function afterSave($insert, $changedAttributes) {
         parent::afterSave($insert, $changedAttributes);
         // Сигнал для системы сообщений
-        \Yii::$app->automaticSystemMessages->setDataUpdated();
+        if (isset(\Yii::$app->automaticSystemMessages)) {
+            \Yii::$app->automaticSystemMessages->setDataUpdated();
+        }
     }
 
     public function getUser()

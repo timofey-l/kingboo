@@ -99,7 +99,15 @@ $this->registerCss('
 
                     <?= $form->field($model, 'contact_phone')->textInput(['maxlength' => 255]) ?>
 
-                    <?= $form->field($model, 'currency_id')->dropDownList(Currency::getOptions('code',true)) ?>
+                    <?= $form->field($model, 'currency_id')->dropDownList(Currency::getOptions('code',true), [
+                        'maxlength' => 255,
+                        'data-toggle' => 'popover',
+                        'data-trigger' => 'hover focus',
+                        'data-html' => 'true',
+                        'data-container' => "body",
+                        'data-placement' => "auto right",
+                        'data-content' => $model->attributePopover('currency_id'),
+                    ]) ?>
                     
                     <?= $form->field($model, 'category')->dropDownList([1=>1,2=>2,3=>3,4=>4,5=>5]) ?>
 

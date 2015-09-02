@@ -73,4 +73,5 @@ return [
     'Specify the minimum amount of partial advance payment' => 'Укажите минимальный размер предоплаты',
     'Create and enter the address of your hotel in system king.boo.com. Ex. palm-beach-hotel.' => 'Придумайте и введите адрес вашего отеля в системе king.boo.com. Например, palm-beach-hotel.',
     'Fill in this field, if you want to register already existing personal domain of your hotel in king.boo system. If you still don’t have but want to register personal domain name for your hotel, please, apply for registration'     => 'Поле требует заполнения, если вы хотите, чтоб в системе был зарегистрирован уже существующий персональный домен вашего отеля. Если домена еще нет, но вы хотите его зарегистрировать, пожалуйста, подайте заявку на регистрацию',
+    'The currency in which prices for hotel rooms are shown.<br /><b class="text-red">Attention!</b><br />If you change hotel currency all room prices will be deleted!' => 'Валюта, в которой отображаются цены на номера отеля.<br /><b class="text-red">Внимание!</b><br />Если вы измените валюту отеля, все цены на его номера будут удалены!',
 ];

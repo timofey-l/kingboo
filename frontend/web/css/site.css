@@ -303,3 +303,7 @@ ul.hotel-facilities  li:before {
     top: -3px;
     transition: all 200ms ease-in-out;
 }
+
+.orderOptions {
+    padding-right: 20px;
+}

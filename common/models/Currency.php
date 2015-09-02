@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use \common\models\ExchangeRates;
 
 /**
  * This is the model class for table "{{%currencies}}".
@@ -16,6 +17,16 @@ use Yii;
  */
 class Currency extends \yii\db\ActiveRecord
 {
+
+    private static $exchangeRates;
+
+    public function __construct() {
+        parent::__construct();
+        if (!isset(self::$exchangeRates)) {
+            self::$exchangeRates = ExchangeRates::find()->orderBy(['date' => SORT_DESC])->one();
+        }
+    }
+
     /**
      * @inheritdoc
      */
@@ -99,4 +110,69 @@ class Currency extends \yii\db\ActiveRecord
             ->andWhere(['iso_code' => (string)$code])
             ->one();
     }
+
+    /**
+     * Конвертация из текущей валюты в указанную
+     * 
+     * @param decimal $x - сумма, которую надо конвертировать
+     * @param string|int $to - валюта, в которую надо конвертировать (code|id)
+     * @param decimal $coef - коэффициент в процентах, на который надо увеличить результат (например, 3 %)
+     * 
+     * @return decimal
+     */
+    public function convertTo($x, $to, $coef = 0) {
+        $rates = unserialize(self::$exchangeRates->rates);
+        if (is_integer($to)) {
+            $to = @self::find()->where(['id' => $to])->one()->code;
+            if (!$to) {
+                throw new \Exception("Cannot find currency with id=$id");
+            }
+        }
+
+        if ($this->code == 'USD') {
+            if ($to == 'USD') {
+                return $x;
+            } else {
+                $v = $x * $rates[$to];
+            }
+        } else {
+            if ($this->code == $to) {
+                return $x;
+            }
+            if ($to == 'USD') {
+                $v = $x / $rates[$this->code];
+            } else {
+                $v = $x * $rates[$to] / $rates[$this->code];
+            }
+        }
+
+        if ($coef) {
+            $v = $v * (1 + $coef / 100);
+        }
+        return round($v, 2);
+    }
+
+    /**
+     * convertTo() + getFormatted()
+     * 
+     * @param decimal $x - сумма, которую надо конвертировать
+     * @param string|int $to - валюта, в которую надо конвертировать (code|id)
+     * @param decimal $coef - коэффициент в процентах, на который надо увеличить результат (например, 3 %)
+     * 
+     * @return string
+     */
+    public function convertToFormatted($x, $to, $coef = 0) {
+        if (is_integer($to)) {
+            $toObj = @self::find()->where(['id' => $to])->one();
+            if (!$toObj) {
+                throw new \Exception("Cannot find currency with id=$id");
+            }
+            $to = $toObj->code;
+        } else {
+            $toObj = @self::find()->where(['code' => $to])->one();
+        }
+        $x = $this->convertTo($x, $to, $coef);
+        return $toObj->getFormatted($x);
+    }
+
 }

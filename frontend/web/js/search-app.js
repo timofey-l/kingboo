@@ -54,6 +54,10 @@
             goWithPOST(l + '/hotel/booking', data, 'BookingParams');
         };
 
+        $scope.pFormat = function (p) {
+            return window.priceFormat(p.price,p.sum_currency);
+        }
+
         setTimeout(function(){
             $scope.find()
         }, 1000);

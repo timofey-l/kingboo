@@ -16,6 +16,7 @@ $this->params['no_desc'] = $no_desc;
 $this->registerCss($order->hotel->css, [
     'depends' => BootstrapAsset::className(),
 ]);
+$this->registerCssFile(\Yii::$app->assetManager->publish('@bower/fontawesome')[1].'/css/font-awesome.min.css');
 
 $this->title = \Yii::t('frontend', 'Order payment');
 
@@ -71,16 +72,14 @@ $this->registerJs("
                 <?= \Yii::t('frontend', 'Total sum:') ?>
                 <br/>
 				<span class="sum text-primary">
-				<?= $order->sum ?>
-                    &nbsp;<?= $hotel->currency->symbol != "" ? $hotel->currency->symbol : $hotel->currency->code ?>
+                    <?= $hotel->currency->getFormatted($order->sum) ?>
 				</span>
                 <br/>
                 <br/>
                 <?= \Yii::t('frontend', 'Sum to pay now:') ?>
                 <br/>
 				<span class="sum text-success">
-				<?= $order->pay_sum ?>
-                    &nbsp;<?= $hotel->currency->symbol != "" ? $hotel->currency->symbol : $hotel->currency->code ?>
+                    <?= $hotel->currency->getFormatted($order->pay_sum) ?>
 				</span>
             </div>
         </div>
