@@ -76,12 +76,22 @@ class BillingAccount extends \yii\db\ActiveRecord
         return $this->hasMany(BillingExpense::className(), ['account_id' => 'id']);
     }
 
+    /**
+     * Пересчет балланса
+     *
+     * TODO: проверка валюты и конвертация её при подсчёте
+     */
     public function updateBalance()
     {
-        $totalIncome = 0;
-        $totalIncome = (new Query())
+        $totalIncome = (float) (new Query())
             ->from(BillingIncome::tableName())
             ->sum('sum');
 
+        $totalExpenses = (float) (new Query())
+            ->from(BillingExpense::tableName())
+            ->sum('sum');
+
+        $this->balance = $totalIncome - $totalExpenses;
+        $this->save();
     }
 }

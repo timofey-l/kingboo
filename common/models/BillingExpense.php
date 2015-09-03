@@ -52,4 +52,14 @@ class BillingExpense extends \yii\db\ActiveRecord
             'comment' => Yii::t('billing_expense', 'Comment'),
         ];
     }
+
+    public function afterSave($insert)
+    {
+        parent::afterSave($insert);
+
+        // если добавление записи - пересчет balance в billing_account
+        if ($insert) {
+            $this->account->updateBalance();
+        }
+    }
 }

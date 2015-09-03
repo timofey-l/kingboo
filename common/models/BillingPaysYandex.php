@@ -53,4 +53,33 @@ class BillingPaysYandex extends \yii\db\ActiveRecord
             'avisio_post_dump' => Yii::t('billing_pays_yandex', 'Avisio Post Dump'),
         ];
     }
+
+    public function getInvoice()
+    {
+        return $this->hasOne(BillingInvoice::className(), ['id' => 'billing_invoice_id']);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        if (parent::afterSave($insert, $changedAttributes)) {
+
+            // если payed стало true - добавляем запись в billing_income
+            if (isset($changedAttributes['payed']) && $changedAttributes['payed'] == false && $this->payed == true) {
+                /** @var BillingInvoice $invoice */
+                $invoice = $this->invoice;
+
+                $income = new BillingIncome();
+                $income->sum = $invoice->sum;
+                $income->account_id = $invoice->account_id;
+                $income->invoice_id = $invoice->id;
+                $income->save();
+            }
+
+        } else {
+            return false;
+        }
+    }
 }

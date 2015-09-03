@@ -55,4 +55,19 @@ class BillingInvoice extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getAccount()
+    {
+        return $this->hasOne(BillingAccount::className(), ['id' => 'account_id']);
+    }
+
+    public function afterSave($insert)
+    {
+        parent::afterSave($insert);
+
+        // если добавление записи - пересчет balance в billing_account
+        if ($insert) {
+            $this->account->updateBalance();
+        }
+    }
+
 }

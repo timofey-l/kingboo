@@ -12,6 +12,7 @@ use partner\models\PartnerUser;
 $messages = \common\models\SupportMessage::findNew();
 $orders = \common\models\Order::findNew();
 
+PartnerUser::findOne(\Yii::$app->user->id)->billing->updateBalance();
 ?>
 
 <header class="main-header">

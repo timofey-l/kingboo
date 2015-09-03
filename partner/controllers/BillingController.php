@@ -6,6 +6,7 @@ use common\components\checkOrderResponse;
 use common\components\paymentAvisoResponse;
 use common\components\YandexHelper;
 use common\models\BillingInvoice;
+use common\models\BillingPaysYandex;
 use common\models\PayMethod;
 use partner\models\PartnerUser;
 use Yii;
@@ -95,8 +96,9 @@ class BillingController extends Controller
             'code' => 200,
             'performedDatetime' => date(\DateTime::W3C),
             'invoiceId' => \Yii::$app->request->post('invoiceId', ''),
-            'shopId' => \Yii::$app->request->post('invoiceId', ''),
+            'shopId' => \Yii::$app->request->post('shopId', ''),
             'message' => "",
+
         ];
 
         // проверка запроса по хэшу и shopId
@@ -106,12 +108,19 @@ class BillingController extends Controller
         }
 
         // проверка invoiceId
-        $invoice = BillingInvoice::findOne((int) $response['invoiceId']);
+        $invoice = BillingInvoice::findOne((int) \Yii::$app->request->post('orderNumber', 0));
         if (is_null($invoice)) {
+            $response['message'] = 'Billing invoice was not found!';
             return $response;
         }
 
+        $payYandex = new BillingPaysYandex();
 
+        $payYandex->check_post_dump = var_export(\Yii::$app->request->post(), true);
+        $payYandex->billing_invoice_id = $invoice->id;
+        $payYandex->invoiceId = $response['invoiceId'];
+        $payYandex->checked = true;
+        $payYandex->save();
 
         return $response;
     }
