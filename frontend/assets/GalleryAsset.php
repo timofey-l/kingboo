@@ -19,10 +19,10 @@ class GalleryAsset extends AssetBundle
 //    public $basePath = '@webroot';
 //    public $baseUrl = '@web';
     public $css = [
-        '/dist/css/swiper.min.css',
+        'dist/css/swiper.min.css',
     ];
     public $js = [
-        '/dist/js/swiper.jquery.min.js',
+        'dist/js/swiper.jquery.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
