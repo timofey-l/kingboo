@@ -1,5 +1,6 @@
 <?php
 use frontend\components\HotelUrlRule;
+use frontend\components\PageUrlRule;
 
 $params = array_merge(
     require(__DIR__ . '/../../common/config/params.php'),
@@ -13,6 +14,11 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+    'controllerMap' => [
+        [
+            'pages' => \common\components\PagesController::className(),
+        ],
+    ],
     'components' => [
         'user' => [
             'identityClass' => 'common\models\User',
@@ -47,6 +53,9 @@ return [
                 '/hotel/test' => 'hotel/test',
                 '/payment/<id:[0-9a-zA-Z\-_]{64}>' => 'payment/show',
                 'GET /hotel/<name:\w+>' => 'hotel/index',
+                [
+                    'class' => PageUrlRule::className(),
+                ],
 	            '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
             ]
         ],

@@ -1,0 +1,13 @@
+.main #content {
+    padding: 0;
+}
+
+nav.main-menu a.selected  {
+    color: #e67300;
+}
+
+
+
+.logo {
+    cursor: pointer;
+}

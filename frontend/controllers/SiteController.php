@@ -11,17 +11,24 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\models\Hotel;
 use yii\base\InvalidParamException;
+use yii\base\Theme;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use frontend\models\BookingParams;
+
 /**
  * Site controller
  */
 class SiteController extends Controller
 {
     var $_hotel = null;
+
+    var $themeName = "yellowKingBoo";
+
+    var $layout = "content";
+
 
     /**
      * @inheritdoc
@@ -69,12 +76,30 @@ class SiteController extends Controller
             ],
         ];
     }
-    
-    public function beforeAction($action) {
+
+    public function beforeAction($action)
+    {
         parent::beforeAction($action);
         if (HotelUrlRule::$current !== null) {
             $this->_hotel = HotelUrlRule::$current;
         }
+
+        if (HotelUrlRule::$mainDomain && \Yii::$app->params['mainDomainTheme'] !== false) {
+            $themePath = '@app/themes/' . \Yii::$app->params['mainDomainTheme'];
+
+            $baseUrl = '@frontend/web';
+            if (file_exists(\Yii::getAlias($themePath).'/assets')) {
+                $baseUrl = \Yii::$app->assetManager->publish(\Yii::getAlias($themePath).'/assets')[1];
+            }
+            \Yii::$app->view->theme = new Theme([
+                'basePath' => '@app/themes/' . \Yii::$app->params['mainDomainTheme'],
+                'baseUrl' => $baseUrl,
+                'pathMap' => [
+                    '@app/views' => '@app/themes/' . \Yii::$app->params['mainDomainTheme'],
+                ],
+            ]);
+        }
+
         return true;
     }
 
