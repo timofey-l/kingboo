@@ -94,7 +94,7 @@ class HotelController extends \yii\web\Controller
                 'code'     => $orderForm->code,
 			]);
 
-			$orderForm->number = md5(\Yii::$app->getSecurity()->generateRandomString(15) . $orderForm->contact_email);
+			$orderForm->number = Order::generateNumber($orderForm->contact_email);
 
 			$orderForm->lang = Lang::$current->url;
 
@@ -123,12 +123,13 @@ class HotelController extends \yii\web\Controller
 				}
 			}
 
-			return $this->render('booking_error', [
+			throw new \yii\web\HttpException(456, 'Unrecoverable Error');
+			/*return $this->render('booking_error', [
 				'orderForm' => $orderForm,
 				'orderItem' => $orderItem,
 				'embedded'   => \Yii::$app->request->get('embedded', 0),
 				'no_desc'   => \Yii::$app->request->get('no_desc', 0),
-			]);
+			]);*/
 		} else {
 			$bookingParams = new BookingParams();
 

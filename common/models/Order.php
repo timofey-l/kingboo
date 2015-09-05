@@ -103,7 +103,7 @@ class Order extends ActiveRecord
             [['status', 'contact_address', 'partial_pay', 'partial_pay_percent', 'hotel_id', 'checkin_fullpay', 'payment_via_bank_transfer' ], 'integer'],
             [['sum', 'pay_sum'], 'number'],
             [['viewed'], 'boolean'],
-            [['number'], 'string', 'max' => 32, 'min' => 32],
+            [['number'], 'string', 'max' => 12, 'min' => 5],
             [['partner_number'], 'string'],
             [['number'], 'unique'],
             [['lang'], 'string', 'max' => 3],
@@ -271,6 +271,9 @@ class Order extends ActiveRecord
         }
     }
 
+    /**
+     * Генерирует номер заказа с внутренней нумерацией партнера
+     */
     public function generateOrderNumber()
     {
         /** @var PartnerUser $partner_user */
@@ -279,6 +282,21 @@ class Order extends ActiveRecord
         $partner_user->counter++;
         $partner_user->save();
         return $this;
+    }
+
+    /**
+     * Генерирует номер заказа. Формат: 8 цифр шеснадцитиричное число + '-' и последние 2 цифры года
+     * 
+     * @param string $str - произвольная строка для повышения уникальности
+     * @return string
+     */
+    public static function generateNumber($str='') 
+    {
+        do {
+            $number = hash("crc32b", \Yii::$app->getSecurity()->generateRandomString(15) . $str) . '-' . date('y');
+            $order = self::findOne(['number' => $number]);
+        } while (!is_null($order));
+        return $number;
     }
 
     /**
@@ -314,4 +332,5 @@ class Order extends ActiveRecord
     {
         return (new \DateTime($this->dateFrom))->diff((new \DateTime($this->dateTo)))->days;
     }
+
 }
