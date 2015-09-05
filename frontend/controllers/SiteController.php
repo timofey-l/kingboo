@@ -13,6 +13,7 @@ use common\models\Hotel;
 use yii\base\InvalidParamException;
 use yii\base\Theme;
 use yii\web\BadRequestHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -210,6 +211,28 @@ class SiteController extends Controller
 
         return $this->render('resetPassword', [
             'model' => $model,
+        ]);
+    }
+
+    /**
+     * Вывод реквизитов фирмы на печать для оплаты безналом
+     * @param string $number - номер заказа (например, 19f105e0c7347f48c0dd452eb4bd165e)
+     */
+    public function actionBookingInvoice($number) 
+    {
+        if (!$order = \common\models\Order::findOne(['number' => $number])) {
+            throw new NotFoundHttpException("Order #$number not found");
+        }
+
+        if (!$order->hotel->partner->allow_payment_via_bank_transfer) {
+            throw new NotFoundHttpException("Order #$number not found");
+        }
+
+        $paymentDetails = new \partner\models\partnerPaymentDetailsRus();
+        $paymentDetails->unpack($order->hotel->partner->payment_details);
+        return $this->render('@common/views/invoices/clientBookingPrint', [
+            'order' => $order,
+            'paymentDetails' => $paymentDetails,
         ]);
     }
 }

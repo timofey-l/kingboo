@@ -48,6 +48,7 @@ return [
     'Information' => 'Информация',
     'Lat' => 'Широта',
     'Lng' => 'Долгота',
+    'No category' => 'Без категории',
     'Manage photos' => 'Управление фотографиями',
     'Manage rooms' => 'Управление номерами',
     'Name En' => 'Имя En',

@@ -86,8 +86,11 @@ class AdminController extends Controller
     /**
      * Парсинг курсов валют относительно USD (USD / валюта)
      */
-    public function actionExchangeRates() {
-        \common\components\ExchangeRatesParser::parse();
+    public function actionExchangeRates($echo = false) {
+        $res = \common\components\ExchangeRatesParser::parse();
+        if ($echo) {
+            echo $res;
+        }
     }
 
     public function actionGenerateFake() {
