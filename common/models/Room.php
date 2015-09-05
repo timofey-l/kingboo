@@ -200,4 +200,14 @@ class Room extends \yii\db\ActiveRecord
         }
     }
 
+    /**
+     * Определяет доступен ли номер для показа на frontend
+     */
+    public function published() {
+        if (!$this->images) {
+            return false;
+        }
+        return true;
+    }
+
 }

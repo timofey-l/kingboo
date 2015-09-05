@@ -80,4 +80,7 @@ return [
     'Your order #{n} has been paid.' => 'Ваш заказ №{n} был оплачен.',
     '{n, plural, =1{photo} other{# photos}}' => '{n, plural, =1{фото} other{# фото}}',
     'Print invoice' => 'Распечатать счет для оплаты',
+    'Use search form to book a room on disirable dates.' => 'Воспользуйтесь формой поиска для бронирования номера на желаемые даты.',
+    'To watch information about all hotel rooms push the "All rooms" button.' => 'Для просмотра информации о всех номерах отеля нажмите кнопку &laquo;Все номера&raquo;.',
+    'All rooms' => 'Все номера',
 ];

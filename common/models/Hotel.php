@@ -226,4 +226,17 @@ class Hotel extends \yii\db\ActiveRecord
         return $this->$name;
     }
 
+    /**
+     * Определяет доступен ли отель для показа на frontend
+     */
+    public function published() {
+        if (!$this->rooms) {
+            return false;
+        }
+        if (!$this->images) {
+            return false;
+        }
+        return true;
+    }
+
 }

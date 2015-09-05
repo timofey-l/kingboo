@@ -75,6 +75,9 @@ class SiteController extends Controller
         parent::beforeAction($action);
         if (HotelUrlRule::$current !== null) {
             $this->_hotel = HotelUrlRule::$current;
+            if (!is_null($this->_hotel) && !$this->_hotel->published()) {
+                throw new \yii\web\HttpException(404, 'The requested hotel is not published.');
+            }
         }
         return true;
     }
