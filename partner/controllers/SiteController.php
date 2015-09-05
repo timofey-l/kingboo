@@ -252,6 +252,13 @@ class SiteController extends Controller
         $model->allow_payment_via_bank_transfer = $user->allow_payment_via_bank_transfer;
         $model->currency_exchange_percent = $user->currency_exchange_percent;
 
+        // Платежные реквизиты для Российской компании (появятся иностранные - надо менять)
+        $payment_details = $user->allow_payment_via_bank_transfer;
+        if ($payment_details) {
+            $model->payment_details = new \partner\models\partnerPaymentDetailsRus();
+            $model->payment_details->unpack($user->payment_details);
+        }
+
         if ($model->company_name != '') {
             $primaReg = new PrimaRegForm();
             if ($primaReg->load(\Yii::$app->request->post()) && \Yii::$app->request->isAjax) {
@@ -269,6 +276,11 @@ class SiteController extends Controller
             $user->allow_checkin_fullpay = $model->allow_checkin_fullpay;
             $user->allow_payment_via_bank_transfer = $model->allow_payment_via_bank_transfer;
             $user->currency_exchange_percent = $model->currency_exchange_percent;
+
+            if ($payment_details) {
+                $model->payment_details->load(\Yii::$app->request->post());//\Yii::trace(print_r($model,true),'debug');
+                $user->payment_details = $model->payment_details->pack();
+            }
 
             // password
             if ($model->password !== '') {
@@ -290,7 +302,7 @@ class SiteController extends Controller
             }
             if ($user->save()) {
                 \Yii::$app->session->setFlash('success', \Yii::t('partner_profile', 'Profile successfully saved'));
-                return $this->redirect('/');
+                return $this->redirect(['site/profile']);
             };
         }
 

@@ -24,6 +24,7 @@ use Yii;
  * 
  * @property text  $system_info
  * @property decimal $currency_exchange_percent
+ * @property text $payment_details
  */
 class PartnerUser extends User
 {

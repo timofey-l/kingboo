@@ -28,7 +28,7 @@
         // Поиск комнат
         $scope.find = function () {
             $.post('/' + LANG + '/hotel/search', $scope.search)
-                .success(function (data) {console.log(data);
+                .success(function (data) {//console.log(data);
                     $scope.results = data;
                 })
                 .error(function(){

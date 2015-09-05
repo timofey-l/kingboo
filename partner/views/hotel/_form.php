@@ -109,7 +109,7 @@ $this->registerCss('
                         'data-content' => $model->attributePopover('currency_id'),
                     ]) ?>
                     
-                    <?= $form->field($model, 'category')->dropDownList([1=>1,2=>2,3=>3,4=>4,5=>5]) ?>
+                    <?= $form->field($model, 'category')->dropDownList([0=>\Yii::t('hotels', 'No category'),1=>1,2=>2,3=>3,4=>4,5=>5]) ?>
 
                     <?= $form->field($model, 'timezone')->dropDownList(array_combine(DateTimeZone::listIdentifiers(),DateTimeZone::listIdentifiers())) ?>
 

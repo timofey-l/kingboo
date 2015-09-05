@@ -115,6 +115,16 @@ $this->registerJs("$('input[type=checkbox]').iCheck({
                 </div>
             </div>
         </div-->
+
+        <?php 
+        if ($user->allow_payment_via_bank_transfer) {
+            echo $this->render('/payment-details/rus', [
+                'pd' => $user->payment_details,
+                'form' => $form,
+            ]);
+        }
+        ?>
+
         <div class="col-xs-12">
             <div class="form-group">
                 <?= Html::submitButton(\Yii::t('partner_profile', 'Apply'), ['class' => 'btn btn-success']) ?>

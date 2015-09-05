@@ -18,6 +18,8 @@ class ProfileForm extends Model
     var $allow_payment_via_bank_transfer;
     var $currency_exchange_percent;
 
+    var $payment_details;
+
     public function rules() {
         return [
             [['currency_exchange_percent'], 'required'],

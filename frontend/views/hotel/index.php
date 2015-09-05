@@ -60,7 +60,7 @@ $this->registerCssFile($customSB . '/jquery.mCustomScrollbar.min.css');
 
 // сворачивание описания отеля
 $js = <<<Javascript
-console.log($(".collapsable"));
+//console.log($(".collapsable"));
 $(".collapsable").mCustomScrollbar({
     scrollButtons:{enable:true},
     theme:"dark-3",
@@ -119,6 +119,7 @@ if (!$this->context->checkBookingPossibility($model)) {
     <div class="row">
         <div class="col-sm-6">
             <h2><?= $model->{'title_' . $l} ?></h2>
+            <?php if ($model->category > 0) : ?>
             <div class="hotel_stars">
                 <?php foreach (range(1, 5) as $i): ?>
                     <?php if ($i <= $model->category) : ?>
@@ -128,6 +129,7 @@ if (!$this->context->checkBookingPossibility($model)) {
                     <?php endif ?>
                 <?php endforeach; ?>
             </div>
+            <?php endif ?>
         </div>
         <div class="col-sm-6 text-right">
             <br>

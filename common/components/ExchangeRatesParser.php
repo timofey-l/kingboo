@@ -20,7 +20,7 @@ class ExchangeRatesParser extends Component {
 	const PARSE_URL = 'http://www.apilayer.net/api/live';
 	const ACCESS_KEY = '4e2852fcbd056eb02040a92b2e2a83ca';
 
-	public static function parse($echo = false) {
+	public static function parse() {
 		$s = curl_init(); 
 
 		$currencies = Currency::find()->all();
@@ -58,12 +58,14 @@ class ExchangeRatesParser extends Component {
 			throw new \Exception("ExchangeRatesParser: error");
 		}
 
+		$echo = '';
+
 		// вытаскиваем все валюты
 		$r = [];
 		foreach ($rates->quotes as $k => $v) {
 			$currency = substr($k, 3);
 			$r[$currency] = $v;
-			if ($echo) echo "USD / $currency = $v\n";
+			$echo .= "USD / $currency = $v\n";
 		}
 
 		// проверка все ли валюты на месте
@@ -81,9 +83,10 @@ class ExchangeRatesParser extends Component {
 		if (!$exr->save()) {
 			throw new \Exception("ExchangeRatesParser: db save error");
 		} else {
-			if ($echo) echo "ok\n";
+			$echo .=  "ok\n";
 		}
 
+		return $echo;
 	}
 
 

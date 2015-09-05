@@ -79,4 +79,5 @@ return [
     'You have successfully completed the booking procedure.' => 'Вы успешно завершили процедуру бронирования.',
     'Your order #{n} has been paid.' => 'Ваш заказ №{n} был оплачен.',
     '{n, plural, =1{photo} other{# photos}}' => '{n, plural, =1{фото} other{# фото}}',
+    'Print invoice' => 'Распечатать счет для оплаты',
 ];
