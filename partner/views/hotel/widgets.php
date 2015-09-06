@@ -18,22 +18,24 @@ $widgets = $dataProvider->getModels();
         '<i class="fa fa-arrow-left"></i> ' . \Yii::t('partner_hotel', 'Back to hotel view'),
         ['view', 'id' => $hotel->id],
         ['class' => 'btn btn-default']) ?>
-        <?php if (!$widgets): ?>
-            <?= Html::a('<i class="fa fa-plus-circle"></i> ' . Yii::t('partner_widget', 'Create Widget'), ['widget-create', 'id'=>$hotel_id], ['class' => 'btn btn-success']) ?>
-            <br/>
-            <br/>
-        <div class="callout callout-info">
-            <h4><i class="icon fa fa-info"></i> <?= \Yii::t('partner_widget', 'Widgets are absent') ?></h4>
-            <?= \Yii::t('partner_widget', 'Press upper button to create new widget.') ?>
-        </div>
-    <?php endif; ?>
 
-
-    <?php if ($widgets): ?>
 		<?= Html::a('<i class="fa fa-plus-circle"></i> ' . Yii::t('partner_widget', 'Create Widget'), ['widget-create', 'id' => $hotel_id], ['class' => 'btn btn-success']) ?>
         <br/>
         <br/>
+
+    <?php if (!$widgets): ?>
+    <div class="callout callout-info">
+        <h4><i class="icon fa fa-info"></i> <?= \Yii::t('partner_widget', 'Widgets are absent') ?></h4>
+        <?= \Yii::t('partner_widget', 'Press upper button to create new widget.') ?>
+    </div>
+   	<?php endif; ?>
+
 	<div class="row">
+    	<div class="col-xs-12">
+        	<?= \Yii::t('partner_widget', '<p>If you already have personal website of your hotel (not in the <i>{site}</i>), you can install widget for online booking and payment on it. When widget installation is suggessfully complete, a special code is generated. All you need is to insert this code into HTML code of your site to the place where you want to locate the widget, and online payment system is ready to use!</p>', ['site' => \Yii::$app->params['mainDomainShort']]) ?>
+    	</div>
+
+    <?php if ($widgets): ?>
 		<?php foreach ($widgets as $widget): ?>
 			<div class="col-sm-6">
 				<div class="box box-default">
@@ -74,8 +76,8 @@ $widgets = $dataProvider->getModels();
 				</div>
 			</div>
 		<?php endforeach; ?>
-	</div>
     <?php endif; ?>
+	</div>
 
 
 </div>

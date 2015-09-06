@@ -21,7 +21,7 @@ return [
     'Params' => '',
     'Widget id:' => '',
     'Are you sure you want to delete this item?' => 'Вы действительно хотите удалить этот элемент?',
-    'Back to widgets' => 'Вернутья к виджетам',
+    'Back to widgets' => 'Вернуться к виджетам',
     'Comment' => 'Комментарий',
     'Common information' => 'Общая информация',
     'Compiled Css' => 'Скомпилированный Css',
@@ -40,4 +40,5 @@ return [
     'Widgets' => 'Виджеты',
     'Widgets are absent' => 'Виджеты отсутствуют',
     'Yes' => 'Да',
+    '<p>If you already have personal website of your hotel (not in the <i>{site}</i>), you can install widget for online booking and payment on it. When widget installation is suggessfully complete, a special code is generated. All you need is to insert this code into HTML code of your site to the place where you want to locate the widget, and online payment system is ready to use!</p>' => '<p>Если у вашего отеля есть собственный сайт (не в системе <i>{site}</i>), вы можете установить на него виджет для онлайн бронирования и оплаты. После установки виджета генерируется код, который достаточно вставить в HTML код сайта в то место, где вы хотите видеть виджет, и полноценная система оплаты готова к использованию!</p>',
 ];

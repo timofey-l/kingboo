@@ -155,7 +155,7 @@ updateGroup();
                     <td>
                         <input class="iCheck" type="checkbox" data-id="<?= $order->id ?>" id="order_<?= $order->id ?>"/>
                     </td>
-					<td><?= $order->partner_number ?></td>
+					<td><?= $order->partner_number ?><br /><?= $order->number ?></td>
 					<td>
 						<?= (new DateTime($order->created_at))->format(\Yii::t('partner_orders', 'd/m/Y'))?>
 						<br/>

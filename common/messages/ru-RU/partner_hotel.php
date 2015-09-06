@@ -18,5 +18,5 @@
  */
 return [
     'Back to main page' => 'Вернуться на главную',
-    'Back to hotel view' => 'Вернуться к отелю',
+    'Back to hotel view' => 'Страница отеля',
 ];

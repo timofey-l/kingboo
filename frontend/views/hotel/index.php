@@ -113,6 +113,7 @@ if (!$this->context->checkBookingPossibility($model)) {
     var adults = <?= $bookParams->adults ?>;
     var children = <?= $bookParams->children ?>;
     var kids = <?= $bookParams->kids ?>;
+    var searchMode = <?= $search ?>;
 </script>
 
 <div class="<?= $no_desc == 1 ? 'hidden' : '' ?>">
@@ -137,7 +138,7 @@ if (!$this->context->checkBookingPossibility($model)) {
             <br>
             <span class="phone"><?= Html::encode($model->contact_phone) ?></span>
             <br>
-            <span class="email"><?= Html::encode($model->contact_email) ?></span>
+            <span class="email"><?= Html::mailto($model->contact_email) ?></span>
             <br>
         </div>
     </div>
@@ -192,7 +193,7 @@ if (!$this->context->checkBookingPossibility($model)) {
 
 
 <div ng-app="roomsSearch" ng-controller="searchCtrl" ng-init="search.hotelId = <?= $model->id ?>;" style="display: none;">
-    <h2 id="search"><?= Yii::t('frontend', 'Search') ?></h2>
+    <h2 id="search"><?= Yii::t('frontend', 'Search vacant rooms for booking') ?></h2>
     <div class="row well">
         <div class="input-daterange" id="datepicker">
             <div class="form-group col-md-2 col-sm-6">
@@ -261,9 +262,16 @@ if (!$this->context->checkBookingPossibility($model)) {
             <br/>
             <button class="btn btn-primary" ng-click="find()"><?= Yii::t('frontend', 'Find') ?></button>
         </div>
-
+        <div class="col-xs-10">
+            <?= Yii::t('frontend', 'Use search form to book a room on disirable dates.') ?>
+            <?= Yii::t('frontend', 'To watch information about all hotel rooms push the "All rooms" button.') ?>
+        </div>
+        <div class="col-xs-2">
+            <button class="btn btn-primary" ng-disabled="!searchMode" ng-click="getRooms()"><?= Yii::t('frontend', 'All rooms') ?></button>
+        </div>
     </div>
-    <div class="alert alert-warning" role="alert" ng-show="!results || results.length === 0">
+
+    <div class="alert alert-warning" role="alert" ng-show="!loading && searchMode && (!results || results.length === 0)">
         <?= \Yii::t('frontend', '<b>No rooms available for this period.</b> Please, select other days.');?>
     </div>
     <div class="row result-item well" ng-repeat="r in results">
@@ -287,7 +295,20 @@ if (!$this->context->checkBookingPossibility($model)) {
                 </div>
             </div>
         </div>
-        <div class="col-md-7 info">
+        <div class="col-md-9 info" ng-if="!searchMode">
+            <div class="row">
+                <div class="title">{{r['title_' + LANG]}}</div>
+            </div>
+            <div class="row">
+                <div class="description">{{r['description_' + LANG]}}</div>
+            </div>
+            <div class="room-facilities row">
+                    <span class="label label-default" ng-repeat="f in r.facilities">
+                        {{f['name_' + LANG]}}
+                    </span>
+            </div>
+        </div>
+        <div class="col-md-7 info" ng-if="searchMode">
             <div class="row">
                 <div class="title">{{r['title_' + LANG]}}</div>
             </div>
@@ -300,7 +321,7 @@ if (!$this->context->checkBookingPossibility($model)) {
 			        </span>
             </div>
         </div>
-        <div class="col-md-2 price">
+        <div class="col-md-2 price" ng-if="searchMode">
             <span ng-bind-html="pFormat(r)"></span>
             <br/>
             <br/>

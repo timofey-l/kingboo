@@ -83,15 +83,17 @@ $this->registerCss('
                         'data-content' => $model->attributePopover('name'),
                     ]) ?>
 
-                    <?= $form->field($model, 'domain')->textInput([
-                        'maxlength' => 255,
-                        'data-toggle' => 'popover',
-                        'data-trigger' => 'hover focus',
-                        'data-html' => 'true',
-                        'data-container' => "body",
-                        'data-placement' => "auto right",
-                        'data-content' => $model->attributePopover('domain'),
-                    ]) ?>
+                    <?php if ($model->domain) {
+                            echo $form->field($model, 'domain')->textInput([
+                            'maxlength' => 255,
+                            'data-toggle' => 'popover',
+                            'data-trigger' => 'hover focus',
+                            'data-html' => 'true',
+                            'data-container' => "body",
+                            'data-placement' => "auto right",
+                            'data-content' => $model->attributePopover('domain'),
+                        ]);}
+                    ?>
 
                     <?= $form->field($model, 'address')->textInput(['maxlength' => 255]) ?>
 

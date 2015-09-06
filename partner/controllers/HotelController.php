@@ -27,7 +27,7 @@ class HotelController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['view', 'update', 'delete', 'rooms', 'images', 'facilities', 'iframe', 'css'],
+                        'actions' => ['view', 'update', 'delete', 'rooms', 'images', 'facilities', 'iframe', 'css', 'domain-registration-request'],
                         'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
@@ -348,4 +348,35 @@ class HotelController extends Controller
             'hotel' => $hotel,
         ]);
     }
+
+    /**
+     * Creates a new Hotel model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionDomainRegistrationRequest($id)
+    {
+        $hotel = $this->findModel($id); 
+
+        if ($hotel->domain) {
+            throw new \ForbiddenHttpException();
+        }
+
+        $model = new \partner\models\DomainRequestForm();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if (!$model->email) {
+                $model->email = $hotel->partner->email;
+            }
+            $model->sendEmail(\Yii::$app->params['adminEmail'], $hotel);
+            \Yii::$app->session->setFlash('success', \Yii::t('domain-request', 'You are successfully applied for activation of "My domain" service'));
+            return $this->redirect(['hotel/view', 'id' => $id]);
+        } else {
+            return $this->render('domain-request', [
+                'model' => $model,
+                'hotel' => $hotel,
+            ]);
+        }
+    }
+
 }

@@ -14,6 +14,8 @@
             kids: kids,
             hotelId: $scope.hotelId
         };
+        $scope.loading = true;
+        $scope.searchMode = window.searchMode;
 
         $('.input-daterange').on('changeDate', function (e) {
             if (e.target.name == 'dateFrom') {
@@ -30,15 +32,33 @@
             $.post('/' + LANG + '/hotel/search', $scope.search)
                 .success(function (data) {//console.log(data);
                     $scope.results = data;
+                    $scope.searchMode = true;
                 })
                 .error(function(){
                     $scope.results = [];
                 })
                 .done(function(){
+                    $scope.loading = false;
                     $scope.$digest();
                     init_rooms_gallery();
                 });
         };
+
+        $scope.getRooms = function () {
+            $scope.searchMode = false;
+            $.post('/' + LANG + '/hotel/rooms', {hotelId: $scope.search.hotelId})
+                .success(function (data) {//console.log(data);
+                    $scope.results = data;
+                })
+                .error(function(){
+                    $scope.results = [];
+                })
+                .done(function(){
+                    $scope.loading = false;
+                    $scope.$digest();
+                    init_rooms_gallery();
+                });
+        }
 
         // переход к бронированию
         $scope.goBooking = function(r) {
@@ -59,7 +79,11 @@
         }
 
         setTimeout(function(){
-            $scope.find()
+            if ($scope.searchMode) {
+                $scope.find();
+            } else {
+                $scope.getRooms();
+            }
         }, 1000);
 
     }]);

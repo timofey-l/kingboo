@@ -25,7 +25,7 @@ class HotelController extends \yii\web\Controller
 			'verb' => [
 				'class'   => VerbFilter::className(),
 				'actions' => [
-					['booking', 'search', 'get-form'] => ['post'],
+					['booking', 'search', 'get-form', 'rooms'] => ['post'],
 				]
 			],
 		];
@@ -79,6 +79,9 @@ class HotelController extends \yii\web\Controller
 			if (!$hotel) {
 				throw new BadRequestHttpException('Wrong hotel id');
 			}
+        	if (!$hotel->published()) {
+        		throw new \yii\web\HttpException(404, 'The requested hotel is not published.');
+        	}
 
 			$orderForm->status = 1;
 			$orderForm->sum = BookingHelper::calcRoomPrice([
@@ -91,7 +94,7 @@ class HotelController extends \yii\web\Controller
                 'code'     => $orderForm->code,
 			]);
 
-			$orderForm->number = md5(\Yii::$app->getSecurity()->generateRandomString(15) . $orderForm->contact_email);
+			$orderForm->number = Order::generateNumber($orderForm->contact_email);
 
 			$orderForm->lang = Lang::$current->url;
 
@@ -120,12 +123,13 @@ class HotelController extends \yii\web\Controller
 				}
 			}
 
-			return $this->render('booking_error', [
+			throw new \yii\web\HttpException(456, 'Unrecoverable Error');
+			/*return $this->render('booking_error', [
 				'orderForm' => $orderForm,
 				'orderItem' => $orderItem,
 				'embedded'   => \Yii::$app->request->get('embedded', 0),
 				'no_desc'   => \Yii::$app->request->get('no_desc', 0),
-			]);
+			]);*/
 		} else {
 			$bookingParams = new BookingParams();
 
@@ -197,15 +201,30 @@ class HotelController extends \yii\web\Controller
         $model = Hotel::findOne(['name' => $name]);
 
         if (!$this->checkBookingPossibility($model)) {
-            \Yii::$app->session->setFlash('danger', \Yii::t('frontend', 'Booking is not availible!'));
+            //\Yii::$app->session->setFlash('danger', \Yii::t('frontend', 'Booking is not availible!'));
         }
 
 		if (is_null($model)) {
 			throw new \yii\web\HttpException(404, 'The requested hotel does not exist.');
 		}
+        if (!$model->published()) {
+        	throw new \yii\web\HttpException(404, 'The requested hotel is not published.');
+        }
+
 		$req = \Yii::$app->request;
-		$dateFrom = new DateTime($req->get('dateFrom', date('Y-m-d')));
-		$dateTo = new DateTime($req->get('dateTo', date('Y-m-d')));
+		$dateFrom = $req->get('dateFrom', false);
+		$dateTo = $req->get('dateTo', false);
+
+		if ($dateFrom && $dateTo) {
+			$dateFrom = new DateTime($dateFrom);
+			$dateTo = new DateTime($dateTo);
+			$search = true;
+		} else {
+			$dateFrom = new DateTime();
+			$dateTo = clone $dateFrom;
+			$dateTo->add(new \DateInterval('P7D'));
+			$search = false;
+		}
 
 		$now = new DateTime();
 
@@ -237,6 +256,7 @@ class HotelController extends \yii\web\Controller
 			'bookParams' => $bookParams,
 			'embedded'   => \Yii::$app->request->get('embedded', 0),
 			'no_desc'   => \Yii::$app->request->get('no_desc', 0),
+			'search' => $search ? 'true' : 'false',
 		]);
 	}
 
@@ -273,6 +293,9 @@ class HotelController extends \yii\web\Controller
 		$rooms = Room::findAll(['hotel_id' => $hotelId]);
 		$result = [];
 		foreach ($rooms as $room) {
+			if (!$room->published()) {
+				continue;
+			}
 			$price = null;
 			try {
 				$price = BookingHelper::calcRoomPrice([
@@ -308,4 +331,46 @@ class HotelController extends \yii\web\Controller
 		return $result;
 
 	}
+
+	public function actionRooms()
+	{
+		// вывод в формате JSON
+		\Yii::$app->response->format = Response::FORMAT_JSON;
+		$req = \Yii::$app->request;
+
+		// разбираем входные данные
+		$hotelId = (int)$req->post('hotelId', false);
+
+		$hotel = Hotel::findOne($hotelId);
+
+		if ($hotel === null) {
+			throw new BadRequestHttpException();
+		}
+
+		$rooms = Room::findAll(['hotel_id' => $hotelId]);
+		$result = [];
+		foreach ($rooms as $room) {
+			if (!$room->published()) {
+				continue;
+			}
+			$item = $room->toArray([], ['facilities']);
+			$item['images'] = [];
+			foreach ($room->images as $image) {
+				$im = [];
+				$im['image'] = $image->getUploadUrl('image');
+				$im['thumb'] = $image->getThumbUploadUrl('image', 'thumb');
+				$im['preview'] = $image->getThumbUploadUrl('image', 'preview');
+				$item['images'][] = $im;
+			}
+			$item['price'] = '';
+			$item['sum_currency'] = '';
+
+			$result[] = $item;
+		}
+
+
+		return $result;
+
+	}
+
 }

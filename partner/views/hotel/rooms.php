@@ -32,7 +32,7 @@ $this->title = $hotel_title;
 $this->params['breadcrumbs'][] = ['label' => $hotel_title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('hotels', 'Rooms'), 'url' => ['rooms', 'id' => $model->id]];
 
-//var_dump(\partner\models\PartnerUser::findOne(Yii::$app->user->id));
+//echo \common\models\Order::generateNumber('mn@itdesign.ru');
 //echo \common\helpers\DebugHelper::grid(new \common\models\Order());
 //echo \common\helpers\DebugHelper::grid(new \common\models\RoomPrices());
 //echo 'res='.\common\components\BookingHelper::priceSetStatistic(['beginDate'=>'2015-09-01','endDate'=>'2015-09-30','roomId'=>3]).'<br>';
