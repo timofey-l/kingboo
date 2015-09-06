@@ -19,8 +19,12 @@
 return [
     'Are you sure you want to delete this item?' => '',
     'Create' => '',
+    'Create Exchange Rates' => '',
+    'Create Hotel' => '',
     'Create Log' => '',
     'Delete' => '',
+    'Exchange Rates' => '',
+    'Hotels' => '',
     'Logs' => '',
     'Reset' => '',
     'Search' => '',

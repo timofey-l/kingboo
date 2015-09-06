@@ -17,17 +17,11 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Countries ' => '',
-    'Currencies ' => '',
-    'Exchange rates' => '',
-    'Hotel facilities ' => '',
-    'Hotels' => '',
-    'Logs' => '',
-    'Pages' => '',
-    'Partners' => '',
-    'Pay logs' => '',
-    'Room facilities ' => '',
-    'Support' => '',
-    'Clients' => '@@@@',
-    'Types of food' => '@@@@',
+    'Active' => '',
+    'Content En' => '',
+    'Content Ru' => '',
+    'ID' => '',
+    'Route' => '',
+    'Title En' => '',
+    'Title Ru' => '',
 ];

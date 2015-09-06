@@ -17,14 +17,14 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'compiled after last save' => '@@скомпилирован после последнего сохранения@@',
+    'CSS code' => 'CSS код',
     'Code save failure' => 'Ошибка сохранения кода',
     'Compiled css code (after last save)' => 'Скомпилированный CSS код (после последнего сохранения)',
-    'CSS code' => 'CSS код',
-    'compiled after last save' => 'скомпилирован после последнего сохранения',
     'LESS code' => 'LESS код',
     'Save' => 'Сохранить',
+    'You can edit CSS of your hotel page (<a href="{url}" target=_blank>{url}</a>).' => 'Вы можете изменять внешний вид страницы своего отеля. Чтобы это сделать вам надо переписать стили CSS, которые используются на странице отеля (<a href="{url}" target=_blank>{url}</a>). Для изменения стилей вам потребуются знания HTML и CSS.',
+    'You can edit your hotel page CSS code here' => 'Здесь вы можете переписать CSS код страницы вашего отеля',
     'Your code was successfully saved' => 'Код успешно сохранён.',
     'read only' => 'только чтение',
-    'You can edit your hotel page CSS code here' => 'Здесь вы можете переписать CSS код страницы вашего отеля',
-    'You can edit CSS of your hotel page (<a href="{url}" target=_blank>{url}</a>).' => 'Вы можете изменять внешний вид страницы своего отеля. Чтобы это сделать вам надо переписать стили CSS, которые используются на странице отеля (<a href="{url}" target=_blank>{url}</a>). Для изменения стилей вам потребуются знания HTML и CSS.',
 ];

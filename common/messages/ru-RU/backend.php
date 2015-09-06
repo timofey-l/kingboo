@@ -17,17 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Countries ' => '',
-    'Currencies ' => '',
-    'Exchange rates' => '',
-    'Hotel facilities ' => '',
-    'Hotels' => '',
-    'Logs' => '',
+    'Are you sure you want to delete this item?' => '',
+    'Create' => '',
+    'Create Page' => '',
+    'Delete' => '',
     'Pages' => '',
-    'Partners' => '',
-    'Pay logs' => '',
-    'Room facilities ' => '',
-    'Support' => '',
-    'Clients' => '@@@@',
-    'Types of food' => '@@@@',
+    'Reset' => '',
+    'Search' => '',
+    'Update' => '',
+    'Update {modelClass}: ' => '',
 ];
