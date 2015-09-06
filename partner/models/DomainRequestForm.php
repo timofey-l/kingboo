@@ -22,6 +22,8 @@ class DomainRequestForm extends Model
     public function rules()
     {
         return [
+            [['notes'], 'string'],
+            [['domain_exists'], 'integer', 'min' => 0, 'max' => 1],
             // name, email, subject and body are required
             [['name', 'domain'], 'required'],
             // email has to be a valid email address
@@ -68,12 +70,12 @@ class DomainRequestForm extends Model
     public function sendEmail($email, $hotel)
     {
         $subject = \Yii::t('domain-request', 'Request for the hotel domain from {site}', ['site' => \Yii::$app->params['mainDomain']]);
-        $body = \Yii::t('domain-request', 'Contact person') . ': ' . $this->name . "\n";
-        $body = \Yii::t('domain-request', 'Email') . ': ' . $this->email . "\n";
-        $body = \Yii::t('domain-request', 'Partner') . ': ' . $hotel->partner->email . "\n";
-        $body = \Yii::t('domain-request', 'Hotel') . ': ' . $hotel->name . "\n";
-        $body .= \Yii::t('domain-request', 'Domain') . ': ' . $this->domain . "\n";
-        $body .= \Yii::t('domain-request', 'Notes') . ': ' . $this->notes . "\n";
+        $body = \Yii::t('domain-request', 'Contact person') . ': ' . Html::encode($this->name) . "\n";
+        $body .= \Yii::t('domain-request', 'Email') . ': ' . Html::encode($this->email) . "\n";
+        $body .= \Yii::t('domain-request', 'Partner') . ': ' . Html::encode($hotel->partner->email) . "\n";
+        $body .= \Yii::t('domain-request', 'Hotel') . ': ' . Html::encode($hotel->name) . "\n";
+        $body .= \Yii::t('domain-request', 'Domain') . ': ' . Html::encode($this->domain) . "\n";
+        $body .= \Yii::t('domain-request', 'Notes') . ': ' . Html::encode($this->notes) . "\n";
         return Yii::$app->mailer->compose()
             ->setTo($email)
             ->setFrom([$this->email => $this->name])
