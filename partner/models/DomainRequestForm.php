@@ -4,6 +4,7 @@ namespace partner\models;
 
 use Yii;
 use yii\base\Model;
+use yii\helpers\Html;
 
 /**
  * ContactForm is the model behind the contact form.
@@ -75,6 +76,7 @@ class DomainRequestForm extends Model
         $body .= \Yii::t('domain-request', 'Partner') . ': ' . Html::encode($hotel->partner->email) . "\n";
         $body .= \Yii::t('domain-request', 'Hotel') . ': ' . Html::encode($hotel->name) . "\n";
         $body .= \Yii::t('domain-request', 'Domain') . ': ' . Html::encode($this->domain) . "\n";
+        $body .= \Yii::t('domain-request', 'Domain exists already') . ': ' . ($this->domain_exists ? '+' : '-') . "\n";
         $body .= \Yii::t('domain-request', 'Notes') . ': ' . Html::encode($this->notes) . "\n";
         return Yii::$app->mailer->compose()
             ->setTo($email)
