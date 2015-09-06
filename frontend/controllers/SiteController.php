@@ -232,7 +232,7 @@ class SiteController extends Controller
             throw new NotFoundHttpException("Order #$number not found");
         }
 
-        $paymentDetails = new \partner\models\partnerPaymentDetailsRus();
+        $paymentDetails = new \partner\models\PartnerPaymentDetailsRus();
         $paymentDetails->unpack($order->hotel->partner->payment_details);
         return $this->render('@common/views/invoices/clientBookingPrint', [
             'order' => $order,
