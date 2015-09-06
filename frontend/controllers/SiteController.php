@@ -234,6 +234,7 @@ class SiteController extends Controller
 
         $paymentDetails = new \partner\models\PartnerPaymentDetailsRus();
         $paymentDetails->unpack($order->hotel->partner->payment_details);
+        $this->layout = false;
         return $this->render('@common/views/invoices/clientBookingPrint', [
             'order' => $order,
             'paymentDetails' => $paymentDetails,
