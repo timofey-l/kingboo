@@ -193,6 +193,18 @@ class Hotel extends \yii\db\ActiveRecord
 	}
 
 	/**
+	 * Возвращает системный URL отеля (http://hotel.king-boo.com)
+	 */
+	public function getLocal_url() {
+		$server = 'king-boo.com';
+		$hostInfo = \Yii::$app->request->getHostInfo();
+		if (preg_match('%partner\.(?<server>.+)$%', $hostInfo, $m)) {
+    		$server = $m['server'];
+		}		
+		return 'http://' . $this->name . '.' . $server;
+	}
+
+	/**
 	 * Возвращает массив особенностей отеля [id => поле заданное через $name]
 	 *
 	 * @param mixed $name

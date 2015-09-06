@@ -24,7 +24,7 @@ if (!is_null($hotel))
         <address>
             <b><?= \Yii::t('frontend', 'Address', []) ?>:</b> <?= Html::encode($hotel->address) ?>
             <br>
-            <b><?= \Yii::t('frontend', 'E-mail', []) ?>:</b> <?= Html::encode($hotel->contact_email) ?>
+            <b><?= \Yii::t('frontend', 'E-mail', []) ?>:</b> <?= Html::mailto($hotel->contact_email) ?>
             <br>
             <b><?= \Yii::t('frontend', 'Phone', []) ?>:</b> <?= Html::encode($hotel->contact_phone) ?>
         </address>

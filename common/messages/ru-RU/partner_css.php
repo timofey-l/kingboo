@@ -25,4 +25,6 @@ return [
     'Save' => 'Сохранить',
     'Your code was successfully saved' => 'Код успешно сохранён.',
     'read only' => 'только чтение',
+    'You can edit your hotel page CSS code here' => 'Здесь вы можете переписать CSS код страницы вашего отеля',
+    'You can edit CSS of your hotel page (<a href="{url}" target=_blank>{url}</a>).' => 'Вы можете изменять внешний вид страницы своего отеля. Чтобы это сделать вам надо переписать стили CSS, которые используются на странице отеля (<a href="{url}" target=_blank>{url}</a>). Для изменения стилей вам потребуются знания HTML и CSS.',
 ];

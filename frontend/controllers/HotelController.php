@@ -201,7 +201,7 @@ class HotelController extends \yii\web\Controller
         $model = Hotel::findOne(['name' => $name]);
 
         if (!$this->checkBookingPossibility($model)) {
-            \Yii::$app->session->setFlash('danger', \Yii::t('frontend', 'Booking is not availible!'));
+            //\Yii::$app->session->setFlash('danger', \Yii::t('frontend', 'Booking is not availible!'));
         }
 
 		if (is_null($model)) {

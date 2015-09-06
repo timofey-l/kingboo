@@ -47,10 +47,15 @@ $this->params['breadcrumbs'][] = Yii::t('hotels', 'Custom CSS');
 <br/>
 <br/>
 <div class="row">
+    <div class="col-xs-12">
+        <p><?= \Yii::t('partner_css', 'You can edit CSS of your hotel page (<a href="{url}" target=_blank>{url}</a>).', ['url' => $hotel->local_url]) ?></p>
+    </div>
+    
     <div class="col-md-6">
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title"><?= \Yii::t('partner_css', 'LESS code', []) ?></h3>
+                <p><?= \Yii::t('partner_css', 'You can edit your hotel page CSS code here') ?></p>
             </div>
             <div class="box-body">
                 <textarea name="less" id="less" style="visibility: hidden;position: absolute;"><?= $hotel->less ?></textarea>
@@ -62,7 +67,7 @@ $this->params['breadcrumbs'][] = Yii::t('hotels', 'Custom CSS');
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title"><?= \Yii::t('partner_css', 'CSS code', []) ?></h3>
-                <p><?= \Yii::t('partner_css', 'compiled after last save', []) ?></p>
+                <p><?= \Yii::t('partner_css', 'Compiled css code (after last save)', []) ?></p>
                 <div class="box-tools pull-right">
                     <span class="label label-danger"><?= \Yii::t('partner_css', 'read only', []) ?></span>
                 </div>

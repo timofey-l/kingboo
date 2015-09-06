@@ -11,12 +11,6 @@ $this->title = $model->{'title_' . $l};
 
 $this->params['breadcrumbs'][] = $this->title;
 
-$server = 'king-boo.com';
-$hostInfo = \Yii::$app->request->getHostInfo();
-if (preg_match('%partner\.(?<server>.+)$%', $hostInfo, $m)) {
-    $server = $m['server'];
-}
-
 ?>
 <style>
     .rooms-list {
@@ -36,9 +30,44 @@ if (preg_match('%partner\.(?<server>.+)$%', $hostInfo, $m)) {
         <?= Html::a('<span class="fa fa-check-square-o"></span>' . Yii::t('hotels', 'Facilities'), ['facilities', 'id' => $model->id], ['class' => 'btn btn-app']) ?>
         <?= Html::a('<span class="fa fa-hotel"></span>' . Yii::t('hotels', 'Rooms'), ['rooms', 'id' => $model->id], ['class' => 'btn btn-app']) ?>
         <?= Html::a('<span class="fa fa-camera"></span>' . Yii::t('hotels', 'Images'), ['images', 'id' => $model->id], ['class' => 'btn btn-app']) ?>
-        <?= Html::a('<span class="fa fa-th"></span>' . Yii::t('partner_widget', 'Widgets'), ['widgets', 'id' => $model->id], ['class' => 'btn btn-app']) ?>
-        <?= Html::a('<span class="fa fa-code"></span>' . Yii::t('hotels', 'Frame on site'), ['iframe', 'id' => $model->id], ['class' => 'btn btn-app']) ?>
-        <?= Html::a('<span class="fa fa-css3"></span>' . Yii::t('hotels', 'Custom CSS'), ['css', 'id' => $model->id], ['class' => 'btn btn-app']) ?>
+        <?= Html::a('<span class="fa fa-th"></span>' . Yii::t('partner_widget', 'Widgets'), ['widgets', 'id' => $model->id], [
+                'class' => 'btn btn-app',
+                'data-toggle' => 'popover',
+                'data-trigger' => 'hover focus',
+                'data-html' => 'true',
+                'data-container' => "body",
+                'data-placement' => "auto bottom",
+                'data-content' => Yii::t('hotels','Install on your site widget for online booking'),
+            ]) ?>
+        <?= Html::a('<span class="fa fa-code"></span>' . Yii::t('hotels', 'Frame on site'), ['iframe', 'id' => $model->id], [
+                'class' => 'btn btn-app',
+                'data-toggle' => 'popover',
+                'data-trigger' => 'hover focus',
+                'data-html' => 'true',
+                'data-container' => "body",
+                'data-placement' => "auto bottom",
+                'data-content' => Yii::t('hotels','Install on your site booking form'),
+        ]) ?>
+        <?= Html::a('<span class="fa fa-css3"></span>' . Yii::t('hotels', 'Custom CSS'), ['css', 'id' => $model->id], [
+                'class' => 'btn btn-app',
+                'data-toggle' => 'popover',
+                'data-trigger' => 'hover focus',
+                'data-html' => 'true',
+                'data-container' => "body",
+                'data-placement' => "auto bottom",
+                'data-content' => Yii::t('hotels','Change your hotel page styles as you like'),
+        ]) ?>
+        <?php if (!$model->domain) {
+                echo Html::a('<span class="fa fa-registered"></span>' . Yii::t('hotels', 'My domain'), ['domain-registration-request', 'id' => $model->id], [
+                    'class' => 'btn btn-app bg-green',
+                    'data-toggle' => 'popover',
+                    'data-trigger' => 'hover focus',
+                    'data-html' => 'true',
+                    'data-container' => "body",
+                    'data-placement' => "auto bottom",
+                    'data-content' => Yii::t('hotels','Place your hotel web page on it&acute;s own domain name, not on <i>{site}</i> subdomain', ['site' => Yii::$app->params['mainDomainShort']]),
+                ]);
+        } ?>
         <?= Html::a('<span class="fa fa-trash-o"></span>' . Yii::t('hotels', 'Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-app bg-red',
             'data' => [
@@ -112,8 +141,7 @@ if (preg_match('%partner\.(?<server>.+)$%', $hostInfo, $m)) {
                             'category',
                             [
                                 'attribute' => 'name',
-                                'value' => '<a target="_blank"
- href="http://' . $model->name . '.' . $server . '">http://' . $model->name . '.' . $server . '</a>',
+                                'value' => '<a target="_blank" href="' . $model->local_url . '">' . $model->local_url . '</a>',
                                 'format' => 'raw',
                             ],
                             'domain',

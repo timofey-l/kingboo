@@ -138,7 +138,7 @@ if (!$this->context->checkBookingPossibility($model)) {
             <br>
             <span class="phone"><?= Html::encode($model->contact_phone) ?></span>
             <br>
-            <span class="email"><?= Html::encode($model->contact_email) ?></span>
+            <span class="email"><?= Html::mailto($model->contact_email) ?></span>
             <br>
         </div>
     </div>
@@ -193,7 +193,7 @@ if (!$this->context->checkBookingPossibility($model)) {
 
 
 <div ng-app="roomsSearch" ng-controller="searchCtrl" ng-init="search.hotelId = <?= $model->id ?>;" style="display: none;">
-    <h2 id="search"><?= Yii::t('frontend', 'Search') ?></h2>
+    <h2 id="search"><?= Yii::t('frontend', 'Search vacant rooms for booking') ?></h2>
     <div class="row well">
         <div class="input-daterange" id="datepicker">
             <div class="form-group col-md-2 col-sm-6">

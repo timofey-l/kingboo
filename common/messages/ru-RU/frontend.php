@@ -83,4 +83,5 @@ return [
     'Use search form to book a room on disirable dates.' => 'Воспользуйтесь формой поиска для бронирования номера на желаемые даты.',
     'To watch information about all hotel rooms push the "All rooms" button.' => 'Для просмотра информации о всех номерах отеля нажмите кнопку &laquo;Все номера&raquo;.',
     'All rooms' => 'Все номера',
+    'Search vacant rooms for booking' => 'Поиск свободных номеров для бронирования',
 ];

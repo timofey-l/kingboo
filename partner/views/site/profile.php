@@ -47,7 +47,6 @@ $this->registerJs("$('input[type=checkbox]').iCheck({
                         'class' => 'iCheck',
                     ]) ?>
                     <?= $form->field($user, 'currency_exchange_percent')->textInput([
-                        'maxlength' => 255,
                         'data-toggle' => 'popover',
                         'data-trigger' => 'hover focus',
                         'data-html' => 'true',

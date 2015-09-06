@@ -44,6 +44,7 @@ class PriceRules extends \yii\db\ActiveRecord
             [['dateFrom', 'dateTo', 'dateFromB', 'dateToB', 'minSum', 'maxSum', 'code', 'value', 'valueType', 'additive', 'applyForCheckIn'], 'safe'],
             [['type', 'valueType', 'additive', 'active', 'applyForCheckIn'], 'integer'],
             [['params'], 'string'],
+            [['counter'], 'default', 'value' => 0],
         ];
     }
 
