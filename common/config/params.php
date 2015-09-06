@@ -1,6 +1,6 @@
 <?php
 return [
-    'adminEmail' => ['admin@king-boo.com' => 'Support service', 'admin@king-boo.ru'],
+    'adminEmail' => ['admin@king-boo.com' => 'Support service', 'timofeylyzhenkov@gmail.com'],
     'email.from' => ['no-reply@king-boo.com' => 'king-boo.com'],
     'supportEmail' => 'timofeylyzhenkov@gmail.com',
     'user.passwordResetTokenExpire' => 3600,
