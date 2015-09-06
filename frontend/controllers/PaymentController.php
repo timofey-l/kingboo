@@ -71,7 +71,7 @@ class PaymentController extends \yii\web\Controller
 			return base64_encode($this->render('_pay_form', [
 				'shopId'         => $partner->shopId,
 				'scid'           => $partner->scid,
-				'sum'            => $order->pay_sum,
+				'sum'            => $pay_sum,
 				'customerNumber' => md5($order->contact_email),
 				'orderNumber'    => $order->number,
 				'paymentType'    => $pay_type,
