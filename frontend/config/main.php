@@ -48,6 +48,7 @@ return [
                 '/signup' => 'site/signup',
                 '/login' => 'site/login',
                 '/logout' => 'site/logout',
+                '/contact' => 'site/contact',
                 'POST /hotel/search' => 'hotel/search',
 //	            'POST /hotel/booking' => 'hotel/booking',
                 '/hotel/test' => 'hotel/test',

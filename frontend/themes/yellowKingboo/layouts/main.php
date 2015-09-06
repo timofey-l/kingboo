@@ -4,6 +4,8 @@ use frontend\widgets\Alert;
 use rmrevin\yii\fontawesome\AssetBundle;
 use rmrevin\yii\fontawesome\FontAwesome;
 use yii\base\View;
+use yii\bootstrap\BootstrapAsset;
+use yii\bootstrap\BootstrapThemeAsset;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\web\JqueryAsset;
@@ -18,6 +20,8 @@ JqueryAsset::register($this);
 
 AssetBundle::register($this);
 
+BootstrapAsset::register($this);
+BootstrapThemeAsset::register($this);
 $assetOptions = [
     'depends' => [
         JqueryAsset::className(),

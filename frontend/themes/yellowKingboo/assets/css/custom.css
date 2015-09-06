@@ -6,8 +6,17 @@ nav.main-menu a.selected  {
     color: #e67300;
 }
 
-
+html, * , a {
+    color: #630;
+}
 
 .logo {
     cursor: pointer;
+}
+
+
+.offer .image img {
+    width: 100%;
+    max-width: 340px;
+    height: auto;
 }

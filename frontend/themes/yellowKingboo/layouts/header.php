@@ -8,8 +8,7 @@
         <div class="text"><b>global </b>hotel &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;website system <br>with
             <b>direct booking</b></div>
     </div>
-    <div class="login-block"><a href="#" class="button orange-bg">Регистрация</a><a href="#"
-                                                                                    class="button green-bg">Вход</a>
+    <div class="login-block"><a href="https://partner.king-boo.com/signup" class="button orange-bg">Регистрация</a><a href="https://partner.king-boo.com/signin" class="button green-bg">Вход</a>
     </div>
     <div class="header-top-text">Прямо сейчас самые <b>предприимчивые владельцы </b><br>отелей <b>регистрируются в
             сети King-Boo </b>и получают
@@ -26,5 +25,5 @@
         Ваши клиенты <b>больше не ограничены </b>в способах оплаты <br>и могут забронировать номер <b>из любой точки
             мира! </b>
     </div>
-    <?php $this->render('top-menu', []) ?>
+    <?= $this->render('top-menu', []) ?>
 </header>
