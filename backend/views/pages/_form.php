@@ -10,16 +10,25 @@ use yii\widgets\ActiveForm;
 $ace = \Yii::$app->assetManager->publish('@bower/ace-builds/src-min-noconflict')[1];
 $this->registerJsFile($ace.'/ace.js');
 $this->registerJs("
-    var editorRU = ace.edit('page-content_ru');
+    var content_ru = $('#page-content_ru');
+    var editorRU = ace.edit('content_ru');
+    editorRU.getSession().setValue(content_ru.val())
     editorRU.setTheme('ace/theme/xcode');
     editorRU.getSession().setMode('ace/mode/html');
     editorRU.setFontSize('1.1em');
+    editorRU.getSession().on('change', function(){
+        content_ru.val(editorRU.getSession().getValue());
+    });
 
-    var editorEN = ace.edit('page-content_en');
+    var content_en = $('#page-content_en');
+    var editorEN = ace.edit('content_en');
     editorEN.setTheme('ace/theme/xcode');
     editorEN.getSession().setMode('ace/mode/html');
+    editorEN.getSession().setValue(content_en.val())
     editorEN.setFontSize('1.1em');
-
+    editorEN.getSession().on('change', function(){
+        content_en.val(editorEN.getSession().getValue());
+    });
 ");
 
 $this->registerCss("
@@ -39,10 +48,11 @@ $this->registerCss("
 
     <?= $form->field($model, 'title_en')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'content_ru')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'content_ru')->hiddenInput() ?>
+    <div id="content_ru"></div>
 
-    <?= $form->field($model, 'content_en')->textarea(['rows' => 6]) ?>
-
+    <?= $form->field($model, 'content_en')->hiddenInput() ?>
+    <div id="content_en"></div>
     <?= $form->field($model, 'active')->checkbox() ?>
 
     <div class="form-group">
