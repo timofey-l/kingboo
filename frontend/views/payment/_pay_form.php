@@ -4,7 +4,7 @@
 
 	<input type="hidden" name="shopId" value="<?= $partner->shopId ?>"/>
 	<input type="hidden" name="scid" value="<?= $partner->scid ?>"/>
-	<input type="hidden" name="sum" value="<?= $order->pay_sum ?>"/>
+	<input type="hidden" name="sum" value="<?= $sum ?>"/>
 	<input type="hidden" name="customerNumber" value="<?= md5($order->contact_email) ?>"/>
 	<input type="hidden" name="paymentType" value="<?= $paymentType ?>"/>
 	<input type="hidden" name="orderNumber" value="<?= $order->number ?>"/>
