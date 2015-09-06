@@ -55,6 +55,10 @@ class HotelUrlRule extends UrlRule
                         } elseif (preg_match('%payment/(?<action>\w+)$%', $pathInfo, $m_path)) {
                             return ['payment/'.$m_path['action'], []];
                         }
+
+                        if ($pathInfo == 'contact') {
+                            return ['site/contact', []];
+                        }
                         return [$pathInfo, $request->get()];
                     }
 
