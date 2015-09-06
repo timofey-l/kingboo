@@ -255,7 +255,7 @@ class SiteController extends Controller
         // Платежные реквизиты для Российской компании (появятся иностранные - надо менять)
         $payment_details = $user->allow_payment_via_bank_transfer;
         if ($payment_details) {
-            $model->payment_details = new \partner\models\partnerPaymentDetailsRus();
+            $model->payment_details = new \partner\models\PartnerPaymentDetailsRus();
             $model->payment_details->unpack($user->payment_details);
         }
 

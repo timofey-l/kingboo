@@ -19,7 +19,7 @@ class PaymentController extends \yii\web\Controller
 			throw new NotFoundHttpException(\Yii::t('frontend', 'Page was not found!'));
 		}
 
-        $paymentDetails = new \partner\models\partnerPaymentDetailsRus();
+        $paymentDetails = new \partner\models\PartnerPaymentDetailsRus();
         $paymentDetails->unpack($order->hotel->partner->payment_details);
 
 		return $this->render('show', [
