@@ -11,17 +11,25 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\models\Hotel;
 use yii\base\InvalidParamException;
+use yii\base\Theme;
 use yii\web\BadRequestHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use frontend\models\BookingParams;
+
 /**
  * Site controller
  */
 class SiteController extends Controller
 {
     var $_hotel = null;
+
+    var $themeName = "yellowKingBoo";
+
+    var $layout = "content";
+
 
     /**
      * @inheritdoc
@@ -69,17 +77,36 @@ class SiteController extends Controller
             ],
         ];
     }
-    
-    public function beforeAction($action) {
+
+    public function beforeAction($action)
+    {
         parent::beforeAction($action);
         if (HotelUrlRule::$current !== null) {
             $this->_hotel = HotelUrlRule::$current;
         }
+
+        if (HotelUrlRule::$mainDomain && \Yii::$app->params['mainDomainTheme'] !== false) {
+            $themePath = '@app/themes/' . \Yii::$app->params['mainDomainTheme'];
+
+            $baseUrl = '@frontend/web';
+            if (file_exists(\Yii::getAlias($themePath).'/assets')) {
+                $baseUrl = \Yii::$app->assetManager->publish(\Yii::getAlias($themePath).'/assets')[1];
+            }
+            \Yii::$app->view->theme = new Theme([
+                'basePath' => '@app/themes/' . \Yii::$app->params['mainDomainTheme'],
+                'baseUrl' => $baseUrl,
+                'pathMap' => [
+                    '@app/views' => '@app/themes/' . \Yii::$app->params['mainDomainTheme'],
+                ],
+            ]);
+        }
+
         return true;
     }
 
     public function actionIndex()
     {
+        $this->layout = 'main';
         return $this->render('index');
     }
 
@@ -185,6 +212,28 @@ class SiteController extends Controller
 
         return $this->render('resetPassword', [
             'model' => $model,
+        ]);
+    }
+
+    /**
+     * Вывод реквизитов фирмы на печать для оплаты безналом
+     * @param string $number - номер заказа (например, 19f105e0c7347f48c0dd452eb4bd165e)
+     */
+    public function actionBookingInvoice($number) 
+    {
+        if (!$order = \common\models\Order::findOne(['number' => $number])) {
+            throw new NotFoundHttpException("Order #$number not found");
+        }
+
+        if (!$order->hotel->partner->allow_payment_via_bank_transfer) {
+            throw new NotFoundHttpException("Order #$number not found");
+        }
+
+        $paymentDetails = new \partner\models\partnerPaymentDetailsRus();
+        $paymentDetails->unpack($order->hotel->partner->payment_details);
+        return $this->render('@common/views/invoices/clientBookingPrint', [
+            'order' => $order,
+            'paymentDetails' => $paymentDetails,
         ]);
     }
 }

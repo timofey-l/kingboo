@@ -13,9 +13,6 @@
         <a class="btn btn-xs btn-primary" title="{{t('room_table_head_photos')}}" href="#/images/{{room.id}}">
             <i class="fa fa-camera"></i>
         </a>
-        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_money')}}" href="#/prices/{{room.id}}">
-            <i class="fa fa-usd"></i>
-        </a>
     </div>
 </div>
 <!-- /.box-header -->
@@ -35,24 +32,27 @@
     <div class="callout callout-info">
         <h4>{{t('availability_legend')}}</h4>
         <div class="row">
-        <div class="col-xs-12 col-sm-6 col-lg-3">
-            <div class="ava-legend"><div class="color" style="background-color: #b5bbc8"></div><div class="title">{{t('availability_no_price')}}</div></div>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-lg-3">
-            <div class="ava-legend"><div class="color" style="background-color: #ffffff"></div><div class="title">{{t('availability_no_count')}}</div></div>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-lg-3">
-            <div class="ava-legend"><div class="color" style="background-color: #f39c12"></div><div class="title">{{t('availability_stop_sale')}}</div></div>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-lg-3">
-            <div class="ava-legend"><div class="color" style="background-color: #00a65a"></div><div class="title">{{t('availability_on_sale')}}</div></div>
-        </div>
+            <div class="col-xs-12 col-sm-6">
+                <div class="ava-legend"><div class="color" style="background-color: #dddddd"></div><div class="title">{{t('availability_no_price')}}</div></div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <div class="ava-legend"><div class="color" style="background-color: #fef459"></div><div class="title">{{t('availability_partial_price')}}</div></div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <div class="ava-legend"><div class="color" style="background-color: #f39c12"></div><div class="title">{{t('availability_legend_stop_sale')}}</div></div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <div class="ava-legend"><div class="color" style="background-color: #00ff00"></div><div class="title">{{t('availability_on_sale')}}</div></div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <div class="ava-legend"><div class="color" style="background-color: #aaffaa"></div><div class="title">{{t('availability_no_rooms')}}</div></div>
+            </div>
         </div>
     </div>
 
     <!-- Calendar -->
     <div class="row">
-        <div class="col-md-6 col-lg-4" ng-repeat="month in months">
+        <div class="col-sm-12 col-md-6" ng-repeat="month in months" data-toggle="popover" data-trigger="hover" data-content="{{t('availability_tooltip_instructions')}}">
             <table class="table table-bordered calendar-table">
                 <tr>
                     <td colspan="1" class="month-prev" ng-click="prevMonth()"><i class="fa fa-backward"></i></td>
@@ -62,10 +62,12 @@
                 <tr><td ng-repeat="dayOfWeek in month.daysOfWeek">{{dayOfWeek.name}}</td></tr>
                 <tr ng-repeat="week in month.weeks">
                     <td ng-repeat="day in week.days" class="fixed"
-                        ng-class="{nonactive: !day.active, clicable: day.active, selected: day.selected, stop: day.stopSale, saling: day.count !== '' && !day.stopSale, noprice: day.active && !day.price}" 
-                        ng-click="chooseDate(day)">
+                        ng-class="{nonactive: !day.active, clicable: day.active, selected: day.selected, stop: day.stopSale, saling: day.count !== '' && !day.stopSale, noprice: day.active && !day.allPricesSet && day.prices.length == 0, partialprice: day.active && !day.allPricesSet && day.prices.length == undefined, norooms: day.active && day.prices.length == undefined && day.count == 0}" 
+                        ng-click="chooseDate(day,$event)">
+                        <i class="fa fa-fw fa-info-circle text-aqua" ng-if="day.fulldate != ''" ng-click="showDayInfo(day)"></i>
                         <div class="ava-date">{{day.date}}</div>
-                        {{day.count}}&nbsp;
+                        <div class="ava-num">{{day.count}}&nbsp;</div>
+                        <div class="ava-price" ng-bind-html="day.minPrice"></div>
                     </td>
                 </tr>
             </table>
@@ -79,26 +81,62 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cancelModal()"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">
                         {{t('availability_dates')}}:
-                        {{startDate.format(dateFormat)}} <span ng-show="endDate"> &mdash; {{endDate.format(dateFormat)}}</span>
+                        {{startDate.format(dateFormat)}} 
+                        <span ng-show="endDate"> &mdash; {{endDate.format(dateFormat)}}</span>
                     </h4>
                 </div>
                 <div class="modal-body">
-                        <div class="form-group" ng-class="{'has-error': countInvalid}">
-                            {{t('availability_count')}}
-                            <input type="number" name="count" id="rooms-count" ng-model="count" min="0" class="form-control">
+                    <div class="form-group" ng-class="{'has-error': countInvalid}">
+                        {{t('availability_count')}}
+                        <input type="number" name="count" id="rooms-count" ng-model="count" min="0" class="form-control">
+                    </div>
+                    <b>{{t('availability_set_prices')}} "{{currencyValue(currency,'name')}}".</b>
+                    <div class="direct-chat-messages">
+                        <div class="form-group" ng-class="{'has-error': priceInvalid[key]}" ng-repeat="(key, obj) in priceTitles">
+                            {{obj.title}}:
+                            <input type="number" name="count" id="rooms-count" ng-model="newPrices[key].price" min="0" class="form-control">
                         </div>
-                    <p ng-show="!endDate">
-                        {{t('availability_select_period')}}<br />
-                        <button type="button" class="btn btn-info" data-dismiss="modal" ng-click="period()">
-                            {{t('availability_period')}}
-                        </button>
-                    </p>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-warning pull-left" data-dismiss="modal" ng-click="stopSale(true)">{{t('availability_stop_sale')}}</button>
                     <button type="button" class="btn btn-success pull-left" data-dismiss="modal" ng-click="stopSale(false)">{{t('availability_start_sale')}}</button>
                     <button type="button" class="btn btn-primary" ng-click="save()">{{t('availability_save')}}</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelModal()">{{t('availability_cancel')}}</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal" id="day-info">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="closeDayInfo()"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{{t('availability_info_title')}} {{selectedDay.formatedDate}}</h4>
+                </div>
+                <div class="modal-body">
+                    <b>{{t('availability_info_count')}}</b> {{selectedDay.count}}<br />
+                    <b>{{t('availability_info_prices')}}</b>
+                    <div class="callout callout-warning" ng-if="!selectedDay.allPricesSet && selectedDay.prices.length == undefined">
+                        <h4>{{t('availability_info_warning_prices_title')}}</h4>
+                        <p>{{t('availability_info_warning_prices')}}</p>
+                    </div>
+                    <div class="callout callout-danger" ng-if="selectedDay.prices.length == 0">
+                        <h4>{{t('availability_info_danger_prices_title')}}</h4>
+                        <p>{{t('availability_info_danger_prices')}}</p>
+                    </div>
+                    <div class="direct-chat-messages">
+                        <table class="table">
+                            <tr ng-repeat="(key,price) in selectedDay.prices">
+                                <td>{{priceTitles[key].title}}</td>
+                                <td ng-bind-html="cFormat(price.price,price.price_currency)"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeDayInfo()">{{t('availability_close')}}</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

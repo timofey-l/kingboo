@@ -28,12 +28,20 @@ $this->registerJsFile($colorbox . '/jquery.colorbox-min.js', ['depends' => [\yii
 $this->registerJsFile($colorbox . '/i18n/jquery.colorbox-' . ($l == 'en' ? 'uk' : $l) . '.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 $this->registerCssFile($colorbox . '/example1/colorbox.css', [], 'colorbox');
 
+//Font Awesome
+$this->registerCssFile($assetManager->publish('@bower/fontawesome')[1] . '/css/font-awesome.min.css', [], 'font-awesome');
+
 // Подключаем библиотеку moment.js
 $this->registerJsFile($assetManager->publish('@bower/moment/min')[1] . '/moment-with-locales.min.js');
 
 // Галлерея
 \frontend\assets\GalleryAsset::register($this);
 $this->registerCssFile('/css/gallery.css', ['depends' => [\frontend\assets\GalleryAsset::className()]], 'gallery');
+
+// angular-sanitize
+$ang_sanitize = \Yii::$app->assetManager->publish('@vendor/bower/angular-sanitize');
+$assetOptions = ['depends' => [\partner\assets\AngularAsset::className()]];
+$this->registerJsFile($ang_sanitize[1] . '/angular-sanitize.js', $assetOptions);
 
 // Приложение angular
 $this->registerJsFile('/js/search.js', ['depends' => [\frontend\assets\GalleryAsset::className()]]);
@@ -52,7 +60,7 @@ $this->registerCssFile($customSB . '/jquery.mCustomScrollbar.min.css');
 
 // сворачивание описания отеля
 $js = <<<Javascript
-console.log($(".collapsable"));
+//console.log($(".collapsable"));
 $(".collapsable").mCustomScrollbar({
     scrollButtons:{enable:true},
     theme:"dark-3",
@@ -111,6 +119,7 @@ if (!$this->context->checkBookingPossibility($model)) {
     <div class="row">
         <div class="col-sm-6">
             <h2><?= $model->{'title_' . $l} ?></h2>
+            <?php if ($model->category > 0) : ?>
             <div class="hotel_stars">
                 <?php foreach (range(1, 5) as $i): ?>
                     <?php if ($i <= $model->category) : ?>
@@ -120,6 +129,7 @@ if (!$this->context->checkBookingPossibility($model)) {
                     <?php endif ?>
                 <?php endforeach; ?>
             </div>
+            <?php endif ?>
         </div>
         <div class="col-sm-6 text-right">
             <br>
@@ -291,7 +301,7 @@ if (!$this->context->checkBookingPossibility($model)) {
             </div>
         </div>
         <div class="col-md-2 price">
-            {{ r.price }}&nbsp;{{ r.sum_currency.code }}
+            <span ng-bind-html="pFormat(r)"></span>
             <br/>
             <br/>
 

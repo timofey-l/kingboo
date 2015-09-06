@@ -9,6 +9,7 @@ class RoomsManageAsset extends AssetBundle
     public $js = [
         'js/rooms/langs.js',
         'js/rooms/controllers.js',
+        'js/rooms/room-calendar.js',
         'js/rooms/services.js',
         'js/rooms/app.js',
         'js/rooms/hotelroomprices.js',

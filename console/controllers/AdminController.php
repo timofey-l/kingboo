@@ -16,6 +16,11 @@ use yii\helpers\Inflector;
 class AdminController extends Controller
 {
 
+    public function actionDo() {
+        $c = \common\models\Currency::find()->where(['code' => 'EUR'])->one();
+        echo $c->convertTo(100,'EUR',5)."\n";
+    }
+
     public function actionChangeAdminPassword($id)
     {
         /** @var BackendUser $admin */
@@ -76,6 +81,16 @@ class AdminController extends Controller
             echo "Error while creating user.\n";
         }
 
+    }
+
+    /**
+     * Парсинг курсов валют относительно USD (USD / валюта)
+     */
+    public function actionExchangeRates($echo = false) {
+        $res = \common\components\ExchangeRatesParser::parse();
+        if ($echo) {
+            echo $res;
+        }
     }
 
     public function actionGenerateFake() {

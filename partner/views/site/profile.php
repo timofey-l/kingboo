@@ -46,6 +46,15 @@ $this->registerJs("$('input[type=checkbox]').iCheck({
                     <?= $form->field($user, 'allow_payment_via_bank_transfer')->checkbox([
                         'class' => 'iCheck',
                     ]) ?>
+                    <?= $form->field($user, 'currency_exchange_percent')->textInput([
+                        'maxlength' => 255,
+                        'data-toggle' => 'popover',
+                        'data-trigger' => 'hover focus',
+                        'data-html' => 'true',
+                        'data-container' => "body",
+                        'data-placement' => "auto right",
+                        'data-content' => $user->attributePopover('currency_exchange_percent'),
+                    ]) ?>
                 </div>
             </div>
         </div>
@@ -84,7 +93,7 @@ $this->registerJs("$('input[type=checkbox]').iCheck({
             </div>
         </div>
 
-        <div class="col-sm-12 col-md-6">
+        <!--div class="col-sm-12 col-md-6">
             <div class="box box-default">
                 <div class="box-header with-border">
                     <h3 class="box-title"><?= \Yii::t('partner_profile', 'Configuration of IP telephony') ?></h3>
@@ -105,7 +114,17 @@ $this->registerJs("$('input[type=checkbox]').iCheck({
                     </div>
                 </div>
             </div>
-        </div>
+        </div-->
+
+        <?php 
+        if ($user->allow_payment_via_bank_transfer) {
+            echo $this->render('/payment-details/rus', [
+                'pd' => $user->payment_details,
+                'form' => $form,
+            ]);
+        }
+        ?>
+
         <div class="col-xs-12">
             <div class="form-group">
                 <?= Html::submitButton(\Yii::t('partner_profile', 'Apply'), ['class' => 'btn btn-success']) ?>

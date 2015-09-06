@@ -57,14 +57,25 @@ class Hotel extends \yii\db\ActiveRecord
     public function afterDelete() {
         parent::afterDelete();
         // Сигнал для системы сообщений
-        \Yii::$app->automaticSystemMessages->setDataUpdated();
+        if (isset(\Yii::$app->automaticSystemMessages)) {
+        	\Yii::$app->automaticSystemMessages->setDataUpdated();
+        }
     }
 
     public function afterSave($insert, $changedAttributes) {
     	parent::afterSave($insert, $changedAttributes);
+
+    	// Если изменилась валюта, удаляем будущие цены для всех номеров
+    	if (isset($changedAttributes['currency_id']) && $changedAttributes['currency_id'] != $this->currency_id) {
+    		foreach ($this->rooms as $room) {
+    			\common\models\RoomPrices::deleteFuturePrices($room);
+    		}
+    	}
     	if ($insert) {
             // Сигнал для системы сообщений
-            \Yii::$app->automaticSystemMessages->setDataUpdated();
+        	if (isset(\Yii::$app->automaticSystemMessages)) {
+        		\Yii::$app->automaticSystemMessages->setDataUpdated();
+        	}
     	}
     }
 
@@ -85,11 +96,12 @@ class Hotel extends \yii\db\ActiveRecord
 			}, 'whenClient'                   => "function (attribute, value) {
                 return !$('#hotel-title_ru').val();
             }"],
-			[['partner_id', 'category', 'currency_id'], 'integer'],
+			[['partner_id', 'category'], 'integer'],
 			[['lng', 'lat'], 'number'],
 			[['description_ru', 'description_en', 'domain'], 'string'],
 			[['name', 'address', 'timezone', 'title_ru', 'title_en', 'contact_email', 'contact_phone'], 'string', 'max' => 255],
 			[['lng', 'lat'], 'default', 'value' => 0],
+			[['currency_id'], 'integer', 'min' => 1],
 			[['allow_partial_pay'], 'integer', 'max' => 1, 'min' => 0],
 			['partial_pay_percent', 'integer', 'min' => self::MIN_PART_PAY, 'max' => 100],
             ['name', 'unique'],
@@ -146,6 +158,7 @@ class Hotel extends \yii\db\ActiveRecord
     	$a = [
             'name' => Yii::t('hotels', 'Create and enter the address of your hotel in system king.boo.com. Ex. palm-beach-hotel.'),
             'domain' => Yii::t('hotels', 'Fill in this field, if you want to register already existing personal domain of your hotel in king.boo system. If you still don’t have but want to register personal domain name for your hotel, please, apply for registration'),
+            'currency_id' =>Yii::t('hotels', 'The currency in which prices for hotel rooms are shown.<br /><b class="text-red">Attention!</b><br />If you change hotel currency all room prices will be deleted!'),
         ];
     	if ($key) {
     		if (isset($a[$key])) {

@@ -2,6 +2,7 @@
 
 /* @var $order \common\models\Order */
 use yii\bootstrap\BootstrapAsset;
+use yii\helpers\Html;
 
 /* @var $this \yii\web\View */
 
@@ -16,6 +17,7 @@ $this->params['no_desc'] = $no_desc;
 $this->registerCss($order->hotel->css, [
     'depends' => BootstrapAsset::className(),
 ]);
+$this->registerCssFile(\Yii::$app->assetManager->publish('@bower/fontawesome')[1].'/css/font-awesome.min.css');
 
 $this->title = \Yii::t('frontend', 'Order payment');
 
@@ -33,6 +35,10 @@ $this->registerJs("
 			\$form.submit();
 		});
 	});
+    $('#printInvoiceBtn').click(function printInvoice() {
+        var win = window.open('/site/booking-invoice?number=" . $order->number . "', '_blank');
+        win.focus();
+    });
 ");
 
 ?>
@@ -71,16 +77,14 @@ $this->registerJs("
                 <?= \Yii::t('frontend', 'Total sum:') ?>
                 <br/>
 				<span class="sum text-primary">
-				<?= $order->sum ?>
-                    &nbsp;<?= $hotel->currency->symbol != "" ? $hotel->currency->symbol : $hotel->currency->code ?>
+                    <?= $hotel->currency->getFormatted($order->sum) ?>
 				</span>
                 <br/>
                 <br/>
                 <?= \Yii::t('frontend', 'Sum to pay now:') ?>
                 <br/>
 				<span class="sum text-success">
-				<?= $order->pay_sum ?>
-                    &nbsp;<?= $hotel->currency->symbol != "" ? $hotel->currency->symbol : $hotel->currency->code ?>
+                    <?= $hotel->currency->getFormatted($order->pay_sum) ?>
 				</span>
             </div>
         </div>
@@ -95,7 +99,15 @@ $this->registerJs("
                 </div>
                 <div class="panel-body">
                     <!--  -->
-                    <p>Тут информация о банке</p>
+                    <strong><?= Html::encode($paymentDetails->firmName); ?></strong><br>
+                    <strong><?= Html::encode($paymentDetails->attributeLabels()['INN']) ?>:</strong> <?= Html::encode($paymentDetails->INN) ?><br />
+                    <strong><?= Html::encode($paymentDetails->attributeLabels()['KPP']) ?>:</strong> <?= Html::encode($paymentDetails->KPP) ?><br />
+                    <strong><?= Html::encode($paymentDetails->attributeLabels()['address']) ?>:</strong><?= Html::encode($paymentDetails->address); ?><br />
+                    <strong><?= \Yii::t('partner_payment_details', 'Bank') ?>:</strong> <?= Html::encode($paymentDetails->bank); ?><br />
+                    <strong><?= Html::encode($paymentDetails->attributeLabels()['BIK']) ?>:</strong> <?= Html::encode($paymentDetails->BIK) ?><br />
+                    <strong><?= \Yii::t('partner_payment_details', 'cor. acc.') ?>:</strong> <?= Html::encode($paymentDetails->cAccount) ?><br />
+                    <strong><?= \Yii::t('partner_payment_details', 'acc.') ?>:</strong> <?= Html::encode($paymentDetails->account) ?><br /><br />
+                    <button class="btn btn-block btn-default" id="printInvoiceBtn"><?= \Yii::t('frontend', 'Print invoice') ?></button>
                     <!--  -->
                 </div>
             </div>

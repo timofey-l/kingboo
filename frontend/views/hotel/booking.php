@@ -198,8 +198,7 @@ $this->title = \Yii::t('frontend', 'Room booking');
 					]) ?>
 					<br/>
 					<span class="sum text-success">
-					<?= $price ?>
-						&nbsp;<?= $hotel->currency->symbol != "" ? $hotel->currency->symbol : $hotel->currency->code ?>
+						<?= $hotel->currency->getFormatted($price) ?>
 					</span>
 				</div>
                 <div class="panel-footer">

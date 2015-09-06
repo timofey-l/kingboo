@@ -3,7 +3,6 @@ namespace partner\models;
 
 use common\models\PayMethod;
 use common\models\User;
-use common\models\BillingAccount;
 use Yii;
 
 /**
@@ -22,10 +21,8 @@ use Yii;
  * @property string  $phone
  * @property string  $prima_login
  * @property string  $demo_expire
- *
+ * 
  * @property text  $system_info
- *
- * @property BillingAccount $billing
  */
 class PartnerUser extends User
 {
@@ -59,7 +56,9 @@ class PartnerUser extends User
         }
 
         // Сигнал для системы сообщений
-        \Yii::$app->automaticSystemMessages->setDataUpdated();
+        if (isset(\Yii::$app->automaticSystemMessages)) {
+            \Yii::$app->automaticSystemMessages->setDataUpdated();
+        }
     }
 
     public function getBilling()

@@ -1,5 +1,5 @@
 (function () {
-    var searchApp = angular.module('roomsSearch', []);
+    var searchApp = angular.module('roomsSearch', ['ngSanitize']);
 
     searchApp.controller('searchCtrl', ['$scope', '$http', function ($scope, $http) {
         $('[ng-app]').fadeIn('slow');
@@ -28,7 +28,7 @@
         // Поиск комнат
         $scope.find = function () {
             $.post('/' + LANG + '/hotel/search', $scope.search)
-                .success(function (data) {
+                .success(function (data) {//console.log(data);
                     $scope.results = data;
                 })
                 .error(function(){
@@ -53,6 +53,10 @@
             }
             goWithPOST(l + '/hotel/booking', data, 'BookingParams');
         };
+
+        $scope.pFormat = function (p) {
+            return window.priceFormat(p.price,p.sum_currency);
+        }
 
         setTimeout(function(){
             $scope.find()

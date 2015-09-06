@@ -73,6 +73,10 @@ class RoomavailabilityController extends ActiveController
         $endDate = \Yii::$app->request->post('endDate', false);
         $room_id = \Yii::$app->request->post('room_id', false);
         $count = \Yii::$app->request->post('count', false);
+        if (!$count & $count !== 0) {
+            $count = false;
+        }
+        $prices = \Yii::$app->request->post('prices', false);
         $stopSale = \Yii::$app->request->post('stopSale', false);
 
         $room = \common\models\Room::findOne($room_id);
@@ -95,50 +99,53 @@ class RoomavailabilityController extends ActiveController
             ->andWhere(['<=', 'date', $endDate])
             ->all();
 
-        //Записываем существующие цены   
-        $updated = $saved = [];
+        $update = [];
         if ($availability) {
             foreach ($availability as $a) {
-                if ($count !== false) $a->count = $count;
-                if ($stopSale !== false) $a->stop_sale = $stopSale;
-                if ($a->save()) {
-                    $saved[] = $a->date;
-                }
-                $updated[] = $a->date;
+                $update[] = $a->date;
             }
         }
-        
-        if ($count === false) {
-            return $saved;
+
+        // Обновляем имеющиеся
+        \common\models\RoomAvailability::groupUpdate($room, $startDate, $endDate, $count, $stopSale);
+
+        // Вставляем недостающие
+        \common\models\RoomAvailability::groupInsert($room, $startDate, $endDate, $count, $stopSale, $update);
+
+        // Меняем цены
+        if ($prices) {
+            foreach ($prices as $newPrice) {
+                // Если цена не задана, пропускаем этот пункт
+                if (!$newPrice['price']) {
+                    continue;
+                }
+                // Удаляем старые цены
+                \common\models\RoomPrices::groupDelete($room, $startDate, $endDate, $newPrice['adults'], $newPrice['children'], $newPrice['kids']);
+                // Записываем новые цены
+                \common\models\RoomPrices::groupInsert($room, $startDate, $endDate, $newPrice['adults'], $newPrice['children'], $newPrice['kids'], $newPrice['price']);
+            }
         }
-        
-        //Добавляем позиции, которых не было
+
+        // Возвращаем данные на выбранный период
+        $dates = [];
         $date = \DateTime::createFromFormat('Y-m-d', $startDate);
-        $to = \DateTime::createFromFormat('Y-m-d', $endDate);   
+        $to = \DateTime::createFromFormat('Y-m-d', $endDate);
         while ($date <= $to) {
-            if (in_array($date->format('Y-m-d'),$updated)) {
-                $date->modify('+1 day');
-                continue;
-            }   
-            $a = new RoomAvailability();
-            $a->date = $date->format('Y-m-d');
-            $a->room_id = $room_id;
-            if ($count !== false) $a->count = $count;
-            $a->stop_sale = 0;
-            if ($a->save()) {
-                $saved[] = $a->date;
+            $dates[$date->format('Y-m-d')] = \common\components\BookingHelper::getPrice(['date' => $date->format('Y-m-d'), 'roomId' =>$room->id]);
+            if ($count !== false || $stopSale !== false) {
+                // Поле, в котором хранится список всех дат, для которых произошли изменения в таблице availability
+                $dates['changed'][] = $date->format('Y-m-d');
             }
             $date->modify('+1 day');
         }
 
-        return $saved;
-
+        return $dates;
     }
 
     /**
-     * Проверяет установлены ли цены для указанных дат
+     * Возвращает цены для указанных дат
      */
-    public function actionCheckprices() {
+    public function actionPrices() {
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
         $startDate = \Yii::$app->request->post('startMonth', false);
@@ -163,13 +170,20 @@ class RoomavailabilityController extends ActiveController
         $date = \DateTime::createFromFormat('Y-m-d', $startDate);
         $to = \DateTime::createFromFormat('Y-m-d', $endDate);
         while ($date <= $to) {
-            if (\common\components\BookingHelper::isPriceSet(['date' => $date->format('Y-m-d'), 'roomId' =>$room->id])) {
-                $dates[] = $date->format('Y-m-d');
-            }
+            $dates[$date->format('Y-m-d')] = \common\components\BookingHelper::getPrice(['date' => $date->format('Y-m-d'), 'roomId' =>$room->id]);
             $date->modify('+1 day');
         }
 
+        $dates['titles'] = \common\components\BookingHelper::getPriceTitles(['date' => $date->format('Y-m-d'), 'roomId' =>$room->id]);
+        $dates['currency'] = $hotel->currency_id;
+
         return $dates;
+    }
+
+    public function actionCurrencies() {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $currencies = \common\models\Currency::find()->all();
+        return $currencies;
     }
 
     public function checkAccess($action, $model = null, $params = [])

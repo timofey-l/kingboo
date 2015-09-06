@@ -186,14 +186,18 @@ class Room extends \yii\db\ActiveRecord
                 ->execute();
 
             // Сигнал для системы сообщений
-            \Yii::$app->automaticSystemMessages->setDataUpdated();
+            if (isset(\Yii::$app->automaticSystemMessages)) {
+                \Yii::$app->automaticSystemMessages->setDataUpdated();
+            }
         }
     }
 
     public function afterDelete() {
         parent::afterDelete();
         // Сигнал для системы сообщений
-        \Yii::$app->automaticSystemMessages->setDataUpdated();
+        if (isset(\Yii::$app->automaticSystemMessages)) {
+            \Yii::$app->automaticSystemMessages->setDataUpdated();
+        }
     }
 
 }

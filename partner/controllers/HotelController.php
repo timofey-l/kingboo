@@ -31,11 +31,7 @@ class HotelController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
-                            if ($action->id == 'delete') {
-                                $id = \Yii::$app->request->post('id', false);
-                            } else {
-                                $id = \Yii::$app->request->get('id', false);
-                            }
+                            $id = \Yii::$app->request->get('id', false);
                             if (!$id) return false;
                             $hotel = \common\models\Hotel::findOne($id);
                             if (!$hotel) return false;
@@ -120,14 +116,14 @@ class HotelController extends Controller
      */
     public function actionDelete($id)
     {
-        //$this->findModel($id)->delete();
+        $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/']);
     }
 
     /**
     * Выводит номера отеля
-    * 
+    *
     * @param mixed $id
     * @return string
     */

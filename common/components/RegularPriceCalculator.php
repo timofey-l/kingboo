@@ -82,7 +82,7 @@ class RegularPriceCalculator extends Object
      *
      * @return int
      */
-    public static function bookingTypes($room, $f='', $params=false) {
+    public static function bookingTypes($room, $f=false, &$params=false) {
         $types = 0;
         for ($i = 1; $i <= $room->adults; $i++) {
             for ($j0 = 0; $j0 <= $room->children; $j0++) {
@@ -95,8 +95,8 @@ class RegularPriceCalculator extends Object
                     if ($j1 + $j0 > $room->children) {
                         continue;
                     }
-                    if (strlen($f) > 0) {
-                        $f($params);
+                    if ($f) {
+                        $f($params, $i, $j1, $j0);
                     }
                     $types++;
                 }
@@ -125,31 +125,91 @@ class RegularPriceCalculator extends Object
             ])
             ->all();
 
-        $types = 0;
-        $n = 0;
-        for ($i = 1; $i <= $room->adults; $i++) {
-            for ($j0 = 0; $j0 <= $room->children; $j0++) {
-                //kids
-                for ($j1 = 0; $j1 <= $room->children; $j1++) {
-                    //children
-                    if ($i + $j1 + $j0 > $room->total) {
-                        continue;
-                    }
-                    if ($j1 + $j0 > $room->children) {
-                        continue;
-                    }
-                    $types++;
-                    foreach ($prices as $price) {
-                        if ($price['adults'] == $i && $price['children'] == $j1 && $price['kids'] == $j0) {
-                            $n++;
-                            break;
-                        }
-                    }
+        $data = new \stdClass();
+        $data->prices = $prices;
+        $data->n = 0;
+        $types = self::bookingTypes($room, function(&$params, $i, $j1, $j0) {
+            foreach ($params->prices as $price) {
+                if ($price['adults'] == $i && $price['children'] == $j1 && $price['kids'] == $j0) {
+                    $params->n++;
+                    break;
                 }
             }
-        }
+        }, $data);
 
-        return ($types && $types == $n);
+        return ($types && $types == $data->n);
+    }
+
+    /**
+     * Возвращает объект, описывающий цену на номер в указанный день
+     * 
+     *
+     * @param Room  $room   Объект комнаты
+     * @param array $params Параметры поиска (date)
+     *
+     * @return stdClass
+     */
+    public static function getPrice($room, $params)
+    {
+        $date = ArrayHelper::getValue($params, 'date', false);
+
+        $prices = RoomPrices::find()
+            ->where([
+                'room_id' => $room->id,
+                'date'    => $date,
+            ])
+            ->all();
+
+        $data = new \stdClass();
+        $data->prices = $prices;
+        $data->priceObj = new \stdClass();
+        $data->priceObj->prices = [];
+        $data->n = 0;
+        $types = self::bookingTypes($room, function(&$params, $i, $j1, $j0) {
+            foreach ($params->prices as $price) {
+                if ($price['adults'] == $i && $price['children'] == $j1 && $price['kids'] == $j0) {
+                    $name = "$i+$j1+$j0";
+                    $params->priceObj->prices[$name] = new \stdClass();
+                    $params->priceObj->prices[$name]->price = $price['price'];
+                    $params->priceObj->prices[$name]->price_currency = $price['price_currency'];
+                    $params->priceObj->prices[$name]->adults = $i;
+                    $params->priceObj->prices[$name]->children = $j1;
+                    $params->priceObj->prices[$name]->kids = $j0;
+                    $params->n++;
+                    break;
+                }
+            }
+        }, $data);
+
+        $data->priceObj->set = ($types && $types == $data->n);
+        return $data->priceObj;
+    }
+
+    /**
+     * Возвращает массив с описаниями типов заселения
+     * 
+     *
+     * @param Room  $room   Объект комнаты
+     * @param array $params Параметры поиска (date)
+     *
+     * @return stdClass
+     */
+    public static function getPriceTitles($room, $params)
+    {
+        $titles = [];
+
+        self::bookingTypes($room, function(&$params, $i, $j1, $j0) {
+            $a = new \stdClass();
+            $a->title = \Yii::t('pricerules', '{n, plural, one{# adult} other{# adults}}', ['n' => $i]) 
+                . \Yii::t('pricerules', '{n, plural, =0{} one{, # child (7 - 11 y.o.)} other{, # children (7 - 11 y.o.)}}', ['n' => $j1])
+                . \Yii::t('pricerules', '{n, plural, =0{} one{, # child (0 - 6 y.o.)} other{, # children (0 - 6 y.o.)}}', ['n' => $j0]);
+            $a->adults = $i;
+            $a->children = $j1;
+            $a->kids = $j0;
+            $name = "$i+$j1+$j0";
+            $params[$name] = $a; 
+        }, $titles);
+        return $titles;
     }
 
     /**

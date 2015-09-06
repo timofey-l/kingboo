@@ -11,6 +11,8 @@ class HotelUrlRule extends UrlRule
 
     public static $current = null;
 
+    public static $mainDomain = false;
+
     public function init()
     {
         if ($this->name === null) {
@@ -82,7 +84,7 @@ class HotelUrlRule extends UrlRule
                     throw new ForbiddenHttpException('Hotel not found!');
                 }
             }
-
+        static::$mainDomain = true;
         return false;
     }
 

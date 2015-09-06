@@ -35,7 +35,10 @@ class PartnerAutomaticSystemMessages extends \common\components\AutomaticSystemM
     	// перезагружаем данные партнера, чтобы учесть измеения в нем
     	$this->partner = PartnerUser::findOne(\Yii::$app->user->id);
     	parent::resetMessages();
-    	$this->partner->system_info = serialize(['messages' => $this->actualMessages]);
+    	$this->partner->system_info = serialize([
+            'messages' => $this->actualMessages,
+            'messages_update_time' => time(), // Время апдейта сообщений
+        ]);
     	$res = $this->partner->update(false, ['system_info']);
     }
 
@@ -52,6 +55,13 @@ class PartnerAutomaticSystemMessages extends \common\components\AutomaticSystemM
     	} else { // Если поле system_info есть, берем сообщения оттуда
     		$si = unserialize($this->partner->system_info);
     		$this->actualMessages = $si['messages'];
+            if (isset($si['messages_update_time']) && $si['messages_update_time']) {
+                if (time() - $si['messages_update_time'] > 86400 * 3) { // Если апдейт был больше 3-х дней назад - обновляем сообщения
+                    $this->resetMessages();
+                }
+            } else {
+                $this->resetMessages();
+            }
     	}
 
     	// Сообщения для виджета Alert
@@ -110,7 +120,7 @@ class PartnerAutomaticSystemMessages extends \common\components\AutomaticSystemM
  					'type' => self::TYPE_WARNING,
  					'condition' => 'condNoPrices',
  					'title' => \Yii::t('automatic_system_messages', 'Booking is limited'),
- 					'text' => 'Over 50% of prices are missing for the next 30 days for the following rooms: {link}. Follow the links to set prices.',
+ 					'text' => 'Not all prices are specified for the next 30 days for the following rooms: {link}. Follow the links to set prices.',
  				],
  				'noYandexKassa' => [
  					'type' => self::TYPE_WARNING,
@@ -172,7 +182,7 @@ class PartnerAutomaticSystemMessages extends \common\components\AutomaticSystemM
  			if ($hotel->images) {
  				continue;
  			} else {
- 				$links[] = '<a href="' . \yii\helpers\Url::toRoute(['/hotel/images', 'id' => $hotel->id, '#' => '/add']) . '">' . $hotel->$title . '</a>';
+ 				$links[] = '<a href="' . \yii\helpers\Url::toRoute(['/hotel/images', 'id' => $hotel->id, '#' => '/']) . '">' . $hotel->$title . '</a>';
  				$this->stopHotels[] = $hotel->id;
  			}
  		}
@@ -268,8 +278,8 @@ class PartnerAutomaticSystemMessages extends \common\components\AutomaticSystemM
  						'beginDate' => $today->format('Y-m-d'), 
  						'endDate' => $month->format('Y-m-d'),
  					]);
- 					if ($rate < 0.5) {
- 						$links[] = '<a href="' . \yii\helpers\Url::toRoute(['/hotel/rooms', 'id' => $hotel->id, '#' => "/prices/{$room->id}"]) . '">' . $room->$title . '</a>';
+ 					if ($rate < 1) {
+ 						$links[] = '<a href="' . \yii\helpers\Url::toRoute(['/hotel/rooms', 'id' => $hotel->id, '#' => "/availability/{$room->id}"]) . '">' . $room->$title . '</a>';
  						$this->stopRooms[] = $room->id;
  					} else {
  						continue;

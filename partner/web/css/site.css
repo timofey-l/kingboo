@@ -165,13 +165,19 @@ a.desc:after {
 
 /* Availability calendar-table */
 .ava-date {
-    font-size: xx-small;
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    font-size: 9px;
     text-align: right;
 }
 .calendar-table td.fixed {
-    width: 44px;
+    position: relative;
+    min-width: 44px;
     height: 49px;
     overflow: hidden;
+    padding: 2px;
+    font-size: 10px;
 }
 .calendar-table td.nonactive {
     background-color: #f9f9f9;
@@ -199,13 +205,25 @@ a.desc:after {
     background-color: #f39c12;  
 }
 .calendar-table td.saling {
-    background-color: #00a65a;  
+    background-color: #00ff00;  
+}
+.calendar-table td.partialprice {
+    background-color: #fef459;  
 }
 .calendar-table td.noprice {
-    background-color: #b5bbc8;  
+    background-color: #dddddd;  
+}
+.calendar-table td.norooms {
+    background-color: #aaffaa;  
 }
 .calendar-table td.selected {
     background-color: #00a7d0;
+}
+.ava-num {
+    
+}
+.ava-price {
+
 }
 #rooms-count {
     width: 100px;

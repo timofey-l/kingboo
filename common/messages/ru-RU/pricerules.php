@@ -64,4 +64,8 @@ return [
     'If the discount calculated in Sec. 2 is bigger than the value given here, the size of the maximum discount will be decreased to this value, and the total reservation sum will be recalculated automatically.' => 'Если рассчитанная в п. 2 сумма скидки выше заданной здесь, размер минимальной скидки уменьшится до этого значения, а стоимость брони автоматически пересчитается.',
     'Add discounts only after hotel and rooms registration.' => 'Добавление скидок возможно только после регистрации отеля и номеров.',
     'Discounts addition is forbidden' => 'Добавление скидок невозможно',
+    '{n, plural, one{# adult} other{# adults}}' => '{n, plural, one{# взрослый} other{# взрослых}}',
+    '{n, plural, =0{} one{, # child (0 - 6 y.o.)} other{, # children (0 - 6 y.o.)}}' => '{n, plural, =0{} one{, # ребенок (0 - 6 лет)} few{, # ребенка (0 - 6 лет)} many{, # детей (0 - 6 лет)} other{, # ребенка (0 - 6 лет)}}',
+    '{n, plural, =0{} one{, # child (7 - 11 y.o.)} other{, # children (7 - 11 y.o.)}}' => '{n, plural, =0{} one{, # ребенок (7 - 11 лет)} few{, # ребенка (7 - 11 лет)} many{, # детей (7 - 11 лет)} other{, # ребенка (7 - 11 лет)}}',
+    'Price per day' => 'Стоимость проживания в день',
 ];
