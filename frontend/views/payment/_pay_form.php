@@ -1,6 +1,6 @@
 <?php
 ?>
-<form action="https://demomoney.yandex.ru/eshop.xml" method="post">
+<form action="https://money.yandex.ru/eshop.xml" method="post">
 
 	<input type="hidden" name="shopId" value="<?= $partner->shopId ?>"/>
 	<input type="hidden" name="scid" value="<?= $partner->scid ?>"/>
