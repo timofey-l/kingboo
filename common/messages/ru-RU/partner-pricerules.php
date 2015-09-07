@@ -25,7 +25,7 @@ return [
     'Discount code should be set. It should contain letters, digits and following chars: <code>!</code> <code>+</code> <code>-</code> <code>_</code>' => 'Код скидки должет быть задан. Он должен содержать буквы, цифры и следующие символы: <code>!</code> <code>+</code> <code>-</code> <code>_</code>',
     'Living dates range' => 'Диапазон дат проживания',
     'Maximum discount bound' => 'Максимальный порог скидки',
-    'Minimum discount bound' => 'Минимальный порош скидки',
+    'Minimum discount bound' => 'Минимальный порог скидки',
     'Select condition' => 'Выбрать условие',
     'Select rooms' => 'Выбрать номера',
     'Start date range must be before the end date.' => 'Дата начала диапазона должна быть раньше даты окончания.',
