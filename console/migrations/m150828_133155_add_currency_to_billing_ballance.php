@@ -21,7 +21,7 @@ class m150828_133155_add_currency_to_billing_ballance extends Migration
 
     public function down()
     {
-        $this->dropColumn('{{%billing_account}}', 'currency_id');
+        //$this->dropColumn('{{%billing_account}}', 'currency_id');
     }
 
     /*
