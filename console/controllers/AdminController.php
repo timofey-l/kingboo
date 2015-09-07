@@ -2,16 +2,20 @@
 namespace console\controllers;
 
 use common\components\BookingHelper;
+use common\models\BillingAccount;
+use common\models\BillingAccountServices;
+use common\models\BillingExpense;
+use common\models\BillingService;
 use common\models\Hotel;
 use common\models\Order;
 use common\models\Room;
-use Faker\Factory;
+use DateTime;
 use partner\models\PartnerUser;
 use Yii;
 use yii\console\Controller;
 use backend\models\BackendUser;
 use yii\console\Exception;
-use yii\helpers\Inflector;
+use yii\helpers\Console;
 
 class AdminController extends Controller
 {
@@ -223,21 +227,98 @@ class AdminController extends Controller
 
     }
 
-    public function actionTest($id = 1) {
-        /** @var Order $order */
-        $order = Order::findOne($id);
 
-        if (!$order) {
-            echo "Order #{$id} not found!\n";
-        } else {
-            if ($order->status == Order::OS_WAITING_PAY) {
-                $order->status = Order::OS_PAYED;
-                $order->save();
-            } else {
-                $order->status = Order::OS_WAITING_PAY;
-                $order->save();
+    public function actionExpensesUpdate($showDebugInfo = false)
+    {
+        // полчаем все активные подключенные тарифы
+        $accountServices = BillingAccountServices::find()->where(['active' => 1])->all();
+
+        $n = 0;
+        if ($accountServices) $n = count($accountServices);
+
+        if ($showDebugInfo) $this->stdout("Найдено {$n} активных тарифов.\n\n", Console::BOLD);
+
+        foreach($accountServices as $accountService) {
+            if ($showDebugInfo) $this->stdout("Тарифный план id:{$accountService->id}\n");
+            /** @var BillingAccountServices $accountService */
+            /** @var BillingAccount $account */
+            $account = $accountService->account;
+            /** @var BillingService $service */
+            $service = $accountService->service;
+
+            if ($showDebugInfo) $this->stdout("Услуга: {$service->name_ru} ({$service->monthly_cost} {$service->currency->code} / мес.)\n");
+            if ($showDebugInfo) $this->stdout("Клиент: {$account->partner->email} (id: {$account->partner->id})\n");
+
+            /** @var BillingExpense $lastExpense */
+            $lastExpense = BillingExpense::find()->where(['account_id' => $account->id, 'service_id' => $service->id])->orderBy(['date' => SORT_DESC])->one();
+
+            $allowExpense = true;
+            if ($lastExpense === null) {
+                if ($showDebugInfo) $this->stdout("Последнего списания не найдено.\n");
             }
+            // если последнее списание было менее чем 23 часа назад
+            // тогда запрет на списание
+            if (!is_null($lastExpense)) {
+                $dateLastExpense = new DateTime($lastExpense->date);
+                if ($showDebugInfo) $this->stdout("Дата последнего списания: {$lastExpense->date}\n");
+                $h = (new DateTime('now'))->diff($dateLastExpense)->h + (new DateTime('now'))->diff($dateLastExpense)->d * 24;
+                if ($showDebugInfo) $this->stdout("Разница в часах: {$h}\n");
+                if ($h < 23) {
+                    $allowExpense = false;
+                }
+            }
+
+            // если тестовый период еще не закончен - запрет на списание
+            if ($showDebugInfo) $this->stdout("Дата истечения тестового периода: {$account->partner->demo_expire}\n");
+            if ((new DateTime($account->partner->demo_expire))->diff(new DateTime())->invert) {
+                $allowExpense = false;
+            }
+
+            // проверяем баланс и если отрицательный - запрет на списывание
+            $account->updateBalance();
+            $balance = $account->balance . ' ' . $account->currency->code;
+            if ($showDebugInfo) $this->stdout("Баланс на аккаунте: {$balance}\n");
+            if ($account->balance <= 0) {
+                $allowExpense = false;
+            }
+
+            // если разрешено списывать - делаем это
+            if ($allowExpense) {
+//            if (true) {
+                if ($showDebugInfo) $this->stdout("Списание средств возможно.\n");
+                // определим сумму для списания (месячная сумма * 12 / 365)
+                $sum = round($service->monthly_cost * 12 / 365, 2);
+
+                $newExpense = new BillingExpense;
+
+                $newExpense->account_id = $account->id;
+                $newExpense->sum = $sum;
+                $newExpense->date = date(DateTime::ISO8601);
+                $newExpense->sum_currency_id = $service->currency_id;
+                $newExpense->service_id = $service->id;
+                $newExpense->comment = "Ежедневное списание средств по тарифу \"{$service->name_ru}\" (id: {$accountService->id})";
+                if ($newExpense->save()) {
+                    $sum = $newExpense->sum . ' ' . $service->currency->code;
+                    if ($showDebugInfo) $this->stdout("Успешно списано {$sum}. ID записи списания: {$newExpense->id}\n");
+                } else {
+                    $errors = var_export($newExpense->errors, true);
+                    if ($showDebugInfo) $this->stderr("При списании средств произошла ошибка. Ошибки модели:\n");
+                    if ($showDebugInfo) $this->stderr($errors);
+                }
+
+            } else {
+                if ($showDebugInfo) $this->stdout("Списание средств не возможно.\n");
+            }
+
+            if ($showDebugInfo) $this->stdout("\n");
         }
+    }
+
+    public function actionTest($id = 1) {
+        /** @var BillingAccount $account */
+        $account = BillingAccount::findOne($id);
+        $account->updateBalance();
+        var_dump($account->balance);
 	}
 
 }

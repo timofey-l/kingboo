@@ -1,4 +1,7 @@
 <?php
+use common\components\YandexResponse;
+use common\components\YandexResponseFormatter;
+
 $params = array_merge(
     require(__DIR__ . '/../../common/config/params.php'),
     require(__DIR__ . '/../../common/config/params-local.php'),
@@ -67,6 +70,11 @@ return [
             'class' => 'common\components\LangRequest',
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
+            ]
+        ],
+        'response' => [
+            'formatters' => [
+                'yandex' => YandexResponseFormatter::className(),
             ]
         ],
         'automaticSystemMessages' => [

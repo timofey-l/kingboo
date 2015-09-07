@@ -1,6 +1,10 @@
 <?php
 namespace partner\models;
 
+use common\models\BillingAccount;
+use common\models\BillingAccountServices;
+use common\models\BillingService;
+use common\models\Currency;
 use common\models\PayMethod;
 use common\models\User;
 use Yii;
@@ -23,8 +27,6 @@ use Yii;
  * @property string  $demo_expire
  * 
  * @property text  $system_info
- * @property decimal $currency_exchange_percent
- * @property text $payment_details
  */
 class PartnerUser extends User
 {
@@ -49,10 +51,36 @@ class PartnerUser extends User
 
     public function afterSave($insert, $changedAttributes) {
         parent::afterSave($insert, $changedAttributes);
+
+        // создание аккаунта в биллинге
+        if ($insert) {
+            $billingAccount = new BillingAccount;
+            $billingAccount->partner_id = $this->id;
+            $billingAccount->currency_id = Currency::findOne(['code' => 'RUB'])->id;
+            $billingAccount->save();
+
+            // ищем тариф по умолчанию и добавляем его
+            $service = BillingService::findOne(['default' => 1]);
+            if ($service !== null) {
+                $accountService = new BillingAccountServices;
+                $accountService->account_id = $billingAccount->id;
+                $accountService->service_id = $service->id;
+                $accountService->active = true;
+                $accountService->add_date = date(\DateTime::ISO8601);
+                $accountService->end_date = date(\DateTime::ISO8601);
+                $accountService->save();
+            }
+        }
+
         // Сигнал для системы сообщений
         if (isset(\Yii::$app->automaticSystemMessages)) {
             \Yii::$app->automaticSystemMessages->setDataUpdated();
         }
+    }
+
+    public function getBilling()
+    {
+        return $this->hasOne(\common\models\BillingAccount::className(), ['partner_id' => 'id']);
     }
 
     public function getUser()
@@ -74,7 +102,7 @@ class PartnerUser extends User
 
     public function getHotels()
     {
-        return $this->hasMany('\common\models\Hotel', ['partner_id' => 'id']);
+        return $this->hasMany(\common\models\Hotel::className(), ['partner_id' => 'id']);
     }
 
     public function getPayMethods() {
