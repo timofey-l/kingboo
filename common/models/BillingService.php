@@ -61,4 +61,9 @@ class BillingService extends \yii\db\ActiveRecord
             'monthly_cost' => Yii::t('billing_service', 'Monthly Cost'),
         ];
     }
+
+    public function getCurrency()
+    {
+        return $this->hasOne(Currency::className(), ['id' => 'currency_id']);
+    }
 }
