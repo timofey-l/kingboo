@@ -1,5 +1,8 @@
 <?php
 
+use common\models\BillingAccount;
+use common\models\Currency;
+use partner\models\PartnerUser;
 use yii\db\Schema;
 use yii\db\Migration;
 
