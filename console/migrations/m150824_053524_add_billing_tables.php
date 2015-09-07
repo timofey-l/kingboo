@@ -83,15 +83,6 @@ class m150824_053524_add_billing_tables extends Migration
         ]);
 
 
-        // добавление аккаунтов билинга к имеющимся PartnerUser
-        // валюта в рублях
-        $defaultCurrency = Currency::findOne(['code' => 'RUB']);
-        foreach (PartnerUser::find()->all() as $partner) {
-            $billing = new BillingAccount();
-            $billing->currency_id = $defaultCurrency->id;
-            $partner->link('billing', $billing);
-        }
-
     }
 
     public function down()
