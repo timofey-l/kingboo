@@ -134,7 +134,7 @@ class PaymentController extends \yii\web\Controller
             ]);
         }
 
-        $pay->paymentType = YandexHelper::getIdByCode($order->payment_type);
+        $pay->paymentType = YandexHelper::getIdByCode($order->yandex_payment_type);
 
         $pay->orderSumAmount = $req->post('orderSumAmount');
         $pay->paymentDatetime = '';
