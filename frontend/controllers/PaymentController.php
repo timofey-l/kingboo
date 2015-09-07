@@ -90,11 +90,9 @@ class PaymentController extends \yii\web\Controller
 		}
 	}
 
-	public function actionSuccess($orderNumber, $invoiceId) {
+	public function actionSuccess($orderNumber) {
 		$order = Order::findOne(['number' => $orderNumber]);
-		$pay = Pay::findOne(['invoiceId' => $invoiceId]);
 		return $this->render('success', [
-			'pay' =>  $pay,
 			'order' => $order,
 		]);
 	}
