@@ -30,8 +30,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'timestamp',
-            'postParams:ntext',
-            'serverParams:ntext',
+            [
+                'attribute' => 'postParams',
+                'format' => 'raw',
+                'value' => "<pre>".var_export(unserialize($model->postParams), true)."</pre>",
+            ],
+            [
+                'attribute' => 'serverParams',
+                'format' => 'raw',
+                'value' => "<pre>".var_export(unserialize($model->serverParams), true)."</pre>",
+            ],
         ],
     ]) ?>
 

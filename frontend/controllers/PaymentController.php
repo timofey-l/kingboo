@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\components\YandexHelper;
 use common\models\Order;
 use common\models\Pay;
 use yii\web\BadRequestHttpException;
@@ -58,6 +59,9 @@ class PaymentController extends \yii\web\Controller
 		if (!$order) {
 			throw new BadRequestHttpException('Incorrect order');
 		}
+
+        $order->yandex_payment_type = $pay_type;
+        $order->save(false);
 
 		$partner = $order->hotel->partner;
 

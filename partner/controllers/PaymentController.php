@@ -120,7 +120,22 @@ class PaymentController extends \yii\web\Controller
         $pay = new Pay();
         $pay->load($req->post(), '');
         $pay->order_number = $req->post('orderNumber');
-        $pay->paymentType = YandexHelper::getIdByCode($req->post('paymentType'));
+
+        /** @var Order $order */
+        $order = Order::findOne(['number' => $pay->order_number]);
+        // проверяем есть ли заказ
+        if ($order === null) {
+            return $this->renderPartial('check', [
+                'code' => 100,
+                'pay' => $pay,
+                'order' => $order,
+                'post' => $req->post(),
+                'message' => \Yii::t('payment', 'Wrong order number'),
+            ]);
+        }
+
+        $pay->paymentType = YandexHelper::getIdByCode($order->payment_type);
+
         $pay->orderSumAmount = $req->post('orderSumAmount');
         $pay->paymentDatetime = '';
 
@@ -134,20 +149,6 @@ class PaymentController extends \yii\web\Controller
         $payLog->save();
 
         $pay->postParams = serialize($req->post());
-
-        /** @var Order $order */
-        $order = Order::findOne(['number' => $pay->order_number]);
-
-        // проверяем есть ли заказ
-        if ($order === null) {
-            return $this->renderPartial('check', [
-                'code' => 100,
-                'pay' => $pay,
-                'order' => $order,
-                'post' => $req->post(),
-                'message' => \Yii::t('payment', 'Wrong order number'),
-            ]);
-        }
 
         $partner = $order->hotel->partner;
         if (!YandexHelper::checkMd5('checkOrder', \Yii::$app->request->post(), $partner)) {
