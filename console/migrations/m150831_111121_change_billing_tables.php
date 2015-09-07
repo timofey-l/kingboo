@@ -7,7 +7,7 @@ class m150831_111121_change_billing_tables extends Migration
 {
     public function up()
     {
-        $this->renameColumn('{{%billing_services}}', 'currency', 'currency_id');
+        //$this->renameColumn('{{%billing_services}}', 'currency', 'currency_id');
 
         $this->renameColumn('{{%billing_services}}', 'name', 'name_ru');
         $this->addColumn('{{%billing_services}}', 'name_en', Schema::TYPE_STRING);
@@ -25,9 +25,7 @@ class m150831_111121_change_billing_tables extends Migration
 
     public function down()
     {
-        echo "m150831_111121_change_billing_tables cannot be reverted.\n";
 
-        return false;
     }
     
     /*
