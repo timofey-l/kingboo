@@ -12,7 +12,6 @@ use partner\models\PartnerUser;
 $messages = \common\models\SupportMessage::findNew();
 $orders = \common\models\Order::findNew();
 
-var_dump(PartnerUser::findOne(\Yii::$app->user->id)->billing->currency)
 
 ?>
 
