@@ -1,6 +1,10 @@
 <?php
 namespace partner\models;
 
+use common\models\BillingAccount;
+use common\models\BillingAccountServices;
+use common\models\BillingService;
+use common\models\Currency;
 use common\models\PayMethod;
 use common\models\User;
 use Yii;
@@ -52,7 +56,20 @@ class PartnerUser extends User
         if ($insert) {
             $billingAccount = new BillingAccount;
             $billingAccount->partner_id = $this->id;
+            $billingAccount->currency_id = Currency::findOne(['code' => 'RUB'])->id;
             $billingAccount->save();
+
+            // ищем тариф по умолчанию и добавляем его
+            $service = BillingService::findOne(['default' => 1]);
+            if ($service !== null) {
+                $accountService = new BillingAccountServices;
+                $accountService->account_id = $billingAccount->id;
+                $accountService->service_id = $service->id;
+                $accountService->active = true;
+                $accountService->add_date = date(\DateTime::ISO8601);
+                $accountService->end_date = date(\DateTime::ISO8601);
+                $accountService->save();
+            }
         }
 
         // Сигнал для системы сообщений

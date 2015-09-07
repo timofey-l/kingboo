@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use partner\models\PartnerUser;
 use Yii;
 use yii\db\Query;
 
@@ -85,13 +86,20 @@ class BillingAccount extends \yii\db\ActiveRecord
     {
         $totalIncome = (float) (new Query())
             ->from(BillingIncome::tableName())
+            ->where(['account_id' => $this->id])
             ->sum('sum');
 
         $totalExpenses = (float) (new Query())
             ->from(BillingExpense::tableName())
+            ->where(['account_id' => $this->id])
             ->sum('sum');
 
         $this->balance = $totalIncome - $totalExpenses;
         $this->save();
+    }
+
+    public function getServices()
+    {
+        return $this->hasMany(BillingAccountServices::className(), ['account_id' => 'id']);
     }
 }

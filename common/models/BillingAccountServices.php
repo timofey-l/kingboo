@@ -51,4 +51,14 @@ class BillingAccountServices extends \yii\db\ActiveRecord
             'active' => Yii::t('billing_account_services', 'Active'),
         ];
     }
+
+    public function getAccount()
+    {
+        return $this->hasOne(BillingAccount::className(), ['id' => 'account_id']);
+    }
+
+    public function getService()
+    {
+        return $this->hasOne(BillingService::className(), ['id' => 'service_id']);
+    }
 }

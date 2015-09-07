@@ -49,4 +49,10 @@ class BillingIncome extends \yii\db\ActiveRecord
             'pays_id' => Yii::t('billing_income', 'Pays ID'),
         ];
     }
+
+    public function getAccount()
+    {
+        return $this->hasOne(BillingAccount::className(), ['id' => 'account_id']);
+    }
+
 }

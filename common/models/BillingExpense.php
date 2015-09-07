@@ -53,9 +53,19 @@ class BillingExpense extends \yii\db\ActiveRecord
         ];
     }
 
-    public function afterSave($insert)
+    public function getAccount()
     {
-        parent::afterSave($insert);
+        return $this->hasOne(BillingAccount::className(), ['id' => 'account_id']);
+    }
+
+    public function getService()
+    {
+        return $this->hasOne(BillingService::className(), ['id' => 'service_id']);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
 
         // если добавление записи - пересчет balance в billing_account
         if ($insert) {

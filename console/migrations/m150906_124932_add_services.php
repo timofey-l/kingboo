@@ -1,5 +1,6 @@
 <?php
 
+use common\models\BillingService;
 use common\models\Currency;
 use yii\db\Schema;
 use yii\db\Migration;
@@ -10,7 +11,7 @@ class m150906_124932_add_services extends Migration
     {
         $currency_rub = Currency::findOne(['code' => "RUB"]);
 
-        $this->batchInsert('{{%billing_serivces}}', ['name_ru', 'description_ru', 'name_en', 'description_en','archived', 'default', 'mouthly', 'unique', 'currency_id', 'monthly_cost'],[
+        $this->batchInsert(BillingService::tableName(), ['name_ru', 'description_ru', 'name_en', 'description_en','archived', 'default', 'monthly', 'unique', 'currency_id', 'monthly_cost'],[
             [
                 'Базовый', 'Основной тарифный план - 999 руб/мес',
                 'Base', 'The main tariff plan - 999 RUR / month',

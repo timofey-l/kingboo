@@ -2,16 +2,20 @@
 namespace console\controllers;
 
 use common\components\BookingHelper;
+use common\models\BillingAccount;
+use common\models\BillingAccountServices;
+use common\models\BillingExpense;
+use common\models\BillingService;
 use common\models\Hotel;
 use common\models\Order;
 use common\models\Room;
-use Faker\Factory;
+use DateTime;
 use partner\models\PartnerUser;
 use Yii;
 use yii\console\Controller;
 use backend\models\BackendUser;
 use yii\console\Exception;
-use yii\helpers\Inflector;
+use yii\helpers\Console;
 
 class AdminController extends Controller
 {
@@ -223,21 +227,74 @@ class AdminController extends Controller
 
     }
 
-    public function actionTest($id = 1) {
-        /** @var Order $order */
-        $order = Order::findOne($id);
 
-        if (!$order) {
-            echo "Order #{$id} not found!\n";
-        } else {
-            if ($order->status == Order::OS_WAITING_PAY) {
-                $order->status = Order::OS_PAYED;
-                $order->save();
-            } else {
-                $order->status = Order::OS_WAITING_PAY;
-                $order->save();
+    public function actionExpensesUpdate($showDebugInfo = false)
+    {
+        // полчаем все активные подключенные тарифы
+        $accountServices = BillingAccountServices::find()->where(['active' => 1])->all();
+
+        if ($showDebugInfo) $this->stdout("Найдено {$accountServices->count()} активных тарифов.\n\n", Console::BOLD);
+
+        foreach($accountServices as $accountService) {
+            if ($showDebugInfo) $this->stdout("Тарифный план id:{$accountService->id}\n");
+            /** @var BillingAccountServices $accountService */
+            /** @var BillingAccount $account */
+            $account = $accountService->account;
+            /** @var BillingService $service */
+            $service = $accountService->service;
+
+            /** @var BillingExpense $lastExpense */
+            $lastExpense = BillingExpense::find()->where(['account_id' => $account->id])->orderBy(['date' => SORT_DESC])->one();
+
+            $allowExpense = true && is_null($lastExpense);
+
+            // если последнее списание было менее чем 23 часа назад
+            // тогда запрет на списание
+            if (!is_null($lastExpense)) {
+                $dateLastExpense = new DateTime($lastExpense->date);
+                if ($showDebugInfo) $this->stdout("Дата последнего списания: {$lastExpense->date}\n");
+                $h = (new DateTime('now'))->diff($dateLastExpense)->h;
+                if ($showDebugInfo) $this->stdout("Разница в часах: {$lastExpense->date}\n");
+                if ($h < 23) {
+                    $allowExpense = false;
+                }
+            }
+
+            // если тестовый период еще не закончен - запрет на списание
+            if ((new DateTime($account->partner->demo_expire))->diff(new DateTime())->invert) {
+                $allowExpense = false;
+            }
+
+            // проверяем баланс и если отрицательный - запрет на списывание
+            $account->updateBalance();
+            if ($account->balance <= 0) {
+                $allowExpense = false;
+            }
+
+            // если разрешено списывать - делаем это
+            if ($allowExpense) {
+//            if (true) {
+                // определим сумму для списания (месячная сумма * 12 / 365)
+                $sum = round($service->monthly_cost * 12 / 365, 2);
+
+                $newExpense = new BillingExpense;
+
+                $newExpense->account_id = $account->id;
+                $newExpense->sum = $sum;
+                $newExpense->date = date(DateTime::ISO8601);
+                $newExpense->sum_currency_id = $service->currency_is;
+                $newExpense->service_id = $service->id;
+                $newExpense->comment = "Ежедневное списание средств по тарифу \"{$service->name_ru}\" (id: {$accountService->id})";
+                $newExpense->save();
             }
         }
+    }
+
+    public function actionTest($id = 1) {
+        /** @var BillingAccount $account */
+        $account = BillingAccount::findOne($id);
+        $account->updateBalance();
+        var_dump($account->balance);
 	}
 
 }
