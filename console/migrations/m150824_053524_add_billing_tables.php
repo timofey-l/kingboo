@@ -19,7 +19,7 @@ class m150824_053524_add_billing_tables extends Migration
             'default' => Schema::TYPE_BOOLEAN . ' DEFAULT FALSE',
             'monthly' => Schema::TYPE_BOOLEAN . ' DEFAULT TRUE',
             'unique' => Schema::TYPE_BOOLEAN . ' DEFAULT FALSE',
-            'currency' => Schema::TYPE_INTEGER . ' DEFAULT ' . Currency::findOne(['code' => 'RUB'])->id,
+            'currency_id' => Schema::TYPE_INTEGER . ' DEFAULT ' . Currency::findOne(['code' => 'RUB'])->id,
             'enable_cost' => Schema::TYPE_FLOAT . ' DEFAULT 0',
             'monthly_cost' => Schema::TYPE_FLOAT . ' DEFAULT 0',
         ]);
