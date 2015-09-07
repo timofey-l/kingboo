@@ -65,13 +65,13 @@ class PaymentController extends \yii\web\Controller
 			$this->layout = false;
 
 			// переводим в рубли
-			$pay_sum = $order->hotel->currency->convertTo($order->pay_sum, 'RUB', $order->hotel->partner->currency_exchange_percent);
+			//$pay_sum = $order->hotel->currency->convertTo($order->pay_sum, 'RUB', $order->hotel->partner->currency_exchange_percent);
 			//\Yii::trace("sum=$pay_sum, -%=".$pay_sum = $order->hotel->currency->convertTo($order->pay_sum, 'RUB'),'debug');
 
 			return base64_encode($this->render('_pay_form', [
 				'shopId'         => $partner->shopId,
 				'scid'           => $partner->scid,
-				'sum'            => $pay_sum,
+				'sum'            => $order->payment_system_sum,
 				'customerNumber' => md5($order->contact_email),
 				'orderNumber'    => $order->number,
 				'paymentType'    => $pay_type,

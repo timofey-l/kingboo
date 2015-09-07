@@ -27,7 +27,7 @@ $this->registerJs("
 			url:'/payment/get-form',
 			method: 'POST',
 			data: {
-				pay_type: $('input[name=payType]').val()
+				pay_type: $('input[name=payType]:checked').val()
 			}
 		}).done(function(data){
 			var \$form = $(atob(data));

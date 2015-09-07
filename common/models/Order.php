@@ -25,9 +25,13 @@ use yii\helpers\ArrayHelper;
  * @property string $dateFrom
  * @property string $dateTo
  * @property double $sum
+ * @property integer $sum_currency_id
  * @property integer $partial_pay
  * @property integer $partial_pay_percent
  * @property double $pay_sum
+ * @property integer $pay_sum_currency_id
+ * @property double $payment_system_sum
+ * @property integer $payment_system_sum_currency_id
  * @property integer $hotel_id
  * @property string $lang
  * @property boolean $viewed
@@ -99,9 +103,9 @@ class Order extends ActiveRecord
         return [
             ['code', 'match', 'pattern' => '/^[a-zA-Z0-9\-+_!]+$/'],
             [['dateFrom', 'dateTo', 'code'], 'safe'],
-            [['number', 'status', 'contact_email', 'contact_name', 'contact_surname', 'contact_address', 'dateFrom', 'dateTo', 'sum', 'partial_pay_percent', 'pay_sum'], 'required'],
-            [['status', 'contact_address', 'partial_pay', 'partial_pay_percent', 'hotel_id', 'checkin_fullpay', 'payment_via_bank_transfer' ], 'integer'],
-            [['sum', 'pay_sum'], 'number'],
+            [['number', 'status', 'contact_email', 'contact_name', 'contact_surname', 'contact_address', 'dateFrom', 'dateTo', 'sum', 'partial_pay_percent', 'pay_sum', 'sum_currency_id', 'pay_sum_currency_id'], 'required'],
+            [['status', 'contact_address', 'partial_pay', 'partial_pay_percent', 'hotel_id', 'checkin_fullpay', 'payment_via_bank_transfer', 'sum_currency_id', 'pay_sum_currency_id', 'payment_system_sum_currency_id' ], 'integer'],
+            [['sum', 'pay_sum', 'payment_system_sum'], 'number'],
             [['viewed'], 'boolean'],
             [['number'], 'string', 'max' => 12, 'min' => 5],
             [['partner_number'], 'string'],
@@ -138,6 +142,10 @@ class Order extends ActiveRecord
             'checkin_fullpay' => \Yii::t('orders', 'Full payment at checkin'),
             'payment_via_bank_transfer' => \Yii::t('orders', 'Payment via bank transfer'),
             'additional_info' => \Yii::t('orders', 'Additional information'),
+            'sum_currency_id' => \Yii::t('orders', 'Currency ID'),
+            'pay_sum_currency_id' => \Yii::t('orders', 'Pay sum currency ID'),
+            'payment_system_sum' => \Yii::t('orders', 'Sum for payment system'),
+            'payment_system_sum_currency_id' => \Yii::t('orders', 'Payment system sum currency ID'),
         ];
     }
 

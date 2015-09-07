@@ -180,7 +180,7 @@ class PaymentController extends \yii\web\Controller
         }
 
         // проверяем сумму заказа
-        if ($order->pay_sum != $pay->orderSumAmount) {
+        if ($order->payment_system_sum != $pay->orderSumAmount) {
             return $this->renderPartial('check', [
                 'code' => 100,
                 'pay' => $pay,

@@ -15,7 +15,7 @@ use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\Response;
-
+use \common\models\Currency;
 
 class HotelController extends \yii\web\Controller
 {
@@ -98,12 +98,20 @@ class HotelController extends \yii\web\Controller
 
 			$orderForm->lang = Lang::$current->url;
 
+			// Учитываем все деньги
+			$orderForm->sum_currency_id = $hotel->currency_id;
 			if ($orderForm->partial_pay && $hotel->allow_partial_pay) {
 				$orderForm->partial_pay_percent = $hotel->partial_pay_percent;
 				$orderForm->pay_sum = (float)(round($orderForm->sum * ($orderForm->partial_pay_percent / 100) * 100) / 100);
 			} else {
 				$orderForm->pay_sum = $orderForm->sum;
 				$orderForm->partial_pay_percent = 100;
+			}
+			$orderForm->pay_sum_currency_id = $hotel->currency_id;
+			// Если платеж через Яндекс.Кассу записываем сумму в рублях
+			if (!$orderForm->payment_via_bank_transfer && !$orderForm->checkin_fullpay) {
+				$orderForm->payment_system_sum = $orderForm->hotel->currency->convertTo($orderForm->pay_sum, 'RUB', $orderForm->hotel->partner->currency_exchange_percent);
+				$orderForm->payment_system_sum_currency_id = Currency::findOne(['code' => 'RUB'])->id;
 			}
 
 			if ($orderForm->save()) {
