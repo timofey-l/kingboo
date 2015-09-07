@@ -87,9 +87,9 @@ class m150824_053524_add_billing_tables extends Migration
 
     public function down()
     {
-        echo "m150824_053524_add_billing_tables cannot be reverted.\n";
-
-        return false;
+//        echo "m150824_053524_add_billing_tables cannot be reverted.\n";
+//
+//        return false;
     }
     
     /*
