@@ -9,7 +9,7 @@
  * Each array element represents the translation (value) of a message (key).
  * If the value is empty, the message is considered as not translated.
  * Messages that no longer need translation will have their translations
- * enclosed between a pair of '@@' marks.
+ * enclosed between a pair of '' marks.
  *
  * Message string can be used with plural forms format. Check i18n section
  * of the guide for details.
@@ -17,17 +17,17 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Additive discount will be applyed all time. All additive discounts will be summarized and added to one maximal non-additive discount.' => '@@Аддитивные скидки будут применены всегда. Все подходящие аддитивные скидки будут просуммированы и добавлены к одной максимальной обычной@@',
-    'Apply range for check-in date' => '@@Применить диапазон к дате заселения@@',
-    'Check code for discount' => '@@Проверочный код для скидки@@',
-    'Discount promo code' => '@@Промо код скидки@@',
-    'Discount value' => '@@Величина скидки@@',
-    'If checked check-in date should be in living range. Will affect all days in range you booking' => '@@Если отмечено, дата заезда должна быть в указаном диапазоне. Скидка будет применена на весь срок бронирования@@',
-    'If discount of sum for single day will be less than this sum it will be increased to this value' => '@@Если сумма скидки будет меньше заданной, то скидка бодет увеличина до этого значения.@@',
-    'If discount of sum for single day will be more than this sum it will be decreased to this value' => '@@Если сумма скидки будет больше заданной, то скидка бодет уменьшена до этого значения.@@',
-    'Maximal sum of discount' => '@@Максимальная сумма скидки@@',
-    'Minimal sum of discount' => '@@Минимальная сумма скидки@@',
-    'Value' => '@@Занчение@@',
+    'Additive discount will be applyed all time. All additive discounts will be summarized and added to one maximal non-additive discount.' => 'Аддитивные скидки будут применены всегда. Все подходящие аддитивные скидки будут просуммированы и добавлены к одной максимальной обычной',
+    'Apply range for check-in date' => 'Применить диапазон к дате заселения',
+    'Check code for discount' => 'Проверочный код для скидки',
+    'Discount promo code' => 'Промо код скидки',
+    'Discount value' => 'Величина скидки',
+    'If checked check-in date should be in living range. Will affect all days in range you booking' => 'Если отмечено, дата заезда должна быть в указаном диапазоне. Скидка будет применена на весь срок бронирования',
+    'If discount of sum for single day will be less than this sum it will be increased to this value' => 'Если сумма скидки будет меньше заданной, то скидка бодет увеличина до этого значения.',
+    'If discount of sum for single day will be more than this sum it will be decreased to this value' => 'Если сумма скидки будет больше заданной, то скидка бодет уменьшена до этого значения.',
+    'Maximal sum of discount' => 'Максимальная сумма скидки',
+    'Minimal sum of discount' => 'Минимальная сумма скидки',
+    'Value' => 'Занчение',
     'Add discounts only after hotel and rooms registration.' => 'Добавление скидок возможно только после регистрации отеля и номеров.',
     'Additive' => 'Аддитивная',
     'All additive discounts are summarized in one overall discount. If the option is unchecked, only the biggest non-additive discount for booking is applied.' => 'Все аддитивные скидки суммируются в одну общую скидку. При отключенной опции действует только максимальная из неаддитивных скидок на бронь.',

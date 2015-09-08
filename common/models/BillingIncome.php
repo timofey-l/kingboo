@@ -55,4 +55,9 @@ class BillingIncome extends \yii\db\ActiveRecord
         return $this->hasOne(BillingAccount::className(), ['id' => 'account_id']);
     }
 
+    public function getInvoice()
+    {
+        return $this->hasOne(BillingInvoice::className(), ['id' => 'invoice_id']);
+    }
+
 }

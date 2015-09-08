@@ -9,7 +9,7 @@
  * Each array element represents the translation (value) of a message (key).
  * If the value is empty, the message is considered as not translated.
  * Messages that no longer need translation will have their translations
- * enclosed between a pair of '@@' marks.
+ * enclosed between a pair of '' marks.
  *
  * Message string can be used with plural forms format. Check i18n section
  * of the guide for details.
@@ -17,10 +17,10 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    '<b>Rooms not found.</b> Please check information in form above' => '@@<b>Номера не найдены.</b> Пожалуйста, проверьте информацию в форме выше@@',
-    'Go to payment' => '@@Перейти к оплате@@',
-    'Search' => '@@Искать@@',
-    'Thank you for your payment!' => '@@@@',
+    '<b>Rooms not found.</b> Please check information in form above' => '<b>Номера не найдены.</b> Пожалуйста, проверьте информацию в форме выше',
+    'Go to payment' => 'Перейти к оплате',
+    'Search' => 'Искать',
+    'Thank you for your payment!' => '',
     '* If you have' => '* Если имеется',
     '<b>No rooms available for this period.</b> Please, select other days.' => '<b>На указанные даты свободные номера отсутствуют.</b> Пожалуйста, попробуйте другие даты',
     'Address' => 'Адрес',

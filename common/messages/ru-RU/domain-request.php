@@ -9,7 +9,7 @@
  * Each array element represents the translation (value) of a message (key).
  * If the value is empty, the message is considered as not translated.
  * Messages that no longer need translation will have their translations
- * enclosed between a pair of '@@' marks.
+ * enclosed between a pair of '' marks.
  *
  * Message string can be used with plural forms format. Check i18n section
  * of the guide for details.
@@ -18,7 +18,7 @@
  */
 return [
     'Email' => '',
-    'Hotel domain request "{name}"' => '@@Заявка на домен для отеля &laquo;{name}&raquo;@@',
+    'Hotel domain request "{name}"' => 'Заявка на домен для отеля &laquo;{name}&raquo;',
     '<p>Now your hotel Internet page of is located on the subdomain <i>{site}</i>. You can place it on your own domain in the domain zone <i>com</i>. To do this, fill out the form below. If you already have your personal domain, just fill out the domain name here. If you don&acute;t have domain, write here the preferred domain name and we will register it. In case this name is no more vacant, we will help you to choose a different name.</p> <p><span class="text-red">Attention!</span> By submitting this application, you automatically activate "My Domain" the service for 199 <i class="fa fa-rub"></i> monthly.</p>' => '<p>Сейчас интернет страница вашего отеля находится на поддомене <i>{site}</i>. Вы можете разместить ее на собственном домене в доменной зоне <i>ru</i>. Для этого заполните форму ниже. Если у вас уже есть домен, просто впишите его имя. Если домена нет, введите желаемое доменное имя, и мы его зарегистрируем. Если выбранное вами имя уже занято, мы поможем вам подобрать другое подходящее имя.</p><p><span class="text-red">Внимание!</span> Отправляя эту заявку, вы автоматически подключаете услугу &laquo;Мой домен&raquo; стоимостью 199 <i class="fa fa-rub"></i> в месяц.</p>',
     'Check this if you already have the domain' => 'Отметьте, если домен уже зарегистрирован',
     'Contact e-mail' => 'Контактный e-mail',

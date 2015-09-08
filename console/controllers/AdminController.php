@@ -293,6 +293,7 @@ class AdminController extends Controller
 
                 $newExpense->account_id = $account->id;
                 $newExpense->sum = $sum;
+                $newExpense->currency_id = $service->currency_id;
                 $newExpense->date = date(DateTime::ISO8601);
                 $newExpense->sum_currency_id = $service->currency_id;
                 $newExpense->service_id = $service->id;

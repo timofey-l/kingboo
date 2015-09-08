@@ -17,7 +17,10 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Hotel ID' => '',
+    'Account ID' => '',
+    'Active' => '',
+    'Add Date' => '',
+    'End Date' => '',
     'ID' => '',
-    'Image' => '',
+    'Service ID' => '',
 ];

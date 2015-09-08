@@ -17,7 +17,14 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Hotel ID' => '',
+    'Archived' => '',
+    'Currency' => '',
+    'Default' => '',
+    'Description' => '',
+    'Enable Cost' => '',
     'ID' => '',
-    'Image' => '',
+    'Monthly' => '',
+    'Monthly Cost' => '',
+    'Name' => '',
+    'Unique' => '',
 ];

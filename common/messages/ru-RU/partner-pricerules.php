@@ -9,7 +9,7 @@
  * Each array element represents the translation (value) of a message (key).
  * If the value is empty, the message is considered as not translated.
  * Messages that no longer need translation will have their translations
- * enclosed between a pair of '@@' marks.
+ * enclosed between a pair of '' marks.
  *
  * Message string can be used with plural forms format. Check i18n section
  * of the guide for details.
@@ -25,7 +25,7 @@ return [
     'Discount code should be set. It should contain letters, digits and following chars: <code>!</code> <code>+</code> <code>-</code> <code>_</code>' => 'Код скидки должет быть задан. Он должен содержать буквы, цифры и следующие символы: <code>!</code> <code>+</code> <code>-</code> <code>_</code>',
     'Living dates range' => 'Диапазон дат проживания',
     'Maximum discount bound' => 'Максимальный порог скидки',
-    'Minimum discount bound' => 'Минимальный порош скидки',
+    'Minimum discount bound' => 'Минимальный порог скидки',
     'Select condition' => 'Выбрать условие',
     'Select rooms' => 'Выбрать номера',
     'Start date range must be before the end date.' => 'Дата начала диапазона должна быть раньше даты окончания.',

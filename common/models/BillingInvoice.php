@@ -10,7 +10,6 @@ use Yii;
  * @property integer $id
  * @property integer $account_id
  * @property double $sum
- * @property integer $currency
  * @property string $created_at
  * @property boolean $payed
  * @property integer $system
@@ -31,8 +30,8 @@ class BillingInvoice extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['account_id', 'currency'], 'required'],
-            [['account_id', 'currency', 'system'], 'integer'],
+            [['account_id', 'currency_id'], 'required'],
+            [['account_id', 'currency_id', 'system'], 'integer'],
             [['sum'], 'number'],
             [['created_at'], 'safe'],
             [['payed'], 'boolean']
@@ -60,9 +59,9 @@ class BillingInvoice extends \yii\db\ActiveRecord
         return $this->hasOne(BillingAccount::className(), ['id' => 'account_id']);
     }
 
-    public function afterSave($insert)
+    public function afterSave($insert, $changedAttributes)
     {
-        parent::afterSave($insert);
+        parent::afterSave($insert, $changedAttributes);
 
         // если добавление записи - пересчет balance в billing_account
         if ($insert) {
