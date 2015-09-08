@@ -109,4 +109,27 @@ class PaymentController extends \yii\web\Controller
 		]);
 	}
 
+    /**
+     * Вывод реквизитов фирмы на печать для оплаты безналом
+     * @param string $number - номер заказа (например, 19f105e0c7347f48c0dd452eb4bd165e)
+     */
+    public function actionBookingInvoice($number) 
+    {
+        if (!$order = \common\models\Order::findOne(['number' => $number])) {
+            throw new NotFoundHttpException("Order #$number not found");
+        }
+
+        if (!$order->hotel->partner->allow_payment_via_bank_transfer) {
+            throw new NotFoundHttpException("Order #$number not found");
+        }
+
+        $paymentDetails = new \partner\models\PartnerPaymentDetailsRus();
+        $paymentDetails->unpack($order->hotel->partner->payment_details);
+        $this->layout = false;
+        return $this->render('@common/views/invoices/client-booking-rus-print', [
+            'order' => $order,
+            'paymentDetails' => $paymentDetails,
+        ]);
+    }
+
 }

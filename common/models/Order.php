@@ -341,4 +341,15 @@ class Order extends ActiveRecord
         return (new \DateTime($this->dateFrom))->diff((new \DateTime($this->dateTo)))->days;
     }
 
+    public function getSumCurrency()
+    {
+        return $this->hasOne(Currency::className(), ['id' => 'sum_currency_id']);
+    }
+
+    public function getPaymentSystemSumCurrency()
+    {
+        return $this->hasOne(Currency::className(), ['id' => 'payment_system_sum_currency_id']);
+    }
+
+
 }

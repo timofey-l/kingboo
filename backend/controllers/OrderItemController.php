@@ -3,16 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\ExchangeRates;
-use backend\models\ExchangeRatesSearch;
+use common\models\OrderItem;
+use backend\models\OrderItemSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ExchangeRatesController implements the CRUD actions for ExchangeRates model.
+ * OrderItemController implements the CRUD actions for OrderItem model.
  */
-class ExchangeRatesController extends Controller
+class OrderItemController extends Controller
 {
     public function behaviors()
     {
@@ -27,14 +27,14 @@ class ExchangeRatesController extends Controller
     }
 
     /**
-     * Lists all ExchangeRates models.
+     * Lists all OrderItem models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ExchangeRatesSearch();
+        $searchModel = new OrderItemSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->sort->defaultOrder = ['date' => SORT_DESC];
+        $dataProvider->sort->defaultOrder = ['order_id' => SORT_DESC];
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -43,7 +43,7 @@ class ExchangeRatesController extends Controller
     }
 
     /**
-     * Displays a single ExchangeRates model.
+     * Displays a single OrderItem model.
      * @param integer $id
      * @return mixed
      */
@@ -55,13 +55,13 @@ class ExchangeRatesController extends Controller
     }
 
     /**
-     * Creates a new ExchangeRates model.
+     * Creates a new OrderItem model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new ExchangeRates();
+        $model = new OrderItem();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -73,7 +73,7 @@ class ExchangeRatesController extends Controller
     }
 
     /**
-     * Updates an existing ExchangeRates model.
+     * Updates an existing OrderItem model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -92,7 +92,7 @@ class ExchangeRatesController extends Controller
     }
 
     /**
-     * Deletes an existing ExchangeRates model.
+     * Deletes an existing OrderItem model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -105,15 +105,15 @@ class ExchangeRatesController extends Controller
     }
 
     /**
-     * Finds the ExchangeRates model based on its primary key value.
+     * Finds the OrderItem model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return ExchangeRates the loaded model
+     * @return OrderItem the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = ExchangeRates::findOne($id)) !== null) {
+        if (($model = OrderItem::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

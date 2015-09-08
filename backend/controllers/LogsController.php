@@ -34,6 +34,7 @@ class LogsController extends Controller
     {
         $searchModel = new LogSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->sort->defaultOrder = ['log_time' => SORT_DESC];
 
         return $this->render('index', [
             'searchModel' => $searchModel,

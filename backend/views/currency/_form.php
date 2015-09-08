@@ -18,10 +18,18 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'code')->textInput(['maxlength' => 3]) ?>
 
+    <?= $form->field($model, 'iso_code')->textInput(['maxlength' => 3]) ?>
+
     <?= $form->field($model, 'symbol')->textInput(['maxlength' => 50]) ?>
+
+    <?= $form->field($model, 'invoice_symbol')->textInput(['maxlength' => 50]) ?>
 
     <?= $form->field($model, 'format')->textInput(['maxlength' => 50]) ?>
 
+    <?= $form->field($model, 'dec_point')->textInput(['maxlength' => 3]) ?>
+
+    <?= $form->field($model, 'thousands_sep')->textInput(['maxlength' => 3]) ?>
+    
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('backend_models', 'Create') : Yii::t('backend_models', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
