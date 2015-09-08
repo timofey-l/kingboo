@@ -15,6 +15,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
@@ -77,6 +78,9 @@ class BillingController extends Controller
                 'customerNumber' => md5($partner->id . $partner->created_at),
                 'orderNumber' => $billingInvoice->id,
                 'paymentType' => $payMethod->yandex_code,
+
+                'shopSuccessUrl' => Url::to(['billing/pay-success'], 'https') ,
+                'shopFailUrl' => Url::to(['billing/pay-fail'], 'https'),
             ]);
 
             return base64_encode($formCode);
