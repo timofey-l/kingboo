@@ -17,7 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Hotel ID' => '',
-    'ID' => '',
-    'Image' => '',
+    'Are you sure you want to delete this item?' => '',
+    'Create' => '',
+    'Create Order' => '',
+    'Delete' => '',
+    'Orders' => '',
+    'Reset' => '',
+    'Search' => '',
+    'Update' => '',
+    'Update {modelClass}: ' => '',
 ];

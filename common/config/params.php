@@ -11,9 +11,9 @@ return [
 
     'yandex' => [
         'demo' => false,
-        'shopId' => '',
+        'shopId' => '49653',
         'scid' => '',
-        'shopPassword' => '',
+        'shopPassword' => '85Xj2339XEv566S',
 
     ]
 ];

@@ -17,7 +17,10 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Hotel ID' => '',
+    'Account ID' => '',
+    'Comment' => 'Комментарий',
+    'Date' => 'Дата',
     'ID' => '',
-    'Image' => '',
+    'Service ID' => '',
+    'Sum' => 'Сумма',
 ];

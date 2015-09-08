@@ -9,7 +9,7 @@
  * Each array element represents the translation (value) of a message (key).
  * If the value is empty, the message is considered as not translated.
  * Messages that no longer need translation will have their translations
- * enclosed between a pair of '@@' marks.
+ * enclosed between a pair of '' marks.
  *
  * Message string can be used with plural forms format. Check i18n section
  * of the guide for details.
@@ -17,17 +17,17 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Add price rules using buttons above.' => '@@Добавьте правила формирования цен используя кнопки выше@@',
-    'Back to price rules' => '@@Вернуться к правилам форм. цен@@',
-    'Booking date range' => '@@Диапазон даты бронирования@@',
-    'Check code' => '@@Проверить код@@',
-    'Discount value' => '@@Значение скидки@@',
-    'Living date range' => '@@Диапазон на срок бронирования@@',
-    'Maximum discount bound' => '@@Ограничение максимальной суммы@@',
-    'Minimum discount bound' => '@@Ограничение минимальной суммы@@',
-    'Price rules not defined' => '@@Правила формирования цен не определены@@',
-    'percents' => '@@проценты@@',
-    'sum' => '@@сумма@@',
+    'Add price rules using buttons above.' => 'Добавьте правила формирования цен используя кнопки выше',
+    'Back to price rules' => 'Вернуться к правилам форм. цен',
+    'Booking date range' => 'Диапазон даты бронирования',
+    'Check code' => 'Проверить код',
+    'Discount value' => 'Значение скидки',
+    'Living date range' => 'Диапазон на срок бронирования',
+    'Maximum discount bound' => 'Ограничение максимальной суммы',
+    'Minimum discount bound' => 'Ограничение минимальной суммы',
+    'Price rules not defined' => 'Правила формирования цен не определены',
+    'percents' => 'проценты',
+    'sum' => 'сумма',
     'Add discount' => 'Добавить скидку',
     'Additive' => 'Аддитивная',
     'Are you sure you want to deactivate this price rule?' => 'Вы действительно хотите деактивировать это правило?',

@@ -5,11 +5,15 @@ namespace partner\controllers;
 use common\components\checkOrderResponse;
 use common\components\paymentAvisoResponse;
 use common\components\YandexHelper;
+use common\models\BillingExpense;
+use common\models\BillingIncome;
 use common\models\BillingInvoice;
 use common\models\BillingPaysYandex;
 use common\models\PayMethod;
 use partner\models\PartnerUser;
 use Yii;
+use yii\data\ActiveDataProvider;
+use yii\db\Query;
 use yii\filters\AccessControl;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -44,8 +48,8 @@ class BillingController extends Controller
 
         if (\Yii::$app->request->isPost) {
             $this->layout = false;
-            $sum = (float) \Yii::$app->request->post('sum', false);
-            $payMethod = (int) \Yii::$app->request->post('payMethod', false);
+            $sum = (float)\Yii::$app->request->post('sum', false);
+            $payMethod = (int)\Yii::$app->request->post('payMethod', false);
 
             if ($sum === false || $payMethod === false) {
                 throw new BadRequestHttpException('Wrong parameters');
@@ -57,7 +61,7 @@ class BillingController extends Controller
             $billingInvoice->sum = $sum;
             $billingInvoice->system = 0; // yandex kassa
             $billingInvoice->payed = false;
-            $billingInvoice->currency = $partner->billing->currency_id;
+            $billingInvoice->currency_id = $partner->billing->currency_id;
             $billingInvoice->save();
 
             $yandex = \Yii::$app->params['yandex'];
@@ -66,13 +70,15 @@ class BillingController extends Controller
                 'shopId' => $yandex['shopId'],
                 'scid' => $yandex['scid'],
                 'sum' => $sum,
-                'customerNumber' => md5($partner->id.$partner->created_at),
+                'customerNumber' => md5($partner->id . $partner->created_at),
                 'orderNumber' => $billingInvoice->id,
             ]);
 
             return base64_encode($formCode);
         } else {
-            $payMethods = PayMethod::find()->where(['in', 'yandex_code', ['PC', 'AC', 'MC']])->all();
+            $payMethods = PayMethod::find()
+//                ->where(['in', 'yandex_code', ['PC', 'AC', 'MC']])
+                ->all();
 
             return $this->render('pay', [
                 'partner' => $partner,
@@ -108,7 +114,7 @@ class BillingController extends Controller
         }
 
         // проверка invoiceId
-        $invoice = BillingInvoice::findOne((int) \Yii::$app->request->post('orderNumber', 0));
+        $invoice = BillingInvoice::findOne((int)\Yii::$app->request->post('orderNumber', 0));
         if (is_null($invoice)) {
             $response['message'] = 'Billing invoice was not found!';
             return $response;
@@ -134,15 +140,76 @@ class BillingController extends Controller
 
         \Yii::$app->response->format = 'yandex';
 
-        $response = [
-            'type' => 'check',
-            'code' => 1,
-            'performedDatetime' => date(\DateTime::W3C),
-            'invoiceId' => 123123,
-            'shopId' => 123123,
-            'message' => "sdfsdf sdf sdf",
-        ];
+        /** @var BillingPaysYandex $yandexPay */
+        $yandexPay = BillingPaysYandex::findOne(['invoiceId' => \Yii::$app->request->post('invoiceId', '')]);
+        if ($yandexPay) {
+
+            // сохраняем входных данных в базу
+            $yandexPay->avisio_post_dump = var_export(\Yii::$app->request->post(), true);
+
+            $yandexPay->payed = true;
+            if ($yandexPay->save()) {
+                $response = [
+                    'type' => 'avisio',
+                    'code' => 0,
+                    'performedDatetime' => date(\DateTime::W3C),
+                    'invoiceId' => \Yii::$app->request->post('invoiceId', ''),
+                    'shopId' => \Yii::$app->request->post('shopId', ''),
+                    'message' => "Оплата прошла успешно",
+                ];
+            } else {
+                $response = [
+                    'type' => 'avisio',
+                    'code' => 200,
+                    'performedDatetime' => date(\DateTime::W3C),
+                    'invoiceId' => \Yii::$app->request->post('invoiceId', ''),
+                    'shopId' => \Yii::$app->request->post('shopId', ''),
+                    'message' => "Ошибка при сохнанении оплаты",
+                ];
+            }
+        } else {
+            $response = [
+                'type' => 'avisio',
+                'code' => 200,
+                'performedDatetime' => date(\DateTime::W3C),
+                'invoiceId' => \Yii::$app->request->post('invoiceId', ''),
+                'shopId' => \Yii::$app->request->post('shopId', ''),
+                'message' => "Счет " . \Yii::$app->request->post('invoiceId', '') . ' не найден.',
+            ];
+        }
 
         return $response;
+    }
+
+    public function actionTransactions()
+    {
+        $query = new Query();
+
+        $incomes = new Query();
+        $incomes->select(['id', 'date', 'sum', 'currency_id', ' CONCAT(1) as type', 'CONCAT(\'\') as comment'])
+            ->from(BillingIncome::tableName());
+
+
+        $expenses = new Query();
+        $expenses->select(['id', 'date', 'sum', 'currency_id', ' CONCAT(2) as type', 'comment'])
+            ->from(BillingExpense::tableName());
+
+        $expensesQuery = clone $expenses;
+
+        $expenses->union($incomes, true)->orderBy(['date' => SORT_ASC]);
+
+        $query->select('*')->from(['u' => $expenses])->orderBy(['date' => SORT_DESC]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        return $this->render('transactions', [
+            'dataProvider' => $dataProvider,
+            'expensesQuery' => $expensesQuery,
+            'incomesQuery' => $incomes,
+        ]);
+
+
     }
 }

@@ -9,7 +9,7 @@
  * Each array element represents the translation (value) of a message (key).
  * If the value is empty, the message is considered as not translated.
  * Messages that no longer need translation will have their translations
- * enclosed between a pair of '@@' marks.
+ * enclosed between a pair of '' marks.
  *
  * Message string can be used with plural forms format. Check i18n section
  * of the guide for details.
@@ -19,7 +19,7 @@
 return [
     'Confirmation code was sent to your email. <br><a href="{url}" class="btn btn-link">Resend</a>' => '',
     'User not found!' => '',
-    'Confirmation code was sent to your email.' => '@@Код подтверждения был выслан на Ваш email@@',
+    'Confirmation code was sent to your email.' => 'Код подтверждения был выслан на Ваш email',
     'Email confirmation for site partner.king-boo.com' => 'Подтверждение email на сайте partner.king-boo.com',
     'I forgot my password' => 'Я забыл пароль',
     'Password reset for partner.king-boo.com' => 'Сброс пароля на сайте partner.king-boo.com',

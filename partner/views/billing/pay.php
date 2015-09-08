@@ -70,7 +70,7 @@ $('#payform').submit(function(e) {
             <div class="form-group" style="width: 150px;">
                 <label for="sum"><?= \Yii::t('billing_pay', 'Sum to pay') ?></label>
                 <div class="input-group">
-                    <input type="number" min="1" class="form-control" id="sum" name="sum" placeholder="<?= \Yii::t('billing_pay', 'Sum') ?>" value="10">
+                    <input type="number" min="1" class="form-control" id="sum" name="sum" placeholder="<?= \Yii::t('billing_pay', 'Sum') ?>" value="1000">
                     <div class="input-group-addon"><?= $partner->billing->currency->code ?></div>
                 </div>
             </div>

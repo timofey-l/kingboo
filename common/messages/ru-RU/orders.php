@@ -9,7 +9,7 @@
  * Each array element represents the translation (value) of a message (key).
  * If the value is empty, the message is considered as not translated.
  * Messages that no longer need translation will have their translations
- * enclosed between a pair of '@@' marks.
+ * enclosed between a pair of '' marks.
  *
  * Message string can be used with plural forms format. Check i18n section
  * of the guide for details.
@@ -17,28 +17,32 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Currency ID' => '',
+    'Pay sum currency ID' => '',
+    'Payment system sum currency ID' => '',
     'Post Params' => '',
     'Room ID' => '',
     'Server Params' => '',
+    'Sum for payment system' => '',
     'Timestamp' => '',
     'Updated At' => '',
-    'Allow full payment at checkin' => '@@Разрешить оплату при заселении@@',
-    'Allow payment via bank transfer' => '@@Разрешить оплату банковским переводом@@',
-    'Checked' => '@@@@',
-    'Customer Number' => '@@Номер клиента@@',
-    'Invoice ID' => '@@ID счета@@',
-    'Order Created Datetime' => '@@Дата создания заказа@@',
-    'Order Number' => '@@Номер заказа@@',
-    'Order Sum Amount' => '@@Сумма заказа@@',
-    'Order Sum Bank Paycash' => '@@@@',
-    'Order Sum Currency Paycash' => '@@@@',
-    'Payed' => '@@Сумма оплаты@@',
-    'Payment Datetime' => '@@@@',
-    'Payment Payer Code' => '@@@@',
-    'Payment Type' => '@@@@',
-    'Shop Sum Amount' => '@@@@',
-    'Shop Sum Bank Paycash' => '@@@@',
-    'Shop Sum Currency Paycash' => '@@@@',
+    'Allow full payment at checkin' => 'Разрешить оплату при заселении',
+    'Allow payment via bank transfer' => 'Разрешить оплату банковским переводом',
+    'Checked' => '',
+    'Customer Number' => 'Номер клиента',
+    'Invoice ID' => 'ID счета',
+    'Order Created Datetime' => 'Дата создания заказа',
+    'Order Number' => 'Номер заказа',
+    'Order Sum Amount' => 'Сумма заказа',
+    'Order Sum Bank Paycash' => '',
+    'Order Sum Currency Paycash' => '',
+    'Payed' => 'Сумма оплаты',
+    'Payment Datetime' => '',
+    'Payment Payer Code' => '',
+    'Payment Type' => '',
+    'Shop Sum Amount' => '',
+    'Shop Sum Bank Paycash' => '',
+    'Shop Sum Currency Paycash' => '',
     'Additional information' => 'Дополнительная информация',
     'Address' => 'Обращение',
     'Adults' => 'Взрослых',

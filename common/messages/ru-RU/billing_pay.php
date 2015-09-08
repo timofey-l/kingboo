@@ -17,7 +17,9 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Hotel ID' => '',
-    'ID' => '',
-    'Image' => '',
+    'Pay' => 'Оплатить',
+    'Payment method' => 'Метод оплаты',
+    'Put money on your account' => 'Пополнить счёт',
+    'Sum' => 'Сумма',
+    'Sum to pay' => 'Сумма для пополнения',
 ];

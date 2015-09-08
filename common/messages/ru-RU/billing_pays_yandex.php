@@ -17,7 +17,11 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Hotel ID' => '',
+    'Avisio Post Dump' => '',
+    'Billing Invoice ID' => '',
+    'Check Post Dump' => '',
+    'Checked' => '',
     'ID' => '',
-    'Image' => '',
+    'Invoice ID' => '',
+    'Payed' => '',
 ];

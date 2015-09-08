@@ -108,7 +108,7 @@ $orders = \common\models\Order::findNew();
                 <li class="dropdown ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <?php
-                            echo \Yii::t('main', 'Balance: {b}', ['b' => PartnerUser::findOne(\Yii::$app->user->id)->billing->getBalanceString()])
+                            echo \Yii::t('main', 'Balance: <b>{b}</b>', ['b' => PartnerUser::findOne(\Yii::$app->user->id)->billing->getBalanceString()])
                         ?>
                     </a>
                     <ul class="dropdown-menu">
@@ -120,8 +120,8 @@ $orders = \common\models\Order::findNew();
                         </li>
                         <li>
                             <?= Html::a(
-                                '<i class="fa fa-money"></i>'.\Yii::t('main', 'Put money on your account'),
-                                ['/billing/pay']
+                                '<i class="fa fa-exchange"></i>'.\Yii::t('main', 'Billing transactions'),
+                                ['/billing/transactions']
                             ) ?>
                         </li>
 
