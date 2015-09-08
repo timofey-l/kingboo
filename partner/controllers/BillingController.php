@@ -17,6 +17,8 @@ use yii\db\Query;
 use yii\filters\AccessControl;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 class BillingController extends Controller
@@ -134,6 +136,30 @@ class BillingController extends Controller
         return $response;
     }
 
+    public function actionPaySuccess($orderNumber)
+    {
+        $partner = PartnerUser::findOne(\Yii::$app->user->id);
+        if ($partner === null) {
+            throw new ForbiddenHttpException;
+        }
+
+        $billingInvoice = BillingInvoice::findOne(['account_id' => $partner->billing->id, 'id' => (int) $orderNumber]);
+
+        if ($billingInvoice === null) {
+            throw new NotFoundHttpException;
+        }
+
+        return $this->render('success', [
+            'partner' => $partner,
+            'invoice' => $billingInvoice,
+        ]);
+    }
+
+    public function actionPayFail()
+    {
+        \Yii::$app->getSession()->setFlash('danger', \Yii::t('partner_billing', 'An error has occured at making payment. Please try again.'));
+        return $this->redirect(['billing/pay']);
+    }
 
     public function actionPayAvisio()
     {
