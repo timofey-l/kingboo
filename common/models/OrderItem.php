@@ -14,6 +14,11 @@ use Yii;
  * @property integer $children
  * @property integer $kids
  * @property double $sum
+ * @property double $sum_currency_id
+ * @property double $pay_sum
+ * @property double $pay_sum_currency_id
+ * @property double $payment_system_sum
+ * @property double $payment_system_sum_currency_id
  * @property string $guest_name
  * @property string $guest_surname
  * @property integer $guest_address
@@ -35,8 +40,8 @@ class OrderItem extends \yii\db\ActiveRecord
     {
         return [
             [['room_id', 'order_id', 'adults', 'children', 'kids', 'sum', 'guest_name', 'guest_surname', 'guest_address'], 'required'],
-            [['room_id', 'order_id', 'adults', 'children', 'kids', 'guest_address'], 'integer'],
-            [['sum'], 'number'],
+            [['room_id', 'order_id', 'adults', 'children', 'kids', 'guest_address', 'sum_currency_id', 'pay_sum_currency_id', 'payment_system_sum_currency_id'], 'integer'],
+            [['sum', 'pay_sum', 'payment_system_sum'], 'number'],
             [['guest_name', 'guest_surname'], 'string', 'max' => 255]
         ];
     }

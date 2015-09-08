@@ -109,16 +109,22 @@ class HotelController extends \yii\web\Controller
 			}
 			$orderForm->pay_sum_currency_id = $hotel->currency_id;
 			// Если платеж через Яндекс.Кассу записываем сумму в рублях
-			if (!$orderForm->payment_via_bank_transfer && !$orderForm->checkin_fullpay) {
-				$orderForm->payment_system_sum = $orderForm->hotel->currency->convertTo($orderForm->pay_sum, 'RUB', $orderForm->hotel->partner->currency_exchange_percent);
-				$orderForm->payment_system_sum_currency_id = Currency::findOne(['code' => 'RUB'])->id;
-			}
+			// TODO: Надо учитывать, чей отель и соответственно, в какой валюте оплата
+			$orderForm->payment_system_sum = $orderForm->hotel->currency->convertTo($orderForm->pay_sum, 'RUB', $orderForm->hotel->partner->currency_exchange_percent);
+			$orderForm->payment_system_sum_currency_id = Currency::findOne(['code' => 'RUB'])->id;
 
 			if ($orderForm->save()) {
 				$orderItem->order_id = $orderForm->id;
+				//Устанавливаем все суммы на конкретный номер (сейчас как у заказа, потом ПЕРЕПИСАТЬ)
 				$orderItem->sum = $orderForm->sum;
+				$orderItem->sum_currency_id = $orderForm->sum_currency_id;
+				$orderItem->pay_sum = $orderForm->pay_sum;
+				$orderItem->pay_sum_currency_id = $orderForm->pay_sum_currency_id;
+				$orderItem->payment_system_sum = $orderForm->payment_system_sum;
+				$orderItem->payment_system_sum_currency_id = $orderForm->payment_system_sum_currency_id;
+				// Сохраняем OrderItem
 				if ($orderItem->save()) {
-					// посылаем письма только после добавления номра, иначе его в письмах не будет
+					// посылаем письма только после добавления номера, иначе его в письмах не будет
 					$orderForm->sendEmailToClient();
 					$orderForm->sendEmailToPartner();
 

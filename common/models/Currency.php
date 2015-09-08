@@ -12,8 +12,12 @@ use \common\models\ExchangeRates;
  * @property string $name_ru
  * @property string $name_en
  * @property string $code
+ * @property string $iso_code
  * @property string $symbol
+ * @property string $invoice_symbol
  * @property string $format
+ * @property string $dec_point
+ * @property string $thousands_sep
  */
 class Currency extends \yii\db\ActiveRecord
 {
@@ -73,10 +77,10 @@ class Currency extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name_ru', 'name_en', 'code', 'symbol', 'format'], 'required'],
+            [['name_ru', 'name_en', 'code', 'iso_code', 'symbol', 'invoice_symbol', 'format', 'dec_point', 'thousands_sep'], 'required'],
             [['name_ru', 'name_en'], 'string', 'max' => 255],
-            [['code'], 'string', 'max' => 3],
-            [['symbol'], 'string', 'max' => 50],
+            [['code', 'iso_code', 'dec_point', 'thousands_sep'], 'string', 'max' => 3],
+            [['symbol', 'invoice_symbol'], 'string', 'max' => 50],
         ];
     }
 
@@ -90,19 +94,46 @@ class Currency extends \yii\db\ActiveRecord
             'name_ru' => Yii::t('common_models', 'Name Ru'),
             'name_en' => Yii::t('common_models', 'Name En'),
             'code' => Yii::t('common_models', 'Code'),
+            'iso_code' => Yii::t('common_models', 'ISO code'),
             'symbol' => Yii::t('common_models', 'Symbol'),
+            'invoice_symbol' => Yii::t('common_models', 'Symbol for invoices'),
             'format' => Yii::t('common_models', 'Format'),
+            'dec_point' => Yii::t('common_models', 'Decimal point'),
+            'thousands_sep' => Yii::t('common_models', 'Thousands separator'),
         ];
     }
 
-    public function getFormatted($value)
+    /**
+     * Возвращает отформатированную сумму со знаком валюты
+     * 
+     * @param $value - денежная сумма
+     * @param $type - параметры форматирования 
+     *                может быть 'invoice', тогда формат вывода официального документа
+     *                потом можно добавить еще сколько угодно форматов вывода
+     */
+    public function getFormatted($value, $type='')
     {
+        $symbol = $this->symbol;
+        $decimal = ($value == (int)$value) ? 0 : 2;
+        if ($type == 'invoice') {
+            $symbol = $this->invoice_symbol;
+            $decimal = 2;
+        }
+
+        $value = number_format($value, $decimal, $this->dec_point, $this->thousands_sep);
         $replace = [
             '{value}' => $value,
-            '{symbol}' => $this->symbol,
+            '{symbol}' => $symbol,
             '{code}' => $this->code,
         ];
-        return str_replace(array_keys($replace), array_values($replace), $this->format);
+
+        $s = str_replace(array_keys($replace), array_values($replace), $this->format);
+
+        if ($type == 'invoice') {
+            $s = str_replace('&nbsp;', ' ', $s);
+        }
+
+        return $s;
     }
 
     public static function getByISOCode($code) {
@@ -161,7 +192,7 @@ class Currency extends \yii\db\ActiveRecord
      * 
      * @return string
      */
-    public function convertToFormatted($x, $to, $coef = 0) {
+    public function convertToFormatted($x, $to, $coef = 0, $type='') {
         if (is_integer($to)) {
             $toObj = @self::find()->where(['id' => $to])->one();
             if (!$toObj) {
@@ -172,7 +203,7 @@ class Currency extends \yii\db\ActiveRecord
             $toObj = @self::find()->where(['code' => $to])->one();
         }
         $x = $this->convertTo($x, $to, $coef);
-        return $toObj->getFormatted($x);
+        return $toObj->getFormatted($x, $type);
     }
 
 }

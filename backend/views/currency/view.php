@@ -32,8 +32,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'name_ru',
             'name_en',
             'code',
+            'iso_code',
             'symbol',
+            'invoice_symbol',
             'format',
+            'dec_point',
+            'thousands_sep',
         ],
     ]) ?>
 

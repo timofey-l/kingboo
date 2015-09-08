@@ -34,6 +34,7 @@ class PayLogController extends Controller
     {
         $searchModel = new PayLogSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->sort->defaultOrder = ['timestamp' => SORT_DESC];
 
         return $this->render('index', [
             'searchModel' => $searchModel,

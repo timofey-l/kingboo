@@ -36,7 +36,7 @@ $this->registerJs("
 		});
 	});
     $('#printInvoiceBtn').click(function printInvoice() {
-        var win = window.open('/site/booking-invoice?number=" . $order->number . "', '_blank');
+        var win = window.open('/payment/booking-invoice?number=" . $order->number . "', '_blank');
         win.focus();
     });
 ");
