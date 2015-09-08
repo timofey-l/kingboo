@@ -55,6 +55,8 @@ class BillingController extends Controller
                 throw new BadRequestHttpException('Wrong parameters');
             }
 
+            $payMethod = PayMethod::findOne($payMethod);
+
             // cоздаем счет
             $billingInvoice = new BillingInvoice();
             $billingInvoice->account_id = $partner->billing->id;
@@ -72,6 +74,7 @@ class BillingController extends Controller
                 'sum' => $sum,
                 'customerNumber' => md5($partner->id . $partner->created_at),
                 'orderNumber' => $billingInvoice->id,
+                'paymentType' => $payMethod->yandex_code,
             ]);
 
             return base64_encode($formCode);
