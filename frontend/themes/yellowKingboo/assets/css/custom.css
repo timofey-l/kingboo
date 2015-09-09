@@ -73,3 +73,7 @@ a:hover, a:focus {
 #content a {
     text-decoration: underline;
 }
+
+#content p {
+    margin: 0 0 15px 0;
+}
