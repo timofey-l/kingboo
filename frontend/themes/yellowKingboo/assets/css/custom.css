@@ -10,6 +10,10 @@ html, * , a {
     color: #630;
 }
 
+a:hover, a:focus {
+    color: #630;
+}
+
 .logo {
     cursor: pointer;
 }
@@ -32,4 +36,23 @@ html, * , a {
     background-repeat: no-repeat;
     background-position: left top;
     min-height: 24px;
+}
+
+.more-button {
+    display: inline-block;
+    color: #f9980f;
+    padding: 0.3em 0;
+}
+
+.more-button:focus, .more-button:hover {
+    color: #de8116;
+}
+
+.more {
+    font-weight: 300 !important;
+}
+
+.top-baloon {
+
+    font-weight: 300 !important;
 }
