@@ -68,6 +68,7 @@ a:hover, a:focus {
 
 #content h1, #content h2 {
     text-align: center;
+    margin-bottom: 0.5em;
 }
 
 #content a {
