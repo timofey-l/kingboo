@@ -69,3 +69,7 @@ a:hover, a:focus {
 #content h1, #content h2 {
     text-align: center;
 }
+
+#content a {
+    text-decoration: underline;
+}
