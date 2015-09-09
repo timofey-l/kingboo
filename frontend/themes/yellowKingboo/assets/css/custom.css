@@ -26,7 +26,7 @@ a:hover, a:focus {
 }
 
 #content ul {
-    padding: 1em 0;
+    padding: 0;
 }
 
 #content ul li {
@@ -42,6 +42,13 @@ a:hover, a:focus {
     display: inline-block;
     color: #f9980f;
     padding: 0.3em 0;
+    text-decoration: underline;
+}
+
+.more-button.right {
+    float: right;
+    margin-right: 30px;
+
 }
 
 .more-button:focus, .more-button:hover {
@@ -50,9 +57,15 @@ a:hover, a:focus {
 
 .more {
     font-weight: 300 !important;
+    text-decoration: underline;
 }
 
 .top-baloon {
 
     font-weight: 300 !important;
+}
+
+
+#content h1, #content h2 {
+    text-align: center;
 }
