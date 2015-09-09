@@ -59,7 +59,7 @@ $this->registerJsFile('/js/format.js');
 <div class="layer-olive-row-content"></div>
 <div id="container" class="content">
     <?= $this->render('header') ?>
-    <div id="content">
+    <div id="content" class="container">
         <?= $content ?>
     </div>
 </div>
