@@ -26,9 +26,10 @@ html, * , a {
 }
 
 #content ul li {
-    margin: 1em 0 1em 3em;
-
-    background-image:url('../img/ul-mark.png');
+    margin: 1em 0 1em 0;
+    padding-left: 2em;
+    background-image: url('../img/ul-mark.png');
     background-repeat: no-repeat;
-
+    background-position: left top;
+    min-height: 24px;
 }
