@@ -180,8 +180,45 @@ if (!isset($l)) {
 <table border="0" width="100%" cellpadding="1" cellspacing="1">
     <tr>
         <td></td>
-        <td style="width:27mm; font-weight:bold;  text-align:right;">Итого:</td>
-        <td style="width:27mm; font-weight:bold;  text-align:right;"><?= Html::encode($c->getFormatted($order->payment_system_sum, 'invoice')) ?></td>
+        <td style="width:38mm; font-weight:bold;  text-align:right;">Итого без НДС:</td>
+        <td style="width:38mm; font-weight:bold;  text-align:right;">
+            <?php 
+                if ($paymentDetails->NDS > 0) {
+                    $v = round($order->payment_system_sum * (1 - $paymentDetails->NDS / 100), 2);
+                } else {
+                    $v = $order->payment_system_sum;
+                }
+                echo Html::encode($c->getFormatted($v, 'invoice')); 
+            ?>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td style="width:38mm; font-weight:bold;  text-align:right;">
+            Итого НДС<?php 
+                if ($paymentDetails->NDS > 0) {
+                    echo ' (' . $paymentDetails->NDS . '%):';
+                } else {
+                    echo ':';
+                }
+            ?>
+        </td>
+        <td style="width:38mm; font-weight:bold;  text-align:right;">
+            <?php 
+                if ($paymentDetails->NDS > 0) {
+                    $v = round($order->payment_system_sum * $paymentDetails->NDS / 100, 2);
+                    $v = Html::encode($c->getFormatted($v, 'invoice'));
+                } else {
+                    $v = '---';
+                }
+                echo $v; 
+            ?>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td style="width:38mm; font-weight:bold;  text-align:right;">Всего к оплате:</td>
+        <td style="width:38mm; font-weight:bold;  text-align:right;"><?= Html::encode($c->getFormatted($order->payment_system_sum, 'invoice')) ?></td>
     </tr>
 </table>
 
@@ -204,6 +241,10 @@ if (!isset($l)) {
 
 <div>Руководитель ______________________ (<?= Html::encode($paymentDetails->director); ?>)</div>
 <br/>
+<?php if (strlen($paymentDetails->bookkeeper) > 0) : ?>
+<div>Гл. бухгалтер&nbsp; ______________________ (<?= Html::encode($paymentDetails->bookkeeper); ?>)</div>
+<br/>
+<?php endif; ?>
 
 <div style="width: 85mm;text-align:center;">М.П.</div>
 <br/>
