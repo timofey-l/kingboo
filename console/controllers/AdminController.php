@@ -246,6 +246,10 @@ class AdminController extends Controller
             /** @var BillingService $service */
             $service = $accountService->service;
 
+            if ($account === null || $service === null) {
+                continue;
+            }
+
             if ($showDebugInfo) $this->stdout("Услуга: {$service->name_ru} ({$service->monthly_cost} {$service->currency->code} / мес.)\n");
             if ($showDebugInfo) $this->stdout("Клиент: {$account->partner->email} (id: {$account->partner->id})\n");
 
@@ -321,5 +325,29 @@ class AdminController extends Controller
         $account->updateBalance();
         var_dump($account->balance);
 	}
+
+    public function actionAddDefaultPlans()
+    {
+        $default_plan = BillingService::findOne(['default' => true]);
+        if ($default_plan === null) {
+            $this->stderr("Не найден тарифный план по умолчанию\n");
+        }
+
+        $accounts = BillingAccount::find()->all();
+
+        foreach ($accounts as $account) {
+            /** @var BillingAccount $account */
+            $services = $account->getServices();
+            if ($services === null) {
+                $accountService = new BillingAccountServices();
+                $accountService->account_id = $account->id;
+                $accountService->service_id = $default_plan->id;
+                $accountService->add_date = date(DateTime::ISO8601);
+                $accountService->end_date = date(DateTime::ISO8601);
+                $accountService->active = true;
+                $accountService->save();
+            }
+        }
+    }
 
 }
