@@ -328,25 +328,34 @@ class AdminController extends Controller
 
     public function actionAddDefaultPlans()
     {
+        $this->stdout("Начало добавления тарифа по умолчанию к аккаунтам биллинга партнёров.\n");
+
         $default_plan = BillingService::findOne(['default' => true]);
         if ($default_plan === null) {
             $this->stderr("Не найден тарифный план по умолчанию\n");
+        } else {
+            $this->stdout("Используется тарифный план \"{$default_plan->name_ru}\" id: {$default_plan->id} \n");
         }
 
         $accounts = BillingAccount::find()->all();
 
         foreach ($accounts as $account) {
+            $this->stdout("\tАккаунт {$account->id}\n");
             /** @var BillingAccount $account */
-            $services = $account->getServices();
-            if ($services === null) {
+            $services = $account->services;
+            $this->stdout("\tНайдено тарифов: " . count($services) . "\n");
+            if (count($services) == 0) {
                 $accountService = new BillingAccountServices();
                 $accountService->account_id = $account->id;
                 $accountService->service_id = $default_plan->id;
                 $accountService->add_date = date(DateTime::ISO8601);
                 $accountService->end_date = date(DateTime::ISO8601);
                 $accountService->active = true;
-                $accountService->save();
+                if (!$accountService->save()) {
+        		    var_dump($accountService->errors);
+        		}
             }
+            $this->stdout("\n");
         }
     }
 
