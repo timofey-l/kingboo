@@ -15,12 +15,15 @@ class PartnerPaymentDetailsRus extends Model {
 	var $cAccount;
 	var $account;
 	var $director;
+	var $bookkeeper;
+	var $NDS;
 
     public function rules() {
         return [
-            [['firmName', 'INN', 'KPP', 'address', 'bank', 'BIK', 'cAccount', 'account', 'director'], 'required'],
-            [['firmName', 'INN', 'KPP', 'address', 'bank', 'BIK', 'cAccount', 'account', 'director'], 'string'],
-            [['firmName', 'INN', 'KPP', 'address', 'bank', 'BIK', 'cAccount', 'account', 'director'], 'trim'],
+            [['firmName', 'INN', 'KPP', 'address', 'bank', 'BIK', 'cAccount', 'account', 'director','NDS'], 'required'],
+            [['firmName', 'INN', 'KPP', 'address', 'bank', 'BIK', 'cAccount', 'account', 'director','bookkeeper'], 'string'],
+            [['firmName', 'INN', 'KPP', 'address', 'bank', 'BIK', 'cAccount', 'account', 'director','bookkeeper'], 'trim'],
+            [['NDS'], 'integer', 'min' => 0, 'max' => 18],
         ];
     }
 
@@ -35,6 +38,8 @@ class PartnerPaymentDetailsRus extends Model {
 			'cAccount' => \Yii::t('partner_payment_details','Cor. account'), 
 			'account' => \Yii::t('partner_payment_details','Account'), 
 			'director' => \Yii::t('partner_payment_details','Director'),
+			'bookkeeper' => \Yii::t('partner_payment_details','Bookkeeper'),
+			'NDS' => \Yii::t('partner_payment_details','NDS, %'),
 		];
 	}
 
