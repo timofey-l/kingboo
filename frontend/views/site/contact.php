@@ -19,7 +19,7 @@ if (!is_null($hotel))
 
 ?>
 <div class="site-contact">
-    <h1><?= $this->title ?></h1>
+    <h2><?= $this->title ?></h2>
     <?php if(!is_null($hotel)): ?>
         <br>
         <address>
@@ -48,10 +48,10 @@ if (!is_null($hotel))
                 <?= $form->field($model, 'subject') ?>
                 <?= $form->field($model, 'body')->textArea(['rows' => 6]) ?>
                 <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
-                    'template' => '<div class="row"><div class="col-md-3">{image}</div><div class="col-md-6">{input}</div><div class="col-md-3"><div class="form-group hidden-sm hidden-xs">'.Html::submitButton(\Yii::t('frontend', 'Submit'), ['class' => 'btn btn-primary', 'name' => 'contact-button']).'</div></div></div>',
+                    'template' => '<div class="row"><div class="col-md-3">{image}</div><div class="col-md-6">{input}</div><div class="col-md-3"><div class="form-group hidden-sm hidden-xs">'.Html::submitButton(\Yii::t('frontend', 'Submit'), ['class' => 'btn btn-warning', 'name' => 'contact-button']).'</div></div></div>',
                 ]) ?>
                 <div class="form-group visible-sm visible-xs">
-                    <?= Html::submitButton(\Yii::t('frontend', 'Submit'), ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                    <?= Html::submitButton(\Yii::t('frontend', 'Submit'), ['class' => 'btn btn-warning', 'name' => 'contact-button']) ?>
                 </div>
             <?php ActiveForm::end(); ?>
         </div>

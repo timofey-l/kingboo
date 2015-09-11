@@ -292,7 +292,7 @@ if (!$this->context->checkBookingPossibility($model)) {
                 <div class="description">{{r['description_' + LANG]}}</div>
             </div>
             <div class="room-facilities row">
-                    <span class="label label-warning text-brown" ng-repeat="f in r.facilities">
+                    <span class="label label-warning" ng-repeat="f in r.facilities">
                         {{f['name_' + LANG]}}
                     </span>
             </div>
@@ -305,7 +305,7 @@ if (!$this->context->checkBookingPossibility($model)) {
                 <div class="description">{{r['description_' + LANG]}}</div>
             </div>
             <div class="room-facilities row">
-			        <span class="label label-warning text-brown" ng-repeat="f in r.facilities">
+			        <span class="label label-warning" ng-repeat="f in r.facilities">
 				        {{f['name_' + LANG]}}
 			        </span>
             </div>

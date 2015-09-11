@@ -73,7 +73,7 @@ if (ArrayHelper::getValue($this->params, 'embedded', 0) == 0) {
 <?php if (ArrayHelper::getValue($this->params, 'embedded', 0) == 0): ?>
     <footer class="footer">
         <div class="container">
-            <p class="pull-left">&copy; <a href="http://itdesign.ru">IT Design Studio</a> <?= date('Y') ?></p>
+            <p class="pull-right">&copy; <a href="http://itdesign.ru">IT Design Studio</a> <?= date('Y') ?></p>
         </div>
     </footer>
 <?php endif ?>

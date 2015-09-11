@@ -115,6 +115,7 @@ ul.hotel-facilities  li:before {
     font-family: 'Glyphicons Halflings';
     content: "\e013";
     position: absolute;
+    color: #f9980f;
     left: -10px;
 }
 
@@ -344,12 +345,9 @@ h2 {
 }
 
 .footer {
-    border-color: #d8e23f;
-    background-image: -webkit-linear-gradient(top, #e7ed88 0, #dee65c 100%);
-    background-image: -o-linear-gradient(top, #e7ed88 0, #dee65c 100%);
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e7ed88), to(#dee65c));
-    background-image: linear-gradient(to bottom, #e7ed88 0, #dee65c 100%);
-    background-repeat: repeat-x;
+    border: none;
+    background-image: none;
+    background-color: transparent;
 }
 
 
@@ -358,9 +356,17 @@ h2 {
 }
 
 .breadcrumb {
-    background-color: #FFEDE0;
+    background-color: #f1f7ca;
 }
 
 .navbar-default .navbar-toggle {
     background-color: #fff;
+}
+
+.navbar-default .navbar-nav>li>a {
+    font-weight: bold;
+}
+
+.label-warning {
+    text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
 }
