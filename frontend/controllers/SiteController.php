@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Page;
 use frontend\components\HotelUrlRule;
 use Yii;
 use \DateTime;
@@ -110,7 +111,15 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $this->layout = 'main';
-        return $this->render('index');
+
+        // поиск страницы с роутом "/"
+        $page = Page::findOne(['route' => '/']);
+        if ($page !== null) {
+            return $this->render('@frontend/views/pages/index', ['page' => $page]);
+        } else {
+            return $this->render('index');
+        }
+
     }
 
     public function actionLogin()
