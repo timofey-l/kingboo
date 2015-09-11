@@ -21,6 +21,7 @@ if (!is_null($hotel))
 <div class="site-contact">
     <h1><?= $this->title ?></h1>
     <?php if(!is_null($hotel)): ?>
+        <br>
         <address>
             <b><?= \Yii::t('frontend', 'Address', []) ?>:</b> <?= Html::encode($hotel->address) ?>
             <br>
