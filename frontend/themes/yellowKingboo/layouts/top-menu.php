@@ -20,17 +20,17 @@ $items = [
         'url' => ['pages/index', 'route' => 'plans'],
     ],
     [
-        'title' => 'Как подключить',
-        'url' => ['pages/index', 'route' => 'how-to-join'],
+        'title' => 'Вопросы и ответы',
+        'url' => ['faq/'],
     ],
     [
         'title' => 'Гарантия безопасности',
         'url' => ['pages/index', 'route' => 'guarantee'],
     ],
-    [
+    /*[
         'title' => 'Акции и спецпредложения',
         'url' => ['pages/index', 'route' => 'special'],
-    ],
+    ],*/
 
 ];
 
@@ -42,8 +42,9 @@ $current_page_route = (Page::getCurrent() === null) ? null : Page::getCurrent()-
 <nav class="main-menu">
     <ul>
         <?php foreach($items as $item): ?>
-            <li class="<?= ($current_page_route == $item['url']['route']) ? 'active' : '' ?>">
-                <a class="<?= ($current_page_route == $item['url']['route']) ? 'selected' : '' ?>"
+            <?php $active = (isset($item['url']['route']) && $current_page_route == $item['url']['route']) || (!$current_page_route && $item['url'][0] == 'faq/'); ?>
+            <li class="<?= $active ? 'active' : '' ?>">
+                <a class="<?= $active ? 'selected' : '' ?>"
                     href="<?= Url::toRoute($item['url']) ?>">
                     <?= $item['title'] ?>
                 </a>

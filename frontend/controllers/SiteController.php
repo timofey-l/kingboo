@@ -227,4 +227,21 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionFaq() {
+        $FAQs = \common\models\Faq::find()->where(['active' => true])->orderBy('order')->all();
+        if (!$FAQs) {
+            throw new BadRequestHttpException('Page not found!');
+        }
+
+        // проврка наличия "/" на конце
+        if (preg_match('~\/$~', \Yii::$app->request->pathInfo)) {
+            return $this->redirect([\Yii::$app->request->pathInfo]);
+        }
+
+        return $this->render('//pages/faq', [
+            'title' => \Yii::t('faq', 'Frequently asked questions'),
+            'FAQs' => $FAQs,
+        ]);
+    }
+
 }
