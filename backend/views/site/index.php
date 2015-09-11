@@ -23,6 +23,7 @@ $this->title = 'BooBooking';
                 <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Logs'), ['/logs/index'],['class'=>'btn btn-default']) ?>
                 <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Pay logs'), ['/pay-log/index'],['class'=>'btn btn-default']) ?>
                 <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Pages'), ['/pages/index'],['class'=>'btn btn-default']) ?>
+                <?= \yii\helpers\Html::a(Yii::t('backend_main', 'FAQ'), ['/faq/index'],['class'=>'btn btn-default']) ?>
                 <?= \yii\helpers\Html::a('Gii', ['/gii'],['class'=>'btn btn-warning']) ?>
             </div>
 
