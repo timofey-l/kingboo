@@ -1,4 +1,5 @@
 <?php
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 /* @var $this \yii\web\View view component instance */
@@ -35,7 +36,7 @@ use yii\helpers\Html;
         <table style="width: 100%; border-collapse: collapse;">
             <tr>
                 <td style="font-size: 0.7rem; padding: 1em; background: #dee65c; text-align: center; color: #000;">
-                    Copyright &copy; 2015 king-boo.com <?= \Yii::t('emails', 'All rights reserved.', [], $this->params['local']) ?>
+                    Copyright &copy; 2015 king-boo.com <?= \Yii::t('emails', 'All rights reserved.', [], ArrayHelper::getValue($this->params, 'local')) ?>
                     <br>
                     <?= \Yii::t('emails', 'This message was sent by king-boo.com service.', []) ?>
                 </td>

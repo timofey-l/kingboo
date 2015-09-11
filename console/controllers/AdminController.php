@@ -359,4 +359,22 @@ class AdminController extends Controller
         }
     }
 
+    public function actionTestEmails()
+    {
+        foreach (Order::find()->all() as $order) {
+            /** @var Order $order */
+            $this->stdout('id: ' . $order->id . "\t" . $order->contact_email . "\t" . $order->hotel->partner->email."\n");
+        }
+
+        $id = $this->prompt("Enter id:", []);
+
+        $order = Order::findOne($id);
+
+        $this->stdout("Sending email to client\n");
+        $order->sendEmailToClient();
+        $this->stdout("Sending email to parntner\n");
+        $order->sendEmailToPartner();
+        $this->stdout("Done!\n");
+    }
+
 }
