@@ -5,7 +5,7 @@ use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
 
 /* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
+/* @var $form \yii\widgets\ActiveForm */
 /* @var $model \frontend\models\ContactForm */
 /* @vat $hotel \common\models\Hotel */
 

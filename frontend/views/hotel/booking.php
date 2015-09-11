@@ -93,7 +93,7 @@ $this->registerJs("
             });
             parent.find('input[type=checkbox]').each(function(index, el){
                 if (chechbox == el) return;
-                $.each($(el).data('disable').split(' '), function(i, elem){
+                $.each($(el).data('disable').split(' '), function(i, elebackground-colorm){
                     if ($(el).is(':checked')) {
                         enable[elem] = enable[elem] && false;
                     }
@@ -165,7 +165,7 @@ $this->title = \Yii::t('frontend', 'Room booking');
 			</div>
 			<div class="hotel-facilities">
 				<?php foreach ($hotel->facilities as $f): ?>
-					<span class="label label-default">
+					<span class="label label-warning">
 						<?= $f->{'name_' . $l} ?>
 					</span>
 				<?php endforeach ?>

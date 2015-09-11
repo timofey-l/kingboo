@@ -351,3 +351,16 @@ h2 {
     background-image: linear-gradient(to bottom, #e7ed88 0, #dee65c 100%);
     background-repeat: repeat-x;
 }
+
+
+.order-info-panel .panel-footer {
+    background-color: #fcf8e3;
+}
+
+.breadcrumb {
+    background-color: #FFEDE0;
+}
+
+.navbar-default .navbar-toggle {
+    background-color: #fff;
+}

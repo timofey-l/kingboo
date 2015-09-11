@@ -1,5 +1,6 @@
 <?php
 use frontend\assets\AppAsset;
+use frontend\assets\HotelsBootstrapAsset;
 use frontend\widgets\Alert;
 use yii\base\View;
 use yii\bootstrap\Nav;
@@ -11,15 +12,15 @@ use yii\widgets\Breadcrumbs;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+HotelsBootstrapAsset::register($this);
 AppAsset::register($this);
-
 //Yii::$app->assetManager->publish('@bower');
 
 $this->registerJsFile('/js/langs.js');
 $this->registerJsFile('/js/format.js');
 
 if (ArrayHelper::getValue($this->params, 'embedded', 0) == 0) {
-    $this->registerCss(".wrap > .container { padding: 70px 15px 20px;}");
+//    $this->registerCss(".wrap > .container { padding: 70px 15px 20px;}");
 } else {
     $this->registerJs('var EMBEDDED = true;', \yii\web\View::POS_HEAD);
 }
@@ -46,7 +47,7 @@ if (ArrayHelper::getValue($this->params, 'embedded', 0) == 0) {
             'brandLabel' => isset($this->params['appName']) ? $this->params['appName'] : str_replace(['https://', 'http://'], '', \Yii::$app->request->hostInfo),
             'brandUrl' => \yii\helpers\Url::to(['site/index']),
             'options' => [
-                'class' => 'navbar-inverse navbar-fixed-top',
+                'class' => 'navbar-default',
             ],
         ]);
         $menuItems = [

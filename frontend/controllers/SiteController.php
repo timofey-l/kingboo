@@ -147,6 +147,10 @@ class SiteController extends Controller
 
     public function actionContact()
     {
+        if ($this->_hotel !== null) {
+            $this->layout = 'main';
+        }
+
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $email = Yii::$app->params['adminEmail'];
