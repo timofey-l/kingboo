@@ -38,7 +38,13 @@ use yii\helpers\Html;
                             <?= $form->field($pd, 'account') ?>
                         </div>
                         <div class="col-sm-12 col-md-6">
+                            <?= $form->field($pd, 'NDS') ?>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
                             <?= $form->field($pd, 'director') ?>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <?= $form->field($pd, 'bookkeeper') ?>
                         </div>
                     </div>
                 </div>

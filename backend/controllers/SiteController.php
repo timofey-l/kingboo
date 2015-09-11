@@ -84,7 +84,17 @@ class SiteController extends Controller
     }
     
     public function actionInfo() {
-	phpinfo();
+	   phpinfo();
+    }
+
+    public function actionShowMail($id) {
+
+        $order = \common\models\Order::findOne($id);
+        return $this->render('@common/mail/orderCreatedToClient-html', [
+            'order' => $order,
+            'lang' => $order->lang,
+            'local' => \common\models\Lang::findOne(['url' => $order->lang])->local,
+        ]);
     }
 
     public function actionShowEmailTemplates($name='', $local="ru-RU") {
