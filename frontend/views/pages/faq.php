@@ -31,7 +31,7 @@ $this->title = $title;
 	$n = 1;
 	foreach ($FAQs as $faq) { 
 ?>
-  <div class="panel panel-default">
+  <div class="panel panel-warning">
     <div class="panel-heading" role="tab" id="heading<?= $n ?>">
       <h4 class="panel-title">
         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<?= $n ?>" name="collapse<?= $n ?>" aria-expanded="true" aria-controls="collapse<?= $n ?>">
