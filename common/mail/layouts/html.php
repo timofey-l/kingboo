@@ -25,7 +25,7 @@ use yii\helpers\Html;
     <?php $this->beginBody() ?>
     <div style="background: #fff; max-width: 600px; margin: 0 auto; width: 100%;">
         <div style="background: #fff; height: 50px;border-bottom: 4px solid #f9980f;">
-            <img src="http://www.booking.local/img/emails-logo.png" width="163" height="50" alt="king-boo.com"/>
+            <img src="http://www.king-boo.com/img/emails-logo.png" width="163" height="50" alt="king-boo.com"/>
         </div>
         <div style="padding: 1em 2em;">
 
