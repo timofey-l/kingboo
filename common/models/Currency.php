@@ -120,6 +120,25 @@ class Currency extends \yii\db\ActiveRecord
             $decimal = 2;
         }
 
+        if ($type == "email") {
+            switch ($this->code) {
+                case "USD":
+                    $symbol = "$";
+                    break;
+
+                case "EUR":
+                    $symbol = "&euro;";
+                    break;
+
+                case "RUB":
+                    $symbol = "р.";
+                    break;
+
+                default:
+                    $symbol = $this->code;
+            }
+        }
+
         $value = number_format($value, $decimal, $this->dec_point, $this->thousands_sep);
         $replace = [
             '{value}' => $value,

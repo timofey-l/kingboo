@@ -24,8 +24,8 @@ $values = [
     \Yii::t('mails_order', 'Hotel information', [], $local) => $hotel->address."<br>".$hotel->contact_email."<br>".$hotel->contact_phone,
     \Yii::t('mails_order', 'Check-in date', [], $local) => (new \DateTime($order->dateFrom))->format(\Yii::t('mails_order', 'd/m/Y', [], $local)),
     \Yii::t('mails_order', 'Check-out date', [], $local) => (new \DateTime($order->dateTo))->format(\Yii::t('mails_order', 'd/m/Y', [], $local)),
-    \Yii::t('mails_order', 'Order sum', [], $local) => $currency->getFormatted($order->sum),
-    \Yii::t('mails_order', 'Pay sum', [], $local) => $currency->getFormatted($order->pay_sum),
+    \Yii::t('mails_order', 'Order sum', [], $local) => $currency->getFormatted($order->sum, 'email'),
+    \Yii::t('mails_order', 'Pay sum', [], $local) => $currency->getFormatted($order->pay_sum, 'email'),
     \Yii::t('mails_order', 'Status', [], $local) => \common\models\Order::getOrderStatusTitle($order->status),
     \Yii::t('mails_order', 'Contact information', [], $local) => \common\components\ListAddressType::getTitle($order->contact_address, $local) . ' ' .  \yii\helpers\Html::encode($order->contact_name) . ' ' . \yii\helpers\Html::encode($order->contact_surname) . "<br> <a href=\"mailto:" . \yii\helpers\Html::encode($order->contact_email). '">' . \yii\helpers\Html::encode($order->contact_email) . '</a>' . "<br/>" . \yii\helpers\Html::encode($order->contact_phone),
 
@@ -57,7 +57,7 @@ $values = [
             <td style="vertical-align: middle; text-align: right;" rowspan="2">
                 <?= \Yii::t('mails_order', 'Sum', [], $local) ?>:<br>
                 <div style="font-size: 1rem; font-weight: bold;">
-                    <?= $currency->getFormatted($item->sum) ?>
+                    <?= $currency->getFormatted($item->sum, 'email') ?>
                 </div>
             </td>
         </tr>
