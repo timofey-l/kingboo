@@ -40,7 +40,8 @@
     "bower-asset/jquery": "*",
     "bower-asset/jquery-minicolors": "*",
     "bower-asset/malihu-custom-scrollbar-plugin": "*",
-    "bower-asset/ace-builds": "*"
+    "bower-asset/ace-builds": "*",
+    "bower-asset/fotorama": "*"
   },
   "require-dev": {
     "yiisoft/yii2-codeception": "*",

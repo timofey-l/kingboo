@@ -307,3 +307,13 @@ ul.hotel-facilities  li:before {
 .orderOptions {
     padding-right: 20px;
 }
+
+
+/*fotorama tweaks*/
+.fotorama__thumb-border {
+    border-color: #f60;
+}
+
+.datepicker-days .table>thead>tr>th, .datepicker-days .table>tbody>tr>th, .datepicker-days .table>tfoot>tr>th, .datepicker-days .table>thead>tr>td, .datepicker-days .table>tbody>tr>td, .datepicker-days .table>tfoot>tr>td {
+    border: none;
+}

@@ -1,5 +1,6 @@
 <?php
 /* @var $this yii\web\View */
+use frontend\assets\FotoramaAsset;
 use yii\bootstrap\BootstrapAsset;
 use yii\helpers\Html;
 use yii\web\View;
@@ -19,6 +20,8 @@ $this->registerCss($model->css, [
     'depends' => BootstrapAsset::className(),
 ]);
 
+FotoramaAsset::register($this);
+
 // underscore.js
 $this->registerJsFile($assetManager->publish('@bower/underscore')[1] . '/underscore-min.js');
 
@@ -34,9 +37,9 @@ $this->registerCssFile($assetManager->publish('@bower/fontawesome')[1] . '/css/f
 // Подключаем библиотеку moment.js
 $this->registerJsFile($assetManager->publish('@bower/moment/min')[1] . '/moment-with-locales.min.js');
 
-// Галлерея
-\frontend\assets\GalleryAsset::register($this);
-$this->registerCssFile('/css/gallery.css', ['depends' => [\frontend\assets\GalleryAsset::className()]], 'gallery');
+//// Галлерея
+//\frontend\assets\GalleryAsset::register($this);
+//$this->registerCssFile('/css/gallery.css', ['depends' => [\frontend\assets\GalleryAsset::className()]], 'gallery');
 
 // angular-sanitize
 $ang_sanitize = \Yii::$app->assetManager->publish('@vendor/bower/angular-sanitize');
@@ -146,30 +149,16 @@ if (!$this->context->checkBookingPossibility($model)) {
     <div class="row">
         <?php if (count($model->images)): ?>
         <div class="col-md-6 col-sm-12 images-container">
-            <!-- Slider main container -->
-            <div class="big-image" id="hotelImagesBig">
-                <div class="big-image-div"></div>
-            </div>
-            <div class="swiper-container" id="hotel-images-container">
-                <!-- Additional required wrapper -->
-                <div class="swiper-wrapper">
-                    <!-- Slides -->
-                    <?php foreach ($model->images as $image): /* @var $image \common\models\RoomImage */ ?>
-                        <div class="swiper-slide"
-                             style="background-image: url('<?= $image->getThumbUploadUrl('image', 'preview') ?>');"
-                             data-big-preview="<?= $image->getThumbUploadUrl('image', 'bigPreview') ?>">
-                            <a href="<?= $image->getUploadUrl('image') ?>" rel="hotelImages"></a>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-                <!-- If we need pagination -->
-                <div class="swiper-pagination"></div>
 
-                <!-- If we need navigation buttons -->
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-
+            <div class="fotorama" data-nav="thumbs" data-allowfullscreen="true" data-fit="cover" data-thumbfit="true" data-thumbwidth="114" data-thumbheight="64">
+                <?php foreach ($model->images as $image): /* @var $image \common\models\RoomImage */ ?>
+                    <a href="<?= $image->getUploadUrl('image') ?>">
+                        <img src="<?= $image->getThumbUploadUrl('image', 'preview') ?>" alt="">
+                    </a>
+                <?php endforeach; ?>
             </div>
+
+
         </div>
         <?php endif; ?>
         <div class="col-md-6 col-sm-12 info-container">
@@ -211,13 +200,13 @@ if (!$this->context->checkBookingPossibility($model)) {
 
             <div class="input-group">
                 <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" ng-click="search.adults = search.adults - 1">
+                    <button class="btn btn-warning" type="button" ng-click="search.adults = search.adults - 1">
                         <i class="glyphicon glyphicon-minus"></i>
                     </button>
                 </span>
                 <input ng-model="search.adults" type="text" class="form-control" name="adults" id="adults">
                 <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" ng-click="search.adults = search.adults + 1">
+                    <button class="btn btn-warning" type="button" ng-click="search.adults = search.adults + 1">
                         <i class="glyphicon glyphicon-plus"></i>
                     </button>
                 </span>
@@ -228,13 +217,13 @@ if (!$this->context->checkBookingPossibility($model)) {
 
             <div class="input-group">
                 <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" ng-click="search.children = search.children - 1">
+                    <button class="btn btn-warning" type="button" ng-click="search.children = search.children - 1">
                         <i class="glyphicon glyphicon-minus"></i>
                     </button>
                 </span>
                 <input ng-model="search.children" type="text" class="form-control" name="children" id="children">
                 <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" ng-click="search.children = search.children + 1">
+                    <button class="btn btn-warning" type="button" ng-click="search.children = search.children + 1">
                         <i class="glyphicon glyphicon-plus"></i>
                     </button>
                 </span>
@@ -245,13 +234,13 @@ if (!$this->context->checkBookingPossibility($model)) {
 
             <div class="input-group">
                 <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" ng-click="search.kids = search.kids - 1">
+                    <button class="btn btn-warning" type="button" ng-click="search.kids = search.kids - 1">
                         <i class="glyphicon glyphicon-minus"></i>
                     </button>
                 </span>
                 <input ng-model="search.kids" type="text" class="form-control" name="kids" id="kids">
                 <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" ng-click="search.kids = search.kids + 1">
+                    <button class="btn btn-warning" type="button" ng-click="search.kids = search.kids + 1">
                         <i class="glyphicon glyphicon-plus"></i>
                     </button>
                 </span>
@@ -260,14 +249,14 @@ if (!$this->context->checkBookingPossibility($model)) {
         <div class="col-md-2 col-xs-3">
             <label for="">&nbsp;</label>
             <br/>
-            <button class="btn btn-primary" ng-click="find()"><?= Yii::t('frontend', 'Find') ?></button>
+            <button class="btn btn-warning" ng-click="find()"><?= Yii::t('frontend', 'Find') ?></button>
         </div>
         <div class="col-xs-10">
             <?= Yii::t('frontend', 'Use search form to book a room on disirable dates.') ?>
             <?= Yii::t('frontend', 'To watch information about all hotel rooms push the "All rooms" button.') ?>
         </div>
         <div class="col-xs-2">
-            <button class="btn btn-primary" ng-disabled="!searchMode" ng-click="getRooms()"><?= Yii::t('frontend', 'All rooms') ?></button>
+            <button class="btn btn-warning" ng-disabled="!searchMode" ng-click="getRooms()"><?= Yii::t('frontend', 'All rooms') ?></button>
         </div>
     </div>
 
