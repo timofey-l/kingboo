@@ -180,7 +180,7 @@ $this->title = \Yii::t('frontend', 'Room booking');
 	<div class="row">
 		<div class="col-sm-4">
 			<!--срок проживания-->
-			<div class="panel panel-success order-info-panel">
+			<div class="panel panel-warning order-info-panel">
 				<div class="panel-heading">
 					<?= \Yii::t('frontend', 'Order information') ?>
 				</div>
@@ -207,7 +207,7 @@ $this->title = \Yii::t('frontend', 'Room booking');
 			</div>
 		</div>
 		<div class="col-sm-8">
-			<div class="panel panel-default">
+			<div class="panel panel-warning">
 				<div class="panel-heading">
 					<?= \Yii::t('frontend', 'Contact information') ?>
 				</div>
@@ -266,7 +266,7 @@ $this->title = \Yii::t('frontend', 'Room booking');
 	</div>
 
 <?php foreach ($items as $index => $item): $item_room = \common\models\Room::findOne($item['room_id']); ?>
-	<div class="panel panel-primary panel-room">
+	<div class="panel panel-warning panel-room">
 		<div class="panel-heading">
 			<?= $item_room->{'title_' . $l} ?>
 			<a class="pull-right visible-xs"
@@ -416,7 +416,7 @@ $this->title = \Yii::t('frontend', 'Room booking');
                         <?php endif; ?>
                     </td>
                     <td><?= \yii\helpers\Html::submitButton(\Yii::t('frontend', 'Next'), [
-                            'class' => 'btn btn-primary btn-lg '
+                            'class' => 'btn btn-warning btn-lg '
                         ]) ?></td>
                 </tr>
             </tbody>

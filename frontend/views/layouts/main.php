@@ -12,8 +12,8 @@ use yii\widgets\Breadcrumbs;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-AppAsset::register($this);
 HotelsBootstrapAsset::register($this);
+AppAsset::register($this);
 //Yii::$app->assetManager->publish('@bower');
 
 $this->registerJsFile('/js/langs.js');

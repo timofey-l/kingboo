@@ -1,6 +1,9 @@
+@import url(https://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic);
+
 html,
 body {
     height: 100%;
+    color: #630 !important;
 }
 
 .wrap {
@@ -92,7 +95,9 @@ a.desc:after {
     color: orange;
     font-size: 25px;
     font-weight: bold;
-    margin: 20px 0;
+    margin: 0 0 20px 0;
+    line-height: 1;
+
 }
 
 .info-description {
@@ -187,7 +192,6 @@ ul.hotel-facilities  li:before {
 .result-item .info .title {
     font-size: 20px;
 
-    color: #000;
     padding: 0 0 10px 0;
 }
 
@@ -238,7 +242,7 @@ ul.hotel-facilities  li:before {
 
 .form-group.required label:before {
     content: "* ";
-    color: red;
+    /*color: red;*/
 }
 
 .panel-primary .panel-heading a {
@@ -316,4 +320,32 @@ ul.hotel-facilities  li:before {
 
 .datepicker-days .table>thead>tr>th, .datepicker-days .table>tbody>tr>th, .datepicker-days .table>tfoot>tr>th, .datepicker-days .table>thead>tr>td, .datepicker-days .table>tbody>tr>td, .datepicker-days .table>tfoot>tr>td {
     border: none;
+}
+
+.text-brown {
+    color: #630 !important;
+}
+
+.navbar-brand {
+    font-size: 2em;
+    font-family: 'Lobster', cursive;
+}
+
+
+h1 {
+    color: #f60 !important;
+    margin-bottom: 0 !important;
+}
+
+h2 {
+    color: #f9980f !important;
+}
+
+.footer {
+    border-color: #d8e23f;
+    background-image: -webkit-linear-gradient(top, #e7ed88 0, #dee65c 100%);
+    background-image: -o-linear-gradient(top, #e7ed88 0, #dee65c 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e7ed88), to(#dee65c));
+    background-image: linear-gradient(to bottom, #e7ed88 0, #dee65c 100%);
+    background-repeat: repeat-x;
 }

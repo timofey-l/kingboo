@@ -122,7 +122,7 @@ if (!$this->context->checkBookingPossibility($model)) {
 <div class="<?= $no_desc == 1 ? 'hidden' : '' ?>">
     <div class="row">
         <div class="col-sm-6">
-            <h2><?= $model->{'title_' . $l} ?></h2>
+            <h1><?= $model->{'title_' . $l} ?></h1>
             <?php if ($model->category > 0) : ?>
             <div class="hotel_stars">
                 <?php foreach (range(1, 5) as $i): ?>
@@ -292,7 +292,7 @@ if (!$this->context->checkBookingPossibility($model)) {
                 <div class="description">{{r['description_' + LANG]}}</div>
             </div>
             <div class="room-facilities row">
-                    <span class="label label-default" ng-repeat="f in r.facilities">
+                    <span class="label label-warning text-brown" ng-repeat="f in r.facilities">
                         {{f['name_' + LANG]}}
                     </span>
             </div>
@@ -305,7 +305,7 @@ if (!$this->context->checkBookingPossibility($model)) {
                 <div class="description">{{r['description_' + LANG]}}</div>
             </div>
             <div class="room-facilities row">
-			        <span class="label label-default" ng-repeat="f in r.facilities">
+			        <span class="label label-warning text-brown" ng-repeat="f in r.facilities">
 				        {{f['name_' + LANG]}}
 			        </span>
             </div>
