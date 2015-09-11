@@ -18,7 +18,7 @@
                 БЕСПЛАТНО!</b><a href="#" class="more">Подробнее</a></div>
     </div>
     <div class="logo-big-character"></div>
-    <a href="#" class="join-now">Подключиться сейчас</a>
+    <a href="https://partner.king-boo.com/signup" class="join-now">Подключиться сейчас</a>
 
     <div class="header-bottom-text">
 
