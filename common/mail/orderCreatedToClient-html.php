@@ -27,7 +27,7 @@ $currency = $order->hotel->currency;
 
     <?php // оплата при заселении ?>
     <?php if ($order->checkin_fullpay): ?>
-        <p><?= \Yii::t('mails_order', 'Booking is successfully complete. You need to make the full payment at check in  - {sum}.', ['sum' => $order->sumCurrency->getFormatted($order->sum)]) ?></p>
+        <p><?= \Yii::t('mails_order', 'Booking is successfully complete. You need to make the full payment at check in  &ndash; {sum}.', ['sum' => $order->sumCurrency->getFormatted($order->sum, 'email')]) ?></p>
     <?php endif; ?>
     <p style="color: #630; font-weight: bold; font-size: 0.9rem;"><?= \Yii::t('mails_order', 'Order details') ?>:</p>
 

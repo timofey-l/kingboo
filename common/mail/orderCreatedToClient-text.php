@@ -24,7 +24,7 @@ if (!isset($lang)) {
 
 <?php // оплата при заселении ?>
 <?php if ($order->checkin_fullpay): ?>
-    <?= \Yii::t('mails_order', 'Booking is successfully complete. You need to make the full payment at check in  - {sum}.', ['sum' => $order->sumCurrency->getFormatted($order->sum)]) ?>
+    <?= \Yii::t('mails_order', 'Booking is successfully complete. You need to make the full payment at check in  - {sum}.', ['sum' => $order->sumCurrency->getFormatted($order->sum, 'email')]) ?>
 <?php endif; ?>
 <?= \Yii::t('mails_order', 'Order details') ?>:
 <?= $this->render('_order-html', ['order' => $order, 'lang' => $lang, 'local' => $local]) ?>

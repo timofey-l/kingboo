@@ -16,9 +16,9 @@ $currency = $order->hotel->currency;
 
 <?= \Yii::t('mails_order', 'Nights: {n}', ['n' => $order->nights], $local) ?>
 
-<?= \Yii::t('mails_order', 'Order sum', [], $local) ?>: <?= $currency->getFormatted($order->sum) ?>
+<?= \Yii::t('mails_order', 'Order sum', [], $local) ?>: <?= $currency->getFormatted($order->sum, 'email') ?>
 
-<?= \Yii::t('mails_order', 'Pay sum', [], $local) ?>: <?= $currency->getFormatted($order->pay_sum) ?>
+<?= \Yii::t('mails_order', 'Pay sum', [], $local) ?>: <?= $currency->getFormatted($order->pay_sum, 'email') ?>
 
 <?= \Yii::t('mails_order', 'Hotel', [], $local) ?>: <?= $order->hotel->{'title_' . $lang} ?>
 
@@ -33,7 +33,7 @@ $currency = $order->hotel->currency;
 
 <?= $index + 1 ?>. <?= $item->room->{'title_' . $lang} ?>
 
-        <?= \Yii::t('mails_order', 'Sum', [], $local) ?>: <?= $currency->getFormatted($item->sum) ?>
+        <?= \Yii::t('mails_order', 'Sum', [], $local) ?>: <?= $currency->getFormatted($item->sum, 'email') ?>
 
         <?= \Yii::t('mails_order', 'Adults: {n}', ['n' => $item->adults], $local) ?>
 
