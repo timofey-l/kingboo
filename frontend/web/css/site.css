@@ -335,6 +335,8 @@ ul.hotel-facilities  li:before {
 h1 {
     color: #f60 !important;
     margin-bottom: 0 !important;
+    font-family: 'Lobster', cursive;
+
 }
 
 h2 {
