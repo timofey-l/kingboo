@@ -17,6 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Order number:' => 'Номер заказа:',
     'To make a payment, please open the link below in your browser: 
 {url}' => 'Для оплаты, пожалуйста, откройте ссылку в вашем браузере:
 {url}',
@@ -53,8 +54,10 @@ return [
     'Sum' => 'Сумма',
     'The rooms are now booked, but the booking will be canceled if payment is not received within 24 hours.' => 'Номера сейчас забронированы, но бронь будет аннулирована, если оплата не поступит в течение 24 часов.',
     'To make a payment, please click the link below <br/><a href="{url}">{url}</a>' => 'Для оплаты, пожалуйста, перейдите по ссылке ниже <br/><a href="{url}">{url}</a>',
+    'To make a payment, please click the link below <br/><a href="{url}">Go to payment page</a>' => 'Для оплаты, пожалуйста, перейдите по ссылке ниже <br/><a href="{url}">Перейти на страницу оплаты</a>',
     'You can open order to manage it by <a href="{url}">clicking here</a>.' => 'Вы можете перейти к управлению заказом <a href="{url}">нажав на ссылку</a>.',
     'You made a order on the site <a href="http://king-boo.com">king-boo.com</a>.' => 'Вы совершили заказ на сайте <a href="http://king-boo.com">king-boo.com</a>.',
     'Your order\'s #{n} status was changed' => 'Статус Вашего заказа №{n} был изменен.',
     'd/m/Y' => 'd.m.Y',
+    'We wish you a pleasant journey!<br>Team king-boo.com' => 'Желаем вам приятного путешествия!<br>Команда king-boo.com',
 ];

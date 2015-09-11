@@ -45,6 +45,7 @@ class Lang extends \yii\db\ActiveRecord
 		$language = self::getLangByUrl($url);
 		self::$current = ($language === null) ? self::getDefaultLang() : $language;
 		Yii::$app->language = self::$current->local;
+		setlocale(LC_ALL, self::$current->locale);
 	}
 
 

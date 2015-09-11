@@ -1,6 +1,8 @@
 <?php
 namespace backend\controllers;
 
+use common\models\Lang;
+use common\models\Order;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -84,4 +86,23 @@ class SiteController extends Controller
     public function actionInfo() {
 	phpinfo();
     }
+
+    public function actionShowEmailTemplates($name='', $local="ru-RU") {
+        if ($name == '') {
+            return false;
+        }
+
+        $lang = Lang::findOne(['local' => $local]);
+        setlocale(LC_ALL, $lang->locale);
+
+        $order = Order::find()->one();
+        $this->layout = '@common/mail/layouts/html';
+        \Yii::$app->view->params['local'] = $local;
+        return $this->render('@common/mail/'.$name, [
+            'order' => $order,
+            'local' => Lang::$current->local,
+            'link' => '',
+        ]);
+    }
 }
+
