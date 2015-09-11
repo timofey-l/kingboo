@@ -19,6 +19,15 @@ $this->registerJs("
 		$(document.location.hash).collapse('show');
 	}
 ");
+$this->registerJs("
+  function goTo(anchor) {
+    $('#accordion>div>.collapse').collapse('hide');
+    $(anchor).collapse('show');
+    document.location.hash = anchor;
+    var top = $(anchor).offset().top;
+    return window.scroll(0, top);
+  }
+", View::POS_HEAD);
 
 $lang = Lang::$current;
 
@@ -32,14 +41,14 @@ $this->title = $title;
 	foreach ($FAQs as $faq) { 
 ?>
   <div class="panel panel-warning">
-    <div class="panel-heading" role="tab" id="heading<?= $n ?>">
+    <div class="panel-heading" role="tab" id="heading<?= $faq->id ?>">
       <h4 class="panel-title">
-        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<?= $n ?>" name="collapse<?= $n ?>" aria-expanded="true" aria-controls="collapse<?= $n ?>">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<?= $faq->id ?>" name="collapse<?= $faq->id ?>" aria-expanded="true" aria-controls="collapse<?= $faq->id ?>">
           <?= $faq->{'title_' . $lang->url} ?>
         </a>
       </h4>
     </div>
-    <div id="collapse<?= $n ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<?= $n ?>">
+    <div id="collapse<?= $faq->id ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<?= $faq->id ?>">
       <div class="panel-body">
         <?= $faq->{'content_' . $lang->url} ?>
       </div>

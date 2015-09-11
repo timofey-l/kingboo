@@ -42,7 +42,8 @@ $current_page_route = (Page::getCurrent() === null) ? null : Page::getCurrent()-
 <nav class="main-menu">
     <ul>
         <?php foreach($items as $item): ?>
-            <?php $active = (isset($item['url']['route']) && $current_page_route == $item['url']['route']) || (!$current_page_route && $item['url'][0] == 'faq/'); ?>
+            <?php $active = (isset($item['url']['route']) && $current_page_route === $item['url']['route']) 
+                || (strlen(URL::current()) > 1 && !$current_page_route && $item['url'][0] == 'faq/'); ?>
             <li class="<?= $active ? 'active' : '' ?>">
                 <a class="<?= $active ? 'selected' : '' ?>"
                     href="<?= Url::toRoute($item['url']) ?>">
