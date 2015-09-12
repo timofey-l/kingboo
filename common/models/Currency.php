@@ -181,13 +181,13 @@ class Currency extends \yii\db\ActiveRecord
 
         if ($this->code == 'USD') {
             if ($to == 'USD') {
-                return $x;
+                return number_format(round($x, 2), 2, '.', '');
             } else {
                 $v = $x * $rates[$to];
             }
         } else {
             if ($this->code == $to) {
-                return $x;
+                return number_format(round($x, 2), 2, '.', '');
             }
             if ($to == 'USD') {
                 $v = $x / $rates[$this->code];
@@ -199,7 +199,8 @@ class Currency extends \yii\db\ActiveRecord
         if ($coef) {
             $v = $v * (1 + $coef / 100);
         }
-        return round($v, 2);
+        $v = round($v, 2);
+        return number_format($v, 2, '.', '');
     }
 
     /**

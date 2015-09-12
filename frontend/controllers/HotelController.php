@@ -137,7 +137,7 @@ class HotelController extends \yii\web\Controller
 				}
 			}
 
-			throw new \yii\web\HttpException(456, 'Unrecoverable Error');
+			throw new \yii\web\BadRequestHttpException('Validation Error');
 			/*return $this->render('booking_error', [
 				'orderForm' => $orderForm,
 				'orderItem' => $orderItem,

@@ -22,7 +22,7 @@ class AdminController extends Controller
 
     public function actionDo() {
         $c = \common\models\Currency::find()->where(['code' => 'EUR'])->one();
-        echo $c->convertTo(100,'EUR',5)."\n";
+        echo $c->convertTo('100.657345','EUR',5)."\n";
     }
 
     public function actionChangeAdminPassword($id)

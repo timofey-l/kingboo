@@ -93,7 +93,7 @@ $this->registerJs("
             });
             parent.find('input[type=checkbox]').each(function(index, el){
                 if (chechbox == el) return;
-                $.each($(el).data('disable').split(' '), function(i, elebackground-colorm){
+                $.each($(el).data('disable').split(' '), function(i, elem){
                     if ($(el).is(':checked')) {
                         enable[elem] = enable[elem] && false;
                     }
@@ -142,6 +142,7 @@ $this->title = \Yii::t('frontend', 'Room booking');
 			<?php endif; ?>
 		</div>
 		<div class="col-sm-8">
+			<?php if ($hotel->category > 0) : ?>
 			<span class="hotel_stars">
 			<?php foreach (range(1, 5) as $i): ?>
 				<?php if ($i <= $hotel->category) : ?>
@@ -151,6 +152,7 @@ $this->title = \Yii::t('frontend', 'Room booking');
 				<?php endif ?>
 			<?php endforeach; ?>
 			</span>
+		<?php endif; ?>
 
 			<h3>
 				<?= $hotel->{'title_' . $l} ?>
