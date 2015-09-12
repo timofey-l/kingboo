@@ -29,9 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'route',
             'title_ru',
             'title_en',
-            'content_ru:ntext',
+            //'content_ru:ntext',
             // 'content_en:ntext',
-            // 'active:boolean',
+            'active:boolean',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
