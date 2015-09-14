@@ -16,6 +16,10 @@ $items = [
         'url' => ['pages/index', 'route' => 'about'],
     ],
     [
+        'title' => 'Функционал системы',
+        'url' => ['pages/index', 'route' => 'facilities'],
+    ],
+    [
         'title' => 'Расширенные возможности',
         'url' => ['pages/index', 'route' => 'extended'],
     ],
@@ -27,11 +31,11 @@ $items = [
         'title' => 'Вопросы и ответы',
         'url' => ['faq/'],
     ],
-    [
+    /*[
         'title' => 'Гарантия безопасности',
         'url' => ['pages/index', 'route' => 'guarantee'],
     ],
-    /*[
+    [
         'title' => 'Акции и спецпредложения',
         'url' => ['pages/index', 'route' => 'special'],
     ],*/
