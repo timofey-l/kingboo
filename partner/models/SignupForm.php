@@ -41,6 +41,7 @@ class SignupForm extends Model
             $user = new PartnerUser();
             $user->username = $this->email;
             $user->email = $this->email;
+            $user->demo_expire = date('Y-m-d', time() + 86400 * \Yii::$app->params['partner.demo']);
             $user->setPassword($this->password);
             $user->generateAuthKey();
             if ($user->save()) {
