@@ -29,5 +29,5 @@ use dmstr\widgets\Alert;
 </div>
 
 <footer class="main-footer">
-    <strong><?= \Yii::t('main', 'Copyright &copy; 2014-2015') ?> <a href="http://itdesign.ru">IT-Design Studio</a>.</strong> <?= \Yii::t('main', 'All rights reserved.') ?>
+    <strong><?= \Yii::t('main', 'Copyright &copy; ') ?>2014-<?= date('Y') ?> <a href="http://www.itdesign.ru">IT-Design Studio</a>.</strong> <?= \Yii::t('main', 'All rights reserved.') ?>
 </footer>

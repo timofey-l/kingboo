@@ -43,6 +43,8 @@ $this->params['breadcrumbs'][] = $this->title;
 			'shopPassword',
 			'scid',
 			'lang',
+			'demo_expire',
+			'system_info',
 		],
 	]) ?>
 

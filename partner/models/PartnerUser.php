@@ -142,4 +142,16 @@ class PartnerUser extends User
     public function getDemoLeft() {
         return !$this->getDemoExpired() ? (new \DateTime())->diff(new \DateTime($this->demo_expire))->days : false;
     }
+
+    /**
+     * Возвращает true, если аккаунт заблокирован, например по причине отрицательного баланса
+     * @return boolean
+     */
+    public function isBlocked() {
+        if ($this->billing->balance < -\Yii::$app->params['partner.credit']) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

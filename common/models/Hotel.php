@@ -248,6 +248,9 @@ class Hotel extends \yii\db\ActiveRecord
         if (!$this->images) {
             return false;
         }
+        if ($this->partner->isBlocked()) {
+        	return false;
+        }
         return true;
     }
 

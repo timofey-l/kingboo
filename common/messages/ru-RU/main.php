@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Copyright &copy; 2014-2015' => '',
+    'Copyright &copy; ' => '',
     'Put money on your account' => 'Пополнить счёт',
     'Billing transactions' => 'Платежные операции',
     'All messages' => 'Все сообщения',

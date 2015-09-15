@@ -321,3 +321,7 @@ a.desc:after {
     margin-top: 3px;
     font-size: 30px;
 }
+
+.system-message-alert {
+    margin-bottom: 1px;
+}

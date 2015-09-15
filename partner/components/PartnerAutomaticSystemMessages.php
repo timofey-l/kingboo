@@ -32,6 +32,9 @@ class PartnerAutomaticSystemMessages extends \common\components\AutomaticSystemM
     }
 
     public function resetMessages() {
+        if ($this->reset) {
+            return;
+        }
     	// перезагружаем данные партнера, чтобы учесть измеения в нем
     	$this->partner = PartnerUser::findOne(\Yii::$app->user->id);
     	parent::resetMessages();
@@ -39,7 +42,7 @@ class PartnerAutomaticSystemMessages extends \common\components\AutomaticSystemM
             'messages' => $this->actualMessages,
             'messages_update_time' => time(), // Время апдейта сообщений
         ]);
-    	$res = $this->partner->update(false, ['system_info']);
+    	$this->partner->update(false, ['system_info']);
     }
 
     public function prepareMessages($event) {
@@ -56,7 +59,7 @@ class PartnerAutomaticSystemMessages extends \common\components\AutomaticSystemM
     		$si = unserialize($this->partner->system_info);
     		$this->actualMessages = $si['messages'];
             if (isset($si['messages_update_time']) && $si['messages_update_time']) {
-                if (time() - $si['messages_update_time'] > 86400 * 3) { // Если апдейт был больше 3-х дней назад - обновляем сообщения
+                if (time() - $si['messages_update_time'] > 86400 * 1) { // Если апдейт был больше 1-го дня назад - обновляем сообщения
                     $this->resetMessages();
                 }
             } else {
@@ -69,7 +72,8 @@ class PartnerAutomaticSystemMessages extends \common\components\AutomaticSystemM
     	$shownMessages = \Yii::$app->session->get(self::SESSION_SHOWN_MESSAGES, []);//$shownMessages = [];print_r($shownMessages);
     	$a = [];
         foreach ($this->actualMessages as $k => $message) {
-        	if (!in_array($k, $shownMessages)) { // Если сообщение не было показано, добавляем его к показу и в список показанных
+            // Если сообщение не было показано, или типа Error, добавляем его к показу и в список показанных
+        	if ($message['type'] == self::TYPE_ERROR || !in_array($k, $shownMessages)) { 
         		$a[$message['type']][] = "<b>{$message['title']}</b><br />{$message['text']}";
         		\Yii::$app->session->set(self::SESSION_SHOWN_MESSAGES, array_keys($this->actualMessages));
         	}
@@ -84,6 +88,35 @@ class PartnerAutomaticSystemMessages extends \common\components\AutomaticSystemM
 
  	public function messages() {
  		return [
+            // Окончание демо периода
+            'demoPeriod' => [
+                'demoShort' => [
+                    'type' => self::TYPE_WARNING,
+                    'condition' => 'condDemoShort',
+                    'title' => \Yii::t('automatic_system_messages', 'Expiration of demo period'),
+                    'text' => 'Expiration of demo period in {n, plural, =0{# days} one{# day} few{# days} many{# days} other{# days}}. <a href="{link}">Put money on your account</a>.',
+                ],
+            ],
+            'balance' => [
+                'critical' => [
+                    'type' => self::TYPE_ERROR,
+                    'condition' => 'condBalanceCritical',
+                    'title' => \Yii::t('automatic_system_messages', 'The account is blocked'),
+                    'text' => 'Your balance is {sum}. <a href="{link}">Put money on your account</a>.',
+                ],
+                'negative' => [
+                    'type' => self::TYPE_DANGER,
+                    'condition' => 'condBalanceNegative',
+                    'title' => \Yii::t('automatic_system_messages', 'Your balance is negative'),
+                    'text' => \Yii::t('automatic_system_messages', '<a href="{link}">Put money on your account</a>.', ['link' => \yii\helpers\Url::toRoute('/billing/pay')]),
+                ],
+                'short' => [
+                    'type' => self::TYPE_WARNING,
+                    'condition' => 'condBalanceShort',
+                    'title' => \Yii::t('automatic_system_messages', 'Low balance'),
+                    'text' => 'Your balance is {sum}. <a href="{link}">Put money on your account</a>.',
+                ],
+            ],
  			// Серия действий необходмых для начала работы
  			'beginWork' => [
  				'noHotels' => [
@@ -131,6 +164,10 @@ class PartnerAutomaticSystemMessages extends \common\components\AutomaticSystemM
  			],
  		];
  	}
+
+    /*****************************************************************************************/
+    /* Begin work
+    /*****************************************************************************************/
 
  	/**
  	 * Нет отелей
@@ -313,5 +350,64 @@ class PartnerAutomaticSystemMessages extends \common\components\AutomaticSystemM
  			return $message;
  		}
  	}
+
+
+    /*****************************************************************************************/
+    /* Demo period
+    /*****************************************************************************************/
+    public function condDemoShort($message) {
+        $n = $this->partner->getDemoLeft();
+        if ($n !== false && $n > 0 && $n < 10 && $this->partner->billing->balance <= 0) {
+            $message['text'] = \Yii::t('automatic_system_messages', $message['text'], ['n' => $n, 'link' => \yii\helpers\Url::toRoute('/billing/pay')]);
+            return $message;
+        } else {
+            return false;
+        }
+    }
+
+    /*****************************************************************************************/
+    /* Balance
+    /*****************************************************************************************/
+    public function condBalanceCritical($message) {
+        if (!$this->partner->getDemoExpired()) {
+            return false;
+        }
+        if ($this->partner->isBlocked()) {
+            $message['text'] = \Yii::t('automatic_system_messages', $message['text'], ['sum' => $this->partner->billing->getBalanceString(), 'link' => \yii\helpers\Url::toRoute('/billing/pay')]);
+            return $message;
+        } else {
+            return false;
+        }
+    }
+
+    public function condBalanceNegative($message) {
+        if (!$this->partner->getDemoExpired()) {
+            return false;
+        }
+        if (isset($this->actualMessages['balance-critical'])) {
+            return false;
+        }
+        if ($this->partner->billing->balance <= 0) {
+            return $message;
+        } else {
+            return false;
+        }
+    }
+
+    public function condBalanceShort($message) {
+        if (!$this->partner->getDemoExpired()) {
+            return false;
+        }
+        if (isset($this->actualMessages['balance-critical']) || isset($this->actualMessages['balance-negative'])) {
+            return false;
+        }
+        // TODO: сделать вывод сообщений в зависимости от дневных затрат
+        if ($this->partner->billing->balance < 300) {
+            $message['text'] = \Yii::t('automatic_system_messages', $message['text'], ['sum' => $this->partner->billing->getBalanceString(), 'link' => \yii\helpers\Url::toRoute('/billing/pay')]);
+            return $message;
+        } else {
+            return false;
+        }
+    }
 
 }

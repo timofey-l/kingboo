@@ -13,11 +13,14 @@ class AutomaticSystemMessages extends Component {
  	const TYPE_INFO = 'info';
  	const TYPE_WARNING = 'warning';
  	const TYPE_DANGER = 'danger';
+    const TYPE_ERROR = 'error';
 
     // Обработанные сообщения, подлежащие выдаче в настоящее время
  	protected $actualMessages = [];
     // Признак того, что произошли события, влияющие на сообщения
     protected $dataUpdated = false;
+    // Признак, что сообщения уже проверены, устанавливается в true в ResetMessages()
+    protected $reset = false;
 
     /**
      * Привязывает события EVENT_BEFORE_REQUEST и EVENT_AFTER_REQUEST
@@ -61,7 +64,9 @@ class AutomaticSystemMessages extends Component {
      * Пересчитывет сообщения
      */
     public function resetMessages() {
-        \Yii::trace('Reset messages', 'debug');
+        if ($this->reset) {
+            return;
+        }
         $this->actualMessages = [];
         // Цикл по последовательностям
         foreach ($this->messages() as $key0 => $query) {
@@ -78,7 +83,8 @@ class AutomaticSystemMessages extends Component {
                 }
             }
         }
-
+        \Yii::trace('Reset messages', 'debug');
+        $this->reset = true;
     }
 
     /**

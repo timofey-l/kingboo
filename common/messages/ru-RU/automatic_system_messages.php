@@ -34,4 +34,12 @@ return [
     'No registered hotels' => 'Нет зарегистрированных отелей',
     'Please, <a href="{link}">register a hotel</a> to continue.' => 'Для продолжения работы <a href="{link}">зарегистрируйте отель</a>.',
     'Room registration is not complete' => 'Регистрация номера не завершена',
+    'Expiration of demo period' => 'Окончание демо периода',
+    'Expiration of demo period in {n, plural, =0{# days} one{# day} few{# days} many{# days} other{# days}}. <a href="{link}">Put money on your account</a>.' => 'Демо период заканчивается через {n, plural, =0{# дней} one{# день} few{# дня} many{# дней} other{# дня}}. <a href="{link}">Пополнить баланс</a>.',
+    'The account is blocked' => 'Работа вашего аккаунта остановлена',
+    'Your balance is {sum}. <a href="{link}">Put money on your account</a>.' => 'На вашем аккаунте {sum}. <a href="{link}">Пополнить баланс</a>.',
+    'Your balance is negative' => 'Отрицательный баланс',
+    '<a href="{link}">Put money on your account</a>.' => 'На вашем аккаунте образовалась задолженность. <a href="{link}">Пополнить баланс</a>.',
+    'Low balance' => 'Пополните баланс',
+    'The funds on your balance are left for {n, plural, =0{# days} one{# day} few{# days} many{# days} other{# days}}. <a href="{link}">Put money on your account</a>.' => 'Средств на вашем балансе осталочь на {n, plural, =0{# дней} one{# день} few{# дня} many{# дней} other{# дня}}. <a href="{link}">Пополнить баланс</a>.',
 ];
