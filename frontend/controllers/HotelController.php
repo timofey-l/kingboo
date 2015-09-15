@@ -14,6 +14,7 @@ use partner\models\PartnerUser;
 use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use \common\models\Currency;
 
@@ -219,10 +220,10 @@ class HotelController extends \yii\web\Controller
         }
 
 		if (is_null($model)) {
-			throw new \yii\web\HttpException(404, 'The requested hotel does not exist.');
+			throw new NotFoundHttpException('The requested hotel does not exist.');
 		}
         if (!$model->published()) {
-        	throw new \yii\web\HttpException(404, 'The requested hotel is not published.');
+        	throw new NotFoundHttpException('The requested hotel is not published.');
         }
 
 		$req = \Yii::$app->request;

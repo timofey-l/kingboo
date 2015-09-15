@@ -85,7 +85,9 @@ class SiteController extends Controller
         if (HotelUrlRule::$current !== null) {
             $this->_hotel = HotelUrlRule::$current;
             if (!is_null($this->_hotel) && !$this->_hotel->published()) {
-                throw new \yii\web\HttpException(404, 'The requested hotel is not published.');
+                // TODO: понять что происходит
+                // Если раскомментировать эту строку, возникает ошибка 500 из-за двойного исключения с indexAction HotelController
+                //throw new \yii\web\HttpException(404, 'The requested hotel is not published.');
             }
         }
 
