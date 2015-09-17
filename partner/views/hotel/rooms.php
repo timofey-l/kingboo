@@ -5,6 +5,8 @@
 /* @var $model common\models\Hotel */
 
 $lang = \common\models\Lang::$current->url;
+$langs = \common\models\Lang::sortedLangList();
+
 $directoryBower = Yii::$app->assetManager->getPublishedUrl('@bower');
 $directoryLTE = $directoryBower . '/admin-lte';
 $this->registerJsFile($directoryBower . '/moment/moment.js');
@@ -32,7 +34,7 @@ $this->title = $hotel_title;
 $this->params['breadcrumbs'][] = ['label' => $hotel_title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('hotels', 'Rooms'), 'url' => ['rooms', 'id' => $model->id]];
 
-//echo '<pre>';print_r(\partner\models\PartnerUser::findOne(\Yii::$app->user->id)->billing);
+//echo '<pre>';print_r($langs);
 //echo \common\helpers\DebugHelper::grid(new \common\models\RoomPrices());
 //echo 'res='.\common\components\BookingHelper::priceSetStatistic(['beginDate'=>'2015-09-01','endDate'=>'2015-09-30','roomId'=>3]).'<br>';
 
@@ -42,6 +44,10 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('hotels', 'Rooms'), 'url' =>
     const PriceTypeFixed = <?=\common\components\ListPriceType::TYPE_FIXED?>;
     const PriceTypeGuests = <?=\common\components\ListPriceType::TYPE_GUESTS?>;
     const CURRENCY = <?=$model->currency_id?>;
+    var hotelLangs = {};
+    <?php foreach ($langs as $l) : ?>
+    hotelLangs.<?= $l->url ?> = <?= $model->{$l->url} ? 'true' : 'false' ?>;
+    <?php endforeach; ?>
 </script>
 
 <div class="hotel-view">

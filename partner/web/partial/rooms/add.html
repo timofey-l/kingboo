@@ -25,57 +25,42 @@
         <div class="row">
             <div class="col-sm-6">
 
-                <div class="nav-tabs-custom"> <!-- titles -->
+                <div class="nav-tabs-custom"> <!-- lang properties -->
                     <ul class="nav nav-tabs">
-                        <li class="active"><a ng-class="labelClasses('title_ru')" href="" data-tabid="title_ru_tab"
-                                              data-toggle="tab">{{t('room_title_ru')}}</a></li>
-                        <li><a ng-class="labelClasses('title_en')" href="" data-tabid="title_en_tab" data-toggle="tab">{{t('room_title_en')}}</a>
+                        <li class="active">
+                            <a ng-class="langBlockClasses('ru')" href="" data-tabid="ru_tab" data-toggle="tab">{{t('ru')}}</a>
+                        </li>
+                        <li>
+                            <a ng-class="langBlockClasses('en')" href="" data-tabid="en_tab" data-toggle="tab">{{t('en')}}</a>
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane active" id="title_ru_tab">
+                        <div class="tab-pane active" id="ru_tab">
                             <div class="form-group" ng-class="getClasses('title_ru')">
-                                <input type="text" class="form-control" ng-model="room.title_ru" name="title_ru"
-                                       id="title_ru" placeholder="" ng-required="!room.title_en">
+                                <label for="title_ru">{{t('room_title')}}</label>
+                                <input type="text" class="form-control" ng-model="room.title_ru" name="title_ru" id="title_ru" placeholder="" ng-required="hotelLangs.ru">
+                            </div>
+                            <div class="form-group" ng-class="getClasses('description_ru')">
+                                <label for="description_ru">{{t('room_description')}}</label>
+                                <textarea rows="6" type="text" class="form-control" ng-model="room.description_ru"
+                                    name="description_ru" id="description_ru" placeholder="" ng-required="hotelLangs.ru"></textarea>
                             </div>
                         </div>
-                        <div class="tab-pane" id="title_en_tab">
+                        <div class="tab-pane" id="en_tab">
                             <div class="form-group" ng-class="getClasses('title_en')">
-                                <input type="text" class="form-control" ng-model="room.title_en" name="title_en"
-                                       id="title_en" placeholder="" ng-required="!room.title_ru">
+                                <label for="title_en">{{t('room_title')}}</label>
+                                <input type="text" class="form-control" ng-model="room.title_en" name="title_en" id="title_en" placeholder="" ng-required="hotelLangs.en">
+                            </div>
+                            <div class="form-group" ng-class="getClasses('description_en')">
+                                <label for="description_en">{{t('room_description')}}</label>
+                                <textarea rows="6" type="text" class="form-control" ng-model="room.description_en"
+                                    name="description_en" id="description_en" placeholder="" ng-required="hotelLangs.en"></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- /titles -->
+                <!-- /lang properties -->
                 
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="nav-tabs-custom"> <!-- descriptions -->
-                            <ul class="nav nav-tabs">
-                                <li class="active"><a ng-class="labelClasses('description_ru')" href=""
-                                    data-tabid="description_ru_tab" data-toggle="tab">{{t('room_description_ru')}}</a>
-                                </li>
-                                <li><a ng-class="labelClasses('description_en')" href="" data-tabid="description_en_tab"
-                                    data-toggle="tab">{{t('room_description_en')}}</a></li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="description_ru_tab">
-                                    <div class="form-group" ng-class="getClasses('description_ru')">
-                                        <textarea rows="6" type="text" class="form-control" ng-model="room.description_ru"
-                                            name="description_ru" id="description_ru" placeholder="" ng-required="!room.description_en"></textarea>
-                                    </div>
-                                </div>
-                                <div class="tab-pane" id="description_en_tab">
-                                    <div class="form-group" ng-class="getClasses('description_en')">
-                                        <textarea rows="6" type="text" class="form-control" ng-model="room.description_en"
-                                            name="description_en" id="description_en" placeholder="" ng-required="!room.description_ru"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- /descriptions -->
-                    </div>                
-                </div><!-- /.row -->
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group"  ng-class="getClasses('price_type')">

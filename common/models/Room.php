@@ -53,26 +53,12 @@ class Room extends \yii\db\ActiveRecord
     {
         return [
             [['hotel_id', 'price_type'], 'required'],
-            [['title_ru'], 'required', 'when' => function($model) {
-                return empty($model->title_en);
-            }, 'whenClient' => "function (attribute, value) {
-                return !$('#room-title_en').val();
-            }"],
-            [['title_en'], 'required', 'when' => function($model) {
-                return empty($model->title_ru);
-            }, 'whenClient' => "function (attribute, value) {
-                return !$('#room-title_ru').val();
-            }"],
-            [['description_ru'], 'required', 'when' => function($model) {
-                return empty($model->description_en);
-            }, 'whenClient' => "function (attribute, value) {
-                return !$('#room-description_en').val();
-            }"],
-            [['description_en'], 'required', 'when' => function($model) {
-                return empty($model->description_ru);
-            }, 'whenClient' => "function (attribute, value) {
-                return !$('#room-description_ru').val();
-            }"],
+            [['title_ru', 'description_ru'], 'required', 'when' => function($model) {
+                return $model->hotel->ru == 1;
+            }],
+            [['title_en', 'description_en'], 'required', 'when' => function($model) {
+                return $model->hotel->en == 1;
+            }],
             [['hotel_id', 'adults', 'children', 'total', 'active', 'amount'], 'integer'],
             [['price_type'], 'integer', 'min' => 1, 'max' => 2],
             [['description_ru', 'description_en'], 'string'],

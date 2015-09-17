@@ -79,7 +79,7 @@ roomsManageControllers.controller('RoomEditCtrl',
     $scope.loading = true;
     $scope.room = null;
     $scope.PriceTypes = window.PriceTypes;
-        window.s = $scope;
+    $scope.hotelLangs = window.hotelLangs;
 
     $scope.reqStatus = null;
 
@@ -116,6 +116,15 @@ roomsManageControllers.controller('RoomEditCtrl',
             'has-error': el.$touched && el.$invalid
         }
     };
+
+    $scope.langBlockClasses = function (name) {
+        var el1 = $scope.add_room['title_' + name];
+        var el2 = $scope.add_room['description_' + name];
+        return {
+            'text-green': (el1.$touched || el2.$touched) && (el1.$valid && el2.$valid),
+            'text-red': (el1.$touched || el2.$touched) && (el1.$invalid || el2.$invalid),
+        }
+    }
 
     $scope.labelClasses = function (name) {
         var el = $scope.add_room[name];
@@ -171,6 +180,7 @@ roomsManageControllers.controller('RoomAddCtrl',
     $scope.LANG = window.LANG;
     $scope.t = window.t;
     $scope.PriceTypes = window.PriceTypes;
+    $scope.hotelLangs = window.hotelLangs;
     $scope.loading = true;
 
     const defaultRoom = {
@@ -206,6 +216,15 @@ roomsManageControllers.controller('RoomAddCtrl',
             'has-error': el.$touched && el.$invalid
         }
     };
+
+    $scope.langBlockClasses = function (name) {
+        var el1 = $scope.add_room['title_' + name];
+        var el2 = $scope.add_room['description_' + name];
+        return {
+            'text-green': (el1.$touched || el2.$touched) && (el1.$valid && el2.$valid),
+            'text-red': (el1.$touched || el2.$touched) && (el1.$invalid || el2.$invalid),
+        }
+    }
 
     $scope.labelClasses = function (name) {
         var el = $scope.add_room[name];

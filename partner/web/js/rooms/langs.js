@@ -1,9 +1,14 @@
 var LANGS = {};
 
 LANGS.ru = {
+    ru: "RU",
+    en: "EN",
+
     room_add: "Добавить номер",
+    room_title: "Название",
     room_title_ru: "Название RU",
     room_title_en: "Название EN",
+    room_description: "Описание",
     room_description_ru: "Описание RU",
     room_description_en: "Описание EN",
 
@@ -92,9 +97,14 @@ LANGS.ru = {
 };
 
 LANGS.en = {
+    ru: "RU",
+    en: "EN",
+    
     room_add: "Add room",
+    room_title: "Title",
     room_title_ru: "Title RU",
     room_title_en: "Title EN",
+    room_description: "Description",
     room_description_ru: "Description RU",
     room_description_en: "Description EN",
 
