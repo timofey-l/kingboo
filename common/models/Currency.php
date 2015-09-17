@@ -181,13 +181,13 @@ class Currency extends \yii\db\ActiveRecord
 
         if ($this->code == 'USD') {
             if ($to == 'USD') {
-                return number_format(round($x, 2), 2, '.', '');
+                return self::numberFormat($x);
             } else {
                 $v = $x * $rates[$to];
             }
         } else {
             if ($this->code == $to) {
-                return number_format(round($x, 2), 2, '.', '');
+                return self::numberFormat($x);
             }
             if ($to == 'USD') {
                 $v = $x / $rates[$this->code];
@@ -200,7 +200,14 @@ class Currency extends \yii\db\ActiveRecord
             $v = $v * (1 + $coef / 100);
         }
         $v = round($v, 2);
-        return number_format($v, 2, '.', '');
+        return self::numberFormat($v);
+    }
+
+    /**
+     * Возвращает сумму, отформатированную для сохранения в БД
+     */
+    public static function numberFormat($x) {
+        return number_format(round($x, 2), 2, '.', '');
     }
 
     /**

@@ -137,7 +137,7 @@ if (!$this->context->checkBookingPossibility($model)) {
         </div>
         <div class="col-sm-6 text-right">
             <br>
-            <span class="address"><?= Html::encode($model->address) ?></span>
+            <span class="address"><?= Html::encode($model->property('address')) ?></span>
             <br>
             <span class="phone"><?= Html::encode($model->contact_phone) ?></span>
             <br>

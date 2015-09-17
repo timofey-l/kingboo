@@ -21,7 +21,7 @@ $td_value = "vertical-align: top; text-align:right; border-left: 0px; padding-le
 
 $values = [
     \Yii::t('mails_order', 'Hotel', [], $local) => $order->hotel->{'title_' . $lang},
-    \Yii::t('mails_order', 'Hotel information', [], $local) => $hotel->address."<br>".$hotel->contact_email."<br>".$hotel->contact_phone,
+    \Yii::t('mails_order', 'Hotel information', [], $local) => $hotel->property('address')."<br>".$hotel->contact_email."<br>".$hotel->contact_phone,
     \Yii::t('mails_order', 'Check-in date', [], $local) => (new \DateTime($order->dateFrom))->format(\Yii::t('mails_order', 'd/m/Y', [], $local)),
     \Yii::t('mails_order', 'Check-out date', [], $local) => (new \DateTime($order->dateTo))->format(\Yii::t('mails_order', 'd/m/Y', [], $local)),
     \Yii::t('mails_order', 'Order sum', [], $local) => $currency->getFormatted($order->sum, 'email'),

@@ -11,7 +11,8 @@ use yii\behaviors\SluggableBehavior;
  * @property integer $id
  * @property integer $partner_id
  * @property string  $name
- * @property string  $address
+ * @property string  $address_ru
+ * @property string  $address_en
  * @property string  $contact_email
  * @property string  $contact_phone
  * @property string  $lng
@@ -85,7 +86,7 @@ class Hotel extends \yii\db\ActiveRecord
 	public function rules()
 	{
 		return [
-			[['partner_id', 'name', 'address', 'currency_id'], 'required'],
+			[['partner_id', 'name', 'currency_id'], 'required'],
 			[['title_ru'], 'required', 'when' => function ($model) {
 				return empty($model->title_en);
 			}, 'whenClient'                   => "function (attribute, value) {
@@ -96,10 +97,20 @@ class Hotel extends \yii\db\ActiveRecord
 			}, 'whenClient'                   => "function (attribute, value) {
                 return !$('#hotel-title_ru').val();
             }"],
+			[['address_ru'], 'required', 'when' => function ($model) {
+				return empty($model->address_en);
+			}, 'whenClient'                   => "function (attribute, value) {
+                return !$('#hotel-address_en').val();
+            }"],
+			[['address_en'], 'required', 'when' => function ($model) {
+				return empty($model->address_ru);
+			}, 'whenClient'                   => "function (attribute, value) {
+                return !$('#hotel-address_ru').val();
+            }"],
 			[['partner_id', 'category'], 'integer'],
 			[['lng', 'lat'], 'number'],
 			[['description_ru', 'description_en', 'domain'], 'string'],
-			[['name', 'address', 'timezone', 'title_ru', 'title_en', 'contact_email', 'contact_phone'], 'string', 'max' => 255],
+			[['name', 'address_ru', 'address_en', 'timezone', 'title_ru', 'title_en', 'contact_email', 'contact_phone'], 'string', 'max' => 255],
 			[['lng', 'lat'], 'default', 'value' => 0],
 			[['currency_id'], 'integer', 'min' => 1],
 			[['allow_partial_pay'], 'integer', 'max' => 1, 'min' => 0],
@@ -130,7 +141,8 @@ class Hotel extends \yii\db\ActiveRecord
 			'id'                  => Yii::t('hotels', 'ID'),
 			'partner_id'          => Yii::t('hotels', 'Partner ID'),
 			'name'                => Yii::t('hotels', 'URL'),
-			'address'             => Yii::t('hotels', 'Hotel address'),
+			'address_ru'          => Yii::t('hotels', 'Hotel address Ru'),
+			'address_en'          => Yii::t('hotels', 'Hotel address En'),
 			'lng'                 => Yii::t('hotels', 'Lng'),
 			'lat'                 => Yii::t('hotels', 'Lat'),
 			'currency_id'         => Yii::t('hotels', 'Currency'),
@@ -230,10 +242,28 @@ class Hotel extends \yii\db\ActiveRecord
 		return $this->hasOne('\partner\models\PartnerUser', ['id' => 'partner_id']);
 	}
 
-    public function getLangAttribute($attr, $lang = false) {
+    /*public function getLangAttribute($attr, $lang = false) {
         $name = $lang ? $attr . '_' . $lang : $attr . '_' . Lang::$current->url;
         if (!isset($this->$name)) {
             return false;
+        }
+        return $this->$name;
+    }*/
+
+    /**
+     * Возвращает свойство объекта с учетом языка
+     * 
+     * @param string $property - имя свойства
+     * @param string $lang - язык, если не задан используется системный
+     * @return mixed
+     */
+    public function property($property, $lang = false) {
+    	if (isset($this->$property)) {
+    		return $this->$property;
+    	}
+        $name = $lang ? $property . '_' . $lang : $property . '_' . Lang::$current->url;
+        if (!isset($this->$name)) {
+            return null;
         }
         return $this->$name;
     }

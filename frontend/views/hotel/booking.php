@@ -159,7 +159,7 @@ $this->title = \Yii::t('frontend', 'Room booking');
 			</h3>
 
 			<div>
-				<i class="fa fa-map-marker"></i> <?= $hotel->address ?>
+				<i class="fa fa-map-marker"></i> <?= $hotel->property('address') ?>
                 <br>
                 <i class="fa fa-mobile"></i> <span class="phone"><?= Html::encode($hotel->contact_phone) ?></span>
 				<br>

@@ -146,10 +146,28 @@ class Room extends \yii\db\ActiveRecord
         return $a;
     }
 
-    public function getLangAttribute($attr, $lang = false) {
+    /*public function getLangAttribute($attr, $lang = false) {
         $name = $lang ? $attr . '_' . $lang : $attr . '_' . Lang::$current->url;
         if (!isset($this->$name)) {
             return false;
+        }
+        return $this->$name;
+    }*/
+
+    /**
+     * Возвращает свойство объекта с учетом языка
+     * 
+     * @param string $property - имя свойства
+     * @param string $lang - язык, если не задан используется системный
+     * @return mixed
+     */
+    public function property($property, $lang = false) {
+        if (isset($this->$property)) {
+            return $this->$property;
+        }
+        $name = $lang ? $property . '_' . $lang : $property . '_' . Lang::$current->url;
+        if (!isset($this->$name)) {
+            return null;
         }
         return $this->$name;
     }

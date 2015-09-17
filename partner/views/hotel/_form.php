@@ -95,8 +95,6 @@ $this->registerCss('
                         ]);}
                     ?>
 
-                    <?= $form->field($model, 'address')->textInput(['maxlength' => 255]) ?>
-
                     <?= $form->field($model, 'contact_email')->textInput(['maxlength' => 255]) ?>
 
                     <?= $form->field($model, 'contact_phone')->textInput(['maxlength' => 255]) ?>
@@ -186,6 +184,47 @@ $this->registerCss('
 
                 </div>
             </div>
+            <div class="box box-info"><!-- address -->
+                <div class="box-header">
+                    <h3 class="box-title"><?= Yii::t('hotels', 'Hotel address') ?></h3>
+                </div>
+                <div class="box-body">
+
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+
+                            <?php foreach ($langs as $i => $lang): /** @var $lang \common\models\Lang */ ?>
+
+                                <li class="<?= $i == 0 ? "active" : "" ?>">
+                                    <a href="#address_<?= $lang->url ?>" data-tabid="address_<?= $lang->url ?>" data-toggle="tab" >
+
+                                        <?= strtoupper($lang->url) ?>
+
+                                    </a>
+                                </li>
+
+                            <?php endforeach; ?>
+
+                        </ul>
+                        <div class="tab-content">
+
+                            <?php foreach ($langs as $i => $lang): /** @var $lang \common\models\Lang */ ?>
+
+                                <div class="tab-pane <?= $i == 0 ? "active" : "" ?>" id="address_<?= $lang->url ?>">
+
+                                    <?= $form->field($model, 'address_' . $lang->url, [
+                                        'template' => '{input}{error}'
+                                    ])->textInput(['rows' => 6]) ?>
+
+                                </div>
+
+                            <?php endforeach; ?>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div><!-- ./address -->
             <div class="box box-info">
                 <div class="box-header">
                     <h3 class="box-title"><?= Yii::t('hotels', 'Hotel description') ?></h3>

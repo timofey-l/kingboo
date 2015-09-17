@@ -27,7 +27,7 @@ $td_value = "vertical-align: top; text-align:left; font-weight: bold; border-lef
             <?= \Yii::t('mails_order', 'Hotel information') ?>
         </td>
         <td colspan="4" style="<?= $td . $td_value ?>">
-            <?= $hotel->address ?>
+            <?= $hotel->property('address') ?>
             <br>
             <?= $hotel->contact_email ?>
             <br>

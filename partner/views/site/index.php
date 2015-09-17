@@ -70,7 +70,7 @@ $this->registerCssFile($colorbox . '/example1/colorbox.css', [], 'colorbox');
                                     <?php endforeach ?>
                                 </div>
                                 <div class="col-md-12">
-                                    <?= $hotel->address ?>
+                                    <?= $hotel->property('address') ?>
                                 </div>
                                 <div class="col-md-12">
                                     <small><?= $hotel->{'description_' . $l} ?></small>

@@ -108,6 +108,9 @@ class HotelController extends \yii\web\Controller
 				$orderForm->pay_sum = $orderForm->sum;
 				$orderForm->partial_pay_percent = 100;
 			}
+			// форматируем для сохранения в БД
+			$orderForm->sum = Currency::numberFormat($orderForm->sum);
+			$orderForm->pay_sum = Currency::numberFormat($orderForm->pay_sum);
 			$orderForm->pay_sum_currency_id = $hotel->currency_id;
 			// Если платеж через Яндекс.Кассу записываем сумму в рублях
 			// TODO: Надо учитывать, чей отель и соответственно, в какой валюте оплата

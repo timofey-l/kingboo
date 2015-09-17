@@ -148,7 +148,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'title_' . $l,
                             'description_' . $l,
 //                            'currency',
-                            'address',
+                            'address_' . $l,
                             'contact_email',
                             'contact_phone',
                         ],

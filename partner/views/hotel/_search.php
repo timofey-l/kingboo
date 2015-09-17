@@ -21,7 +21,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name') ?>
 
-    <?= $form->field($model, 'address') ?>
+    <?= $form->field($model, 'address_ru') ?>
+
+    <?= $form->field($model, 'address_en') ?>
 
     <?= $form->field($model, 'lng') ?>
 

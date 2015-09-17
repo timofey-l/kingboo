@@ -19,7 +19,7 @@ class HotelSearch extends Hotel
     {
         return [
             [['id', 'partner_id', 'category', 'currency_id', 'partial_pay_percent'], 'integer'],
-            [['name', 'address', 'description_ru', 'timezone', 'description_en', 'title_ru', 'title_en', 'domain', 'less', 'css', 'contact_phone', 'contact_email'], 'safe'],
+            [['name', 'address_ru', 'address_en', 'description_ru', 'timezone', 'description_en', 'title_ru', 'title_en', 'domain', 'less', 'css', 'contact_phone', 'contact_email'], 'safe'],
             [['lng', 'lat'], 'number'],
             [['allow_partial_pay'], 'boolean'],
         ];
@@ -69,7 +69,8 @@ class HotelSearch extends Hotel
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'address', $this->address])
+            ->andFilterWhere(['like', 'address_ru', $this->address_ru])
+            ->andFilterWhere(['like', 'address_en', $this->address_en])
             ->andFilterWhere(['like', 'description_ru', $this->description_ru])
             ->andFilterWhere(['like', 'timezone', $this->timezone])
             ->andFilterWhere(['like', 'description_en', $this->description_en])

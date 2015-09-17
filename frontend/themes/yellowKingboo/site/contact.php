@@ -22,7 +22,7 @@ if (!is_null($hotel))
     <h1><?= $this->title ?></h1>
     <?php if (!is_null($hotel)): ?>
         <address>
-            <b><?= \Yii::t('frontend', 'Address', []) ?>:</b> <?= Html::encode($hotel->address) ?>
+            <b><?= \Yii::t('frontend', 'Address', []) ?>:</b> <?= Html::encode($hotel->property('address') ?>
             <br>
             <b><?= \Yii::t('frontend', 'E-mail', []) ?>:</b> <?= Html::encode($hotel->contact_email) ?>
             <br>

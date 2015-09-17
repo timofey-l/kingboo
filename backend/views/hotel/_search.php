@@ -21,7 +21,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name') ?>
 
-    <?= $form->field($model, 'address') ?>
+    <?= //$form->field($model, 'address_ru') ?>
+
+    <?= //$form->field($model, 'address_en') ?>
 
     <?= $form->field($model, 'lng') ?>
 
@@ -35,9 +37,9 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'description_en') ?>
 
-    <?php // echo $form->field($model, 'title_ru') ?>
+    <?php echo $form->field($model, 'title_ru') ?>
 
-    <?php // echo $form->field($model, 'title_en') ?>
+    <?php echo $form->field($model, 'title_en') ?>
 
     <?php // echo $form->field($model, 'currency_id') ?>
 
