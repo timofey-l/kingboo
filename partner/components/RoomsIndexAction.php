@@ -34,6 +34,7 @@ class RoomsIndexAction extends IndexAction
                 ->joinWith('hotel')
 //                ->joinWith('facilities')
                 ->where($params)
+                ->orderBy('id ASC')
         ]);
     }
 }
