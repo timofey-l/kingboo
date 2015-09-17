@@ -11,6 +11,8 @@ use yii\behaviors\SluggableBehavior;
  * @property integer $id
  * @property integer $partner_id
  * @property string  $name
+ * @property boolean  $ru
+ * @property boolean  $en
  * @property string  $address_ru
  * @property string  $address_en
  * @property string  $contact_email
@@ -87,25 +89,21 @@ class Hotel extends \yii\db\ActiveRecord
 	{
 		return [
 			[['partner_id', 'name', 'currency_id'], 'required'],
-			[['title_ru'], 'required', 'when' => function ($model) {
-				return empty($model->title_en);
-			}, 'whenClient'                   => "function (attribute, value) {
-                return !$('#hotel-title_en').val();
+			[['ru'], 'integer', 'min' => 1, 'when' => function ($model) {
+				return ($model->en == 0);
+			}],
+			[['en'], 'integer', 'min' => 1, 'when' => function ($model) {
+				return ($model->ru == 0);
+			}],
+			[['title_ru', 'address_ru'], 'required', 'when' => function ($model) {
+				return $model->ru == 1;
+			}, 'whenClient' => "function (attribute, value) {
+                return $('#hotel-ru').prop('checked');
             }"],
-			[['title_en'], 'required', 'when' => function ($model) {
-				return empty($model->title_ru);
-			}, 'whenClient'                   => "function (attribute, value) {
-                return !$('#hotel-title_ru').val();
-            }"],
-			[['address_ru'], 'required', 'when' => function ($model) {
-				return empty($model->address_en);
-			}, 'whenClient'                   => "function (attribute, value) {
-                return !$('#hotel-address_en').val();
-            }"],
-			[['address_en'], 'required', 'when' => function ($model) {
-				return empty($model->address_ru);
-			}, 'whenClient'                   => "function (attribute, value) {
-                return !$('#hotel-address_ru').val();
+			[['title_en', 'address_en'], 'required', 'when' => function ($model) {
+				return $model->en > 1;
+			}, 'whenClient' => "function (attribute, value) {
+                return $('#hotel-en').prop('checked');
             }"],
 			[['partner_id', 'category'], 'integer'],
 			[['lng', 'lat'], 'number'],
@@ -113,7 +111,7 @@ class Hotel extends \yii\db\ActiveRecord
 			[['name', 'address_ru', 'address_en', 'timezone', 'title_ru', 'title_en', 'contact_email', 'contact_phone'], 'string', 'max' => 255],
 			[['lng', 'lat'], 'default', 'value' => 0],
 			[['currency_id'], 'integer', 'min' => 1],
-			[['allow_partial_pay'], 'integer', 'max' => 1, 'min' => 0],
+			[['ru', 'en', 'allow_partial_pay'], 'integer', 'max' => 1, 'min' => 0],
 			['partial_pay_percent', 'integer', 'min' => self::MIN_PART_PAY, 'max' => 100],
             ['name', 'unique'],
             ['domain', 'unique'],
@@ -141,6 +139,8 @@ class Hotel extends \yii\db\ActiveRecord
 			'id'                  => Yii::t('hotels', 'ID'),
 			'partner_id'          => Yii::t('hotels', 'Partner ID'),
 			'name'                => Yii::t('hotels', 'URL'),
+			'ru'          		  => Yii::t('hotels', 'Russian'),
+			'en'          		  => Yii::t('hotels', 'English'),
 			'address_ru'          => Yii::t('hotels', 'Hotel address Ru'),
 			'address_en'          => Yii::t('hotels', 'Hotel address En'),
 			'lng'                 => Yii::t('hotels', 'Lng'),
@@ -270,8 +270,11 @@ class Hotel extends \yii\db\ActiveRecord
 
     /**
      * Определяет доступен ли отель для показа на frontend
+     *
+     * param @lang - язык, если указан, определяет опубликованность этого языка
+     * return boolean
      */
-    public function published() {
+    public function published($lang = false) {
         if (!$this->rooms) {
             return false;
         }
@@ -280,6 +283,11 @@ class Hotel extends \yii\db\ActiveRecord
         }
         if ($this->partner->isBlocked()) {
         	return false;
+        }
+        if ($lang) {
+        	if (!$this->$lang) {
+        		return false;
+        	}
         }
         return true;
     }

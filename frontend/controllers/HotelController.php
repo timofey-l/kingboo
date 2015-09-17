@@ -80,7 +80,7 @@ class HotelController extends \yii\web\Controller
 			if (!$hotel) {
 				throw new BadRequestHttpException('Wrong hotel id');
 			}
-        	if (!$hotel->published()) {
+        	if (!$hotel->published(\common\models\Lang::$current->url)) {
         		throw new \yii\web\HttpException(404, 'The requested hotel is not published.');
         	}
 
@@ -225,7 +225,7 @@ class HotelController extends \yii\web\Controller
 		if (is_null($model)) {
 			throw new NotFoundHttpException('The requested hotel does not exist.');
 		}
-        if (!$model->published()) {
+        if (!$model->published(\common\models\Lang::$current->url)) {
         	throw new NotFoundHttpException('The requested hotel is not published.');
         }
 

@@ -8,7 +8,8 @@ use \common\models\Currency;
 /* @var $model common\models\Hotel */
 /* @var $form yii\widgets\ActiveForm */
 
-$langs = \common\models\Lang::sortedLangList();   
+$langs = \common\models\Lang::sortedLangList(); 
+$lang = \common\models\Lang::$current->url;  
 
 \Yii::$app->assetManager->publish('@vendor/almasaeed2010/adminlte/plugins/iCheck');
 \Yii::$app->assetManager->publish('@vendor/almasaeed2010/adminlte/plugins/bootstrap-slider');
@@ -22,9 +23,20 @@ $this->registerCssFile($dir_iCheck . '/minimal/blue.css');
 $this->registerJsFile($dir_slider . '/bootstrap-slider.js', ['depends' => \yii\web\JqueryAsset::className()]);
 $this->registerCssFile($dir_slider . '/slider.css', ['depends' => \yii\web\JqueryAsset::className()]);
 
+if ($model->isNewRecord) {
+    $this->registerJs("
+        var lang = '$lang';
+        var newRecord = true;
+    ", yii\web\View::POS_END);
+} else {
+    $this->registerJs("
+        var lang = '$lang';
+        var newRecord = false;
+    ", yii\web\View::POS_END);
+}
 
 $this->registerJs("
-$('.icheck').iCheck({
+$('#hotel-allow_partial_pay').iCheck({
  checkboxClass: 'icheckbox_minimal-blue'
 }).on('ifChecked', function(event){
 	$('.partial_pay_container').removeClass('hide');
@@ -41,6 +53,36 @@ $('.partialSlider').slider({
 		return value;
 	}
 });
+
+$('#hotel-ru').iCheck({
+ checkboxClass: 'icheckbox_minimal-blue'
+}).on('ifChecked', function(event){
+    $($('#hotel-ru').parent()).css('border', 'none');
+    $($('#hotel-en').parent()).css('border', 'none');
+    $('#submitBtn').prop('disabled', false);
+}).on('ifUnchecked', function(event){
+    if (!$('#hotel-en').parent().hasClass('checked')) {
+        $($('#hotel-ru').parent()).css('border', 'solid 1px red');
+        $($('#hotel-en').parent()).css('border', 'solid 1px red');
+        $('#submitBtn').prop('disabled', true);
+    }
+});
+$('#hotel-en').iCheck({
+ checkboxClass: 'icheckbox_minimal-blue'
+}).on('ifChecked', function(event){
+    $($('#hotel-ru').parent()).css('border', 'none');
+    $($('#hotel-en').parent()).css('border', 'none');
+    $('#submitBtn').prop('disabled', false);
+}).on('ifUnchecked', function(event){
+    if (!$('#hotel-ru').parent().hasClass('checked')) {
+        $($('#hotel-ru').parent()).css('border', 'solid 1px red');
+        $($('#hotel-en').parent()).css('border', 'solid 1px red');
+        $('#submitBtn').prop('disabled', true);
+    }
+});
+if (newRecord) {
+    $('#hotel-' + lang).iCheck('check');
+}
 ");
 
 $this->registerCss('
@@ -142,12 +184,22 @@ $this->registerCss('
                 </div>
             </div>
         </div>
+
         <div class="col-sm-6">
             <div class="box box-info">
                 <div class="box-header">
-                    <h3 class="box-title"><?= Yii::t('hotels', 'Hotel name') ?></h3>
+                    <h3 class="box-title"><?= Yii::t('hotels', 'Languages') ?></h3>
                 </div>
                 <div class="box-body">
+
+                    <?php foreach ($langs as $i => $lang): /** @var $lang \common\models\Lang */ ?>
+                        <?= Html::activeCheckbox($model, $lang->url, [
+                            'class' => 'icheck',
+                            'template' => '{input}{error}',
+                        ]) ?>
+                        &nbsp;
+                    <?php endforeach; ?>
+                    <br /><br />
 
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
@@ -155,7 +207,7 @@ $this->registerCss('
                             <?php foreach ($langs as $i => $lang): /** @var $lang \common\models\Lang */ ?>
 
                                 <li class="<?= $i == 0 ? "active" : "" ?>">
-                                    <a href="#title_<?= $lang->url ?>" data-tabid="title_<?= $lang->url ?>" data-toggle="tab" >
+                                    <a href="#lang_<?= $lang->url ?>" data-tabid="lang_<?= $lang->url ?>" data-toggle="tab" >
 
                                         <?= strtoupper($lang->url) ?>
 
@@ -169,93 +221,13 @@ $this->registerCss('
 
                             <?php foreach ($langs as $i => $lang): /** @var $lang \common\models\Lang */ ?>
 
-                                <div class="tab-pane <?= $i == 0 ? "active" : "" ?>" id="title_<?= $lang->url ?>">
+                                <div class="tab-pane <?= $i == 0 ? "active" : "" ?>" id="lang_<?= $lang->url ?>">
 
-                                    <?= $form->field($model, 'title_' . $lang->url, [
-                                        'template' => '{input}{error}'
-                                    ])->textInput(['rows' => 6]) ?>
+                                    <?= $form->field($model, 'title_' . $lang->url)->textInput(['maxlength' => 255]) ?>
 
-                                </div>
+                                    <?= $form->field($model, 'address_' . $lang->url)->textInput(['maxlength' => 255]) ?>
 
-                            <?php endforeach; ?>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="box box-info"><!-- address -->
-                <div class="box-header">
-                    <h3 class="box-title"><?= Yii::t('hotels', 'Hotel address') ?></h3>
-                </div>
-                <div class="box-body">
-
-                    <div class="nav-tabs-custom">
-                        <ul class="nav nav-tabs">
-
-                            <?php foreach ($langs as $i => $lang): /** @var $lang \common\models\Lang */ ?>
-
-                                <li class="<?= $i == 0 ? "active" : "" ?>">
-                                    <a href="#address_<?= $lang->url ?>" data-tabid="address_<?= $lang->url ?>" data-toggle="tab" >
-
-                                        <?= strtoupper($lang->url) ?>
-
-                                    </a>
-                                </li>
-
-                            <?php endforeach; ?>
-
-                        </ul>
-                        <div class="tab-content">
-
-                            <?php foreach ($langs as $i => $lang): /** @var $lang \common\models\Lang */ ?>
-
-                                <div class="tab-pane <?= $i == 0 ? "active" : "" ?>" id="address_<?= $lang->url ?>">
-
-                                    <?= $form->field($model, 'address_' . $lang->url, [
-                                        'template' => '{input}{error}'
-                                    ])->textInput(['rows' => 6]) ?>
-
-                                </div>
-
-                            <?php endforeach; ?>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div><!-- ./address -->
-            <div class="box box-info">
-                <div class="box-header">
-                    <h3 class="box-title"><?= Yii::t('hotels', 'Hotel description') ?></h3>
-                </div>
-                <div class="box-body">
-
-                    <div class="nav-tabs-custom">
-                        <ul class="nav nav-tabs">
-
-                            <?php foreach ($langs as $i => $lang): /** @var $lang \common\models\Lang */ ?>
-
-                                <li class="<?= $i == 0 ? "active" : "" ?>">
-                                    <a href="#description_<?= $lang->url ?>" data-tabid="description_<?= $lang->url ?>" data-toggle="tab" >
-
-                                        <?= strtoupper($lang->url) ?>
-
-                                    </a>
-                                </li>
-
-                            <?php endforeach; ?>
-
-                        </ul>
-                        <div class="tab-content">
-
-                            <?php foreach ($langs as $i => $lang): /** @var $lang \common\models\Lang */ ?>
-
-                                <div class="tab-pane <?= $i == 0 ? "active" : "" ?>" id="description_<?= $lang->url ?>">
-
-                                    <?= $form->field($model, 'description_' . $lang->url, [
-                                        'template' => '{input}{error}'
-                                    ])->textarea(['rows' => 6]) ?>
+                                    <?= $form->field($model, 'description_' . $lang->url)->textarea(['rows' => 6]) ?>
 
                                 </div>
 
@@ -276,7 +248,8 @@ $this->registerCss('
 
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('hotels', 'Create') : Yii::t('hotels', 'Save'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('hotels', 'Create') : Yii::t('hotels', 'Save'), 
+            ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'id' => 'submitBtn']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
