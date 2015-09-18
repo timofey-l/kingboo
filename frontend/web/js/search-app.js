@@ -24,7 +24,9 @@
             if (e.target.name == 'dateTo') {
                 $scope.search.dateTo = get_date(e.date);
             }
-            //console.log(e);
+            if ($scope.search.dateFrom == $scope.search.dateTo) {
+                $('#dateTo').datepicker('setDate', moment($scope.search.dateFrom).add(1, 'days').toDate());
+            }
         });
 
         // Поиск комнат
@@ -85,6 +87,6 @@
                 $scope.getRooms();
             }
         }, 1000);
-
+        window.s = $scope;
     }]);
 })();

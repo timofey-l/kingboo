@@ -117,7 +117,8 @@ $(document).ready(function () {
 
     $('.input-daterange').datepicker({
         language: LANG,
-        format: t('datesFormat')
+        format: t('datesFormat'),
+        startDate: '-0d',
     });
 
     if (typeof window.dateFrom != 'undefined') {
