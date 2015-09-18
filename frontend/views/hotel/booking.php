@@ -8,6 +8,8 @@ use yii\helpers\Html;
 /* @var $bookingParams \frontend\models\BookingParams */
 /* @var $orderForm \common\models\Order */
 
+$this->params['hotel'] = $hotel;
+
 $l = \common\models\Lang::$current->url;
 $assetManager = \Yii::$app->assetManager;
 //$bower = \Yii::$app->assetManager->getPublishedUrl('@bower');

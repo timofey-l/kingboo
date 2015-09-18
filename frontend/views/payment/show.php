@@ -8,6 +8,7 @@ use yii\helpers\Html;
 
 /** @var \common\models\Hotel $hotel */
 $hotel = $order->hotel;
+$this->params['hotel'] = $hotel;
 
 $l = \common\models\Lang::$current->url;
 

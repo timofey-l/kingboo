@@ -50,8 +50,30 @@ if (ArrayHelper::getValue($this->params, 'embedded', 0) == 0) {
                 'class' => 'navbar-default',
             ],
         ]);
+
+        // Языки
+        $langs = \common\models\Lang::sortedLangList();
+        $menuItems = [];
+        $defaultLang = \common\models\Lang::getDefaultLang();
+        $otherLangs = [];
+        foreach ($langs as $l) { // Получаем список опубликованных языков, отличных от текущего
+            if ($l->url != \common\models\Lang::$current->url && $this->params['hotel']->published($l->url)) {
+                $otherLangs[] = $l->url;
+            }
+        }
+        if ($otherLangs) {
+            echo '<ul id="w2" class="navbar-nav navbar-right nav" style="padding-left: 20px;">';
+            foreach ($otherLangs as $l) {
+                $url = $l == $defaultLang->url ? '@web/' : '/' . $l;
+                $url = yii\helpers\Url::to($url);
+                echo '<li><a href="' . $url . '" class="navbar-brand"><img alt="' . $l . '" src="/img/flag-' . $l . '.jpg"></a></li>';
+            }
+            echo '</ul>';
+        }
+
+        // Меню
         $menuItems = [
-            ['label' => \Yii::t('frontend', 'Main'), 'url' => ['/site/index']],
+            ['label' => \Yii::t('frontend', 'Home'), 'url' => ['/site/index']],
             ['label' => \Yii::t('frontend', 'Contact us'), 'url' => ['/site/contact']],
         ];
         echo Nav::widget([
@@ -65,6 +87,7 @@ if (ArrayHelper::getValue($this->params, 'embedded', 0) == 0) {
     <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            'homeLink' => ['label' => \Yii::t('frontend', 'Home'), 'url' => ['site/index']],
         ]) ?>
         <?= Alert::widget() ?>
         <?= $content ?>
@@ -77,7 +100,6 @@ if (ArrayHelper::getValue($this->params, 'embedded', 0) == 0) {
         </div>
     </footer>
 <?php endif ?>
-
 
 <?php $this->endBody() ?>
 </body>

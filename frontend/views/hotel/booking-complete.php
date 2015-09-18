@@ -12,6 +12,7 @@ $l = Lang::$current->url;
 /** @var Order $order */
 /** @var Hotel $hotel */
 $hotel = $order->hotel;
+$this->params['hotel'] = $hotel;
 
 $this->title = \Yii::t('frontend', 'Booking is completed');
 

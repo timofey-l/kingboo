@@ -49,6 +49,7 @@ return [
     'Information for payment via bank transfer' => 'Информация для оплаты через банковский перевод',
     'Kids' => 'Дети 0-6 лет',
     'Main' => 'Главная',
+    'Home' => 'Главная',
     'Name' => 'Имя',
     'Next' => 'Далее',
     'Nights: {n}' => 'Ночей: {n}',

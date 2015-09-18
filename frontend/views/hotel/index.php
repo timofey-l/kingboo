@@ -12,6 +12,7 @@ $assetManager = Yii::$app->assetManager;
 //$directoryBower = $assetManager->getPublishedUrl('@bower');
 
 $this->title = $model->{'title_' . $l};
+$this->params['hotel'] = $model;
 
 $this->params['embedded'] = $embedded;
 $this->params['no_desc'] = $no_desc;

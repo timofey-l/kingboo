@@ -9,6 +9,8 @@ use yii\captcha\Captcha;
 /* @var $model \frontend\models\ContactForm */
 /* @vat $hotel \common\models\Hotel */
 
+$this->params['hotel'] = $hotel;
+
 $this->title = \Yii::t('frontend', 'Contact us');
 $this->params['breadcrumbs'][] = $this->title;
 $l = Lang::$current->url;
@@ -23,7 +25,7 @@ if (!is_null($hotel))
     <?php if(!is_null($hotel)): ?>
         <br>
         <address>
-            <b><?= \Yii::t('frontend', 'Address', []) ?>:</b> <?= Html::encode($hotel->property('address') ?>
+            <b><?= \Yii::t('frontend', 'Address', []) ?>:</b> <?= Html::encode($hotel->property('address')) ?>
             <br>
             <b><?= \Yii::t('frontend', 'E-mail', []) ?>:</b> <?= Html::mailto($hotel->contact_email) ?>
             <br>

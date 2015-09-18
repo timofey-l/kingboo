@@ -4,7 +4,7 @@
 /** @var \common\models\Pay $pay */
 /** @var \common\models\Order $order */
 
-
+$this->params['hotel'] = $order->hotel;
 ?>
 
 <div>
