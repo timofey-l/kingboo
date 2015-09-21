@@ -85,4 +85,10 @@ return [
     'Title Ru' => 'Название (рус.)',
     'URL' => 'URL',
     'View' => 'Просмотр',
+    'Confirm changes' => 'Подтвердите действие',
+    'You have changed the hotel currency. All room prices will be deleted. If you sure you want to continue type "change".' => 'Вы изменили валюту отеля. Все цены на номера отеля будут удалены. Если вы уверены, что хотите продолжать, напишите &laquo;change&raquo;.',
+    'Cancel' => 'Отмена',
+    'Ok' => 'Подтвердить',
+    'Confirm action' => 'Подтвердите действие',
+    'The hotel will be permanently deleted. If you sure you want to continue type "delete".' => 'Отель будет удален без возможности восстановления. Если вы уверены, что хотите продолжать, напишите &laquo;delete&raquo;.',
 ];

@@ -196,7 +196,7 @@ if (!$this->context->checkBookingPossibility($model)) {
                 <input id="dateTo" type="text" class="form-control" name="dateTo"/>
             </div>
         </div>
-        <div class="col-md-2 col-xs-3">
+        <div class="form-group col-md-2 col-xs-6">
             <label for="adults"><?= Yii::t('frontend', 'Adults') ?></label>
 
             <div class="input-group">
@@ -213,7 +213,7 @@ if (!$this->context->checkBookingPossibility($model)) {
                 </span>
             </div>
         </div>
-        <div class="col-md-2 col-xs-3">
+        <div class="form-group col-md-2 col-xs-6">
             <label for="children"><?= Yii::t('frontend', 'Children') ?></label>
 
             <div class="input-group">
@@ -230,7 +230,7 @@ if (!$this->context->checkBookingPossibility($model)) {
                 </span>
             </div>
         </div>
-        <div class="col-md-2 col-xs-3">
+        <div class="form-group col-md-2 col-xs-6">
             <label for="kids"><?= Yii::t('frontend', 'Kids') ?></label>
 
             <div class="input-group">
@@ -247,16 +247,16 @@ if (!$this->context->checkBookingPossibility($model)) {
                 </span>
             </div>
         </div>
-        <div class="col-md-2 col-xs-3">
+        <div class="form-group col-md-2 col-xs-6">
             <label for="">&nbsp;</label>
             <br/>
             <button class="btn btn-warning" ng-click="find()"><?= Yii::t('frontend', 'Find') ?></button>
         </div>
-        <div class="col-xs-10">
+        <div class="form-group col-xs-12 col-sm-10">
             <?= Yii::t('frontend', 'Use search form to book a room on disirable dates.') ?>
             <?= Yii::t('frontend', 'To watch information about all hotel rooms push the "All rooms" button.') ?>
         </div>
-        <div class="col-xs-2">
+        <div class="form-group col-xs-12 col-sm-2">
             <button class="btn btn-warning" ng-disabled="!searchMode" ng-click="getRooms()"><?= Yii::t('frontend', 'All rooms') ?></button>
         </div>
     </div>

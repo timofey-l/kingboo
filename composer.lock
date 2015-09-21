@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4f46d1f2bbd2984666f370275d85bb8c",
+    "hash": "27306ee94e9147034bbe20c176106724",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -646,6 +646,68 @@
                     "package.json"
                 ]
             }
+        },
+        {
+            "name": "bower-asset/remodal",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/VodkaBears/Remodal.git",
+                "reference": "b0a5f0832dfa5006c622ae5209b0c15af8eb28ba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/VodkaBears/Remodal/zipball/b0a5f0832dfa5006c622ae5209b0c15af8eb28ba",
+                "reference": "b0a5f0832dfa5006c622ae5209b0c15af8eb28ba",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": "*"
+            },
+            "require-dev": {
+                "bower-asset/jquery": ">=2.1.4,<3.0.0",
+                "bower-asset/qunit": ">=1.18.0,<2.0.0",
+                "bower-asset/zepto": ">=1.1.6,<2.0.0"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "dist/remodal.js",
+                    "dist/remodal.css",
+                    "dist/remodal-default-theme.css"
+                ],
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "examples/",
+                    "libs/",
+                    "src/",
+                    "test/",
+                    "*.md",
+                    "Gruntfile.js",
+                    "package.json"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with hash tracking.",
+            "keywords": [
+                "animations",
+                "dialog",
+                "flat",
+                "jquery",
+                "jquery-plugin",
+                "lightbox",
+                "modal",
+                "plugin",
+                "popin",
+                "popup",
+                "responsive",
+                "synchronized",
+                "ui",
+                "window",
+                "zepto"
+            ]
         },
         {
             "name": "bower-asset/swiper",

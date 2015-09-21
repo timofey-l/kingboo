@@ -49,5 +49,18 @@
             </tr>
         </tbody>
     </table>
+
+    <div class="remodal" id="modal">
+        <button data-remodal-action="close" class="remodal-close"></button>
+        <h1>{{t('rooms_confirm_action')}}</h1>
+        <p>
+            {{t('delete_confirm')}}
+        </p>
+        <p><input ng-model="submitPrompt"></p>
+        <br>
+        <button data-remodal-action="cancel" class="btn">{{t('cancel')}}</button>
+        <button data-remodal-action="confirm" class="btn btn-success">{{t('ok')}}</button>
+    </div>
+
 </div>
 <!-- /.box-body -->

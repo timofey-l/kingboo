@@ -1,16 +1,38 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
+use partner\assets\RemodalAsset;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Hotel */
+
+// подключаем remodal
+RemodalAsset::register($this);
 
 $l = \common\models\Lang::$current->url;
 $this->title = $model->{'title_' . $l};
 
 $this->params['breadcrumbs'][] = $this->title;
 
+// Подтверждение удаления
+$this->registerJs("
+window.remodal = $('#modal').remodal();
+$(document).on('confirmation', '.remodal', function () {
+    if ($('#submit_prompt').val() == 'delete') {
+        $.post('" . Url::to(['delete', 'id' => $model->id]) . "');
+    } else {
+        window.remodal.open();
+    }
+});
+");
+$this->registerJs("
+function promptDelete() {
+    window.remodal.open();
+    return false;
+}
+", yii\web\View::POS_END);
 ?>
 <style>
     .rooms-list {
@@ -68,13 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'data-content' => Yii::t('hotels','Place your hotel web page on it&acute;s own domain name, not on <i>{site}</i> subdomain', ['site' => Yii::$app->params['mainDomainShort']]),
                 ]);
         } ?>
-        <?= Html::a('<span class="fa fa-trash-o"></span>' . Yii::t('hotels', 'Delete'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-app bg-red',
-            'data' => [
-                'confirm' => Yii::t('hotels', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
+        <a class="btn btn-app bg-red" href="javascript:promptDelete();"><span class="fa fa-trash-o"></span><?= Yii::t('hotels', 'Delete') ?></a>
     </p>
 
     <div class="row">
@@ -223,4 +239,17 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     <?php endif; ?>
 
+    <div class="remodal" id="modal">
+        <button data-remodal-action="close" class="remodal-close"></button>
+        <h1><?= Yii::t('hotels', 'Confirm action') ?></h1>
+        <p>
+            <?= Yii::t('hotels', 'The hotel will be permanently deleted. If you sure you want to continue type "delete".') ?>
+        </p>
+        <p><input id="submit_prompt"></p>
+        <br>
+        <button data-remodal-action="cancel" class="btn"><?= Yii::t('hotels', 'Cancel') ?></button>
+        <button data-remodal-action="confirm" class="btn btn-success"><?= Yii::t('hotels', 'Ok') ?></button>
+    </div>
+
 </div>
+

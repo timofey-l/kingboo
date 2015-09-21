@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use \common\models\Currency;
+use partner\assets\RemodalAsset;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Hotel */
@@ -22,6 +23,9 @@ $this->registerJsFile($dir_iCheck . '/icheck.min.js', ['depends' => \yii\web\Jqu
 $this->registerCssFile($dir_iCheck . '/minimal/blue.css');
 $this->registerJsFile($dir_slider . '/bootstrap-slider.js', ['depends' => \yii\web\JqueryAsset::className()]);
 $this->registerCssFile($dir_slider . '/slider.css', ['depends' => \yii\web\JqueryAsset::className()]);
+
+// подключаем remodal
+RemodalAsset::register($this);
 
 if ($model->isNewRecord) {
     $this->registerJs("
@@ -83,7 +87,29 @@ $('#hotel-en').iCheck({
 if (newRecord) {
     $('#hotel-' + lang).iCheck('check');
 }
+
+// Подтверждение изменения валюты
+window.remodal = $('#modal').remodal();
+$(document).on('confirmation', '.remodal', function () {
+    if ($('#submit_prompt').val() == 'change') {
+        document.forms.w0.submit();
+    } else {
+        window.remodal.open();
+    }
+});
 ");
+
+// Проверка на изменение валюты
+$this->registerJs("
+var oldCurrencyId = '" . $model['currency_id'] . "';
+function checkCurrency() {
+    if (oldCurrencyId != $('#hotel-currency_id').val()) {
+        window.remodal.open();
+        return false;
+    }
+    return true;
+}
+", yii\web\View::POS_END);
 
 $this->registerCss('
 .slider .slider-selection {
@@ -248,10 +274,27 @@ $this->registerCss('
 
 
     <div class="form-group">
+        <?php if ($model->isNewRecord) : ?>
         <?= Html::submitButton($model->isNewRecord ? Yii::t('hotels', 'Create') : Yii::t('hotels', 'Save'), 
             ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'id' => 'submitBtn']) ?>
+        <?php else : ?>
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('hotels', 'Create') : Yii::t('hotels', 'Save'), 
+            ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'id' => 'submitBtn', 'onclick' => 'return checkCurrency();']) ?>
+        <?php endif; ?>
     </div>
 
     <?php ActiveForm::end(); ?>
+
+    <div class="remodal" id="modal">
+        <button data-remodal-action="close" class="remodal-close"></button>
+        <h1><?= Yii::t('hotels', 'Confirm changes') ?></h1>
+        <p>
+            <?= Yii::t('hotels', 'You have changed the hotel currency. All room prices will be deleted. If you sure you want to continue type "change".') ?>
+        </p>
+        <p><input id="submit_prompt"></p>
+        <br>
+        <button data-remodal-action="cancel" class="btn"><?= Yii::t('hotels', 'Cancel') ?></button>
+        <button data-remodal-action="confirm" class="btn btn-success"><?= Yii::t('hotels', 'Ok') ?></button>
+    </div>
 
 </div>

@@ -4,6 +4,9 @@ LANGS.ru = {
     ru: "RU",
     en: "EN",
 
+    cancel: 'Отмена',
+    ok: 'Подтвердить',
+
     room_add: "Добавить номер",
     room_title: "Название",
     room_title_ru: "Название RU",
@@ -12,6 +15,7 @@ LANGS.ru = {
     room_description_ru: "Описание RU",
     room_description_en: "Описание EN",
 
+    rooms_confirm_action: 'Подтвердить действие',
     delete_confirm: 'Вы уверены, что хотите удалить номер?\n' +
     'В случае продолжения номер будет удален безвозвратно!\n' +
     'Если Вы понимаете что делаете, введите "delete" для выполнения операции:',
@@ -100,6 +104,9 @@ LANGS.en = {
     ru: "RU",
     en: "EN",
     
+    cancel: 'Cancel',
+    ok: 'Ok',
+
     room_add: "Add room",
     room_title: "Title",
     room_title_ru: "Title RU",
@@ -108,6 +115,7 @@ LANGS.en = {
     room_description_ru: "Description RU",
     room_description_en: "Description EN",
 
+    rooms_confirm_action: 'Confirm action',
     delete_confirm: 'Are you sure want to delete this room?\n' +
     'If you know that you doing, please type word "delete", to continue operation:',
 

@@ -27,6 +27,8 @@ roomsManageControllers.controller('RoomListCtrl',
     $scope.loading = true;
     $scope.priceLoading = false;
     $scope.t = window.t;
+    $scope.roomToDelete = null;
+    $scope.submitPrompt = '';
     
     $scope.load = function() {
         $scope.rooms = Room.query(
@@ -45,14 +47,9 @@ roomsManageControllers.controller('RoomListCtrl',
     $scope.load();
 
     $scope.delete = function (room) {
-        var v = prompt(t('delete_confirm'));
-        if (v == 'delete') {
-            Room.delete({id: room.id})
-                .$promise.then(function (room) {
-                    $scope.loading = true;
-                    $scope.load();
-                });
-        }
+        $scope.submitPrompt = '';
+        $scope.roomToDelete = room;
+        window.remodal.open();
     };
     
     //Возвращает соответствующую id запись из типов цены
@@ -65,6 +62,27 @@ roomsManageControllers.controller('RoomListCtrl',
         });
         return el;
     }
+
+    setTimeout(function () {
+        window.remodal = $('#modal').remodal();
+    },500);
+
+
+    $(document).on('confirmation', '.remodal', function () {
+        if ($scope.roomToDelete == null) {
+            return;
+        }
+        if ($scope.submitPrompt == 'delete') {
+            Room.delete({id: $scope.roomToDelete.id})
+                .$promise.then(function () {
+                    $scope.loading = true;
+                    $scope.load();
+                    $scope.roomToDelete = null;
+                });
+        } else {
+            window.remodal.open();
+        }
+    });
         
 }]);
 
