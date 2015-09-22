@@ -29,6 +29,7 @@ imagesManageControllers.controller('ImageListCtrl',
     $scope.loading = true;
     $scope.images = [];
     $scope.t = window.t;
+    $scope.imgToDelete = null;
     
     const defaultImage = {
         hotel_id: $rootScope.hotelId,
@@ -96,14 +97,27 @@ imagesManageControllers.controller('ImageListCtrl',
     };
     
     $scope.delete = function (image) {
-        if (confirm(t('delete_confirm'))) {
-            Image.delete({id: image.id})
-                .$promise.then(function (image) {
-                    $scope.loading = true;
-                    $scope.load();
-                });
-        }
+        $scope.imgToDelete = image;
+        window.remodal.open();
     };
-    window.s = $scope;
+
+    // Delete confirmation
+    setTimeout(function () {
+        window.remodal = $('#modal').remodal();
+    },500);
+    $(document).on('confirmation', '.remodal', function () {
+        if ($scope.imgToDelete == null) {
+            return;
+        }
+        Image.delete({id: $scope.imgToDelete.id})
+            .$promise.then(function () {
+                $scope.loading = true;
+                $scope.load();
+            });
+
+    });
+    $(document).on('cancellation', '.remodal', function () {
+        $scope.imgToDelete = null;
+    });
     
 }]);

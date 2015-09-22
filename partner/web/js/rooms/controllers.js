@@ -83,7 +83,9 @@ roomsManageControllers.controller('RoomListCtrl',
             window.remodal.open();
         }
     });
-        
+    $(document).on('cancellation', '.remodal', function () {
+        $scope.roomToDelete = null;
+    });
 }]);
 
 roomsManageControllers.controller('RoomEditCtrl', 
@@ -477,6 +479,7 @@ roomsManageControllers.controller('ImagesCtrl',
     $scope.images = [];
     $scope.t = window.t;
     $scope.room = null;
+    $scope.imgToDelete = null;
 
     //Загружаем комнаты, если был прямой заход на УРЛ
     if ($rootScope.rooms == null) {
@@ -568,13 +571,27 @@ roomsManageControllers.controller('ImagesCtrl',
     };
     
     $scope.delete = function (image) {
-        if (confirm(t('photo_delete_confirm'))) {
-            Image.delete({id: image.id})
-                .$promise.then(function (image) {
-                    $scope.loading = true;
-                    $scope.load();
-                });
-        }
+        $scope.imgToDelete = image;
+        window.remodal.open();
     };    
+
+    // Delete confirmation
+    setTimeout(function () {
+        window.remodal = $('#modal').remodal();
+    },500);
+    $(document).on('confirmation', '.remodal', function () {
+        if ($scope.imgToDelete == null) {
+            return;
+        }
+        Image.delete({id: $scope.imgToDelete.id})
+            .$promise.then(function () {
+                $scope.loading = true;
+                $scope.load();
+            });
+
+    });
+    $(document).on('cancellation', '.remodal', function () {
+        $scope.imgToDelete = null;
+    });
 
 }]);
