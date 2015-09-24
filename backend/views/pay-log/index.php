@@ -26,7 +26,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'timestamp',
+            [
+                'attribute' => 'timestamp',
+                'value' => function($model, $key, $index, $column) {
+                    return date('d.m.Y H:i:s', $model->timestamp);
+                }
+            ],
             'postParams:ntext',
             'serverParams:ntext',
 
