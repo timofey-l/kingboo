@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'category',
             [
                 'attribute' => 'log_time',
+                'format' => 'raw',
                 'value' => function($model, $key, $index, $column) {
                     return date('d.m.Y H:i:s', $model->log_time);
                 }
