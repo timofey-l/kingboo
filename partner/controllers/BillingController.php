@@ -25,6 +25,8 @@ use yii\web\Response;
 class BillingController extends Controller
 {
 
+    public $enableCsrfValidation = false;
+
     public function behaviors()
     {
         return [
