@@ -35,7 +35,7 @@ class BillingController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['pay-check', 'pay-avisio'],
+                        'actions' => ['pay-check', 'pay-avisio', 'pay-success', 'pay-fail'],
                         'roles' => ['?'],
                     ],
                     [
