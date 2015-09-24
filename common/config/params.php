@@ -12,10 +12,10 @@ return [
     'partner.credit' => 100, // сумма в рублях, до которой партнер может уходить в кредит
 
     'yandex' => [
-        'demo' => false,
-        'shopId' => '40001',
-        'scid' => '31258',
-        'shopPassword' => 'PslwyuPJSCjQX2ZOfCrz',
+        'demo' => true,
+        'shopId' => '49653',
+        'scid' => '527060',
+        'shopPassword' => '85Xj2339XEv566S',
 
     ]
 ];
