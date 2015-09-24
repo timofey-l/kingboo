@@ -21,7 +21,7 @@ if (in_array(Yii::$app->controller->action->id, ['login', 'error', 'signup', 're
     $bootstrap_js = $assetManager->publish('@bower/bootstrap/js')[1];
     $this->registerJsFile($bootstrap_js . "/tooltip.js", ['depends' => [dmstr\web\AdminLteAsset::className()]]);
     $this->registerJsFile($bootstrap_js . "/popover.js", ['depends' => [dmstr\web\AdminLteAsset::className()]]);
-    $this->registerJs("$('[data-toggle=popover]').popover();");
+    $this->registerJsFile('/js/common-scripts.js', ['depends' => [yii\bootstrap\BootstrapAsset::className()]]);
     ?>
     <?php $this->beginPage() ?>
     <!DOCTYPE html>

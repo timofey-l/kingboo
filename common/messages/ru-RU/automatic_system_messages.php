@@ -42,4 +42,5 @@ return [
     '<a href="{link}">Put money on your account</a>.' => 'На вашем аккаунте образовалась задолженность. <a href="{link}">Пополнить баланс</a>.',
     'Low balance' => 'Пополните баланс',
     'The funds on your balance are left for {n, plural, =0{# days} one{# day} few{# days} many{# days} other{# days}}. <a href="{link}">Put money on your account</a>.' => 'Средств на вашем балансе осталочь на {n, plural, =0{# дней} one{# день} few{# дня} many{# дней} other{# дня}}. <a href="{link}">Пополнить баланс</a>.',
+    'Don&acute;t show it again.' => 'Больше не показывать.',
 ];

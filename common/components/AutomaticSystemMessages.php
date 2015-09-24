@@ -3,6 +3,7 @@ namespace common\components;
  
 use \Yii;
 use yii\base\Component;
+use yii\helpers\Html;
  
 class AutomaticSystemMessages extends Component {
  
@@ -17,6 +18,8 @@ class AutomaticSystemMessages extends Component {
 
     // Обработанные сообщения, подлежащие выдаче в настоящее время
  	protected $actualMessages = [];
+    // Закрытые сообщения
+    protected $closedMessages = [];
     // Признак того, что произошли события, влияющие на сообщения
     protected $dataUpdated = false;
     // Признак, что сообщения уже проверены, устанавливается в true в ResetMessages()
@@ -79,7 +82,12 @@ class AutomaticSystemMessages extends Component {
                 }
                 $msg = $this->$f($message);
                 if ($msg) {
-                    $this->actualMessages["$key0-$key"] = $msg;
+                    $key = "$key0-$key";
+                    if ($msg['close']) {
+                        $msg['text'] .= '<p class="pull-right" data-sysmsg-id="' . $key . '"><a href="javascript:closeSystemMessage(\'' . $key . '\')">' 
+                            . \Yii::t('automatic_system_messages', 'Don&acute;t show it again.') . '</a></p>';
+                    }
+                    $this->actualMessages[$key] = $msg;
                 }
             }
         }
