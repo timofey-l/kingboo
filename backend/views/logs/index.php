@@ -28,7 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'level',
             'category',
-            'log_time',
+            [
+                'attribute' => 'log_time',
+                'value' => function($model, $key, $index, $column) {
+                    return date('d.m.Y H:i:s', $model->log_time);
+                }
+            ],
             'prefix:ntext',
             // 'message:ntext',
 
