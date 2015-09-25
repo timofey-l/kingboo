@@ -26,7 +26,7 @@ return [
             'targets' => [
                 [
                     'class' => 'yii\log\DbTarget',
-                    'levels' => ['error', 'warning', 'trace'],
+                    'levels' => ['error', 'warning'],
                 ],
                 [
                     'class' => 'yii\log\EmailTarget',

@@ -100,7 +100,7 @@ class BillingController extends Controller
 
 
     public function actionPayCheck()
-    {\Yii::trace('pay-check start','debug');
+    {
         if (!\Yii::$app->request->isPost) {
             throw new BadRequestHttpException('Wrong method');
         }
@@ -123,7 +123,7 @@ class BillingController extends Controller
             $response['code'] = 200;
             return $response;
         }
-\Yii::trace(print_r($req->post(),true),'debug');
+
         // проверка invoiceId
         $invoice = BillingInvoice::findOne((int)\Yii::$app->request->post('orderNumber', 0));
         if (is_null($invoice)) {
@@ -138,7 +138,7 @@ class BillingController extends Controller
         $payYandex->invoiceId = $response['invoiceId'];
         $payYandex->checked = true;
         $payYandex->save();
-\Yii::trace(print_r($payYandex,true),'debug');
+
         return $response;
     }
 
