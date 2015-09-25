@@ -43,7 +43,7 @@ class SystemMessages extends \yii\bootstrap\Widget
             if (isset($this->alertTypes[$message['type']])) {
                 $message_items .= 
 <<<HTML
-                    <li><!-- start message -->
+                    <li id="w-sysmsg-$id"><!-- start message -->
                         <div class="alert {$this->alertTypes[$message['type']]} system-message-alert">
                             <i class="{$this->faIcons[$message['type']]}"></i>
                             {$message['title']}<br />

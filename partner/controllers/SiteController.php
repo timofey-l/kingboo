@@ -49,6 +49,7 @@ class SiteController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
+                    'close-system-message' => ['post'],
                 ],
             ],
         ];
@@ -352,6 +353,14 @@ class SiteController extends Controller
             \Yii::$app->session->setFlash('warning', \Yii::t('partner_login', 'User not found!'));
         }
         return $this->redirect('login');
+    }
+
+    /**
+     * Закрывает системное сообщение от дальнейшего показа
+     */
+    public function actionCloseSystemMessage() {
+        $key = \Yii::$app->request->post('key');
+        \Yii::$app->automaticSystemMessages->closeMessage($key);
     }
 
     public static function checkYandexKassa()

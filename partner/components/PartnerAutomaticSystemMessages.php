@@ -5,11 +5,28 @@ use \Yii;
 use yii\base\Component;
 use partner\models\PartnerUser;
  
-class PartnerAutomaticSystemMessages extends \common\components\AutomaticSystemMessages {
+class PartnerAutomaticSystemMessages extends Component {
  
  	/**
  	 * Работа с системными сообщениями
  	 */
+
+    const TYPE_INFO = 'info';
+    const TYPE_WARNING = 'warning';
+    const TYPE_DANGER = 'danger';
+    const TYPE_ERROR = 'error';
+
+    const TIME_UPDATE = 1; // время, через которое пересчитывать сообщения (в сутках)
+    const TIME_CLOSED = 30; // время, через которое снова показывать закрытые сообщения (в сутках)
+
+    const SESSION_SHOWN_MESSAGES = 'systemMessagesShownAlert';
+    const SESSION_ALERT_FLASH_PREFIX = 'systemMessages-';
+
+    protected $systemInfo = [];
+    // Признак того, что произошли события, влияющие на сообщения
+    protected $dataUpdated = false;
+    // Признак, что сообщения уже проверены, устанавливается в true в ResetMessages()
+    protected $reset = false;
 
  	// Объект партнера
  	private $partner;
@@ -19,30 +36,86 @@ class PartnerAutomaticSystemMessages extends \common\components\AutomaticSystemM
  	// Массив, в который складываются Id номеров, по которым уже выведено сообщение из очереди (то есть следующие сообщения для этих номеров не выводятся)
  	private $stopRooms = [];
 
- 	const SESSION_SHOWN_MESSAGES = 'systemMessagesShownAlert';
- 	const SESSION_ALERT_FLASH_PREFIX = 'systemMessages-';
-
  	public function __construct() {
  		parent::__construct();
  		$this->partner = PartnerUser::findOne(\Yii::$app->user->id);
  	}
 
-     public function init() {
-        parent::init();
+    /**
+     * Привязывает события EVENT_BEFORE_REQUEST и EVENT_AFTER_REQUEST
+     */
+    public function init() {
+        Yii::$app->on(yii\base\Application::EVENT_BEFORE_REQUEST, [$this, 'prepareMessages']);
+        Yii::$app->on(yii\base\Application::EVENT_AFTER_REQUEST, [$this, 'checkUpdates']);
+    }
+
+    /**
+     * Сообщения, которые надо выводить сейчас
+     */
+    public function actualMessages() {
+        return $this->systemInfo['messages'];
+    }
+
+    public function setDataUpdated() {
+        $this->dataUpdated = true;
+    }
+
+    /**
+     * Запускает пересчет сообщений, если были изменения
+     */
+    public function checkUpdates() {
+        if ($this->dataUpdated) {
+            $this->resetMessages();
+        }
     }
 
     public function resetMessages() {
         if ($this->reset) {
             return;
         }
-    	// перезагружаем данные партнера, чтобы учесть измеения в нем
-    	$this->partner = PartnerUser::findOne(\Yii::$app->user->id);
-    	parent::resetMessages();
-    	$this->partner->system_info = serialize([
-            'messages' => $this->actualMessages,
-            'messages_update_time' => time(), // Время апдейта сообщений
-        ]);
+        if (!$this->systemInfo) {
+            $this->readSystemInfo();
+        }
+
+
+        $this->systemInfo['messages'] = [];
+        // Цикл по последовательностям
+        foreach ($this->messages() as $key0 => $query) {
+            //Цикл по сообщениям
+            foreach ($query as $key => $message) {
+                $f = $message['condition'];
+                // Проверяем условие и меняем сообщение, если это предусматривает функция
+                if (!method_exists($this, $f)) {
+                    throw new \Exception("Method '$f' is not defined in class " . get_class($this) );
+                }
+                // Если сообщение было закрыто, переходим к следующему
+                if (isset($this->systemInfo['closed']["$key0-$key"]) && $this->systemInfo['closed']["$key0-$key"] > (time() - 86400 * self::TIME_CLOSED)) {
+                    continue;
+                }
+                $msg = $this->$f($message);
+                if ($msg) {
+                    $key = "$key0-$key";
+                    if ($msg['close']) {
+                        $msg['text'] .= '<p class="system-message-dont-show" data-sysmsg-id="' . $key . '"><a href="javascript:closeSystemMessage(\'' . $key . '\')">' 
+                            . \Yii::t('automatic_system_messages', 'Don&acute;t show it again.') . '</a></p>';
+                    }
+                    $this->systemInfo['messages'][$key] = $msg;
+                }
+            }
+        }
+        \Yii::trace('Reset messages', 'debug');
+        $this->reset = true;
+
+
+        $this->systemInfo['messages_update_time'] = time(); // Время апдейта сообщений
+        $this->partner->system_info = serialize($this->systemInfo);
     	$this->partner->update(false, ['system_info']);
+    }
+
+    public function readSystemInfo() {
+        if ($this->partner->system_info) {
+            $this->systemInfo = unserialize($this->partner->system_info);
+        }
     }
 
     public function prepareMessages($event) {
@@ -56,10 +129,9 @@ class PartnerAutomaticSystemMessages extends \common\components\AutomaticSystemM
     	if (!$this->partner->system_info) { // Если поле system_info пустое, запускаем цикл проверки
     		$this->resetMessages();
     	} else { // Если поле system_info есть, берем сообщения оттуда
-    		$si = unserialize($this->partner->system_info);
-    		$this->actualMessages = $si['messages'];
-            if (isset($si['messages_update_time']) && $si['messages_update_time']) {
-                if (time() - $si['messages_update_time'] > 86400 * 1) { // Если апдейт был больше 1-го дня назад - обновляем сообщения
+            $this->readSystemInfo();
+            if (isset($this->systemInfo['messages_update_time']) && $this->systemInfo['messages_update_time']) {
+                if (time() - $this->systemInfo['messages_update_time'] > 86400 * self::TIME_UPDATE) { // Если апдейт был больше 1-го дня назад - обновляем сообщения
                     $this->resetMessages();
                 }
             } else {
@@ -71,11 +143,11 @@ class PartnerAutomaticSystemMessages extends \common\components\AutomaticSystemM
     	// Получаем список уже показанных сообщений
     	$shownMessages = \Yii::$app->session->get(self::SESSION_SHOWN_MESSAGES, []);//$shownMessages = [];print_r($shownMessages);
     	$a = [];
-        foreach ($this->actualMessages as $k => $message) {
+        foreach ($this->systemInfo['messages'] as $k => $message) {
             // Если сообщение не было показано, или типа Error, добавляем его к показу и в список показанных
         	if ($message['type'] == self::TYPE_ERROR || !in_array($k, $shownMessages)) { 
         		$a[$message['type']][] = "<b>{$message['title']}</b><br />{$message['text']}";
-        		\Yii::$app->session->set(self::SESSION_SHOWN_MESSAGES, array_keys($this->actualMessages));
+        		\Yii::$app->session->set(self::SESSION_SHOWN_MESSAGES, array_keys($this->systemInfo['messages']));
         	}
         }
         if ($a) {
@@ -83,9 +155,26 @@ class PartnerAutomaticSystemMessages extends \common\components\AutomaticSystemM
             	\Yii::$app->session->setFlash($k, $v);
         	}
         }
-
     }
 
+    public function closeMessage($key) {
+        $this->readSystemInfo();
+        if (!$this->systemInfo || !isset($this->systemInfo['messages'][$key])) {
+            return;
+        }
+        $this->systemInfo['closed'][$key] = time();
+        
+        $this->partner->system_info = serialize($this->systemInfo);
+        $this->partner->update();
+    }
+
+    /**
+     * Возвращает массив сообщений, переопределяется в потомках
+     * Массив имет вид ['query-key' => ['item-key' => ['type' => $v, 'condition' => $v, 'title' => $v, 'text' => $v, 'close' => true|false]]] 
+     * type - тип сообщения (TYPE_INFO, TYPE_WARNING, TYPE_DANGER)
+     * condition - функция, которая обрабатывает сообщения (она же меняет сообщение и возвращает его измененным, например вставляет в текст ссылки)
+     * close - можно ли попросить больше не показывать это сообщение
+     */
  	public function messages() {
  		return [
             // Окончание демо периода
@@ -95,6 +184,7 @@ class PartnerAutomaticSystemMessages extends \common\components\AutomaticSystemM
                     'condition' => 'condDemoShort',
                     'title' => \Yii::t('automatic_system_messages', 'Expiration of demo period'),
                     'text' => 'Expiration of demo period in {n, plural, =0{# days} one{# day} few{# days} many{# days} other{# days}}. <a href="{link}">Put money on your account</a>.',
+                    'close' => false,
                 ],
             ],
             'balance' => [
@@ -103,18 +193,21 @@ class PartnerAutomaticSystemMessages extends \common\components\AutomaticSystemM
                     'condition' => 'condBalanceCritical',
                     'title' => \Yii::t('automatic_system_messages', 'The account is blocked'),
                     'text' => 'Your balance is {sum}. <a href="{link}">Put money on your account</a>.',
+                    'close' => false,
                 ],
                 'negative' => [
                     'type' => self::TYPE_DANGER,
                     'condition' => 'condBalanceNegative',
                     'title' => \Yii::t('automatic_system_messages', 'Your balance is negative'),
                     'text' => \Yii::t('automatic_system_messages', '<a href="{link}">Put money on your account</a>.', ['link' => \yii\helpers\Url::toRoute('/billing/pay')]),
+                    'close' => false,
                 ],
                 'short' => [
                     'type' => self::TYPE_WARNING,
                     'condition' => 'condBalanceShort',
                     'title' => \Yii::t('automatic_system_messages', 'Low balance'),
                     'text' => 'Your balance is {sum}. <a href="{link}">Put money on your account</a>.',
+                    'close' => false,
                 ],
             ],
  			// Серия действий необходмых для начала работы
@@ -124,42 +217,49 @@ class PartnerAutomaticSystemMessages extends \common\components\AutomaticSystemM
  					'condition' => 'condHotelNotCreated',
  					'title' => \Yii::t('automatic_system_messages', 'No registered hotels'),
  					'text' => \Yii::t('automatic_system_messages', 'Please, <a href="{link}">register a hotel</a> to continue.', ['link'=>\yii\helpers\Url::toRoute('/hotel/create')]),
+                    'close' => false,
  				],
  				'noRooms' => [
  					'type' => self::TYPE_DANGER,
  					'condition' => 'condRoomNotCreated',
  					'title' => \Yii::t('automatic_system_messages', 'Hotel registration is not complete'),
  					'text' => 'No rooms registered yet in the following hotels: {link}. Follow the links to add.',
+                    'close' => false,
  				],
  				'noHotelPhotos' => [
  					'type' => self::TYPE_DANGER,
  					'condition' => 'condNoHotelPhotos',
  					'title' => \Yii::t('automatic_system_messages', 'Hotel registration is not complete'),
  					'text' => 'No photos uploded for the following hotels: {link}. Follow the links to upload.',
+                    'close' => false,
  				],
  				'noRoomPhotos' => [
  					'type' => self::TYPE_DANGER,
  					'condition' => 'condNoRoomPhotos',
  					'title' => \Yii::t('automatic_system_messages', 'Room registration is not complete'),
  					'text' => 'No photos uploded for the following rooms: {link}. Follow the links to upload.',
+                    'close' => false,
  				],
  				'noPayMethods' => [
  					'type' => self::TYPE_WARNING,
  					'condition' => 'condNoPayMethods',
  					'title' => \Yii::t('automatic_system_messages', 'Booking is not available'),
  					'text' => \Yii::t('automatic_system_messages', '<a href="{link}">Select the avaliable payment options</a> to activate on-site booking.', ['link'=>\yii\helpers\Url::toRoute('/profile')]),
+                    'close' => true,
  				],
  				'noPrices' => [
  					'type' => self::TYPE_WARNING,
  					'condition' => 'condNoPrices',
  					'title' => \Yii::t('automatic_system_messages', 'Booking is limited'),
  					'text' => 'Not all prices are specified for the next 30 days for the following rooms: {link}. Follow the links to set prices.',
+                    'close' => true,
  				],
  				'noYandexKassa' => [
  					'type' => self::TYPE_WARNING,
  					'condition' => 'condNoYandexKassa',
  					'title' => \Yii::t('automatic_system_messages', 'Booking is limited'),
  					'text' => \Yii::t('automatic_system_messages', '<a href="{link}">Setup Yandex.Kassa</a> to activate online booking.', ['link'=>\yii\helpers\Url::toRoute('/profile')]),
+                    'close' => true,
  				],
  			],
  		];
@@ -384,7 +484,7 @@ class PartnerAutomaticSystemMessages extends \common\components\AutomaticSystemM
         if (!$this->partner->getDemoExpired()) {
             return false;
         }
-        if (isset($this->actualMessages['balance-critical'])) {
+        if (isset($this->systemInfo['messages']['balance-critical'])) {
             return false;
         }
         if ($this->partner->billing->balance <= 0) {
@@ -398,7 +498,7 @@ class PartnerAutomaticSystemMessages extends \common\components\AutomaticSystemM
         if (!$this->partner->getDemoExpired()) {
             return false;
         }
-        if (isset($this->actualMessages['balance-critical']) || isset($this->actualMessages['balance-negative'])) {
+        if (isset($this->systemInfo['messages']['balance-critical']) || isset($this->systemInfo['messages']['balance-negative'])) {
             return false;
         }
         // TODO: сделать вывод сообщений в зависимости от дневных затрат
