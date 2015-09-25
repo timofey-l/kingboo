@@ -121,6 +121,7 @@ class BillingController extends Controller
         // проверка запроса по хэшу и shopId
         if ($req->post('shopId') != $params['shopId'] || !YandexHelper::checkMd5Common('check', $req->post(), $params)) {
             $response['code'] = 200;
+            $response['message'] = "MD5 check failed";
             return $response;
         }
 
