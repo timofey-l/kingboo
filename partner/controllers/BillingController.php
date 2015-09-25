@@ -109,7 +109,7 @@ class BillingController extends Controller
         $req = \Yii::$app->request;
         $params = \Yii::$app->params['yandex'];
         $response = [
-            'type' => 'avisio',
+            'type' => 'check',
             'code' => 200,
             'performedDatetime' => date(\DateTime::W3C),
             'invoiceId' => \Yii::$app->request->post('invoiceId', ''),
@@ -121,6 +121,7 @@ class BillingController extends Controller
         // проверка запроса по хэшу и shopId
         if ($req->post('shopId') != $params['shopId'] || !YandexHelper::checkMd5Common('check', $req->post(), $params)) {
             $response['code'] = 200;
+            $response['message'] = "MD5 check failed";
             return $response;
         }
 
