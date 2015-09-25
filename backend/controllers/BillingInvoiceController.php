@@ -34,7 +34,7 @@ class BillingInvoiceController extends Controller
     {
         $searchModel = new BillingInvoiceSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->sort->defaultOrder = ['created_at' => SORT_DESC];
+        $dataProvider->sort->defaultOrder = ['id' => SORT_DESC];
 
         return $this->render('index', [
             'searchModel' => $searchModel,

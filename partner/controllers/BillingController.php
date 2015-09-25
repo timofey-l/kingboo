@@ -105,6 +105,8 @@ class BillingController extends Controller
             throw new BadRequestHttpException('Wrong method');
         }
 
+        \Yii::info('pay-check start', 'debug');
+
         \Yii::$app->response->format = 'yandex';
         $req = \Yii::$app->request;
         $params = \Yii::$app->params['yandex'];
@@ -119,9 +121,10 @@ class BillingController extends Controller
         ];
 
         // проверка запроса по хэшу и shopId
-        if ($req->post('shopId') != $params['shopId'] || !YandexHelper::checkMd5Common('check', $req->post(), $params)) {
-            $response['code'] = 200;
+        if ($req->post('shopId') != $params['shopId'] || !YandexHelper::checkMd5Common('checkOrder', $req->post(), $params)) {
+            $response['code'] = 1;
             $response['message'] = "MD5 check failed";
+            \Yii::info('Провал проверки по MD5', 'debug');
             return $response;
         }
 
@@ -129,6 +132,7 @@ class BillingController extends Controller
         $invoice = BillingInvoice::findOne((int)\Yii::$app->request->post('orderNumber', 0));
         if (is_null($invoice)) {
             $response['message'] = 'Billing invoice was not found!';
+            \Yii::info('Провал проверки по invoiceId', 'debug');
             return $response;
         }
 
@@ -138,7 +142,14 @@ class BillingController extends Controller
         $payYandex->billing_invoice_id = $invoice->id;
         $payYandex->invoiceId = $response['invoiceId'];
         $payYandex->checked = true;
-        $payYandex->save();
+        if ($payYandex->save()) {
+            \Yii::info('Yandex Pay создано. id'.$payYandex->id, 'debug');
+        } else {
+            \Yii::info("Yandex Pay не сохранено.\n". var_export($payYandex->errors, true));
+        }
+
+        $response['code'] = 0;
+        $response['message'] = 'Проврка прошла успешно';
 
         return $response;
     }

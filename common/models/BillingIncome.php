@@ -60,4 +60,17 @@ class BillingIncome extends \yii\db\ActiveRecord
         return $this->hasOne(BillingInvoice::className(), ['id' => 'invoice_id']);
     }
 
+    public function afterSave($insert, $chAttrs)
+    {
+        if ($insert) {
+            \partner\models\PartnerUser::findOne(\Yii::$app->user->id)->updateBalance();
+
+            // Сигнал для системы сообщений
+            if (isset(\Yii::$app->automaticSystemMessages)) {
+            	\Yii::$app->automaticSystemMessages->setDataUpdated();
+            }
+
+        }
+    }
+
 }

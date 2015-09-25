@@ -67,7 +67,7 @@ class BillingPaysYandex extends \yii\db\ActiveRecord
         if (parent::afterSave($insert, $changedAttributes)) {
 
             // если payed стало true - добавляем запись в billing_income
-            if (isset($changedAttributes['payed']) && $changedAttributes['payed'] == false && $this->payed == true) {
+            if ($this->payed == true) {
                 /** @var BillingInvoice $invoice */
                 $invoice = $this->invoice;
 

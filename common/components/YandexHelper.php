@@ -137,6 +137,14 @@ class YandexHelper
         $hashArray[] = ArrayHelper::getValue($params, 'invoiceId', '');
         $hashArray[] = ArrayHelper::getValue($params, 'customerNumber', '');
         $hashArray[] = ArrayHelper::getValue($confParams,'shopPassword', '');
+
+
+        \Yii::info('MD5 check. '. "\n". "POST:" . var_export($params, true) . "\n" . "params:\n" . var_export($confParams, true), 'debug' );
+
+        \Yii::info("hash array:\n".var_export($hashArray, true), 'debug');
+        \Yii::info(var_export(strtolower(md5(implode(';', $hashArray))), true), 'debug');
+        \Yii::info(var_export(strtolower(ArrayHelper::getValue($params,'md5', '')), true), 'debug');
+
         return strtolower(md5(implode(';', $hashArray))) == strtolower(ArrayHelper::getValue($params,'md5', ''));
     }
 
