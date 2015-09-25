@@ -33,7 +33,7 @@ return [
                     'levels' => ['error'],
                     'message' => [
                         'from' => ['no-reply@king-boo.com'],
-                        'to' => ['timofeylyzhenkov@gmail.com' => 'Timofey Lyzhenkov', 'admin@king-boo.com'],
+                        'to' => ['admin@king-boo.com' => 'Admin', 'timofeylyzhenkov@gmail.com' => 'Timofey Lyzhenkov'],
                         'subject' => 'Errors at king-boo.com',
                     ],
                 ],
