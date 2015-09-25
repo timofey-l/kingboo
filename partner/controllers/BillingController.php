@@ -109,7 +109,7 @@ class BillingController extends Controller
         $req = \Yii::$app->request;
         $params = \Yii::$app->params['yandex'];
         $response = [
-            'type' => 'avisio',
+            'type' => 'check',
             'code' => 200,
             'performedDatetime' => date(\DateTime::W3C),
             'invoiceId' => \Yii::$app->request->post('invoiceId', ''),
