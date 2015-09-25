@@ -26,14 +26,14 @@ return [
             'targets' => [
                 [
                     'class' => 'yii\log\DbTarget',
-                    'levels' => ['error', 'warning'],
+                    'levels' => ['error', 'warning', 'trace'],
                 ],
                 [
                     'class' => 'yii\log\EmailTarget',
                     'levels' => ['error'],
                     'message' => [
                         'from' => ['no-reply@king-boo.com'],
-                        'to' => ['timofeylyzhenkov@gmail.com' => 'Timofey Lyzhenkov', 'king-boo@itdesign.ru'],
+                        'to' => ['timofeylyzhenkov@gmail.com' => 'Timofey Lyzhenkov', 'admin@king-boo.ru'],
                         'subject' => 'Errors at king-boo.com',
                     ],
                 ],
