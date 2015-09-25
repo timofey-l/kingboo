@@ -96,7 +96,7 @@ class PartnerAutomaticSystemMessages extends Component {
                 if ($msg) {
                     $key = "$key0-$key";
                     if ($msg['close']) {
-                        $msg['text'] .= '<p class="pull-right" data-sysmsg-id="' . $key . '"><a href="javascript:closeSystemMessage(\'' . $key . '\')">' 
+                        $msg['text'] .= '<p class="system-message-dont-show" data-sysmsg-id="' . $key . '"><a href="javascript:closeSystemMessage(\'' . $key . '\')">' 
                             . \Yii::t('automatic_system_messages', 'Don&acute;t show it again.') . '</a></p>';
                     }
                     $this->systemInfo['messages'][$key] = $msg;
