@@ -13,19 +13,26 @@ class TransformToHttps extends Component {
 		curl_setopt($s, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($s, CURLOPT_FRESH_CONNECT, true);
 		$page = curl_exec($s);
-		$contentType = curl_getinfo($s, CURLINFO_CONTENT_TYPE);
 		curl_close($s);
 		
 		$response = Yii::$app->response;
-		/*if ($script) {
+		if ($script) {
 			$response->format = \yii\web\Response::FORMAT_RAW;
 			if (preg_match("#\.css$#is", $url)) {
 				$response->headers->set('Content-type', 'text/css');
 			}
-		}*/
-
-		if ($contentType) {
-			$response->headers->set('Content-type', $contentType);
+			if (preg_match("#\.js$#is", $url)) {
+				$response->headers->set('Content-type', 'application/javascript');
+			}
+			if (preg_match("#\.jpg$|\.jpeg$#is", $url)) {
+				$response->headers->set('Content-type', 'image/jpeg');
+			}
+			if (preg_match("#\.png$#is", $url)) {
+				$response->headers->set('Content-type', 'image/png');
+			}
+			if (preg_match("#\.gif$#is", $url)) {
+				$response->headers->set('Content-type', 'image/gif');
+			}
 		}
 
 		if (!$page) {
