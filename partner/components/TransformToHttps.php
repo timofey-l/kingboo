@@ -24,7 +24,7 @@ class TransformToHttps extends Component {
 		$headers = explode("\r\n", $headers);
 		if (is_array($headers)) {
 			foreach ($headers as $header) {
-				if (strpos($header, 'Content-Type:') === 0) {
+				if (strpos($header, 'Content-Type:') !== false) {
 					$response->headers->set('Content-Type', $header);
 				}
 			}
