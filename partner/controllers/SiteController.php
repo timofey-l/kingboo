@@ -363,6 +363,14 @@ class SiteController extends Controller
         \Yii::$app->automaticSystemMessages->closeMessage($key);
     }
 
+    /**
+     * Преобразует http с frontend в https с partner для отображения iframe и виджета в partner
+     */
+    public function actionTransformToHttps($url) 
+    {
+        echo \partner\components\TransformToHttps::get($url);
+    }
+
     public static function checkYandexKassa()
     {
         return;
@@ -381,4 +389,5 @@ class SiteController extends Controller
             }
         }
     }
+
 }

@@ -65,6 +65,7 @@ window.updateView = function() {
 
     // domain
     params.domain = $('[name=domain]:checked').val();
+    var partner_url = 'https://partner.king-boo.com/site/transform-to-https?url=';
 
     var style = ' style=\"';
     if (params.width100) {
@@ -73,7 +74,8 @@ window.updateView = function() {
     style += 'height:' + params.height + 'px;';
     style += '\"';
 
-    var url = params.domain + '?embedded=1';
+    var url = params.domain + '%3Fembedded=1';
+    var url = partner_url + url;
     if (params.hide_desc) {
         url += '&no_desc=1';
     }
