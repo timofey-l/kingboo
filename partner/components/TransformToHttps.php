@@ -6,25 +6,22 @@ use yii\base\Component;
  
 class TransformToHttps extends Component {
 
-	public static function get($url) {
+	public static function get($url, $script = 0) {
 		$s = curl_init(); 
 		curl_setopt($s, CURLOPT_URL, $url); 
 		curl_setopt($s, CURLOPT_RETURNTRANSFER, true); 
 		$page = curl_exec($s);
 		curl_close($s);
 		if (!$page) return '';
+		if ($script) return $page;
 
 		$page = preg_replace_callback("#href=\"([^\"]+?)\"#is", function($matches) {
-			//print_r($matches);
 			$s = self::replace($matches);
-			//echo $s.'<br>';
 			return "href=\"$s\"";
 		}, $page);
 
 		$page = preg_replace_callback("#src=\"([^\"]+?)\"#is", function($matches) {
-			//print_r($matches);
 			$s = self::replace($matches);
-			//echo $s.'<br>';
 			return "src=\"$s\"";
 		}, $page);
 
@@ -32,14 +29,18 @@ class TransformToHttps extends Component {
 	}
 
 	private static function replace($matches) {
+			print_r($matches);
 		$base = 'https://' . \Yii::$app->params['partnerDomain'];
-		if (strpos($matches[1], '/') === 0) {
+		if (strpos($matches[1], '/assets/') === 0) {
+			$s = $base . '/site/transfer-to-http?script=1&url=http://' . \Yii::$app->params['mainDomain'] . $matches[1];
+		} elseif (strpos($matches[1], '/') === 0) {
 			$s = $base . $matches[1];
 		} elseif (strpos($matches[1], 'mailto:') === 0 || $matches[1]{0} == '{') {
 			$s = $matches[1];
 		} else {
 			$s = $base . '/' . $matches[1];
 		}
+			echo $s.'<br>';
 		return $s;
 	}
 }

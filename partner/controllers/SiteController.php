@@ -366,9 +366,9 @@ class SiteController extends Controller
     /**
      * Преобразует http с frontend в https с partner для отображения iframe и виджета в partner
      */
-    public function actionTransformToHttps($url) 
+    public function actionTransformToHttps($url, $script = 0) 
     {
-        echo \partner\components\TransformToHttps::get($url);
+        echo \partner\components\TransformToHttps::get($url, $script);
     }
 
     public static function checkYandexKassa()
