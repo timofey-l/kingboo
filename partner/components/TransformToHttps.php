@@ -7,7 +7,7 @@ use yii\base\Component;
 class TransformToHttps extends Component {
 
 	public static function get($url, $script = 0) {
-		if (strpos($url, \Yii::$app->params['mainDomain']) === false) {
+		if (strpos($url, \Yii::$app->params['mainDomainShort']) === false) {
 			return;
 		}
 
