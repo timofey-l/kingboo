@@ -29,7 +29,6 @@ class TransformToHttps extends Component {
 	}
 
 	private static function replace($matches) {
-			print_r($matches);
 		$base = 'https://' . \Yii::$app->params['partnerDomain'];
 		if (strpos($matches[1], '/assets/') === 0) {
 			$s = $base . '/site/transfer-to-http?script=1&url=http://' . \Yii::$app->params['mainDomain'] . $matches[1];
@@ -40,7 +39,6 @@ class TransformToHttps extends Component {
 		} else {
 			$s = $base . '/' . $matches[1];
 		}
-			echo $s.'<br>';
 		return $s;
 	}
 }
