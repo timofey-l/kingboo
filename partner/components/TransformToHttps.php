@@ -7,6 +7,10 @@ use yii\base\Component;
 class TransformToHttps extends Component {
 
 	public static function get($url, $script = 0) {
+		if (strpos($url, \Yii::$app->params['mainDomain']) === false) {
+			return;
+		}
+
 		$s = curl_init(); 
 		curl_setopt($s, CURLOPT_URL, $url); 
 		curl_setopt($s, CURLOPT_RETURNTRANSFER, true); 
