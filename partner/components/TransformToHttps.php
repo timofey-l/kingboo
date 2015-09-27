@@ -10,30 +10,24 @@ class TransformToHttps extends Component {
 		$s = curl_init(); 
 		curl_setopt($s, CURLOPT_URL, $url); 
 		curl_setopt($s, CURLOPT_RETURNTRANSFER, true); 
-		curl_setopt($s, CURLOPT_HEADER, true);
-		$result = curl_exec($s);
+		curl_setopt($s, CURLOPT_FOLLOWLOCATION, true);
+		$page = curl_exec($s);echo $page;
 
-		$header_size = curl_getinfo($s, CURLINFO_HEADER_SIZE);
 		curl_close($s);
 		
 		$response = Yii::$app->response;
-
-		$headers = substr($result, 0, $header_size);
-		$page = substr($result, $header_size);
-		$headers = explode("\r\n", $headers);
-		foreach ($headers as $header) {
-			//echo $header.'<br>';
-			if (strpos($header, 'Content-Type:') === 0) {
-				$response->headers->set('Content-Type', $header);
-			}
+		if ($script) {
+			$response->format = \yii\web\Response::FORMAT_RAW;
 		}
 
 		if (!$page) {
 			$response->content = '';
+			$response->send();
 			return;
 		}
 		if ($script) {
 			$response->content = $page;
+			$response->send();
 			return;
 		}
 
@@ -52,7 +46,7 @@ class TransformToHttps extends Component {
 	}
 
 	private static function replace($matches) {
-		$base = 'https://' . \Yii::$app->params['partnerDomain'];
+		$base = \Yii::$app->params['partnerProtocol'] . '://' . \Yii::$app->params['partnerDomain'];
 		if (strpos($matches[1], '/assets/') === 0) {
 			$s = $base . '/site/transform-to-https?script=1&url=http://' . \Yii::$app->params['mainDomain'] . $matches[1];
 		} elseif (strpos($matches[1], '/') === 0) {

@@ -1,8 +1,10 @@
 <?php
 return [
     'mainDomain' => 'www.king-boo.com',
+    'mainProtocol' => 'http',
     'mainDomainShort' => 'king-boo.com',
     'partnerDomain' => 'partner.king-boo.com',
+    'partnerProtocol' => 'https',
     'hotelsDomain' => 'king-boo.com',
     'adminEmail' => ['admin@king-boo.com' => 'King-Boo Administrator','timofeylyzhenkov@gmail.com' => 'Timofey Lyzhenkov'],
     'email.from' => ['no-reply@king-boo.com' => 'King-Boo Booking System'],
