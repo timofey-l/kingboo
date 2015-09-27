@@ -31,7 +31,7 @@ class TransformToHttps extends Component {
 	private static function replace($matches) {
 		$base = 'https://' . \Yii::$app->params['partnerDomain'];
 		if (strpos($matches[1], '/assets/') === 0) {
-			$s = $base . '/site/transfer-to-http?script=1&url=http://' . \Yii::$app->params['mainDomain'] . $matches[1];
+			$s = $base . '/site/transfer-to-https?script=1&url=http://' . \Yii::$app->params['mainDomain'] . $matches[1];
 		} elseif (strpos($matches[1], '/') === 0) {
 			$s = $base . $matches[1];
 		} elseif (strpos($matches[1], 'mailto:') === 0 || $matches[1]{0} == '{') {
