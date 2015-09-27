@@ -12,17 +12,26 @@ class TransformToHttps extends Component {
 		curl_setopt($s, CURLOPT_RETURNTRANSFER, true); 
 		curl_setopt($s, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($s, CURLOPT_FRESH_CONNECT, true);
-		$page = curl_exec($s);
-
+		curl_setopt($s, CURLOPT_HEADER, true);
+		$result = curl_exec($s);
+		$header_size = curl_getinfo($s, CURLINFO_HEADER_SIZE);
 		curl_close($s);
 		
 		$response = Yii::$app->response;
-		if ($script) {
+		$headers = substr($result, 0, $header_size);
+-		$page = substr($result, $header_size);
+-		$headers = explode("\r\n", $headers);
+-		foreach ($headers as $header) {
+-			if (strpos($header, 'Content-Type:') === 0) {
+-				$response->headers->set('Content-Type', $header);
+-			}
+		}
+		/*if ($script) {
 			$response->format = \yii\web\Response::FORMAT_RAW;
 			if (preg_match("#\.css#is", $url)) {
 				$response->headers->set('Content-type', 'text/css');
 			}
-		}
+		}*/
 
 		if (!$page) {
 			$response->content = '';
