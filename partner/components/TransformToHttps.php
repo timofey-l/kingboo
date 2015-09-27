@@ -20,7 +20,7 @@ class TransformToHttps extends Component {
 		if ($script) {
 			$response->format = \yii\web\Response::FORMAT_RAW;
 			if (preg_match("#\.css#is", $url)) {
-				$headers->set('Content-type', 'text/css');
+				$response->headers->set('Content-type', 'text/css');
 			}
 		}
 
