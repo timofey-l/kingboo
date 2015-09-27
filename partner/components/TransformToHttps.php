@@ -11,7 +11,7 @@ class TransformToHttps extends Component {
 		curl_setopt($s, CURLOPT_URL, $url); 
 		curl_setopt($s, CURLOPT_RETURNTRANSFER, true); 
 		curl_setopt($s, CURLOPT_FOLLOWLOCATION, true);
-		$page = curl_exec($s);echo $page;
+		$page = curl_exec($s);
 
 		curl_close($s);
 		
