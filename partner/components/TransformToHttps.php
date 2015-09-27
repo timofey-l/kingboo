@@ -19,13 +19,17 @@ class TransformToHttps extends Component {
 		
 		$response = Yii::$app->response;
 		$headers = substr($result, 0, $header_size);
--		$page = substr($result, $header_size);
--		$headers = explode("\r\n", $headers);
--		foreach ($headers as $header) {
--			if (strpos($header, 'Content-Type:') === 0) {
--				$response->headers->set('Content-Type', $header);
--			}
+		$page = substr($result, $header_size);
+
+		$headers = explode("\r\n", $headers);
+		if (is_array($headers)) {
+			foreach ($headers as $header) {
+				if (strpos($header, 'Content-Type:') === 0) {
+					$response->headers->set('Content-Type', $header);
+				}
+			}
 		}
+
 		/*if ($script) {
 			$response->format = \yii\web\Response::FORMAT_RAW;
 			if (preg_match("#\.css#is", $url)) {
