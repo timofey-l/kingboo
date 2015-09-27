@@ -74,14 +74,19 @@ window.updateView = function() {
     style += 'height:' + params.height + 'px;';
     style += '\"';
 
+    var code = params.domain + '?embedded=1';
     var url = params.domain + '%3Fembedded=1';
+
     var url = partner_url + url;
     if (params.hide_desc) {
+        code += '&no_desc=1';
         url += '&no_desc=1';
     }
+    
+    var iframe_code = '<iframe src=\"' + code + '\" frameborder=\"0\" ' + style + '></iframe>';
     var iframe_text = '<iframe src=\"' + url + '\" frameborder=\"0\" ' + style + '></iframe>';
 
-    $('#code').val(iframe_text);
+    $('#code').val(iframe_code);
     $('#iframe-target').html(iframe_text);
 //    $('#iframe-target').append($(iframe_text));
 }
