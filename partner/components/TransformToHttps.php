@@ -10,10 +10,32 @@ class TransformToHttps extends Component {
 		$s = curl_init(); 
 		curl_setopt($s, CURLOPT_URL, $url); 
 		curl_setopt($s, CURLOPT_RETURNTRANSFER, true); 
-		$page = curl_exec($s);
+		curl_setopt($s, CURLOPT_HEADER, true);
+		$result = curl_exec($s);
+
+		$header_size = curl_getinfo($s, CURLINFO_HEADER_SIZE);
 		curl_close($s);
-		if (!$page) return '';
-		if ($script) return $page;
+		
+		$response = Yii::$app->response;
+
+		$headers = substr($result, 0, $header_size);
+		$page = substr($result, $header_size);
+		$headers = explode("\r\n", $headers);
+		foreach ($headers as $header) {
+			//echo $header.'<br>';
+			if (strpos($header, 'Content-Type:') === 0) {
+				$response->headers->set('Content-Type', $header);
+			}
+		}
+
+		if (!$page) {
+			$response->content = '';
+			return;
+		}
+		if ($script) {
+			$response->content = $page;
+			return;
+		}
 
 		$page = preg_replace_callback("#href=\"([^\"]+?)\"#is", function($matches) {
 			$s = self::replace($matches);
@@ -25,7 +47,8 @@ class TransformToHttps extends Component {
 			return "src=\"$s\"";
 		}, $page);
 
-		return $page;
+		$response->content = $page;
+		$response->send();
 	}
 
 	private static function replace($matches) {

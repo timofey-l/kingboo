@@ -368,7 +368,7 @@ class SiteController extends Controller
      */
     public function actionTransformToHttps($url, $script = 0) 
     {
-        echo \partner\components\TransformToHttps::get($url, $script);
+        \partner\components\TransformToHttps::get($url, $script);
     }
 
     public static function checkYandexKassa()
