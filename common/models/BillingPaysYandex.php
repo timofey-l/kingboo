@@ -70,6 +70,8 @@ class BillingPaysYandex extends \yii\db\ActiveRecord
             if ($this->payed == true) {
                 /** @var BillingInvoice $invoice */
                 $invoice = $this->invoice;
+                $invoice->payed = true;
+                $invoice->save();
 
                 $income = new BillingIncome();
                 $income->sum = $invoice->sum;
