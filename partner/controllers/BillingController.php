@@ -90,6 +90,7 @@ class BillingController extends Controller
         } else {
             $payMethods = PayMethod::find()
                 ->where(['in', 'yandex_code', ['AC', 'GP', 'AB', 'PC', 'WM', 'PB']])
+                ->orderBy('order ASC')
                 ->all();
 
             return $this->render('pay', [

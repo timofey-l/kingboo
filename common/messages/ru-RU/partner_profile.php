@@ -40,4 +40,5 @@ return [
     'Shop password (shopPassword)' => 'Пароль магазина (shopPassword)',
     'Showcase identifier (scid)' => 'Идентификатор витрины (scid)',
     'Yandex.Money payment setup' => 'Настройка оплаты через Яндекс.Деньги',
+    'Demo mode' => 'Тестовый режим',
 ];

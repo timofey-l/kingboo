@@ -24,5 +24,7 @@ return [
         'shopId' => '49653',
         'scid' => '35070',
         'shopPassword' => '85Xj2339XEv566S',
+        'actionURL' => 'https://money.yandex.ru/eshop.xml',
+        'demoActionURL' => 'https://demomoney.yandex.ru/eshop.xml',
     ]
 ];

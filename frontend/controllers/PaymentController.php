@@ -73,6 +73,7 @@ class PaymentController extends \yii\web\Controller
 			//\Yii::trace("sum=$pay_sum, -%=".$pay_sum = $order->hotel->currency->convertTo($order->pay_sum, 'RUB'),'debug');
 
 			return base64_encode($this->render('_pay_form', [
+				'actionURL'		 => $partner->yandex_demo ? \Yii::$app->params['yandex']['demoActionURL'] : \Yii::$app->params['yandex']['actionURL'],
 				'shopId'         => $partner->shopId,
 				'scid'           => $partner->scid,
 				'sum'            => $order->payment_system_sum,

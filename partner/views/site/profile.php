@@ -75,12 +75,15 @@ $this->registerJs("$('input[type=checkbox]').iCheck({
                 <div class="box-body">
                     <div class="row">
                         <div class="col-sm-12 col-md-4">
+                            <?= $form->field($user, 'yandex_demo')->checkbox([
+                                'class' => 'iCheck',
+                            ]) ?>
                             <?= $form->field($user, 'shopId') ?>
                             <?= $form->field($user, 'scid') ?>
                             <?= $form->field($user, 'shopPassword') ?>
                         </div>
                         <div class="col-sm-12 col-md-8">
-                            <?= $form->field($user, 'payMethods')->checkboxList(ArrayHelper::map(PayMethod::find()->all(), 'id', 'title_' . $l), [
+                            <?= $form->field($user, 'payMethods')->checkboxList(ArrayHelper::map(PayMethod::find()->orderBy('order ASC')->all(), 'id', 'title_' . $l), [
                                 'itemOptions' => [
                                     'class' => 'iCheck',
                                 ]

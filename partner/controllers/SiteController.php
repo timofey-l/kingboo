@@ -246,6 +246,7 @@ class SiteController extends Controller
         $user = PartnerUser::findOne(\Yii::$app->user->id);
         $model = new ProfileForm();
         $model->payMethods = $user->payMethods;
+        $model->yandex_demo = $user->yandex_demo;
         $model->scid = $user->scid;
         $model->shopId = $user->shopId;
         $model->shopPassword = $user->shopPassword;
@@ -271,6 +272,7 @@ class SiteController extends Controller
         }
 
         if ($model->load(\Yii::$app->request->post())) {
+            $user->yandex_demo = $model->yandex_demo;
             $user->scid = $model->scid;
             $user->shopId = $model->shopId;
             $user->shopPassword = $model->shopPassword;

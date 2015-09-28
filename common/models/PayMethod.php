@@ -10,7 +10,8 @@ use Yii;
  * @property integer $id
  * @property string $title_ru
  * @property string $title_en
- * @property integer $yandex_code
+ * @property string $yandex_code
+ * @property integer $order
  */
 class PayMethod extends \yii\db\ActiveRecord
 {
@@ -29,7 +30,8 @@ class PayMethod extends \yii\db\ActiveRecord
     {
         return [
             [['title_ru', 'title_en', 'yandex_code'], 'required'],
-            [['yandex_code'], 'integer'],
+            [['yandex_code'], 'string', 'min' => 2, 'max' => 2],
+            [['order'], 'integer'],
             [['title_ru', 'title_en'], 'string', 'max' => 255]
         ];
     }
@@ -40,10 +42,11 @@ class PayMethod extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('support', 'ID'),
-            'title_ru' => Yii::t('support', 'Title Ru'),
-            'title_en' => Yii::t('support', 'Title En'),
-            'yandex_code' => Yii::t('support', 'Yandex Code'),
+            'id' => Yii::t('pay-method', 'ID'),
+            'title_ru' => Yii::t('pay-method', 'Title Ru'),
+            'title_en' => Yii::t('pay-method', 'Title En'),
+            'yandex_code' => Yii::t('pay-method', 'Yandex Code'),
+            'order' => Yii::t('pay-method', 'Order'),
         ];
     }
 }

@@ -11,6 +11,7 @@ class ProfileForm extends Model
     var $password;
     var $payMethods;
 
+    var $yandex_demo;
     var $shopId;
     var $scid;
     var $shopPassword;
@@ -26,7 +27,7 @@ class ProfileForm extends Model
             [['scid', 'shopId', 'shopPassword', 'phone', 'company_name'], 'string'],
             ['password', 'string', 'max' => 32],
             ['payMethods', 'each' , 'rule' => ['integer']],
-            [['allow_checkin_fullpay', 'allow_payment_via_bank_transfer'], 'integer'],
+            [['allow_checkin_fullpay', 'allow_payment_via_bank_transfer', 'yandex_demo'], 'integer'],
             [['currency_exchange_percent'], 'number', 'max' => 10, 'min' => 0],
         ];
     }
@@ -35,6 +36,7 @@ class ProfileForm extends Model
         return [
             'password' => \Yii::t('partner_profile', 'Password'),
             'payMethods' => \Yii::t('partner_profile', 'Payment methods'),
+            'yandex_demo' => \Yii::t('partner_profile', 'Demo mode'),
             'scid' => \Yii::t('partner_profile', 'Showcase identifier (scid)'),
             'shopId' => \Yii::t('partner_profile', 'Shop identifier (shopId)'),
             'shopPassword' => \Yii::t('partner_profile', 'Shop password (shopPassword)'),

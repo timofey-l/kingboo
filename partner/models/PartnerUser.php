@@ -13,6 +13,7 @@ use Yii;
  * Class PartnerUser
  * @package partner\models
  *
+ * @property boolean $yandex_demo
  * @property string $shopId
  * @property string $scid
  * @property string $shopPassword
