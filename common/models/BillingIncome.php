@@ -12,6 +12,7 @@ use Yii;
  * @property integer $currency_id
  * @property string $date
  * @property integer $account_id
+ * @property integer $invoice_id
  * @property integer $pay_id
  */
 class BillingIncome extends \yii\db\ActiveRecord
@@ -30,10 +31,11 @@ class BillingIncome extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sum', 'currency_id', 'date', 'account_id', 'pay_id'], 'required'],
+            [['sum', 'currency_id', 'date', 'account_id', 'pay_id', 'invoice_id'], 'required'],
             [['sum'], 'number'],
             [['date'], 'safe'],
-            [['currency_id', 'account_id', 'pay_id'], 'integer']
+            [['invoice_id', 'pay_id'], 'unique'],
+            [['currency_id', 'account_id', 'pay_id', 'invoice_id'], 'integer']
         ];
     }
 
@@ -48,6 +50,7 @@ class BillingIncome extends \yii\db\ActiveRecord
             'currency_id' => Yii::t('billing_income', 'Currency ID'),
             'date' => Yii::t('billing_income', 'Date'),
             'account_id' => Yii::t('billing_income', 'Account ID'),
+            'invoice_id' => Yii::t('billing_income', 'Invoice ID'),
             'pay_id' => Yii::t('billing_income', 'Pay ID'),
         ];
     }
@@ -70,13 +73,7 @@ class BillingIncome extends \yii\db\ActiveRecord
     public function afterSave($insert, $chAttrs)
     {
         if ($insert) {
-            \partner\models\PartnerUser::findOne(\Yii::$app->user->id)->updateBalance();
-
-            // Сигнал для системы сообщений
-            if (isset(\Yii::$app->automaticSystemMessages)) {
-            	\Yii::$app->automaticSystemMessages->setDataUpdated();
-            }
-
+            \common\models\BillingAccount::findOne($this->account_id)->updateBalance();
         }
     }
 

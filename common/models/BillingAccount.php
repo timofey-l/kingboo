@@ -11,6 +11,7 @@ use yii\db\Query;
  *
  * @property integer $id
  * @property integer $partner_id
+ * @property integer $currency_id
  * @property double $balance
  */
 class BillingAccount extends \yii\db\ActiveRecord
@@ -29,8 +30,9 @@ class BillingAccount extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['partner_id'], 'required'],
-            [['partner_id'], 'integer'],
+            [['partner_id', 'currency_id'], 'required'],
+            [['partner_id'], 'unique'],
+            [['partner_id', 'currency_id'], 'integer'],
             [['balance'], 'number']
         ];
     }
@@ -43,6 +45,7 @@ class BillingAccount extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('billing_account', 'ID'),
             'partner_id' => Yii::t('billing_account', 'Partner ID'),
+            'currency_id' => Yii::t('billing_account', 'Currency ID'),
             'balance' => Yii::t('billing_account', 'Balance'),
         ];
     }

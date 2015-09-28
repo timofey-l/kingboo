@@ -141,6 +141,13 @@ class BillingController extends Controller
             return $response;
         }
      
+        // проверяем не оплачен ли счет
+        if ($invoice->payed) {
+            $response['message'] = 'Billing invoice was payed already!';
+            \Yii::info('Billing invoice was payed already', 'debug');
+            return $response;
+        }
+     
         $payYandex = new BillingPaysYandex();
 
         $payYandex->check_post_dump = var_export(\Yii::$app->request->post(), true);
@@ -172,6 +179,11 @@ class BillingController extends Controller
             throw new NotFoundHttpException;
         }
 
+        // Сигнал для системы сообщений
+        if (isset(\Yii::$app->automaticSystemMessages)) {
+            \Yii::$app->automaticSystemMessages->setDataUpdated();
+        }
+
         return $this->render('success', [
             'partner' => $partner,
             'invoice' => $billingInvoice,
@@ -198,6 +210,19 @@ class BillingController extends Controller
         /** @var BillingPaysYandex $yandexPay */
         $yandexPay = BillingPaysYandex::findOne(['invoiceId' => \Yii::$app->request->post('invoiceId', '')]);
         if ($yandexPay) {
+            
+            // если оплата уже проведена, отвечаем положительно и ничего не делаем
+            if (\common\models\BillingIncome::findOne(['invoice_id' => $yandexPay->id])) {
+                $response = [
+                    'type' => 'avisio',
+                    'code' => 0,
+                    'performedDatetime' => date(\DateTime::W3C),
+                    'invoiceId' => \Yii::$app->request->post('invoiceId', ''),
+                    'shopId' => \Yii::$app->request->post('shopId', ''),
+                    'message' => "Оплата прошла успешно",
+                ];
+                return $response;
+            }
 
             // сохраняем входных данных в базу
             $yandexPay->avisio_post_dump = var_export(\Yii::$app->request->post(), true);
