@@ -10,6 +10,7 @@ use common\models\BillingIncome;
 use common\models\BillingInvoice;
 use common\models\BillingPaysYandex;
 use common\models\PayMethod;
+use common\models\BillingLogs;
 use partner\models\PartnerUser;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -108,6 +109,8 @@ class BillingController extends Controller
         }
 
         \Yii::info('pay-check start', 'debug');
+        $log = new BillingLogs();
+        $log->add('yandex-check');
 
         \Yii::$app->response->format = 'yandex';
         $req = \Yii::$app->request;
@@ -186,6 +189,9 @@ class BillingController extends Controller
         if (!\Yii::$app->request->isPost) {
             throw new BadRequestHttpException('Wrong method');
         }
+
+        $log = new BillingLogs();
+        $log->add('yandex-aviso');
 
         \Yii::$app->response->format = 'yandex';
 

@@ -9,6 +9,7 @@ use Yii;
  *
  * @property integer $id
  * @property double $sum
+ * @property integer $currency_id
  * @property string $date
  * @property integer $account_id
  * @property integer $pays_id
@@ -29,10 +30,10 @@ class BillingIncome extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sum', 'date', 'account_id', 'pays_id'], 'required'],
+            [['sum', 'currency_id', 'date', 'account_id', 'pays_id'], 'required'],
             [['sum'], 'number'],
             [['date'], 'safe'],
-            [['account_id', 'pays_id'], 'integer']
+            [['currency_id', 'account_id', 'pays_id'], 'integer']
         ];
     }
 
@@ -44,6 +45,7 @@ class BillingIncome extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('billing_income', 'ID'),
             'sum' => Yii::t('billing_income', 'Sum'),
+            'currency_id' => Yii::t('billing_income', 'Currency ID'),
             'date' => Yii::t('billing_income', 'Date'),
             'account_id' => Yii::t('billing_income', 'Account ID'),
             'pays_id' => Yii::t('billing_income', 'Pays ID'),
@@ -58,6 +60,11 @@ class BillingIncome extends \yii\db\ActiveRecord
     public function getInvoice()
     {
         return $this->hasOne(BillingInvoice::className(), ['id' => 'invoice_id']);
+    }
+
+    public function getCurrency()
+    {
+        return $this->hasOne(Currency::className(), ['id' => 'currency_id']);
     }
 
     public function afterSave($insert, $chAttrs)

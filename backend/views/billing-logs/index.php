@@ -4,19 +4,19 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\BillingIncomeSearch */
+/* @var $searchModel backend\models\BillingLogsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('billing_income', 'Billing Incomes');
+$this->title = Yii::t('billing-logs', 'Billing Logs');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="billing-income-index">
+<div class="billing-logs-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('billing_income', 'Create Billing Income'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('billing-logs', 'Create Billing Logs'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -26,11 +26,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
+            'type',
             'date',
-            'sum',
-            'currency_id',
-            'account_id',
-            'invoice_id',
+            'postParams:ntext',
+            'serverParams:ntext',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

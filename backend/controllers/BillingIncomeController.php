@@ -34,6 +34,7 @@ class BillingIncomeController extends Controller
     {
         $searchModel = new BillingIncomeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->sort->defaultOrder = ['date' => SORT_DESC];
 
         return $this->render('index', [
             'searchModel' => $searchModel,

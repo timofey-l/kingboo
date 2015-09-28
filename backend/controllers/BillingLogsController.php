@@ -3,16 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\BillingExpense;
-use backend\models\BillingExpenseSearch;
+use common\models\BillingLogs;
+use backend\models\BillingLogsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * BillingExpenseController implements the CRUD actions for BillingExpense model.
+ * BillingLogsController implements the CRUD actions for BillingLogs model.
  */
-class BillingExpenseController extends Controller
+class BillingLogsController extends Controller
 {
     public function behaviors()
     {
@@ -27,12 +27,12 @@ class BillingExpenseController extends Controller
     }
 
     /**
-     * Lists all BillingExpense models.
+     * Lists all BillingLogs models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new BillingExpenseSearch();
+        $searchModel = new BillingLogsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->sort->defaultOrder = ['date' => SORT_DESC];
 
@@ -43,7 +43,7 @@ class BillingExpenseController extends Controller
     }
 
     /**
-     * Displays a single BillingExpense model.
+     * Displays a single BillingLogs model.
      * @param integer $id
      * @return mixed
      */
@@ -55,13 +55,13 @@ class BillingExpenseController extends Controller
     }
 
     /**
-     * Creates a new BillingExpense model.
+     * Creates a new BillingLogs model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new BillingExpense();
+        $model = new BillingLogs();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -73,7 +73,7 @@ class BillingExpenseController extends Controller
     }
 
     /**
-     * Updates an existing BillingExpense model.
+     * Updates an existing BillingLogs model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -92,7 +92,7 @@ class BillingExpenseController extends Controller
     }
 
     /**
-     * Deletes an existing BillingExpense model.
+     * Deletes an existing BillingLogs model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -105,15 +105,15 @@ class BillingExpenseController extends Controller
     }
 
     /**
-     * Finds the BillingExpense model based on its primary key value.
+     * Finds the BillingLogs model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return BillingExpense the loaded model
+     * @return BillingLogs the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = BillingExpense::findOne($id)) !== null) {
+        if (($model = BillingLogs::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

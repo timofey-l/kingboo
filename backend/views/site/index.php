@@ -34,6 +34,7 @@ $this->title = 'BooBooking';
                 <h3><?= Yii::t('backend_main', 'Logs') ?></h3>
                 <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Logs'), ['/logs/index'],['class'=>'btn btn-default']) ?>
                 <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Pay logs'), ['/pay-log/index'],['class'=>'btn btn-default']) ?>
+                <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Billing pay logs'), ['/billing-logs/index'],['class'=>'btn btn-default']) ?>
 
                 <h3><?= Yii::t('backend_main', 'Site') ?></h3>
                 <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Pages'), ['/pages/index'],['class'=>'btn btn-default']) ?>
