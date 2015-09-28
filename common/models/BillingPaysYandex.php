@@ -64,27 +64,21 @@ class BillingPaysYandex extends \yii\db\ActiveRecord
      */
     public function afterSave($insert, $changedAttributes)
     {
-        if (parent::afterSave($insert, $changedAttributes)) {
+        // если payed стало true - добавляем запись в billing_income
+        if ($this->payed == true) {
+            /** @var BillingInvoice $invoice */
+            $invoice = $this->invoice;
+            $invoice->payed = true;
+            $invoice->save();
 
-            // если payed стало true - добавляем запись в billing_income
-            if ($this->payed == true) {
-                /** @var BillingInvoice $invoice */
-                $invoice = $this->invoice;
-                $invoice->payed = true;
-                $invoice->save();
-
-                $income = new BillingIncome();
-                $income->sum = $invoice->sum;
-                $income->date = date('Y-m-d H:i:s');
-                $income->currency_id = $invoice->currency_id;
-                $income->account_id = $invoice->account_id;
-                $income->invoice_id = $invoice->id;
-                $income->pays_id = $this->id;
-                $income->save();
-            }
-
-        } else {
-            return false;
+            $income = new BillingIncome();
+            $income->sum = $invoice->sum;
+            $income->date = date('Y-m-d H:i:s');
+            $income->currency_id = $invoice->currency_id;
+            $income->account_id = $invoice->account_id;
+            $income->invoice_id = $invoice->id;
+            $income->pays_id = $this->id;
+            $income->save();
         }
     }
 }
