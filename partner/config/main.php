@@ -9,7 +9,7 @@ $params = array_merge(
     require(__DIR__ . '/params-local.php')
 );
 
-return [
+$config = [
     'id' => 'app-partner',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'automaticSystemMessages'],
@@ -32,7 +32,7 @@ return [
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
+                    'levels' => ['error', 'warning', 'info'],
                 ],
             ],
         ],
@@ -83,3 +83,17 @@ return [
     ],
     'params' => $params,
 ];
+
+// Debug
+if (false) {
+    $config['bootstrap'][] = 'debug';
+    $config['modules']['debug'] = [
+        'class' => 'yii\debug\Module',
+        'allowedIPs' => [
+            //'154.52.117.150',    // Max Turkey IP
+            '*.*.*.*',
+        ]
+    ]; 
+}
+    
+return $config;

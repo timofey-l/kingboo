@@ -61,16 +61,17 @@ class BillingController extends Controller
             }
 
             $payMethod = PayMethod::findOne($payMethod);
-
+       
             // cоздаем счет
             $billingInvoice = new BillingInvoice();
             $billingInvoice->account_id = $partner->billing->id;
             $billingInvoice->sum = $sum;
             $billingInvoice->system = 0; // yandex kassa
+            $billingInvoice->created_at = date('Y-m-d H:i:s');
             $billingInvoice->payed = false;
             $billingInvoice->currency_id = $partner->billing->currency_id;
             $billingInvoice->save();
-
+       
             $yandex = \Yii::$app->params['yandex'];
 
             $formCode = YandexHelper::getForm([
@@ -84,7 +85,7 @@ class BillingController extends Controller
                 'shopSuccessUrl' => Url::to(['billing/pay-success'], 'https') ,
                 'shopFailUrl' => Url::to(['billing/pay-fail'], 'https'),
             ]);
-
+      
             return base64_encode($formCode);
         } else {
             $payMethods = PayMethod::find()
@@ -119,7 +120,7 @@ class BillingController extends Controller
             'message' => "",
 
         ];
-
+    
         // проверка запроса по хэшу и shopId
         if ($req->post('shopId') != $params['shopId'] || !YandexHelper::checkMd5Common('checkOrder', $req->post(), $params)) {
             $response['code'] = 1;
@@ -127,7 +128,7 @@ class BillingController extends Controller
             \Yii::info('Провал проверки по MD5', 'debug');
             return $response;
         }
-
+     
         // проверка invoiceId
         $invoice = BillingInvoice::findOne((int)\Yii::$app->request->post('orderNumber', 0));
         if (is_null($invoice)) {
@@ -135,7 +136,7 @@ class BillingController extends Controller
             \Yii::info('Провал проверки по invoiceId', 'debug');
             return $response;
         }
-
+     
         $payYandex = new BillingPaysYandex();
 
         $payYandex->check_post_dump = var_export(\Yii::$app->request->post(), true);
@@ -149,7 +150,7 @@ class BillingController extends Controller
         }
 
         $response['code'] = 0;
-        $response['message'] = 'Проврка прошла успешно';
+        $response['message'] = 'Проверка прошла успешно';
 
         return $response;
     }

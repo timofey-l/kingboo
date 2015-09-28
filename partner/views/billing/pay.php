@@ -33,7 +33,10 @@ $this->registerJs("$('input[type=radio]').iCheck({
         });");
 
 $this->registerJs("
+window.payFormSubmitted = false;
 $('#payform').submit(function(e) {
+    if (window.payFormSubmitted) return;
+    window.payFormSubmitted = true;
     e.preventDefault();
     var data = {
         sum: $('#sum').val(),
@@ -50,7 +53,7 @@ $('#payform').submit(function(e) {
             $('body').append(respForm);
             respForm.submit();
         }
-    });
+    }); 
 });
 ", View::POS_END);
 
