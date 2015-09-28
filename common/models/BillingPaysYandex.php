@@ -77,7 +77,7 @@ class BillingPaysYandex extends \yii\db\ActiveRecord
             $income->currency_id = $invoice->currency_id;
             $income->account_id = $invoice->account_id;
             $income->invoice_id = $invoice->id;
-            $income->pays_id = $this->id;
+            $income->pay_id = $this->id;
             $income->save();
         }
     }

@@ -12,7 +12,7 @@ use Yii;
  * @property integer $currency_id
  * @property string $date
  * @property integer $account_id
- * @property integer $pays_id
+ * @property integer $pay_id
  */
 class BillingIncome extends \yii\db\ActiveRecord
 {
@@ -30,10 +30,10 @@ class BillingIncome extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sum', 'currency_id', 'date', 'account_id', 'pays_id'], 'required'],
+            [['sum', 'currency_id', 'date', 'account_id', 'pay_id'], 'required'],
             [['sum'], 'number'],
             [['date'], 'safe'],
-            [['currency_id', 'account_id', 'pays_id'], 'integer']
+            [['currency_id', 'account_id', 'pay_id'], 'integer']
         ];
     }
 
@@ -48,7 +48,7 @@ class BillingIncome extends \yii\db\ActiveRecord
             'currency_id' => Yii::t('billing_income', 'Currency ID'),
             'date' => Yii::t('billing_income', 'Date'),
             'account_id' => Yii::t('billing_income', 'Account ID'),
-            'pays_id' => Yii::t('billing_income', 'Pays ID'),
+            'pay_id' => Yii::t('billing_income', 'Pay ID'),
         ];
     }
 

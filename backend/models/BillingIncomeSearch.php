@@ -18,7 +18,7 @@ class BillingIncomeSearch extends BillingIncome
     public function rules()
     {
         return [
-            [['id', 'account_id', 'invoice_id', 'currency_id'], 'integer'],
+            [['id', 'account_id', 'invoice_id', 'currency_id', 'pay_id'], 'integer'],
             [['sum'], 'number'],
             [['date'], 'safe'],
         ];
@@ -63,6 +63,7 @@ class BillingIncomeSearch extends BillingIncome
             'account_id' => $this->account_id,
             'invoice_id' => $this->invoice_id,
             'currency_id' => $this->currency_id,
+            'pay_id' => $this->pay_id,
         ]);
 
         return $dataProvider;
