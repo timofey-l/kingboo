@@ -13,11 +13,16 @@ return [
     'partner.demo' => 30, // продолжительность бесплатного периода в днях
     'partner.credit' => 100, // сумма в рублях, до которой партнер может уходить в кредит
 
-    'yandex' => [
+    /*'yandex' => [
         'demo' => true,
         'shopId' => '49653',
         'scid' => '527060',
         'shopPassword' => '85Xj2339XEv566S',
-
+    ]  */
+    'yandex' => [
+        'demo' => false,
+        'shopId' => '49653',
+        'scid' => '35070',
+        'shopPassword' => '85Xj2339XEv566S',
     ]
 ];
