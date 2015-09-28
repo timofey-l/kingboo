@@ -88,7 +88,7 @@ class BillingController extends Controller
             return base64_encode($formCode);
         } else {
             $payMethods = PayMethod::find()
-//                ->where(['in', 'yandex_code', ['PC', 'AC', 'MC']])
+                ->where(['in', 'yandex_code', ['AC', 'GP', 'AB', 'PC', 'WM', 'PB']])
                 ->all();
 
             return $this->render('pay', [
