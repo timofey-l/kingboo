@@ -175,7 +175,7 @@ class PaymentController extends \yii\web\Controller
                 'pay' => $pay,
                 'order' => $order,
                 'post' => $req->post(),
-                'message' => '',
+                'message' => 'md5 check failed',
             ]);
         }
 
@@ -220,7 +220,7 @@ class PaymentController extends \yii\web\Controller
                 'pay' => $pay,
                 'order' => $order,
                 'post' => $req->post(),
-                'message' => '',
+                'message' => 'Successful payment',
             ]);
         } else {
             // посылаем письмо с ошибкой

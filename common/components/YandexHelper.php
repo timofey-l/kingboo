@@ -123,6 +123,7 @@ class YandexHelper
         $hashArray[] = ArrayHelper::getValue($params, 'invoiceId', '');
         $hashArray[] = ArrayHelper::getValue($params, 'customerNumber', '');
         $hashArray[] = $partner->shopPassword;
+        
         return strtolower(md5(implode(';', $hashArray))) == strtolower($params['md5']);
     }
 
