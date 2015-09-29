@@ -60,7 +60,6 @@ class PayLog extends \yii\db\ActiveRecord
      */
     public function add($type) {
         $this->type = $type;
-        $this->timestamp = time();
         $this->postParams = serialize(\Yii::$app->request->post());
         $this->serverParams = serialize($_SERVER);
         $this->save();

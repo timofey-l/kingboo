@@ -12,6 +12,8 @@ use Yii;
  * @property string $date
  * @property string $postParams
  * @property string $serverParams
+ * @property integer $code
+ * @property string $notes
  */
 class BillingLogs extends \yii\db\ActiveRecord
 {
@@ -29,10 +31,11 @@ class BillingLogs extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'date'], 'required'],
+            [['type', 'date', 'code'], 'required'],
+            [['code'], 'integer'],
             [['date'], 'safe'],
             [['postParams', 'serverParams'], 'string'],
-            [['type'], 'string', 'max' => 255]
+            [['type', 'notes'], 'string', 'max' => 255]
         ];
     }
 
@@ -47,6 +50,8 @@ class BillingLogs extends \yii\db\ActiveRecord
             'date' => Yii::t('billing-logs', 'Date'),
             'postParams' => Yii::t('billing-logs', 'Post Params'),
             'serverParams' => Yii::t('billing-logs', 'Server Params'),
+            'code' => Yii::t('billing-logs', 'Code'),
+            'notes' => Yii::t('billing-logs', 'Notes'),
         ];
     }
 
@@ -61,4 +66,17 @@ class BillingLogs extends \yii\db\ActiveRecord
         $this->serverParams = serialize($_SERVER);
         $this->save();
     }
+    
+    /**
+    * Добавляет в логи наш ответ
+    * 
+    * @param integer $code - код ответа
+    * @param string $message - Текстовое сообщение
+    */
+    public function response($code, $message) {
+        $this->code = $code;
+        $this->notes = $message;
+        $this->save();
+    }
+
 }

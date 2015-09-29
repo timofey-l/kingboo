@@ -129,7 +129,7 @@ class BillingController extends Controller
         if ($req->post('shopId') != $params['shopId'] || !YandexHelper::checkMd5Common('checkOrder', $req->post(), $params)) {
             $response['code'] = 1;
             $response['message'] = "MD5 check failed";
-            \Yii::info('Провал проверки по MD5', 'debug');
+            $log->response($response['code'], $response['message']);
             return $response;
         }
      
@@ -137,14 +137,15 @@ class BillingController extends Controller
         $invoice = BillingInvoice::findOne((int)\Yii::$app->request->post('orderNumber', 0));
         if (is_null($invoice)) {
             $response['message'] = 'Billing invoice was not found!';
-            \Yii::info('Провал проверки по invoiceId', 'debug');
+            $log->response($response['code'], $response['message']);
             return $response;
         }
      
         // проверяем не оплачен ли счет
         if ($invoice->payed) {
+            $response['code'] = 100;
             $response['message'] = 'Billing invoice was payed already!';
-            \Yii::info('Billing invoice was payed already', 'debug');
+            $log->response($response['code'], $response['message']);
             return $response;
         }
      
@@ -154,15 +155,17 @@ class BillingController extends Controller
         $payYandex->billing_invoice_id = $invoice->id;
         $payYandex->invoiceId = $response['invoiceId'];
         $payYandex->checked = true;
-        if ($payYandex->save()) {
-            \Yii::info('Yandex Pay создано. id'.$payYandex->id, 'debug');
-        } else {
-            \Yii::info("Yandex Pay не сохранено.\n". var_export($payYandex->errors, true));
+        if (!$payYandex->save()) {
+            $response['code'] = 100;
+            $response['message'] = 'DB save error';
+            $log->response($response['code'], $response['message']);
+            return $response;
         }
 
         $response['code'] = 0;
-        $response['message'] = 'Проверка прошла успешно';
+        $response['message'] = 'Successful check';
 
+        $log->response($response['code'], $response['message']);
         return $response;
     }
 
@@ -206,11 +209,21 @@ class BillingController extends Controller
         $log->add('yandex-aviso');
 
         \Yii::$app->response->format = 'yandex';
+        $params = \Yii::$app->params['yandex'];
 
         /** @var BillingPaysYandex $yandexPay */
         $yandexPay = BillingPaysYandex::findOne(['invoiceId' => \Yii::$app->request->post('invoiceId', '')]);
         if ($yandexPay) {
             
+            // проверка запроса по хэшу и shopId
+            if (\Yii::$app->request->post('shopId') != $params['shopId'] 
+                || !YandexHelper::checkMd5Common('paymentAviso', \Yii::$app->request->post(), $params)) {
+                $response['code'] = 1;
+                $response['message'] = "MD5 check failed";
+                $log->response($response['code'], $response['message']);
+                return $response;
+            }
+
             // если оплата уже проведена, отвечаем положительно и ничего не делаем
             if (\common\models\BillingIncome::findOne(['invoice_id' => $yandexPay->id])) {
                 $response = [
@@ -219,8 +232,9 @@ class BillingController extends Controller
                     'performedDatetime' => date(\DateTime::W3C),
                     'invoiceId' => \Yii::$app->request->post('invoiceId', ''),
                     'shopId' => \Yii::$app->request->post('shopId', ''),
-                    'message' => "Оплата прошла успешно",
+                    'message' => "Repeat confirm",
                 ];
+                $log->response($response['code'], $response['message']);
                 return $response;
             }
 
@@ -235,7 +249,7 @@ class BillingController extends Controller
                     'performedDatetime' => date(\DateTime::W3C),
                     'invoiceId' => \Yii::$app->request->post('invoiceId', ''),
                     'shopId' => \Yii::$app->request->post('shopId', ''),
-                    'message' => "Оплата прошла успешно",
+                    'message' => "Successful payment",
                 ];
             } else {
                 $response = [
@@ -244,7 +258,7 @@ class BillingController extends Controller
                     'performedDatetime' => date(\DateTime::W3C),
                     'invoiceId' => \Yii::$app->request->post('invoiceId', ''),
                     'shopId' => \Yii::$app->request->post('shopId', ''),
-                    'message' => "Ошибка при сохнанении оплаты",
+                    'message' => "DB save error",
                 ];
             }
         } else {
@@ -254,10 +268,11 @@ class BillingController extends Controller
                 'performedDatetime' => date(\DateTime::W3C),
                 'invoiceId' => \Yii::$app->request->post('invoiceId', ''),
                 'shopId' => \Yii::$app->request->post('shopId', ''),
-                'message' => "Счет " . \Yii::$app->request->post('invoiceId', '') . ' не найден.',
+                'message' => "Invoice " . \Yii::$app->request->post('invoiceId', '') . ' is not found',
             ];
         }
 
+        $log->response($response['code'], $response['message']);
         return $response;
     }
 

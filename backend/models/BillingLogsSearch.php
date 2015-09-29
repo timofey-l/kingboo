@@ -18,8 +18,8 @@ class BillingLogsSearch extends BillingLogs
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['type', 'date', 'postParams', 'serverParams'], 'safe'],
+            [['id', 'code'], 'integer'],
+            [['type', 'date', 'postParams', 'serverParams', 'notes'], 'safe'],
         ];
     }
 

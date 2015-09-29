@@ -147,7 +147,7 @@ class PaymentController extends \yii\web\Controller
         $order = Order::findOne(['number' => $pay->order_number]);
         // проверяем есть ли заказ
         if ($order === null) {
-            $payLog->response(100, 'Wrong order number');
+            $payLog->response(100, "Wrong order number {$pay->order_number}");
             return $this->renderPartial('check', [
                 'code' => 100,
                 'pay' => $pay,

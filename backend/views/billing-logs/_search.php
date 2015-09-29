@@ -21,6 +21,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'date') ?>
 
+    <?= $form->field($model, 'code') ?>
+    
+    <?= $form->field($model, 'notes') ?>
+    
     <?= $form->field($model, 'postParams') ?>
 
     <?= $form->field($model, 'serverParams') ?>

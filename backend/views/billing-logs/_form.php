@@ -20,6 +20,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'serverParams')->textarea(['rows' => 6]) ?>
 
+    <?= $form->field($model, 'code')->textInput() ?>
+    
+    <?= $form->field($model, 'notes')->textInput() ?>
+    
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('billing-logs', 'Create') : Yii::t('billing-logs', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
