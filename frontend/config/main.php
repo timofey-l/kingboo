@@ -9,7 +9,7 @@ $params = array_merge(
     require(__DIR__ . '/params-local.php')
 );
 
-return [
+$config = [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
@@ -69,3 +69,17 @@ return [
     ],
     'params' => $params,
 ];
+
+// Ставить TRUE только в исключительных случаях!!! Ни в коем случае не забыть установить обратно FALSE !!!!!!!
+if (false) {
+    $config['bootstrap'][] = 'debug';
+    $config['modules']['debug'] = [
+        'class' => 'yii\debug\Module',
+        'allowedIPs' => [
+            //'154.52.117.150',    // Max Turkey IP
+            '*.*.*.*',
+        ]
+    ]; 
+}
+
+return $config;

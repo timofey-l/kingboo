@@ -48,13 +48,12 @@ class PaymentController extends \yii\web\Controller
 
         /** @var PayLog $payLog */
         $payLog = new PayLog();
-        $payLog->postParams = serialize($req->post());
-        $payLog->serverParams = serialize($_SERVER);
-        $payLog->save();
+        $payLog->add('yandex-aviso');
 
         // проверяем запрос
         $partner = PartnerUser::findOne(['shopId' => $req->post('shopId')]);
         if ($partner == null || !YandexHelper::checkMd5('paymentAviso', $req->post(), $partner)) {
+            $payLog->response(1, 'md5 check failed');
             return $this->renderPartial('avisio', [
                 'code' => 1,
                 'post' => $req->post(),
@@ -73,9 +72,10 @@ class PaymentController extends \yii\web\Controller
         ]);
 
         if ($pay === null) {
+            $payLog->response(200, 'Payment was not found');
             return $this->renderPartial('avisio', [
                 'post' => $req->post(),
-                'code' => 100,
+                'code' => 200,
                 'message' => 'Internal server error',
                 'techMessage' => 'checkOrder action was not found',
             ]);
@@ -83,6 +83,16 @@ class PaymentController extends \yii\web\Controller
 
         /** @var Order $order */
         $order = Order::findOne(['number' => $req->post('orderNumber')]);
+        
+        // Проверяем не оплачен ли уже заказ
+        if ($order->status == Order::OS_PAYED && $order->payment_url == '') {
+            $payLog->response(0, 'Repeat confirmation');
+            return $this->renderPartial('avisio', [
+                'post' => $req->post(),
+                'code' => 0,
+                'message' => 'Successful payment',
+            ]);
+        }
 
         $pay->paymentDatetime = $req->post('paymentDatetime');
         $pay->postParams = serialize($req->post());
@@ -90,13 +100,21 @@ class PaymentController extends \yii\web\Controller
         if ($pay->save()) {
             $order->status = Order::OS_PAYED;
             $order->payment_url = '';
-            $order->save();
+            if ($order->save()) {
+                $payLog->response(0, 'Successful payment');
+                return $this->renderPartial('avisio', [
+                    'post' => $req->post(),
+                    'code' => 0,
+                    'message' => 'Successful payment',
+                ]);
+            }
         }
 
+        $payLog->response(200, 'DB save error');
         return $this->renderPartial('avisio', [
             'post' => $req->post(),
-            'code' => 0,
-            'message' => 'Internal server error',
+            'code' => 200,
+            'message' => 'DB save error',
         ]);
     }
 
@@ -117,6 +135,10 @@ class PaymentController extends \yii\web\Controller
 
         $req = \Yii::$app->request;
 
+        /** @var PayLog $payLog */
+        $payLog = new PayLog();
+        $payLog->add('yandex-check');
+
         $pay = new Pay();
         $pay->load($req->post(), '');
         $pay->order_number = $req->post('orderNumber');
@@ -125,6 +147,7 @@ class PaymentController extends \yii\web\Controller
         $order = Order::findOne(['number' => $pay->order_number]);
         // проверяем есть ли заказ
         if ($order === null) {
+            $payLog->response(100, 'Wrong order number');
             return $this->renderPartial('check', [
                 'code' => 100,
                 'pay' => $pay,
@@ -142,16 +165,11 @@ class PaymentController extends \yii\web\Controller
         $pay->checked = 1;
         $pay->payed = 0;
 
-        /** @var PayLog $payLog */
-        $payLog = new PayLog();
-        $payLog->postParams = serialize($req->post());
-        $payLog->serverParams = serialize($_SERVER);
-        $payLog->save();
-
         $pay->postParams = serialize($req->post());
 
         $partner = $order->hotel->partner;
         if (!YandexHelper::checkMd5('checkOrder', \Yii::$app->request->post(), $partner)) {
+            $payLog->response(1, 'md5 check failed');
             return $this->renderPartial('check', [
                 'code' => 1,
                 'pay' => $pay,
@@ -163,6 +181,7 @@ class PaymentController extends \yii\web\Controller
 
         // проверяем статус заказа
         if ($order->status == Order::OS_PAYED) {
+            $payLog->response(100, 'Order is payed already');
             return $this->renderPartial('check', [
                 'code' => 100,
                 'pay' => $pay,
@@ -171,6 +190,7 @@ class PaymentController extends \yii\web\Controller
                 'message' => \Yii::t('payment', 'This order already payed', Lang::findOne(['url' => $order->lang])->local),
             ]);
         } else if ($order->status != Order::OS_WAITING_PAY) {
+            $payLog->response(100, 'Wrong order status');
             return $this->renderPartial('check', [
                 'code' => 100,
                 'pay' => $pay,
@@ -182,6 +202,7 @@ class PaymentController extends \yii\web\Controller
 
         // проверяем сумму заказа
         if ($order->payment_system_sum != $pay->orderSumAmount) {
+            $payLog->response(100, 'Wrong order sum');
             return $this->renderPartial('check', [
                 'code' => 100,
                 'pay' => $pay,
@@ -193,6 +214,7 @@ class PaymentController extends \yii\web\Controller
 
         // все хорошо, пробуем создать запись
         if ($pay->validate() && $pay->save(false)) {
+            $payLog->response(0, 'Successful payment');
             return $this->renderPartial('check', [
                 'code' => 0,
                 'pay' => $pay,
@@ -211,6 +233,7 @@ class PaymentController extends \yii\web\Controller
                 ->setTo(\Yii::$app->params['adminEmail'])
                 ->setSubject('Error on booking.local [paymentCheck]')
                 ->send();
+            $payLog->response(100, 'DB save error');
             return $this->renderPartial('check', [
                 'code' => 100,
                 'pay' => $pay,

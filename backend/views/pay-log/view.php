@@ -40,6 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value' => "<pre>".var_export(unserialize($model->serverParams), true)."</pre>",
             ],
+            'code',
+            'notes',
         ],
     ]) ?>
 
