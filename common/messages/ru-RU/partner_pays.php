@@ -37,4 +37,5 @@ return [
     'Shop Sum Bank Paycash' => '',
     'Shop Sum Currency Paycash' => 'Валюта оплаты',
     'd/m/Y H:i:s' => 'd.m.Y H:i:s',
+    'Order Created Datetime' => 'Дата создания',
 ];

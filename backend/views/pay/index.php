@@ -25,14 +25,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            //'id',
+            'orderCreatedDatetime',
+            'paymentDatetime',
             'checked:boolean',
             'payed:boolean',
             'order_number',
             'invoiceId',
             // 'customerNumber',
-            // 'orderCreatedDatetime',
-            // 'paymentDatetime',
             // 'orderSumAmount',
             // 'orderSumCurrencyPaycash',
             // 'orderSumBankPaycash',
