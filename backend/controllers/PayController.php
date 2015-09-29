@@ -34,6 +34,7 @@ class PayController extends Controller
     {
         $searchModel = new PaySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->sort->defaultOrder = ['orderCreatedDatetime' => SORT_DESC];
 
         return $this->render('index', [
             'searchModel' => $searchModel,

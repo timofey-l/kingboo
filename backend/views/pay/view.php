@@ -44,7 +44,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'shopSumBankPaycash',
             'paymentPayerCode',
             'paymentType',
-            'postParams:ntext',
+            [
+                'attribute' => 'postParams',
+                'format' => 'raw',
+                'value' => "<pre>".var_export(unserialize($model->postParams), true)."</pre>",
+            ],
             'shopId',
         ],
     ]) ?>
