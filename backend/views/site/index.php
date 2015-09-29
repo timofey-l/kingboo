@@ -21,6 +21,7 @@ $this->title = 'BooBooking';
                 <h3><?= Yii::t('backend_main', 'Hotel payments') ?></h3>
                 <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Orders'), ['/order/index'],['class'=>'btn btn-default']) ?>
                 <?= \yii\helpers\Html::a(Yii::t('backend_main', 'OrderItem'), ['/order-item/index'],['class'=>'btn btn-default']) ?>
+                <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Pay'), ['/pay/index'],['class'=>'btn btn-default']) ?>
 
                 <h3><?= Yii::t('backend_main', 'Billing') ?></h3>
                 <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Billing service'), ['/billing-service/index'],['class'=>'btn btn-default']) ?>

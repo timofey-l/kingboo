@@ -17,11 +17,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
+    <?= $form->field($model, 'type') ?>
+
     <?= $form->field($model, 'timestamp') ?>
 
     <?= $form->field($model, 'postParams') ?>
 
     <?= $form->field($model, 'serverParams') ?>
+
+    <?= $form->field($model, 'code') ?>
+
+    <?= $form->field($model, 'notes') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('backend_paylog', 'Search'), ['class' => 'btn btn-primary']) ?>

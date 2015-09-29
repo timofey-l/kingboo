@@ -18,8 +18,8 @@ class PayLogSearch extends PayLog
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['timestamp', 'postParams', 'serverParams'], 'safe'],
+            [['id', 'code'], 'integer'],
+            [['type', 'timestamp', 'postParams', 'serverParams', 'notes'], 'safe'],
         ];
     }
 
