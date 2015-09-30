@@ -4,14 +4,17 @@
     <h3 class="box-title">{{t('room_table_head_timetable')}}</h3>
 
     <div class="box-tools pull-right">
-        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_list')}}" href="#/" >
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_list')}}" href="#/" data-toggle="tooltip" >
             <i class="fa fa-list"></i>
         </a>
-        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_update')}}" href="#/edit/{{room.id}}">
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_update')}}" href="#/edit/{{room.id}}" data-toggle="tooltip">
             <i class="fa fa-edit"></i>
         </a>
-        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_photos')}}" href="#/images/{{room.id}}">
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_photos')}}" href="#/images/{{room.id}}" data-toggle="tooltip">
             <i class="fa fa-camera"></i>
+        </a>
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_money')}}" href="#/prices/{{room.id}}" data-toggle="tooltip">
+            <i class="fa fa-usd"></i>
         </a>
     </div>
 </div>

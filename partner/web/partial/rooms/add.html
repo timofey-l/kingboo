@@ -6,14 +6,17 @@
     <h3 class="box-title" ng-if="room.id">{{t('room_edit_title')}}</h3>
 
     <div class="box-tools pull-right" ng-show="edit">
-        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_list')}}" ng-click="cancel('#/')" >
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_list')}}" ng-click="cancel('#/')" data-toggle="tooltip" >
             <i class="fa fa-list"></i>
         </a>
-        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_photos')}}" ng-click="cancel('#/images/')">
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_photos')}}" ng-click="cancel('#/images/')" data-toggle="tooltip">
             <i class="fa fa-camera"></i>
         </a>
-        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_timetable')}}" ng-click="cancel('#/availability/')">
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_timetable')}}" ng-click="cancel('#/availability/')" data-toggle="tooltip">
             <i class="fa fa-calendar"></i>
+        </a>
+        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_money')}}" ng-click="cancel('#/prices/')" data-toggle="tooltip">
+            <i class="fa fa-usd"></i>
         </a>
     </div>
 </div>

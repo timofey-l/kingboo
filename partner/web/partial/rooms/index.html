@@ -35,13 +35,15 @@
                 <td>{{getPriceType(room)['name_'+LANG]}}</td>
                 <td>
                     <div class="btn-group" style="width:125px;">
-                        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_update')}}" href="#/edit/{{room.id}}">
+                        <a class="btn btn-xs btn-primary" title="{{t('room_table_head_update')}}" href="#/edit/{{room.id}}" data-toggle="tooltip">
                             <i class="fa fa-edit"></i>
-                        </a>&nbsp;<a class="btn btn-xs btn-primary" title="{{t('room_table_head_photos')}}" href="#/images/{{room.id}}">
+                        </a>&nbsp;<a class="btn btn-xs btn-primary" title="{{t('room_table_head_photos')}}" href="#/images/{{room.id}}" data-toggle="tooltip">
                             <i class="fa fa-camera"></i>
-                        </a>&nbsp;<a class="btn btn-xs btn-primary" title="{{t('room_table_head_timetable')}}" href="#/availability/{{room.id}}">
+                        </a>&nbsp;<a class="btn btn-xs btn-primary" title="{{t('room_table_head_timetable')}}" href="#/availability/{{room.id}}" data-toggle="tooltip">
                             <i class="fa fa-calendar"></i>
-                        </a>&nbsp;<a class="btn btn-xs btn-danger" title="{{t('room_table_head_delete')}}" ng-click="delete(room)">
+                        </a>&nbsp;<a class="btn btn-xs btn-primary" title="{{t('room_table_head_money')}}" href="#/prices/{{room.id}}" data-toggle="tooltip">
+                            <i class="fa fa-usd"></i>
+                        </a>&nbsp;<a class="btn btn-xs btn-danger" title="{{t('room_table_head_delete')}}" ng-click="delete(room)" data-toggle="tooltip">
                             <i class="fa fa-close"></i>
                         </a>
                     </div>

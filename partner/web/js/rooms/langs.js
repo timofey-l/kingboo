@@ -31,7 +31,7 @@ LANGS.ru = {
     room_table_head_update: "Редактировать",
     room_table_head_photos: "Фотографии",
     room_table_head_money: "Цены",
-    room_table_head_timetable: "Цены и количество номеров",
+    room_table_head_timetable: "Управление ценами и бронированием",
 
     room_adults_title: "Взрослых",
     room_children_title: "Детей",
