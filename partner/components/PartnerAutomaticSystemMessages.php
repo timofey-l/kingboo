@@ -64,6 +64,9 @@ class PartnerAutomaticSystemMessages extends Component {
      * Запускает пересчет сообщений, если были изменения
      */
     public function checkUpdates() {
+        if (\Yii::$app->user->isGuest) {
+            return;
+        }
         if ($this->dataUpdated) {
             $this->resetMessages();
         }
