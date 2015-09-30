@@ -18,5 +18,6 @@
  */
 return [
     'Partner' => 'Партнёр',
-    'Support thread #{id}' => 'Запрос в техподдержку №{id}',
+    'Support answer (thread #{n})' => 'Получен ответ техподдержки (тикет №{n})',
+    'King-Boo support answered your request (thread #{n}). You can look it in <a href="{url}">your personal cabinet</a>.' => 'Служба техподдержки King-Boo ответила на ваш запрос (тикет №{n}). Вы можете посмотреть ответ в <a href="{url}">личном кабинете</a>.',
 ];

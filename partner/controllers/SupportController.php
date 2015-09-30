@@ -64,7 +64,7 @@ class SupportController extends Controller
                     'model' => $model,
                 ])->setFrom($model->partner->email)
                     ->setTo(\Yii::$app->params['supportEmail'])
-                    ->setSubject(\Yii::t('support', 'New support message #{n}', ['id' => $model->id]))
+                    ->setSubject(\Yii::t('support', 'Support message #{n}', ['n' => $model->id]))
                     ->send();
 
                 return $this->redirect(['thread', 'id' => $model->id]);
@@ -99,7 +99,7 @@ class SupportController extends Controller
                     'model' => $newMessage,
                 ])->setFrom($model->partner->email)
                     ->setTo(\Yii::$app->params['supportEmail'])
-                    ->setSubject(\Yii::t('support', 'Support message #{n}', ['id' => $model->id]))
+                    ->setSubject(\Yii::t('support', 'Support message #{n}', ['n' => $model->id]))
                     ->send();
 
                 return $this->redirect(['thread', 'id'=> $model->id, '#' => 'id'.$newMessage->id]);
