@@ -22,6 +22,7 @@ use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use common\models\Currency;
 
 class BillingController extends Controller
 {
@@ -54,7 +55,7 @@ class BillingController extends Controller
 
         if (\Yii::$app->request->isPost) {
             $this->layout = false;
-            $sum = (float)\Yii::$app->request->post('sum', false);
+            $sum = Currency::numberFormat(\Yii::$app->request->post('sum', false));
             $payMethod = (int)\Yii::$app->request->post('payMethod', false);
 
             if ($sum === false || $payMethod === false) {
@@ -169,36 +170,6 @@ class BillingController extends Controller
         return $response;
     }
 
-    public function actionPaySuccess($orderNumber)
-    {
-        $partner = PartnerUser::findOne(\Yii::$app->user->id);
-        if ($partner === null) {
-            throw new ForbiddenHttpException;
-        }
-
-        $billingInvoice = BillingInvoice::findOne(['account_id' => $partner->billing->id, 'id' => (int) $orderNumber]);
-
-        if ($billingInvoice === null) {
-            throw new NotFoundHttpException;
-        }
-
-        // Сигнал для системы сообщений
-        if (isset(\Yii::$app->automaticSystemMessages)) {
-            \Yii::$app->automaticSystemMessages->setDataUpdated();
-        }
-
-        return $this->render('success', [
-            'partner' => $partner,
-            'invoice' => $billingInvoice,
-        ]);
-    }
-
-    public function actionPayFail()
-    {
-        \Yii::$app->getSession()->setFlash('danger', \Yii::t('partner_billing', 'An error has occured at making payment. Please try again.'));
-        return $this->redirect(['billing/pay']);
-    }
-
     public function actionPayAvisio()
     {
         if (!\Yii::$app->request->isPost) {
@@ -274,6 +245,36 @@ class BillingController extends Controller
 
         $log->response($response['code'], $response['message']);
         return $response;
+    }
+
+    public function actionPaySuccess($orderNumber)
+    {
+        $partner = PartnerUser::findOne(\Yii::$app->user->id);
+        if ($partner === null) {
+            throw new ForbiddenHttpException;
+        }
+
+        $billingInvoice = BillingInvoice::findOne(['account_id' => $partner->billing->id, 'id' => (int) $orderNumber]);
+
+        if ($billingInvoice === null) {
+            throw new NotFoundHttpException;
+        }
+
+        // Сигнал для системы сообщений
+        if (isset(\Yii::$app->automaticSystemMessages)) {
+            \Yii::$app->automaticSystemMessages->setDataUpdated();
+        }
+
+        return $this->render('success', [
+            'partner' => $partner,
+            'invoice' => $billingInvoice,
+        ]);
+    }
+
+    public function actionPayFail()
+    {
+        \Yii::$app->getSession()->setFlash('danger', \Yii::t('partner_billing', 'An error has occured at making payment. Please try again.'));
+        return $this->redirect(['billing/pay']);
     }
 
     public function actionTransactions()

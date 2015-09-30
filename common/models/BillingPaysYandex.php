@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\models\Currency;
 
 /**
  * This is the model class for table "{{%billing_pays_yandex}}".
@@ -69,16 +70,31 @@ class BillingPaysYandex extends \yii\db\ActiveRecord
             /** @var BillingInvoice $invoice */
             $invoice = $this->invoice;
             $invoice->payed = true;
-            $invoice->save();
+            if (!$invoice->save(false, ['payed'])) {
+                MailerHelper::adminEmail(
+                    'Billing aviso save error',
+                    "Invoice errors\n" . print_r($invoice->errors, true)
+                );
+                $this->payed = false;
+                $this->save(false, ['payed']);
+                return;
+            }
 
             $income = new BillingIncome();
-            $income->sum = $invoice->sum;
+            $income->sum = Currency::numberFormat($invoice->sum);
             $income->date = date('Y-m-d H:i:s');
             $income->currency_id = $invoice->currency_id;
             $income->account_id = $invoice->account_id;
             $income->invoice_id = $invoice->id;
             $income->pay_id = $this->id;
-            $income->save();
+            if (!$income->save()) {
+                MailerHelper::adminEmail(
+                    'Billing aviso save error',
+                    "Income errors\n" . print_r($income->errors, true)
+                );
+                $this->payed = false;
+                $this->save(false, ['payed']);
+            }
         }
     }
 }
