@@ -128,6 +128,10 @@ $orders = \common\models\Order::findNew();
                     </ul>
                 </li>
 
+                <li>
+                    <a href="<?= \Yii::$app->params['mainProtocol'] . '://' . \Yii::$app->params['mainDomain'] ?>/faq" target="_blank"><i class="fa fa-question-circle"></i></a>
+                </li>
+
 
                 <li class="user user-menu">
                     <?= Html::a(
