@@ -6,9 +6,11 @@ return [
     'partnerDomain' => 'partner.king-boo.com',
     'partnerProtocol' => 'https',
     'hotelsDomain' => 'king-boo.com',
-    'adminEmail' => ['admin@king-boo.com' => 'King-Boo Administrator','timofeylyzhenkov@gmail.com' => 'Timofey Lyzhenkov'],
+
+    'adminEmail' => ['admin@king-boo.com' => 'King-Boo Administrator', 'timofeylyzhenkov@gmail.com' => 'Timofey Lyzhenkov'],
+    'supportEmail' => ['support@king-boo.com' => 'King-Boo Support', 'timofeylyzhenkov@gmail.com' => 'Timofey Lyzhenkov'],
     'email.from' => ['no-reply@king-boo.com' => 'King-Boo Booking System'],
-    'supportEmail' => ['admin@king-boo.com' => 'King-Boo Administrator','timofeylyzhenkov@gmail.com' => 'Timofey Lyzhenkov'],
+
     'user.passwordResetTokenExpire' => 3600,
     'partner.demo' => 30, // продолжительность бесплатного периода в днях
     'partner.credit' => 100, // сумма в рублях, до которой партнер может уходить в кредит

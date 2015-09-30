@@ -57,6 +57,16 @@ class SupportController extends Controller
             $model->unread_admin = 1;
 
             if ($model->save()) {
+                \Yii::$app->mailer->compose([
+                    'html' => 'adminSupportEmail-html',
+                    'text' => 'adminSupportEmail-text',
+                ], [
+                    'model' => $model,
+                ])->setFrom($model->partner->email)
+                    ->setTo(\Yii::$app->params['supportEmail'])
+                    ->setSubject('New support thread #' . $model->id)
+                    ->send();
+
                 return $this->redirect(['thread', 'id' => $model->id]);
             }
         }
