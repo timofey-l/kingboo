@@ -7,6 +7,7 @@ use common\models\Order;
 use common\models\Pay;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
+use common\models\Currency;
 
 class PaymentController extends \yii\web\Controller
 {
@@ -76,7 +77,7 @@ class PaymentController extends \yii\web\Controller
 				'actionURL'		 => $partner->yandex_demo ? \Yii::$app->params['yandex']['demoActionURL'] : \Yii::$app->params['yandex']['actionURL'],
 				'shopId'         => $partner->shopId,
 				'scid'           => $partner->scid,
-				'sum'            => $order->payment_system_sum,
+				'sum'            => Currency::numberFormat($order->payment_system_sum),
 				'customerNumber' => md5($order->contact_email),
 				'orderNumber'    => $order->number,
 				'paymentType'    => $pay_type,

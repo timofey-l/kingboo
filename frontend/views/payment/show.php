@@ -30,7 +30,7 @@ $this->registerJs("
 			data: {
 				pay_type: $('input[name=payType]:checked').val()
 			}
-		}).done(function(data){
+		}).done(function(data){ 
 			var \$form = $(atob(data));
 			$('body').append(\$form);
 			\$form.submit();

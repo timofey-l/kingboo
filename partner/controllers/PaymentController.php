@@ -10,6 +10,8 @@ use common\models\PayLog;
 use partner\models\PartnerUser;
 use yii\filters\VerbFilter;
 use common\models\Lang;
+use common\components\MailerHelper;
+use common\models\Currency;
 
 class PaymentController extends \yii\web\Controller
 {
@@ -96,21 +98,32 @@ class PaymentController extends \yii\web\Controller
 
         $pay->paymentDatetime = $req->post('paymentDatetime');
         $pay->postParams = serialize($req->post());
+        $pay->orderSumAmount = Currency::numberFormat($pay->orderSumAmount);
+        $pay->shopSumAmount = Currency::numberFormat($pay->shopSumAmount);
         $pay->payed = 1;
+        
         if ($pay->save()) {
             $order->status = Order::OS_PAYED;
             $order->payment_url = '';
-            if ($order->save()) {
+            // Если убрать ограничения на save, выдает ошибки валидации!!!
+            if ($order->save(false, ['status', 'payment_url'])) {
                 $payLog->response(0, 'Successful payment');
                 return $this->renderPartial('avisio', [
                     'post' => $req->post(),
                     'code' => 0,
                     'message' => 'Successful payment',
                 ]);
+            } else {
+                $pay->payed = 0;
+                $pay->save(false, ['payed']);
             }
         }
 
         $payLog->response(200, 'DB save error');
+        MailerHelper::adminEmail(
+            'Payment aviso save error',
+            "Pay errors\n" . print_r($pay->errors, true) . "Order errors\n" . print_r($order->errors, true)
+        );
         return $this->renderPartial('avisio', [
             'post' => $req->post(),
             'code' => 200,
@@ -224,15 +237,10 @@ class PaymentController extends \yii\web\Controller
             ]);
         } else {
             // посылаем письмо с ошибкой
-            \Yii::$app->mailer->compose([
-                'html' => 'errorAdminEmail-html',
-                'text' => 'errorAdminEmail-text',
-            ], [
-                'message' => var_export($pay, true),
-            ])->setFrom(\Yii::$app->params['email.from'])
-                ->setTo(\Yii::$app->params['adminEmail'])
-                ->setSubject('Error on booking.local [paymentCheck]')
-                ->send();
+            MailerHelper::adminEmail(
+                'Payment check save error',
+                "Pay errors\n" . print_r($pay->errors, true)
+            );
             $payLog->response(100, 'DB save error');
             return $this->renderPartial('check', [
                 'code' => 100,
