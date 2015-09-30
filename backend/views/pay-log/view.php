@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'timestamp',
+            'type',
             [
                 'attribute' => 'postParams',
                 'format' => 'raw',
