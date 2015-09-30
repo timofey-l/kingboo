@@ -18,4 +18,5 @@
  */
 return [
     'Partner' => 'Партнёр',
+    'Support thread #{id}' => 'Запрос в техподдержку №{id}',
 ];

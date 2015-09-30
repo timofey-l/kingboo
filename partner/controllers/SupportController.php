@@ -64,7 +64,7 @@ class SupportController extends Controller
                     'model' => $model,
                 ])->setFrom($model->partner->email)
                     ->setTo(\Yii::$app->params['supportEmail'])
-                    ->setSubject('New support thread #' . $model->id)
+                    ->setSubject(\Yii::t('support', 'New support message #{n}', ['id' => $model->id]))
                     ->send();
 
                 return $this->redirect(['thread', 'id' => $model->id]);
@@ -91,6 +91,17 @@ class SupportController extends Controller
             $newMessage->unread_admin = 1;
             if ($newMessage->save()) {
                 $model->touch('updated_at');
+
+                \Yii::$app->mailer->compose([
+                    'html' => 'adminSupportEmail-html',
+                    'text' => 'adminSupportEmail-text',
+                ], [
+                    'model' => $newMessage,
+                ])->setFrom($model->partner->email)
+                    ->setTo(\Yii::$app->params['supportEmail'])
+                    ->setSubject(\Yii::t('support', 'Support message #{n}', ['id' => $model->id]))
+                    ->send();
+
                 return $this->redirect(['thread', 'id'=> $model->id, '#' => 'id'.$newMessage->id]);
             } else {
                 throw new BadRequestHttpException();

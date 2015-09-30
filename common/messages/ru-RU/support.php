@@ -36,6 +36,7 @@ return [
     'Support' => 'Поддержка',
     'Support message' => 'Сообщение в поддержку',
     'Support message #{n}' => 'Сообщение в поддержку №{n}',
+    'New support message #{n}' => 'Новое сообщение в поддержку №{n}',
     'Support team' => 'Служба поддержки',
     'Text' => 'Текст',
     'Title' => 'Тема',
