@@ -113,7 +113,7 @@ class PartnerAutomaticSystemMessages extends Component {
     }
 
     public function readSystemInfo() {
-        if ($this->partner->system_info) {
+        if (isset($this->partner->system_info) && $this->partner->system_info) {
             $this->systemInfo = unserialize($this->partner->system_info);
         }
     }
