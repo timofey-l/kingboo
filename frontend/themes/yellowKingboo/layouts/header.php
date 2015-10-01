@@ -3,21 +3,30 @@ $this->registerJs("
     var ad = [
         {
             text: 'Профессиональный <b>сайт</b> с широкими возможностями для вашего отеля всего за <b>999 <i class=\"fa fa-rub\"></i>!</b>',
-            img: '/img/ad-1.png',
+            img: '/img/robot-1.png',
             url: '/about#no-site',
         },
         {
             text: 'Система <b>онлайн бронирования</b> для вашего отеля с удобным управлением ценами, системой скидок и многим другим!',
-            img: '/img/ad-2.png',
+            img: '/img/robot-2.png',
             url: '/about#have-site',
         },
         {
             text: 'Мы <b>не берем</b> процент с брони,<br />оплата за бронирование поступает<br />на <b>ваш счет без задержек!</b>',
-            img: '/img/ad-3.png',
+            img: '/img/robot-3.png',
             url: '/about#have-site',
         },
     ];
     var adNum = 0;
+
+    function preloadRoboImages() {
+        for (var i in ad) {
+            var el = $('<img src=\"'+ad[i].img+'\">');
+        }
+    }
+
+    preloadRoboImages();
+
     function setHeaderBaloon() {
         var text = ad[adNum].text + '<a href=\"' + ad[adNum].url + '\" class=\"more\">Подробнее</a>';
         $('#top-baloon-text').html(text);
