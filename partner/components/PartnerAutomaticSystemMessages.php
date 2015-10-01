@@ -42,6 +42,19 @@ class PartnerAutomaticSystemMessages extends Component {
  	}
 
     /**
+     * Устанавливает партнера
+     * 
+     * @param int|PartnerUser $partner
+     */
+    protected function setPartner($partner) {
+        if ((int)$partner == $partner) {
+            $this->partner = PartnerUser::findOne($partner);
+        } else {
+            $this->partner = $partner;
+        }
+    }
+
+    /**
      * Привязывает события EVENT_BEFORE_REQUEST и EVENT_AFTER_REQUEST
      */
     public function init() {
@@ -72,9 +85,12 @@ class PartnerAutomaticSystemMessages extends Component {
         }
     }
 
-    public function resetMessages() {
+    public function resetMessages($partner=false) {
         if ($this->reset) {
             return;
+        }
+        if ($partner) {
+            $this->setPartner($partner);
         }
         if (!$this->systemInfo) {
             $this->readSystemInfo();
