@@ -90,8 +90,9 @@ if (false) {
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
         'allowedIPs' => [
-            //'154.52.117.150',    // Max Turkey IP
-            '*.*.*.*',
+            '154.52.117.150',    // Max Turkey IP
+            '77.75.157.169',     // Yandex Aviso
+            //'*.*.*.*',
         ]
     ]; 
 }

@@ -27,10 +27,18 @@ class OrdersController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        $orders = $this->getOrdersActiveQuery()->all();
+        $query = $this->getOrdersActiveQuery();
+        $provider = new \yii\data\ActiveDataProvider([
+            'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'created_at' => SORT_DESC,
+                ],
+            ],
+        ]);
 
         return $this->render('index', [
-            'orders' => $orders,
+            'dataProvider' => $provider,
         ]);
     }
 
@@ -42,8 +50,8 @@ class OrdersController extends \yii\web\Controller
     {
         return Order::find()
             ->joinWith('hotel.partner')
-            ->where(['partner_user.id' => \Yii::$app->user->id])
-            ->orderBy(['created_at' => SORT_DESC]);
+            ->where(['partner_user.id' => \Yii::$app->user->id]);
+            //->orderBy(['created_at' => SORT_DESC]);
     }
 
     public function actionView($id)

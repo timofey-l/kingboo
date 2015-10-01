@@ -42,6 +42,19 @@ class PartnerAutomaticSystemMessages extends Component {
  	}
 
     /**
+     * Устанавливает партнера
+     * 
+     * @param int|PartnerUser $partner
+     */
+    protected function setPartner($partner) {
+        if (is_object($partner)) {
+            $this->partner = $partner;
+        } else {
+            $this->partner = PartnerUser::findOne($partner);
+        }
+    }
+
+    /**
      * Привязывает события EVENT_BEFORE_REQUEST и EVENT_AFTER_REQUEST
      */
     public function init() {
@@ -72,9 +85,12 @@ class PartnerAutomaticSystemMessages extends Component {
         }
     }
 
-    public function resetMessages() {
+    public function resetMessages($partner=false) {
         if ($this->reset) {
             return;
+        }
+        if ($partner) {
+            $this->setPartner($partner);
         }
         if (!$this->systemInfo) {
             $this->readSystemInfo();
@@ -106,7 +122,7 @@ class PartnerAutomaticSystemMessages extends Component {
                 }
             }
         }
-        \Yii::trace('Reset messages', 'debug');
+        \Yii::info('Reset messages', 'debug');
         $this->reset = true;
 
 

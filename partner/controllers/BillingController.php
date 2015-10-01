@@ -260,11 +260,6 @@ class BillingController extends Controller
             throw new NotFoundHttpException;
         }
 
-        // Сигнал для системы сообщений
-        if (isset(\Yii::$app->automaticSystemMessages)) {
-            \Yii::$app->automaticSystemMessages->setDataUpdated();
-        }
-
         return $this->render('success', [
             'partner' => $partner,
             'invoice' => $billingInvoice,

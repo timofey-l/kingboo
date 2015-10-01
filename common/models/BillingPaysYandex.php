@@ -95,6 +95,13 @@ class BillingPaysYandex extends \yii\db\ActiveRecord
                 $this->payed = false;
                 $this->save(false, ['payed']);
             }
+
+            // Сигнал для системы сообщений
+            if (isset(\Yii::$app->automaticSystemMessages)) {
+                \Yii::$app->automaticSystemMessages->resetMessages($income->account->partner);
+            }
+
+
         }
     }
 }
