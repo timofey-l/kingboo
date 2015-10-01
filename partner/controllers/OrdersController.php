@@ -25,15 +25,11 @@ class OrdersController extends \yii\web\Controller
         ];
     }
 
-    public function actionIndex($page = 0, $pageSize = 3)
+    public function actionIndex()
     {
         $query = $this->getOrdersActiveQuery();
         $provider = new \yii\data\ActiveDataProvider([
             'query' => $query,
-            'pagination' => [
-                'pageSize' => $pageSize,
-                'page' => $page,
-            ],
             'sort' => [
                 'defaultOrder' => [
                     'created_at' => SORT_DESC,
