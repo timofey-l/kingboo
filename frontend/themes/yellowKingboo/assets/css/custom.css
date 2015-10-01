@@ -82,3 +82,19 @@ a:hover, a:focus {
 .main #content ul li {
     padding-left: 1.5em;
 }
+
+nav.main-menu ul {
+    width: auto;
+    margin: 0 28px;
+}
+
+@media (max-width: 767px) {
+    nav.main-menu ul {
+        width: 100%;
+        margin: 0 !important;
+    }
+}
+
+nav.main-menu ul li:not(:last-child) {
+    padding-right: 28px;
+}
