@@ -75,6 +75,8 @@ $('#setAllAsViewed_btn').click(function(){
 updateGroup();
 ");
 
+$orders = $dataProvider->getModels();
+
 ?>
 <style>
 	.sum {
@@ -93,7 +95,6 @@ updateGroup();
 
 
 </style>
-
 
 <?php if (!$orders): ?>
     <div class="callout callout-info">
