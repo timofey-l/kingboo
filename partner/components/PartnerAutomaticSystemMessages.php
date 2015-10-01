@@ -47,10 +47,10 @@ class PartnerAutomaticSystemMessages extends Component {
      * @param int|PartnerUser $partner
      */
     protected function setPartner($partner) {
-        if ((int)$partner == $partner) {
-            $this->partner = PartnerUser::findOne($partner);
-        } else {
+        if (is_object($partner)) {
             $this->partner = $partner;
+        } else {
+            $this->partner = PartnerUser::findOne($partner);
         }
     }
 
@@ -122,7 +122,7 @@ class PartnerAutomaticSystemMessages extends Component {
                 }
             }
         }
-        \Yii::trace('Reset messages', 'debug');
+        \Yii::info('Reset messages', 'debug');
         $this->reset = true;
 
 
