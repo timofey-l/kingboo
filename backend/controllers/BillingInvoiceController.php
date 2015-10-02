@@ -7,7 +7,10 @@ use common\models\BillingInvoice;
 use backend\models\BillingInvoiceSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\BadRequestHttpException;
 use yii\filters\VerbFilter;
+use common\models\Currency;
+use common\models\BillingIncome;
 
 /**
  * BillingInvoiceController implements the CRUD actions for BillingInvoice model.
@@ -102,6 +105,51 @@ class BillingInvoiceController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * Зачисление условных денег на счет партнера
+     * Тестовые деньги помечаются как system = BillingInvoice::PAY_SYSTEM_TEST
+     * Income для тестовых денег имеет pay_id = 0
+     */
+    public function actionAddTestMoney() {
+        $invoice = new BillingInvoice();
+
+        if ($invoice->load(Yii::$app->request->post())) {
+            if (!$invoice->account) {
+                throw new BadRequestHttpException('Wrong account id');
+            }
+            $invoice->currency_id = Currency::findOne(['code' => 'RUB'])->id;
+            $invoice->system = BillingInvoice::PAY_SYSTEM_TEST; // yandex kassa
+            $invoice->created_at = date('Y-m-d H:i:s');
+            $invoice->payed = true;
+            if (!$invoice->save()) {
+                throw new BadRequestHttpException('Error while saving invoice: ' . print_r($income->errors, true));
+            }
+
+            $income = new BillingIncome();
+            $income->sum = Currency::numberFormat($invoice->sum);
+            $income->date = date('Y-m-d H:i:s');
+            $income->currency_id = $invoice->currency_id;
+            $income->account_id = $invoice->account_id;
+            $income->invoice_id = $invoice->id;
+            $income->pay_id = 0;
+            if (!$income->save()) {
+                $invoice->delete();
+                throw new BadRequestHttpException('Error while saving income: ' . print_r($income->errors, true));
+            }
+
+            // Сигнал для системы сообщений
+            $automaticSystemMessages = new \partner\components\PartnerAutomaticSystemMessages();
+            $automaticSystemMessages->resetMessages($income->account->partner);
+
+            return $this->redirect(['view', 'id' => $invoice->id]);
+        } else {
+            return $this->render('add-test-money', [
+                'model' => $invoice,
+            ]);
+        }
+
     }
 
     /**

@@ -10,7 +10,7 @@ use yii\db\Query;
  * This is the model class for table "{{%billing_account}}".
  *
  * @property integer $id
- * @property integer $partner_id
+ * @property integer $partner_id - сейчас стоит уникальный индекс (потом аккаунтов может быть несколько, тогда его убрать) В PartnerUser идет учет нескольких аккаунтов
  * @property integer $currency_id
  * @property double $balance
  */

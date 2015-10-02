@@ -31,6 +31,7 @@ $this->title = 'BooBooking';
                 <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Billing income'), ['/billing-income/index'],['class'=>'btn btn-default']) ?>
                 <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Billing expense'), ['/billing-expense/index'],['class'=>'btn btn-default']) ?>
                 <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Billing pays Yandex'), ['/billing-pays-yandex/index'],['class'=>'btn btn-default']) ?>
+                <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Billing add test money'), ['/billing-invoice/add-test-money'],['class'=>'btn btn-primary']) ?>
 
                 <h3><?= Yii::t('backend_main', 'Logs') ?></h3>
                 <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Logs'), ['/logs/index'],['class'=>'btn btn-default']) ?>

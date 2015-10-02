@@ -34,7 +34,7 @@ class BillingIncome extends \yii\db\ActiveRecord
             [['sum', 'currency_id', 'date', 'account_id', 'pay_id', 'invoice_id'], 'required'],
             [['sum'], 'number'],
             [['date'], 'safe'],
-            [['invoice_id', 'pay_id'], 'unique'],
+            [['invoice_id'], 'unique'],
             [['currency_id', 'account_id', 'pay_id', 'invoice_id'], 'integer']
         ];
     }
