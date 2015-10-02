@@ -5,6 +5,7 @@ namespace common\models;
 use partner\models\PartnerUser;
 use Yii;
 use yii\db\Query;
+use common\models\Currency;
 
 /**
  * This is the model class for table "{{%billing_account}}".
@@ -97,8 +98,8 @@ class BillingAccount extends \yii\db\ActiveRecord
             ->where(['account_id' => $this->id])
             ->sum('sum');
 
-        $this->balance = $totalIncome - $totalExpenses;
-        $this->save();
+        $this->balance = Currency::numberFormat($totalIncome - $totalExpenses);
+        $this->save(true, ['balance']);
     }
 
     public function getServices()

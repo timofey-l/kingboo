@@ -92,7 +92,7 @@ if (false) {
         'allowedIPs' => [
             '154.52.117.150',    // Max Turkey IP
             '77.75.157.169',     // Yandex Aviso
-            //'*.*.*.*',
+            '*.*.*.*',
         ]
     ]; 
 }
