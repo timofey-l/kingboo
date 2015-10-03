@@ -68,7 +68,7 @@ class BillingController extends Controller
             $billingInvoice = new BillingInvoice();
             $billingInvoice->account_id = $partner->billing->id;
             $billingInvoice->sum = $sum;
-            $billingInvoice->system = 0; // yandex kassa
+            $billingInvoice->system = BillingInvoice::PAY_SYSTEM_YANDEX; // yandex kassa
             $billingInvoice->created_at = date('Y-m-d H:i:s');
             $billingInvoice->payed = false;
             $billingInvoice->currency_id = $partner->billing->currency_id;
@@ -274,16 +274,24 @@ class BillingController extends Controller
 
     public function actionTransactions()
     {
+        $partner = PartnerUser::findOne(\Yii::$app->user->id);
+        $account_ids = [];
+        foreach ($partner->accounts as $account) {
+            $account_ids[] = $account->id;
+        }
+
         $query = new Query();
 
         $incomes = new Query();
         $incomes->select(['id', 'date', 'sum', 'currency_id', ' CONCAT(1) as type', 'CONCAT(\'\') as comment'])
-            ->from(BillingIncome::tableName());
+            ->from(BillingIncome::tableName())
+            ->where(['account_id' => $account_ids]);
 
 
         $expenses = new Query();
         $expenses->select(['id', 'date', 'sum', 'currency_id', ' CONCAT(2) as type', 'comment'])
-            ->from(BillingExpense::tableName());
+            ->from(BillingExpense::tableName())
+            ->where(['account_id' => $account_ids]);
 
         $expensesQuery = clone $expenses;
 

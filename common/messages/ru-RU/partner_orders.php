@@ -57,7 +57,7 @@ return [
     'Phone' => 'Телефон',
     'Print' => 'Печать',
     'Room and guest' => 'Комната и гость',
-    'Rooms' => 'Комнаты',
+    'Rooms' => 'Номера',
     'Set as payed' => 'Отметить как оплачен',
     'Set as viewed' => 'Отметить как просмотренный',
     'Status' => 'Статус',
@@ -67,4 +67,5 @@ return [
     'bank transfer' => 'банковский перевод',
     'd/m/Y' => 'd.m.Y',
     'd/m/Y H:i:s' => 'd.m.Y H:i:s',
+    'Client' => 'Клиент',
 ];

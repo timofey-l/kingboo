@@ -53,7 +53,11 @@ $this->params['breadcrumbs'] = [$this->title];
                         return $val;
                     }
                 ],
-                'comment:ntext',
+                [
+                    'attribute' => 'comment',
+                    'format' => 'raw',
+                    'label' => \Yii::t('partner_transactions', 'Notes'),
+                ]
             ],
         ]) ?>
 

@@ -97,10 +97,8 @@ class BillingPaysYandex extends \yii\db\ActiveRecord
             }
 
             // Сигнал для системы сообщений
-            if (isset(\Yii::$app->automaticSystemMessages)) {
-                \Yii::$app->automaticSystemMessages->resetMessages($income->account->partner);
-            }
-
+            $automaticSystemMessages = new \partner\components\PartnerAutomaticSystemMessages();
+            $automaticSystemMessages->resetMessages($income->account->partner);
 
         }
     }

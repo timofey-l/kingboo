@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'currency_id',
             'created_at',
             'payed:boolean',
-            // 'system',
+            'system',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

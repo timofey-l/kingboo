@@ -16,6 +16,10 @@ use Yii;
  */
 class BillingInvoice extends \yii\db\ActiveRecord
 {
+
+    const PAY_SYSTEM_YANDEX = 0;
+    const PAY_SYSTEM_TEST = 100;
+
     /**
      * @inheritdoc
      */

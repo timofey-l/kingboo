@@ -184,7 +184,7 @@ function getStatusClass($order) {
                 ],
                 [
                     'attribute' => 'contact_name',
-                    'label' => \Yii::t('partner_orders','Contact info'),
+                    'label' => \Yii::t('partner_orders','Client'),
                     'content' => function ($model, $key, $index, $column) {
                         return \common\components\ListAddressType::getTitle($model->contact_address, $model->lang) . '&nbsp;' 
                         	. \yii\helpers\Html::encode($model->contact_name) . '&nbsp;' . \yii\helpers\Html::encode($model->contact_surname) 

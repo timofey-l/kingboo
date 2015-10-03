@@ -38,7 +38,9 @@ class PartnerAutomaticSystemMessages extends Component {
 
  	public function __construct() {
  		parent::__construct();
- 		$this->partner = PartnerUser::findOne(\Yii::$app->user->id);
+        if (\Yii::$app->id == 'app-partner') {
+            $this->partner = PartnerUser::findOne(\Yii::$app->user->id);
+        }
  	}
 
     /**
@@ -491,6 +493,7 @@ class PartnerAutomaticSystemMessages extends Component {
         if (!$this->partner->getDemoExpired()) {
             return false;
         }
+        \Yii::trace('Critical '. $this->partner->id, 'debug');
         if ($this->partner->isBlocked()) {
             $message['text'] = \Yii::t('automatic_system_messages', $message['text'], ['sum' => $this->partner->billing->getBalanceString(), 'link' => \yii\helpers\Url::toRoute('/billing/pay')]);
             return $message;
@@ -506,6 +509,7 @@ class PartnerAutomaticSystemMessages extends Component {
         if (isset($this->systemInfo['messages']['balance-critical'])) {
             return false;
         }
+        \Yii::trace('Negative '. $this->partner->id, 'debug');
         if ($this->partner->billing->balance <= 0) {
             return $message;
         } else {
@@ -520,6 +524,7 @@ class PartnerAutomaticSystemMessages extends Component {
         if (isset($this->systemInfo['messages']['balance-critical']) || isset($this->systemInfo['messages']['balance-negative'])) {
             return false;
         }
+        \Yii::trace('Short '. $this->partner->id, 'debug');
         // TODO: сделать вывод сообщений в зависимости от дневных затрат
         if ($this->partner->billing->balance < 300) {
             $message['text'] = \Yii::t('automatic_system_messages', $message['text'], ['sum' => $this->partner->billing->getBalanceString(), 'link' => \yii\helpers\Url::toRoute('/billing/pay')]);

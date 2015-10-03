@@ -94,6 +94,14 @@ class PartnerUser extends User
         return $this->hasMany(\common\models\Hotel::className(), ['partner_id' => 'id']);
     }
 
+    /**
+     * Сейчас на самом деле аккаунт может быть только один, это ограничено в BillingAccount->rules + unique index
+     */
+    public function getAccounts()
+    {
+        return $this->hasMany(\common\models\BillingAccount::className(), ['partner_id' => 'id']);
+    }
+
     public function getPayMethods() {
         return $this->hasMany(PayMethod::className(), ['id' => 'pay_method_id'])
             ->viaTable('partner_payMethods', ['partner_id' => 'id']);

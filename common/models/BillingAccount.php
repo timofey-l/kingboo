@@ -5,12 +5,13 @@ namespace common\models;
 use partner\models\PartnerUser;
 use Yii;
 use yii\db\Query;
+use common\models\Currency;
 
 /**
  * This is the model class for table "{{%billing_account}}".
  *
  * @property integer $id
- * @property integer $partner_id
+ * @property integer $partner_id - сейчас стоит уникальный индекс (потом аккаунтов может быть несколько, тогда его убрать) В PartnerUser идет учет нескольких аккаунтов
  * @property integer $currency_id
  * @property double $balance
  */
@@ -97,8 +98,8 @@ class BillingAccount extends \yii\db\ActiveRecord
             ->where(['account_id' => $this->id])
             ->sum('sum');
 
-        $this->balance = $totalIncome - $totalExpenses;
-        $this->save();
+        $this->balance = Currency::numberFormat($totalIncome - $totalExpenses);
+        $this->save(true, ['balance']);
     }
 
     public function getServices()
