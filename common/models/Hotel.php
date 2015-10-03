@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use partner\models\PartnerUser;
 use Yii;
 use yii\behaviors\SluggableBehavior;
 
@@ -65,6 +66,10 @@ class Hotel extends \yii\db\ActiveRecord
         }
     }
 
+    /**
+     * @param bool $insert
+     * @param array $changedAttributes
+     */
     public function afterSave($insert, $changedAttributes) {
     	parent::afterSave($insert, $changedAttributes);
 
@@ -79,7 +84,22 @@ class Hotel extends \yii\db\ActiveRecord
         	if (isset(\Yii::$app->automaticSystemMessages)) {
         		\Yii::$app->automaticSystemMessages->setDataUpdated();
         	}
-    	}
+
+            // ищем тариф по умолчанию и добавляем его к отелю
+            $partner = PartnerUser::findOne(\Yii::$app->user->id);
+            $billingAccount = $partner->account;
+            $service = BillingService::findOne(['default' => 1]);
+            if ($service !== null) {
+                $accountService = new BillingAccountServices;
+                $accountService->account_id = $billingAccount->id;
+                $accountService->service_id = $service->id;
+                $accountService->hotel_id = $this->id;
+                $accountService->active = true;
+                $accountService->add_date = date(\DateTime::ISO8601);
+                $accountService->end_date = date(\DateTime::ISO8601);
+                $accountService->save();
+            }
+        }
     }
 
 	/**

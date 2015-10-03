@@ -12,6 +12,7 @@ use Yii;
  * @property integer $service_id
  * @property string $add_date
  * @property string $end_date
+ * @property integer $hotel_id
  * @property boolean $active
  */
 class BillingAccountServices extends \yii\db\ActiveRecord
@@ -31,7 +32,8 @@ class BillingAccountServices extends \yii\db\ActiveRecord
     {
         return [
             [['account_id', 'service_id', 'add_date', 'end_date'], 'required'],
-            [['account_id', 'service_id'], 'integer'],
+            [['account_id', 'service_id', 'hotel_id'], 'integer'],
+            [['hotel_id'], 'default', 'value' => 0],
             [['add_date', 'end_date'], 'safe'],
             [['active'], 'boolean']
         ];

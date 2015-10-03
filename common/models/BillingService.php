@@ -17,6 +17,7 @@ use Yii;
  * @property integer $currency
  * @property double $enable_cost
  * @property double $monthly_cost
+ * @property double $yearly_cost
  */
 class BillingService extends \yii\db\ActiveRecord
 {
@@ -38,7 +39,7 @@ class BillingService extends \yii\db\ActiveRecord
             [['description'], 'string'],
             [['archived', 'default', 'monthly', 'unique'], 'boolean'],
             [['currency'], 'integer'],
-            [['enable_cost', 'monthly_cost'], 'number'],
+            [['enable_cost', 'monthly_cost', 'yearly_cost'], 'number'],
             [['name'], 'string', 'max' => 255]
         ];
     }
