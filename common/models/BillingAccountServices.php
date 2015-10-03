@@ -63,4 +63,9 @@ class BillingAccountServices extends \yii\db\ActiveRecord
     {
         return $this->hasOne(BillingService::className(), ['id' => 'service_id']);
     }
+
+    public function getHotel()
+    {
+        return $this->hasOne(Hotel::className(), ['id' => 'hotel_id']);
+    }
 }

@@ -28,6 +28,7 @@ use yii\behaviors\SluggableBehavior;
  * @property string  $title_en
  * @property boolean $allow_partial_pay
  * @property string  $partial_pay_percent
+ * @property boolean $frozen
  */
 class Hotel extends \yii\db\ActiveRecord
 {
@@ -135,6 +136,7 @@ class Hotel extends \yii\db\ActiveRecord
 			['partial_pay_percent', 'integer', 'min' => self::MIN_PART_PAY, 'max' => 100],
             ['name', 'unique'],
             ['domain', 'unique'],
+			['frozen', 'integer'],
 			['name', 'in', 'not' => true, 'range' => ['partner', 'backend']],
 		];
 	}

@@ -14,6 +14,7 @@ return [
     'user.passwordResetTokenExpire' => 3600,
     'partner.demo' => 30, // продолжительность бесплатного периода в днях
     'partner.credit' => 100, // сумма в рублях, до которой партнер может уходить в кредит
+    'partner.creditCurrency' => 'RUB',
 
     /*'yandex' => [
         'demo' => true,
@@ -28,5 +29,8 @@ return [
         'shopPassword' => '85Xj2339XEv566S',
         'actionURL' => 'https://money.yandex.ru/eshop.xml',
         'demoActionURL' => 'https://demomoney.yandex.ru/eshop.xml',
-    ]
+    ],
+
+    // кредит для партнеров (лимит отрицательного баланса) при котором не происходит блокировки.
+    // При превышении этого лимита (если отель не заморожен) оплата будет сниматься, отель отображаться не будет.
 ];

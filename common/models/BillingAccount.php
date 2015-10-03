@@ -14,6 +14,8 @@ use common\models\Currency;
  * @property integer $partner_id - сейчас стоит уникальный индекс (потом аккаунтов может быть несколько, тогда его убрать) В PartnerUser идет учет нескольких аккаунтов
  * @property integer $currency_id
  * @property double $balance
+ * @property Currency $currency
+ * @property PartnerUser $partner
  */
 class BillingAccount extends \yii\db\ActiveRecord
 {

@@ -114,6 +114,8 @@ class Currency extends \yii\db\ActiveRecord
     public function getFormatted($value, $type='')
     {
         $symbol = $this->symbol;
+        $format = $this->format;
+
         $decimal = ($value == (int)$value) ? 0 : 2;
         if ($type == 'invoice') {
             $symbol = $this->invoice_symbol;
@@ -139,6 +141,11 @@ class Currency extends \yii\db\ActiveRecord
             }
         }
 
+        if ($type == "code") {
+            $symbol = $this->code;
+            $format = "{value} {code}";
+        }
+
         $value = number_format($value, $decimal, $this->dec_point, $this->thousands_sep);
         $replace = [
             '{value}' => $value,
@@ -146,7 +153,7 @@ class Currency extends \yii\db\ActiveRecord
             '{code}' => $this->code,
         ];
 
-        $s = str_replace(array_keys($replace), array_values($replace), $this->format);
+        $s = str_replace(array_keys($replace), array_values($replace), $format);
 
         if ($type == 'invoice') {
             $s = str_replace('&nbsp;', ' ', $s);
@@ -164,11 +171,11 @@ class Currency extends \yii\db\ActiveRecord
     /**
      * Конвертация из текущей валюты в указанную
      * 
-     * @param decimal $x - сумма, которую надо конвертировать
+     * @param float $x - сумма, которую надо конвертировать
      * @param string|int $to - валюта, в которую надо конвертировать (code|id)
-     * @param decimal $coef - коэффициент в процентах, на который надо увеличить результат (например, 3 %)
+     * @param float $coef - коэффициент в процентах, на который надо увеличить результат (например, 3 %)
      * 
-     * @return decimal
+     * @return float
      */
     public function convertTo($x, $to, $coef = 0) {
         $rates = unserialize(self::$exchangeRates->rates);
