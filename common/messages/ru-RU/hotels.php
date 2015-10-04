@@ -91,4 +91,8 @@ return [
     'Ok' => 'Подтвердить',
     'Confirm action' => 'Подтвердите действие',
     'The hotel will be permanently deleted. If you sure you want to continue type "delete".' => 'Отель будет удален без возможности восстановления. Если вы уверены, что хотите продолжать, напишите &laquo;delete&raquo;.',
+    'Are you sure you want to freeze this hotel?' => "Вы действительно хотите заморозить отель?",
+    'Are you sure you want to unfreeze this hotel?' => "Вы действительно хотите разморозить отель?",
+    'Freeze' => 'Заморозить',
+    'Unreeze' => 'Разморозить',
 ];

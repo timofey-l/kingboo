@@ -18,18 +18,25 @@ $this->params['breadcrumbs'][] = $this->title;
 
 // Подтверждение удаления
 $this->registerJs("
+
 window.remodal = $('#modal').remodal();
-$(document).on('confirmation', '.remodal', function () {
+$(document).on('confirmation', '.remodal', function (e) {
+    console.log(e);
     if ($('#submit_prompt').val() == 'delete') {
         $.post('" . Url::to(['delete', 'id' => $model->id]) . "');
     } else {
         window.remodal.open();
     }
 });
+
 ");
 $this->registerJs("
 function promptDelete() {
     window.remodal.open();
+    return false;
+}
+function promptFreeze() {
+    window.remodal_freeze.open();
     return false;
 }
 ", yii\web\View::POS_END);
@@ -91,6 +98,26 @@ function promptDelete() {
                 ]);
         } ?>
         <a class="btn btn-app bg-red" href="javascript:promptDelete();"><span class="fa fa-trash-o"></span><?= Yii::t('hotels', 'Delete') ?></a>
+
+        <?php if (!$model->frozen): ?>
+            <?= Html::a('<span class="fa fa-lock"></span>' . Yii::t('hotels', 'Freeze'), ['freeze', 'id' => $model->id], [
+                'class' => 'btn btn-app bg-red',
+                'data' => [
+                    'confirm' => Yii::t('hotels', 'Are you sure you want to freeze this hotel?'),
+                    'method' => 'post',
+                ],
+            ]) ?>
+        <?php endif; ?>
+        <?php if ($model->frozen): ?>
+            <?= Html::a('<span class="fa fa-unlock"></span>' . Yii::t('hotels', 'Unfreeze'), ['unfreeze', 'id' => $model->id], [
+                'class' => 'btn btn-app bg-red',
+                'data' => [
+                    'confirm' => Yii::t('hotels', 'Are you sure you want to unfreeze this hotel?'),
+                    'method' => 'post',
+                ],
+            ]) ?>
+        <?php endif; ?>
+
     </p>
 
     <div class="row">

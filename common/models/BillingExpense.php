@@ -87,6 +87,7 @@ class BillingExpense extends \yii\db\ActiveRecord
     public static function processExpenses($accountServiceId = false, $returnLog = true)
     {
         $out = "";
+        echo "1";
         // полчаем все активные подключенные тарифы
         $query = BillingAccountServices::find()->where(['active' => 1]);
         if ($accountServiceId) {

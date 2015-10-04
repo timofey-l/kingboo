@@ -12,6 +12,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -27,7 +28,7 @@ class HotelController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['view', 'update', 'delete', 'rooms', 'images', 'facilities', 'iframe', 'css', 'domain-registration-request'],
+                        'actions' => ['view', 'update', 'delete', 'rooms', 'images', 'facilities', 'iframe', 'css', 'domain-registration-request', 'freeze', 'unfreeze'],
                         'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
@@ -377,6 +378,59 @@ class HotelController extends Controller
                 'hotel' => $hotel,
             ]);
         }
+    }
+
+    /**
+     * Заморозить отель
+     *
+     * @param $id
+     * @return \yii\web\Response
+     * @throws ForbiddenHttpException
+     * @throws NotFoundHttpException
+     */
+    public function actionFreeze($id)
+    {
+        if (!\Yii::$app->request->isPost) {
+            throw new ForbiddenHttpException;
+        }
+
+        $hotel = Hotel::findOne($id);
+
+        if (!$hotel) {
+            throw new NotFoundHttpException;
+        }
+
+        /** @var Hotel frozen */
+        $hotel->frozen = true;
+        $hotel->save(false, ['frozen']);
+
+        return $this->redirect(['hotel/view', 'id' => $id]);
+    }
+
+    /**
+     * Разморозить отель
+     *
+     * @param $id
+     * @return \yii\web\Response
+     * @throws ForbiddenHttpException
+     * @throws NotFoundHttpException
+     */
+    public function actionUnfreeze($id)
+    {
+        if (!\Yii::$app->request->isPost) {
+            throw new ForbiddenHttpException;
+        }
+
+        $hotel = Hotel::findOne($id);
+
+        if (!$hotel) {
+            throw new NotFoundHttpException;
+        }
+
+        $hotel->frozen = false;
+        $hotel->save(false, ['frozen']);
+
+        return $this->redirect(['hotel/view', 'id' => $id]);
     }
 
 }

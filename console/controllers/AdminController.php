@@ -239,6 +239,7 @@ class AdminController extends Controller
         $log = BillingExpense::processExpenses();
 
         MailerHelper::adminEmail('Ежедневное списание средств по активным тарифам', "<pre>{$log}</pre>", 'report');
+        echo $log;
     }
 
     public function actionTest($id = 1) {
