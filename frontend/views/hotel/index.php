@@ -128,9 +128,9 @@ if (!$this->context->checkBookingPossibility($model)) {
             <div class="hotel_stars">
                 <?php foreach (range(1, 5) as $i): ?>
                     <?php if ($i <= $model->category) : ?>
-                        &#x2605;
+                        <i class="glyphicon glyphicon-star"></i>
                     <?php else: ?>
-                        &#x2606;
+                        <i class="glyphicon glyphicon-star-empty"></i>
                     <?php endif ?>
                 <?php endforeach; ?>
             </div>
@@ -151,7 +151,7 @@ if (!$this->context->checkBookingPossibility($model)) {
         <?php if (count($model->images)): ?>
         <div class="col-md-6 col-sm-12 images-container">
 
-            <div class="fotorama" data-nav="thumbs" data-allowfullscreen="true" data-fit="cover" data-thumbfit="true" data-thumbwidth="114" data-thumbheight="64">
+            <div class="fotorama" data-nav="thumbs" data-allowfullscreen="true" data-fit="cover" data-thumbfit="true" data-thumbwidth="114" data-thumbheight="64" data-width="100%">
                 <?php foreach ($model->images as $image): /* @var $image \common\models\RoomImage */ ?>
                     <a href="<?= $image->getUploadUrl('image') ?>">
                         <img src="<?= $image->getThumbUploadUrl('image', 'preview') ?>" alt="">
