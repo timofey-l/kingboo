@@ -146,7 +146,7 @@ class BillingExpense extends \yii\db\ActiveRecord
 
             // получаем последнее списание
             /** @var BillingExpense $lastExpense */
-            $lastExpense = BillingExpense::find()->where(['account_id' => $account->id, 'service_id' => $service->id])->orderBy(['date' => SORT_DESC])->one();
+            $lastExpense = BillingExpense::find()->where(['account_id' => $account->id, 'service_id' => $accountService->id])->orderBy(['date' => SORT_DESC])->one();
             if ($lastExpense === null) {
                 //$out .= "Последнего списания не найдено.\n";
             } else {
@@ -217,8 +217,8 @@ class BillingExpense extends \yii\db\ActiveRecord
                 $newExpense->currency_id = $service->currency_id;
                 $newExpense->date = date(DateTime::ISO8601);
                 $newExpense->sum_currency_id = $service->currency_id;
-                $newExpense->service_id = $service->id;
-                $newExpense->comment = "Ежедневное списание средств по тарифу \"{$service->name_ru}\" (id: {$accountService->id})";
+                $newExpense->service_id = $accountService->id;
+                $newExpense->comment = "Ежедневное списание средств по услуге \"{$service->name_ru}\" (id: {$accountService->id})";
                 if ($newExpense->save()) {
                     $sum = $newExpense->sum . ' ' . $service->currency->code;
                     $out .= "Запись списания успешно создана. id: {$newExpense->id}\n";

@@ -136,7 +136,8 @@ class Hotel extends \yii\db\ActiveRecord
 			['partial_pay_percent', 'integer', 'min' => self::MIN_PART_PAY, 'max' => 100],
             ['name', 'unique'],
             ['domain', 'unique'],
-			['frozen', 'integer'],
+			['frozen', 'default', 'value' => 0],
+//			['frozen', 'integer'],
 			['name', 'in', 'not' => true, 'range' => ['partner', 'backend']],
 		];
 	}

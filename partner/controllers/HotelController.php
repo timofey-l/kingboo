@@ -102,6 +102,13 @@ class HotelController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+
+            if ($model->errors) {
+                foreach ($model->errors as $error_text) {
+                    \Yii::$app->session->setFlash('danger', $error_text);
+                }
+            }
+
             return $this->render('update', [
                 'model' => $model,
                 'hotel' => $model,

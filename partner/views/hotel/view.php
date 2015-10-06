@@ -52,9 +52,13 @@ function promptFreeze() {
         padding-bottom: 10px;
         border-bottom: 1px solid #efefef;
     }
+
+    .block-inline {
+        display: inline-block;
+    }
 </style>
 <div class="hotel-view">
-    <p>
+    <div class="block-inline">
         <?= Html::a('<span class="fa fa-edit"></span>' . Yii::t('hotels', 'Edit'), ['update', 'id' => $model->id], ['class' => 'btn btn-app']) ?>
         <?= Html::a('<span class="fa fa-check-square-o"></span>' . Yii::t('hotels', 'Facilities'), ['facilities', 'id' => $model->id], ['class' => 'btn btn-app']) ?>
         <?= Html::a('<span class="fa fa-hotel"></span>' . Yii::t('hotels', 'Rooms'), ['rooms', 'id' => $model->id], ['class' => 'btn btn-app']) ?>
@@ -86,6 +90,8 @@ function promptFreeze() {
                 'data-placement' => "auto bottom",
                 'data-content' => Yii::t('hotels','Change your hotel page styles as you like'),
         ]) ?>
+    </div>
+    <div class="block-inline">
         <?php if (!$model->domain) {
                 echo Html::a('<span class="fa fa-registered"></span>' . Yii::t('hotels', 'My domain'), ['domain-registration-request', 'id' => $model->id], [
                     'class' => 'btn btn-app bg-green',
@@ -97,7 +103,8 @@ function promptFreeze() {
                     'data-content' => Yii::t('hotels','Place your hotel web page on it&acute;s own domain name, not on <i>{site}</i> subdomain', ['site' => Yii::$app->params['mainDomainShort']]),
                 ]);
         } ?>
-        <a class="btn btn-app bg-red" href="javascript:promptDelete();"><span class="fa fa-trash-o"></span><?= Yii::t('hotels', 'Delete') ?></a>
+
+    <a class="btn btn-app bg-red" href="javascript:promptDelete();"><span class="fa fa-trash-o"></span><?= Yii::t('hotels', 'Delete') ?></a>
 
         <?php if (!$model->frozen): ?>
             <?= Html::a('<span class="fa fa-lock"></span>' . Yii::t('hotels', 'Freeze'), ['freeze', 'id' => $model->id], [
@@ -118,7 +125,7 @@ function promptFreeze() {
             ]) ?>
         <?php endif; ?>
 
-    </p>
+    </div>
 
     <div class="row">
         <div class="col-sm-4">
