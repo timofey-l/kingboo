@@ -6,6 +6,7 @@ use frontend\components\HotelUrlRule;
 use yii\base\Theme;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 class PagesController extends Controller
 {
@@ -47,6 +48,10 @@ class PagesController extends Controller
 
         if ($page === null) {
             throw new BadRequestHttpException('Page not found!');
+        }
+
+        if (!$page->active) {
+            throw new NotFoundHttpException('Page not found!');
         }
 
         // проврка наличия "/" на конце
