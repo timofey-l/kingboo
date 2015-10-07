@@ -298,6 +298,9 @@ class Hotel extends \yii\db\ActiveRecord
      * return boolean
      */
     public function published($lang = false) {
+        if ($this->frozen) {
+            return false;
+        }
         if (!$this->rooms) {
             return false;
         }
