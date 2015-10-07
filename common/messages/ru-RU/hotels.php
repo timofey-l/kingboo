@@ -94,5 +94,7 @@ return [
     'Are you sure you want to freeze this hotel?' => "Вы действительно хотите заморозить отель?",
     'Are you sure you want to unfreeze this hotel?' => "Вы действительно хотите разморозить отель?",
     'Freeze' => 'Заморозить',
-    'Unreeze' => 'Разморозить',
+    'Unfreeze' => 'Разморозить',
+    'The hotel can be unfreezed only a day later after freezing!' => 'Разморозить отель можно будет только спустя сутки с момента заморозки!',
+    '<br><small class="text-muted">Freeze date:<br> {date}</small>' =>'<br><small class="text-muted">Дата заморозки:<br> {date}</small>',
 ];

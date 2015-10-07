@@ -16,6 +16,8 @@ return [
     'partner.credit' => 100, // сумма в рублях, до которой партнер может уходить в кредит
     'partner.creditCurrency' => 'RUB',
 
+    'partner.unfreeze_limit_days' => 1, //days
+
     /*'yandex' => [
         'demo' => true,
         'shopId' => '49653',

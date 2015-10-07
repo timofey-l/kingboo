@@ -14,6 +14,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'partner_id')->textInput() ?>
 
+    <?= $form->field($model, 'frozen')->checkbox() ?>
+
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'address_ru')->textInput(['maxlength' => true]) ?>

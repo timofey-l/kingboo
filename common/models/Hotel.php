@@ -5,6 +5,7 @@ namespace common\models;
 use partner\models\PartnerUser;
 use Yii;
 use yii\behaviors\SluggableBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%hotel}}".
@@ -29,6 +30,7 @@ use yii\behaviors\SluggableBehavior;
  * @property boolean $allow_partial_pay
  * @property string  $partial_pay_percent
  * @property boolean $frozen
+ * @property string  $freeze_time
  */
 class Hotel extends \yii\db\ActiveRecord
 {
@@ -80,7 +82,20 @@ class Hotel extends \yii\db\ActiveRecord
     			\common\models\RoomPrices::deleteFuturePrices($room);
     		}
     	}
-    	if ($insert) {
+
+        // если флаг заморозки был изменен на true
+        if (isset($changedAttributes['frozen']) && $changedAttributes['frozen'] == false && $this->frozen == true) {
+            $this->freeze_time = date(\DateTime::ISO8601);
+            $this->update(false, ['freeze_time']);
+        }
+
+        // если флаг заморозки был изменен на false
+        if (isset($changedAttributes['frozen']) && $changedAttributes['frozen'] == true && $this->frozen == false) {
+            $this->freeze_time = null;
+            $this->update(false, ['freeze_time']);
+        }
+
+        if ($insert) {
             // Сигнал для системы сообщений
         	if (isset(\Yii::$app->automaticSystemMessages)) {
         		\Yii::$app->automaticSystemMessages->setDataUpdated();
@@ -109,6 +124,7 @@ class Hotel extends \yii\db\ActiveRecord
 	public function rules()
 	{
 		return [
+            [['freeze_time'], 'string'],
 			[['partner_id', 'name', 'currency_id'], 'required'],
 			[['ru'], 'integer', 'min' => 1, 'when' => function ($model) {
 				return ($model->en == 0);

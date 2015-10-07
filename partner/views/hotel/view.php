@@ -112,10 +112,19 @@ function promptFreeze() {
                 'data' => [
                     'confirm' => Yii::t('hotels', 'Are you sure you want to freeze this hotel?'),
                     'method' => 'post',
+                    'toggle' => 'popover',
+                    'trigger' => 'hover focus',
+                    'html' => 'true',
+                    'container' => "body",
+                    'placement' => "auto bottom",
+                    'content' => Yii::t('hotels','The hotel can be unfreezed only a day later after freezing!', [])
                 ],
             ]) ?>
         <?php endif; ?>
-        <?php if ($model->frozen): ?>
+        <?php
+            $allowUnfreeze = $model->frozen && date_diff(new \DateTime($model->freeze_time), new DateTime())->days >= \Yii::$app->params['partner.unfreeze_limit_days'];
+        ?>
+        <?php if ($model->frozen && $allowUnfreeze): ?>
             <?= Html::a('<span class="fa fa-unlock"></span>' . Yii::t('hotels', 'Unfreeze'), ['unfreeze', 'id' => $model->id], [
                 'class' => 'btn btn-app bg-red',
                 'data' => [
@@ -124,7 +133,19 @@ function promptFreeze() {
                 ],
             ]) ?>
         <?php endif; ?>
-
+        <?php if ($model->frozen && !$allowUnfreeze): ?>
+            <?= Html::button('<span class="fa fa-unlock"></span>' . Yii::t('hotels', 'Unfreeze'), [
+                'class' => 'btn btn-app bg-red disabled',
+                'data' => [
+                    'toggle' => 'popover',
+                    'trigger' => 'hover focus',
+                    'html' => 'true',
+                    'container' => "body",
+                    'placement' => "auto bottom",
+                    'content' => Yii::t('hotels','The hotel can be unfreezed only a day later after freezing!', []) . Yii::t('hotels', '<br><small class="text-muted">Freeze date:<br> {date}</small>', ['date' => $model->freeze_time]),
+                ],
+            ]) ?>
+        <?php endif; ?>
     </div>
 
     <div class="row">

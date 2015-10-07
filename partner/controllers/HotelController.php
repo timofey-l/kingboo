@@ -3,6 +3,7 @@
 namespace partner\controllers;
 
 use common\models\Widget;
+use Faker\Provider\tr_TR\DateTime;
 use Yii;
 use common\models\Hotel;
 use yii\base\DynamicModel;
@@ -427,11 +428,17 @@ class HotelController extends Controller
         if (!\Yii::$app->request->isPost) {
             throw new ForbiddenHttpException;
         }
-
+        /** @var Hotel $hotel */
         $hotel = Hotel::findOne($id);
 
         if (!$hotel) {
             throw new NotFoundHttpException;
+        }
+
+        $hours = date_diff(new \DateTime($hotel->freeze_time), new DateTime())->days;
+
+        if ($hours < \Yii::$app->params['partner.unfreeze_limit_days']) {
+            throw new ForbiddenHttpException;
         }
 
         $hotel->frozen = false;
