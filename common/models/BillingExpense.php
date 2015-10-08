@@ -158,7 +158,7 @@ class BillingExpense extends \yii\db\ActiveRecord
             // Годовую раз в год
             if ($service->monthly_cost > 0) {
                 $out .= "Ежемесячное списание.\n";
-                $checkLastPeriod = 24; // часа
+                $checkLastPeriod = 23; // часа
                 $sumToPay = round($service->monthly_cost * 12 / 365, 2);
             } else if ($service->yearly_cost > 0) {
                 $out .= "Ежегодное списание.\n";
