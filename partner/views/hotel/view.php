@@ -107,7 +107,7 @@ function promptFreeze() {
     <a class="btn btn-app bg-red" href="javascript:promptDelete();"><span class="fa fa-trash-o"></span><?= Yii::t('hotels', 'Delete') ?></a>
 
         <?php if (!$model->frozen): ?>
-            <?= Html::a('<span class="fa fa-lock"></span>' . Yii::t('hotels', 'Freeze'), ['freeze', 'id' => $model->id], [
+            <?= Html::a('<span class="fa fa-lock"></span>' . Yii::t('hotels', 'Suspend'), ['freeze', 'id' => $model->id], [
                 'class' => 'btn btn-app bg-red',
                 'data' => [
                     'confirm' => Yii::t('hotels', 'Are you sure you want to freeze this hotel?'),
@@ -117,7 +117,7 @@ function promptFreeze() {
                     'html' => 'true',
                     'container' => "body",
                     'placement' => "auto bottom",
-                    'content' => Yii::t('hotels','The hotel can be unfreezed only a day later after freezing!', [])
+                    'content' => Yii::t('hotels','If the hotel account is not active, its webpage is not displayed and money is not charged from the account balance.<br>Activation of the hotel account is possible after {n, plural, =0{# days} one{# day} few{# days} many{# days} other{# days}}', ['n' => \Yii::$app->params['partner.unfreeze_limit_days']])
                 ],
             ]) ?>
         <?php endif; ?>
@@ -125,7 +125,7 @@ function promptFreeze() {
             $allowUnfreeze = $model->frozen && date_diff(new \DateTime($model->freeze_time), new DateTime())->days >= \Yii::$app->params['partner.unfreeze_limit_days'];
         ?>
         <?php if ($model->frozen && $allowUnfreeze): ?>
-            <?= Html::a('<span class="fa fa-unlock"></span>' . Yii::t('hotels', 'Unfreeze'), ['unfreeze', 'id' => $model->id], [
+            <?= Html::a('<span class="fa fa-unlock"></span>' . Yii::t('hotels', 'Activate'), ['unfreeze', 'id' => $model->id], [
                 'class' => 'btn btn-app bg-red',
                 'data' => [
                     'confirm' => Yii::t('hotels', 'Are you sure you want to unfreeze this hotel?'),
@@ -134,7 +134,7 @@ function promptFreeze() {
             ]) ?>
         <?php endif; ?>
         <?php if ($model->frozen && !$allowUnfreeze): ?>
-            <?= Html::button('<span class="fa fa-unlock"></span>' . Yii::t('hotels', 'Unfreeze'), [
+            <?= Html::button('<span class="fa fa-unlock"></span>' . Yii::t('hotels', 'Activate'), [
                 'class' => 'btn btn-app bg-red disabled',
                 'data' => [
                     'toggle' => 'popover',
@@ -298,7 +298,7 @@ function promptFreeze() {
         <button data-remodal-action="close" class="remodal-close"></button>
         <h1><?= Yii::t('hotels', 'Confirm action') ?></h1>
         <p>
-            <?= Yii::t('hotels', 'The hotel will be permanently deleted. If you sure you want to continue type "delete".') ?>
+            <?= Yii::t('hotels', 'The hotel account will be permanently deleted. If you sure you want to continue type "delete".') ?>
         </p>
         <p><input id="submit_prompt"></p>
         <br>
