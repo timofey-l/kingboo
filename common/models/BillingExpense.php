@@ -224,9 +224,9 @@ class BillingExpense extends \yii\db\ActiveRecord
                     $out .= "Запись списания успешно создана. id: {$newExpense->id}\n";
 
                     // Сигнал для системы сообщений
-                    $automaticSystemMessages = new \partner\components\PartnerAutomaticSystemMessages();
-                    $automaticSystemMessages->resetMessages($account->partner);
-                    unset($automaticSystemMessages);
+//                    $automaticSystemMessages = new \partner\components\PartnerAutomaticSystemMessages();
+//                    $automaticSystemMessages->resetMessages($account->partner);
+//                    unset($automaticSystemMessages);
                 } else {
                     // ошибка при сохранении списания
                     $errors = var_export($newExpense->errors, true);
