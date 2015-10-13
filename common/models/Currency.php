@@ -146,7 +146,7 @@ class Currency extends \yii\db\ActiveRecord
             $format = "{value} {code}";
         }
 
-        $value = number_format($value, $decimal, $this->dec_point, $this->thousands_sep);
+        $value = number_format($value, $decimal, $this->dec_point, $type!="code" ? $this->thousands_sep : "");
         $replace = [
             '{value}' => $value,
             '{symbol}' => $symbol,

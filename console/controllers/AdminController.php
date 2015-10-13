@@ -236,7 +236,7 @@ class AdminController extends Controller
      */
     public function actionExpensesUpdate($showDebugInfo = false)
     {
-        $log = BillingExpense::processExpenses();
+        $log = BillingExpense::processExpensesNew();
 
         MailerHelper::adminEmail('Ежедневное списание средств по активным тарифам', "<pre>{$log}</pre>", 'report');
         echo $log;

@@ -87,7 +87,6 @@ class BillingExpense extends \yii\db\ActiveRecord
     public static function processExpenses($accountServiceId = false, $returnLog = true)
     {
         $out = "";
-        echo "1";
         // полчаем все активные подключенные тарифы
         $query = BillingAccountServices::find()->where(['active' => 1]);
         if ($accountServiceId) {
@@ -249,6 +248,245 @@ class BillingExpense extends \yii\db\ActiveRecord
             $out .= "\n";
         }
         return ($returnLog) ? $out : true;
+    }
+
+    /**
+     * Новый метод списания денег, который учитвыет ранее неучтенные даты и даты с замороженным состоянием
+     *
+     * @param bool|false $acconutServiceId
+     * @param bool|false $returnLog
+     */
+    public static function processExpensesNew($acconutServiceId = false, $returnLog = true)
+    {
+        $log = "Запуск процедуры списания средств\n";
+
+        $query = BillingAccountServices::find();
+        $query->where(['active' => true]);
+        if ($acconutServiceId) {
+            $log .= "Задан id услуги (id: $acconutServiceId). Выборка будет ограничена только этим элементом!\n";
+            $query->andWhere(['id' => $acconutServiceId]);
+        }
+        $accountServices = $query->all();
+
+        if (!$accountServices) {
+            $log .= "Поиск вернул пустой результат.\nЗавршение работы процедуры списания.";
+            return $returnLog ? $log : false;
+        }
+
+        if (!$acconutServiceId) {
+            $log .= "Найдено записей для обработки: " . count($accountServices) . "\n";
+        }
+
+        foreach ($accountServices as $i => $accountService) {
+            $log .= "\n===================================================\n";
+            $log .= "Обработка записи id: {$accountService->id}\n";
+            $log .= "---------------------------------------------------\n";
+
+            /** @var BillingService $service */
+            $service = $accountService->service;
+            /** @var BillingAccount $account */
+            $account = $accountService->account;
+            /** @var Hotel $hotel */
+            $hotel = $accountService->hotel;
+            if (!$service || !$account || !$account->getPartner()->one()) {
+                $log .= "Ошибка определения услуги или связи с аккаунтом.\nПереход к следующей записи.\n";
+                MailerHelper::adminEmail('Ошибка с услугой. billing_account_serivices. id=' . $accountService->id, $log, 'error');
+                continue;
+            }
+
+            $log .= "\tклиент: [id:{$account->partner->id}] {$account->partner->email}\n";
+            $log .= "\tбаланс клиента: " . $account->currency->getFormatted($accountService->account->balance, 'code') . "\n";
+            $log .= "\tотель: [id:" . $accountService->hotel_id . "]";
+            if ($hotel) {
+                $log .= " {$hotel->title_ru}";
+            }
+            $log .= "\n";
+            $log .= "\tуслуга: [id: {$accountService->service_id}]";
+            if ($service) {
+                $log .= " {$service->name_ru}";
+            }
+            $log .= "\n";
+
+
+            /** @var BillingAccountServices $accountService */
+            $sum = 0;
+
+            if ($service->monthly_cost > 0 && !$hotel) {
+                $log .= "Ошибка определения отеля.\nПереход к следующей записи.\n";
+                continue;
+            }
+
+            $type = 'm'; // m - месячное списание, y - годичное
+            if ($service->yearly_cost) {
+                $type = "y";
+            }
+
+            // проверка завершения демо периода
+            $log .= "Дата истечения тестового периода: {$account->partner->demo_expire}\n";
+            $nowDate = date(\DateTime::ISO8601);
+            $log .= "Текущая дата: {$nowDate}\n";
+            if ((new DateTime($account->partner->demo_expire))->diff(new DateTime())->invert) {
+                $log .= "Тестовый период еще не завершен.\nПереход к следующей записи.\n";
+                continue;
+            }
+
+            switch ($type) {
+                case "m":
+                    $log .= "Услуга с ежемесячной ценой. Списание каждый день.\n";
+                    $sum = round($service->monthly_cost * 12 / 365, 2);
+                    $log .= "Сумма для списния в сутки: " . $service->currency->getFormatted($sum, 'code') . "\n";
+
+                    // создание календаря оплаты
+                    // На каждый день должно быть определена сумма или флаг заморозки
+                    $calendar_array = [];
+                    $dateStart = new \DateTime($account->partner->demo_expire);
+                    $dateEnd = new \DateTime();
+                    $log .= "Строим календарь с " . $dateStart->format('Y-m-d') . ' по ' . $dateEnd->format('Y-m-d') . "\n";
+                    $dateEnd->modify("+1 day");
+                    $interval = new \DateInterval("P1D");
+                    $dateRange = new \DatePeriod($dateStart, $interval, $dateEnd);
+                    foreach ($dateRange as $date) {
+                        $calendar_array[$date->format('Y-m-d')] = null;
+                    }
+
+                    // получение всех списаний и занесение их в календарь
+                    $expenses = BillingExpense::find()
+                        ->where(['service_id' => $accountService->id])
+                        ->orderBy(['date' => SORT_ASC])
+                        ->all();
+                    if ($expenses) {
+                        foreach ($expenses as $expense) {
+                            $expDate = (new DateTime($expense->date))->format('Y-m-d');
+
+                            if (array_key_exists($expDate, $calendar_array)) {
+                                $calendar_array[$expDate] = $expense;
+                            } else {
+                                $log .= "Найдено списание с датой не входящей в диапазон действия услуги!  [{$dateEnd->format('Y-m-d')}] [id:{$expense->id}]\n";
+                                MailerHelper::adminEmail( "Найдено списание с датой не входящей в диапазон действия услуги!  [{$dateEnd->format('Y-m-d')}] [id:{$expense->id}]", $log, 'error');
+                            }
+                        }
+                    }
+
+                    // проверяем календарь
+                    // если значение на какой-то день равно null - создаем списание
+                    $log .= "Проверка календаря оплаты...\n";
+                    foreach ($calendar_array as $date => $exp) {
+                        if (is_null($exp)) {
+                            $log .= "На дату $date отсутствует списание.\n";
+
+                            $newExp = new BillingExpense();
+                            $newExp->account_id = $account->id;
+                            $newExp->service_id = $accountService->id;
+                            $newExp->sum = $sum;
+                            $newExp->date = $date;
+                            $newExp->comment = "Ежедневное списание средств по услуге \"{$service->name_ru}\" (id: {$accountService->id})";
+                            $newExp->currency_id = $service->currency_id;
+                            $newExp->sum_currency_id = $service->currency_id;
+                            $newExp->frozen = false;
+                            $newExp->created_at = date(\DateTime::ISO8601);
+
+                            //проверка на факт заморозки
+                            if ($hotel->frozen) {
+                                // попадает ли дата в диапазон заморозки
+                                if ((new DateTime($hotel->freeze_time)) <= (new DateTime($date))) {
+                                    $log .= "Дата попадает в диапазон заморозки отеля.\nСтавим отметку о заморозке и обнуляем сумму.";
+                                    $newExp->sum = 0;
+                                    $newExp->frozen = true;
+                                }
+                            }
+
+                            if ($newExp->save()) {
+                                $log .= "Запись списания успешно создана. [id: {$newExp->id}]\n";
+                            } else {
+                                $log .= "Ошибка при создании записи списания.\n";
+                                $log .= "Атрибуты модели:\n";
+                                $log .= var_export($newExp->attributes, true) . "\n";
+                                $log .= "Ошибки модели:\n";
+                                $log .= var_export($newExp->errors, true) . "\n";
+                                MailerHelper::adminEmail('Ошибка при создании записи списания.', $log, 'error');
+                            }
+                            $log .= "\n";
+                        }
+                    }
+                    $log .= "Проверка календаря завершена.\nПереход к другому тарифу.\n";
+
+                    break;
+
+                case "y":
+                    $log .= "Услуга с ежегодной ценой. Списание каждый день.\n";
+                    $sum = round($service->yearly_cost, 2);
+                    $log .= "Сумма для списния в год: " . $service->currency->getFormatted($sum, 'code') . "\n";
+
+                    // создание календаря оплаты
+                    $calendar_array = [];
+                    $dateStart = new \DateTime($accountService->add_date);
+                    $dateEnd = (new \DateTime($accountService->add_date))->modify('+1 year');
+                    $dateNow = new DateTime();
+                    while ($dateStart <= $dateNow && $dateNow < $dateEnd) {
+                        $calendar_array[$dateStart->format('Y-m-d') . ';' . $dateEnd->format('Y-m-d')] = null;
+                        $dateStart->modify('+1 year');
+                        $dateEnd->modify('+1 year');
+                    }
+
+                    // получение всех списаний и занесение их в календарь
+                    $expenses = BillingExpense::find()
+                        ->where(['service_id' => $accountService->id])
+                        ->orderBy(['date' => SORT_ASC])
+                        ->all();
+                    if ($expenses) {
+                        foreach ($expenses as $expense) {
+                            $expDate = (new DateTime($expense->date))->format('Y-m-d');
+
+                            // Проверяем попадание даты отметки списания в какойто из периодов в календаре
+                            foreach ($calendar_array as $date => $val) {
+                                $checkDateStart = new DateTime(explode(';', $date)[0]);
+                                $checkDateEnd = new DateTime(explode(';', $date)[1]);
+                                if ($checkDateStart <= $expDate && $expDate < $checkDateEnd) {
+                                    $calendar_array[$date] = $expense;
+                                }
+                            }
+                        }
+                    }
+
+                    // проверяем календарь
+                    // если значение на какой-то день равно null - создаем списание
+                    foreach ($calendar_array as $date => $exp) {
+                        if (is_null($exp)) {
+                            $newDateStart = new DateTime(explode(';', $date)[0]);
+                            $newDateEnd = new DateTime(explode(';', $date)[1]);
+                            $log .= "На диапазон [{$newDateStart->format('Y/m/d')} - {$newDateEnd->format('Y/m/d')}) отсутствует списание.\n";
+
+                            $newExp = new BillingExpense();
+                            $newExp->account_id = $account->id;
+                            $newExp->service_id = $accountService->id;
+                            $newExp->sum = $sum;
+                            $newExp->date = $date;
+                            $newExp->comment = "Ежегодное списание средств по услуге \"{$service->name_ru}\" (id: {$accountService->id}) за период [{$newDateStart->format('Y/m/d')} - {$newDateEnd->format('Y/m/d')})";
+                            $newExp->currency_id = $service->currency_id;
+                            $newExp->sum_currency_id = $service->currency_id;
+                            $newExp->frozen = false;
+                            $newExp->created_at = date(\DateTime::ISO8601);
+
+                            // TODO: определить влияние флага заморозки на ежегодный списания за домен
+
+                            if ($newExp->save()) {
+                                $log .= "Запись списания успешно создана. [id: {$newExp->id}]\n";
+                            } else {
+                                $log .= "Ошибка при создании записи списания.\n";
+                                $log .= "Атрибуты модели:\n";
+                                $log .= var_export($newExp->attributes, true) . "\n";
+                                $log .= "Ошибки модели:\n";
+                                $log .= var_export($newExp->errors, true) . "\n";
+                                MailerHelper::adminEmail('Ошибка при создании записи списания.', $log, 'error');
+                            }
+                            $log .= "\n";
+                        }
+                    }
+                    break;
+            }
+        }
+        $log .= "Процедура списания денежных средств завершена.\n";
+        return $returnLog ? $log : true;
     }
 
 }
