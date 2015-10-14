@@ -342,7 +342,7 @@ class BillingExpense extends \yii\db\ActiveRecord
                     $dateStart = new \DateTime($account->partner->demo_expire);
                     $dateEnd = new \DateTime();
                     $log .= "Строим календарь с " . $dateStart->format('Y-m-d') . ' по ' . $dateEnd->format('Y-m-d') . "\n";
-                    $dateEnd->modify("+1 day");
+                    //$dateEnd->modify("+1 day");
                     $interval = new \DateInterval("P1D");
                     $dateRange = new \DatePeriod($dateStart, $interval, $dateEnd);
                     foreach ($dateRange as $date) {
