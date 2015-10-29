@@ -47,7 +47,7 @@ class SignupForm extends Model
             $user->generateAuthKey();
             if ($user->save()) {
                 // send email to admins
-                MailerHelper::adminEmail('Регистрация нового пользователя', "<pre>".var_export($user->attributes, true)."</pre>", 'report');
+                MailerHelper::adminEmail('Регистрация нового пользователя через форму регистрации на partner.king-boo.com', "<pre>".var_export($user->attributes, true)."</pre>", 'report');
                 return $user;
             }
         }
