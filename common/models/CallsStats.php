@@ -32,6 +32,7 @@ class CallsStats extends \yii\db\ActiveRecord
     {
         return [
             [['date'], 'safe'],
+            [['email'], 'email'],
             [['email'], 'unique', 'targetClass' => PartnerUser::className(), 'targetAttribute' => 'email'],
             [['company_name', 'email', 'phone'], 'required'],
             [['company_name', 'email', 'phone', 'contact_person'], 'string', 'max' => 255],
