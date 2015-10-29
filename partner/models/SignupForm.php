@@ -1,6 +1,7 @@
 <?php
 namespace partner\models;
 
+use common\components\MailerHelper;
 use partner\models\PartnerUser;
 use yii\base\Model;
 use Yii;
@@ -45,6 +46,8 @@ class SignupForm extends Model
             $user->setPassword($this->password);
             $user->generateAuthKey();
             if ($user->save()) {
+                // send email to admins
+                MailerHelper::adminEmail('Регистрация нового пользователя', "<pre>".var_export($user->attributes, true)."</pre>", 'report');
                 return $user;
             }
         }
