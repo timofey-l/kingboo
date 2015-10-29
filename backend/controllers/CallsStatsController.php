@@ -30,7 +30,7 @@ class CallsStatsController extends \yii\web\Controller
                 $user->setPassword($password);
                 $user->generateAuthKey();
                 if ($user->save()) {
-                    $user->sendConfirmEmail();
+                    $user->sendConfirmEmailWithPassword($password);
                     $model->date = date(\DateTime::ISO8601);
                     $model->save(false);
                     // send email to admins

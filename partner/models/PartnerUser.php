@@ -123,6 +123,24 @@ class PartnerUser extends User
             ->send();
     }
 
+    public function sendConfirmEmailWithPassword($password) {
+        \Yii::$app->mailer->compose(
+            [
+                'html' => 'partnerConfirmEmailWithPassword-html.php',
+                'text' => 'partnerConfirmEmailWithPassword-text.php',
+            ], [
+                'link' => 'https://partner.king-boo.com/confirm-email?code=' . md5($this->password_hash.$this->created_at),
+                'resendCode' => 'https://partner.king-boo.com/confirm-email?code=' . md5($this->email,$this->password_hash),
+                'password' => $password,
+                'email' => $this->email,
+            ]
+        )
+            ->setFrom(\Yii::$app->params['email.from'])
+            ->setTo($this->email)
+            ->setSubject(\Yii::t('partner_login', 'Email confirmation for site partner.king-boo.com'))
+            ->send();
+    }
+
     /**
      * Возвращет true если пробный период закончен. False в противном случае
      * @return int

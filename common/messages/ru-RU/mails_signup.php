@@ -20,4 +20,7 @@ return [
     'Best regards, team of king-boo.com' => 'С наилучшими пожеланиями, команда king-boo.com',
     'Dear visitor!' => 'Дорогой посетитель',
     'You left registration request on partner.king-boo.com. To continue, please, follow the link below:' => 'Вы начали регистрацию на сайте partner.king-boo.com. Для продолжения, пожалуйста, перейдите по ссылке ниже:',
+    'Please, use following data to login:' => 'Пожалуйста, для входа на сайт используйте следующие данные:',
+    'email: {email}' => 'email: {email}',
+    'password: {password}' => 'пароль: {password}',
 ];
