@@ -33,7 +33,6 @@ class CallsStatsController extends \yii\web\Controller
                     $user->sendConfirmEmail();
                     $model->date = date(\DateTime::ISO8601);
                     $model->save(false);
-                    var_dump($model->errors);
                     // send email to admins
                     MailerHelper::adminEmail('Регистрация нового пользователя через форму для колцентра', "<pre>".var_export($user->attributes, true)."</pre>", 'report');
                     \Yii::$app->session->setFlash('success', 'Пользователь был успешно создан!');
