@@ -26,7 +26,7 @@ return [
     'Please, <a href="{link}">add room photos</a>.' => 'Для продолжения работы <a href="{link}">добавьте фотографии номеров</a>.',
     'Please, <a href="{link}">add room prices</a>.' => 'Для возможности бронирования <a href="{link}">установите цены</a> на номер.',
     'Please, <a href="{link}">register rooms</a> to continue.' => 'Для продолжения работы <a href="{link}">зарегистрируйте номера</a> в отеле.',
-    '<a href="{link}">Select the avaliable payment options</a> to activate on-site booking.' => 'Для подключения бронирования с сайта <a href="{link}">укажите допустимые способы оплаты</a>.',
+    '<a href="{link}">Select the avaliable payment options</a> to activate on-site booking.' => 'Чтобы подключить услугу "Бронирование", <a href="{link}">выберите способы получения отелем оплаты от ваших клиентов</a>.',
     '<a href="{link}">Setup Yandex.Kassa</a> to activate online booking.' => 'Для подключения онлайн бронирования <a href="{link}">настройте Яндекс.Кассу</a>.',
     'Booking is limited' => 'Бронирование ограничено',
     'Booking is not available' => 'Бронирование недоступно',
