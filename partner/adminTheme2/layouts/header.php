@@ -135,7 +135,7 @@ $orders = \common\models\Order::findNew();
 
                 <li class="user user-menu">
                     <?= Html::a(
-                        \Yii::t('main', 'Sign out') . '&nbsp;&nbsp;<i class="fa fa-sign-out"></i>',
+                        \Yii::t('main', 'Sign out') . " (" . PartnerUser::findOne(\Yii::$app->user->id)->email .  ")" .  '&nbsp;&nbsp;<i class="fa fa-sign-out"></i>',
                         ['/site/logout'],
                         ['data-method' => 'post', 'class' => 'dropdown-toggle']
                     ) ?>

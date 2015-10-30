@@ -34,6 +34,7 @@ class BillingAccountController extends Controller
     {
         $searchModel = new BillingAccountSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->sort->defaultOrder = ['partner_id' => SORT_DESC];
 
         return $this->render('index', [
             'searchModel' => $searchModel,

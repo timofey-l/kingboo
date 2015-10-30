@@ -327,9 +327,9 @@ class SiteController extends Controller
         $user_code = $query->one();
         if ($user_code) {
             $user = PartnerUser::findOne($user_code['id']);
-            $user->checked = 1;
-            $user->save();
             if (Yii::$app->user->login($user, 3600 * 24 * 30)) {
+                $user->checked = 1;
+                $user->save();
                 return $this->redirect('/');
             }
         } else {
