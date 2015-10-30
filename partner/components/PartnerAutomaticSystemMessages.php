@@ -1,6 +1,7 @@
 <?php
 namespace partner\components;
  
+use common\components\MailerHelper;
 use \Yii;
 use yii\base\Component;
 use partner\models\PartnerUser;
@@ -94,6 +95,10 @@ class PartnerAutomaticSystemMessages extends Component {
         if ($partner) {
             $this->setPartner($partner);
         }
+		if (!$this->partner) {
+			MailerHelper::adminEmail('System messages. resetMessages without partner', "<pre>".debug_backtrace()."</pre>", 'error');
+			return;
+		}
         if (!$this->systemInfo) {
             $this->readSystemInfo();
         }
