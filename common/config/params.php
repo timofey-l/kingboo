@@ -7,6 +7,8 @@ return [
     'partnerProtocol' => 'https',
     'hotelsDomain' => 'king-boo.com',
 
+    'allowPartnerDirectLogin' => false,
+
     'adminEmail' => ['admin@king-boo.com' => 'King-Boo Administrator', 'timofeylyzhenkov@gmail.com' => 'Timofey Lyzhenkov'],
     'supportEmail' => ['support@king-boo.com' => 'King-Boo Support', 'timofeylyzhenkov@gmail.com' => 'Timofey Lyzhenkov', 'perevod@it-translate.ru'],
     'email.from' => ['no-reply@king-boo.com' => 'King-Boo Booking System'],

