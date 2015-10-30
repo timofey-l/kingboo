@@ -47,7 +47,7 @@ class CallsStats extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('page', 'ID'),
-            'date' => Yii::t('page', 'Date'),
+            'date' => Yii::t('page', 'Дата'),
             'company_name' => Yii::t('page', 'Название компании'),
             'email' => Yii::t('page', 'Email'),
             'phone' => Yii::t('page', 'Номер телефона'),

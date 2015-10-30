@@ -34,6 +34,7 @@ return [
             'showScriptName' => false,
             'class' => 'common\components\LangUrlManager',
             'rules' => [
+                '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
             ],
         ],
         'request' => [
