@@ -96,7 +96,7 @@ class PartnerAutomaticSystemMessages extends Component {
             $this->setPartner($partner);
         }
 		if (!$this->partner) {
-			MailerHelper::adminEmail('System messages. resetMessages without partner', "<pre>".var_export(debug_backtrace(), true)."</pre>", 'error');
+			MailerHelper::adminEmail('System messages. resetMessages without partner', "", 'error');
 			return;
 		}
         if (!$this->systemInfo) {
