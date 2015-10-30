@@ -5,19 +5,20 @@
         "This file is @generated automatically"
     ],
     "hash": "27306ee94e9147034bbe20c176106724",
+    "content-hash": "886587b72a65fec4fc6b9402ccb7a808",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
-            "version": "v2.3.0",
+            "version": "v2.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/almasaeed2010/AdminLTE.git",
-                "reference": "81aa879d3a4489213888e24975b073c7478f0447"
+                "reference": "1ee281b3b99e8d8cccdc72fb8437c6888149cb46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/almasaeed2010/AdminLTE/zipball/81aa879d3a4489213888e24975b073c7478f0447",
-                "reference": "81aa879d3a4489213888e24975b073c7478f0447",
+                "url": "https://api.github.com/repos/almasaeed2010/AdminLTE/zipball/1ee281b3b99e8d8cccdc72fb8437c6888149cb46",
+                "reference": "1ee281b3b99e8d8cccdc72fb8437c6888149cb46",
                 "shasum": ""
             },
             "type": "library",
@@ -44,20 +45,20 @@
                 "theme",
                 "web"
             ],
-            "time": "2015-08-17 01:49:41"
+            "time": "2015-10-23 14:50:49"
         },
         {
             "name": "bower-asset/ace-builds",
-            "version": "v1.2.0",
+            "version": "v1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ajaxorg/ace-builds.git",
-                "reference": "0982db4853e3c967756b83b70638b9761d7f801d"
+                "reference": "3fb55e8e374ab02ce47c1ae55ffb60a1835f3055"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ajaxorg/ace-builds/zipball/0982db4853e3c967756b83b70638b9761d7f801d",
-                "reference": "0982db4853e3c967756b83b70638b9761d7f801d",
+                "url": "https://api.github.com/repos/ajaxorg/ace-builds/zipball/3fb55e8e374ab02ce47c1ae55ffb60a1835f3055",
+                "reference": "3fb55e8e374ab02ce47c1ae55ffb60a1835f3055",
                 "shasum": ""
             },
             "type": "bower-asset-library"
@@ -396,16 +397,16 @@
         },
         {
             "name": "bower-asset/jquery-minicolors",
-            "version": "2.1.12",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/claviska/jquery-minicolors.git",
-                "reference": "3bd7753361de137d5de895daa9a8d5aa6dc0ede2"
+                "reference": "d1b2627f4e7f5818d26c3a01056662f8054a9b72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/claviska/jquery-minicolors/zipball/3bd7753361de137d5de895daa9a8d5aa6dc0ede2",
-                "reference": "3bd7753361de137d5de895daa9a8d5aa6dc0ede2",
+                "url": "https://api.github.com/repos/claviska/jquery-minicolors/zipball/d1b2627f4e7f5818d26c3a01056662f8054a9b72",
+                "reference": "d1b2627f4e7f5818d26c3a01056662f8054a9b72",
                 "shasum": ""
             },
             "type": "bower-asset-library",
@@ -541,16 +542,16 @@
         },
         {
             "name": "bower-asset/malihu-custom-scrollbar-plugin",
-            "version": "3.0.9",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/malihu/malihu-custom-scrollbar-plugin.git",
-                "reference": "728a92de311a274e8c81ce9c2ff4c3d71d247d8a"
+                "reference": "a848ef22881dd69d3f0028a61c16c21183565792"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/malihu/malihu-custom-scrollbar-plugin/zipball/728a92de311a274e8c81ce9c2ff4c3d71d247d8a",
-                "reference": "728a92de311a274e8c81ce9c2ff4c3d71d247d8a",
+                "url": "https://api.github.com/repos/malihu/malihu-custom-scrollbar-plugin/zipball/a848ef22881dd69d3f0028a61c16c21183565792",
+                "reference": "a848ef22881dd69d3f0028a61c16c21183565792",
                 "shasum": ""
             },
             "require": {
@@ -649,16 +650,16 @@
         },
         {
             "name": "bower-asset/remodal",
-            "version": "1.0.3",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/VodkaBears/Remodal.git",
-                "reference": "b0a5f0832dfa5006c622ae5209b0c15af8eb28ba"
+                "reference": "08b0f34d24b2c63469628237abe8a47abdc2d3f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/VodkaBears/Remodal/zipball/b0a5f0832dfa5006c622ae5209b0c15af8eb28ba",
-                "reference": "b0a5f0832dfa5006c622ae5209b0c15af8eb28ba",
+                "url": "https://api.github.com/repos/VodkaBears/Remodal/zipball/08b0f34d24b2c63469628237abe8a47abdc2d3f5",
+                "reference": "08b0f34d24b2c63469628237abe8a47abdc2d3f5",
                 "shasum": ""
             },
             "require": {
@@ -666,7 +667,7 @@
             },
             "require-dev": {
                 "bower-asset/jquery": ">=2.1.4,<3.0.0",
-                "bower-asset/qunit": ">=1.18.0,<2.0.0",
+                "bower-asset/qunit": ">=1.19.0,<2.0.0",
                 "bower-asset/zepto": ">=1.1.6,<2.0.0"
             },
             "type": "bower-asset-library",
@@ -711,16 +712,16 @@
         },
         {
             "name": "bower-asset/swiper",
-            "version": "v3.1.5",
+            "version": "v3.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nolimits4web/Swiper.git",
-                "reference": "bbf73bf97a879792486691cb252338345a45f899"
+                "reference": "a0dcb5907cf74aa25f4d504d37bdac4eb1d5b2e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nolimits4web/Swiper/zipball/bbf73bf97a879792486691cb252338345a45f899",
-                "reference": "bbf73bf97a879792486691cb252338345a45f899",
+                "url": "https://api.github.com/repos/nolimits4web/Swiper/zipball/a0dcb5907cf74aa25f4d504d37bdac4eb1d5b2e2",
+                "reference": "a0dcb5907cf74aa25f4d504d37bdac4eb1d5b2e2",
                 "shasum": ""
             },
             "type": "bower-asset-library",
