@@ -325,10 +325,10 @@ class SiteController extends Controller
             ->from('{{%partner_user}}')
             ->where(['MD5(CONCAT(password_hash,created_at))' => $code, 'checked' => 0]);
         $user_code = $query->one();
-        $user = PartnerUser::findOne($user_code['id']);
-        $user->checked = 1;
-        $user->save();
         if ($user_code) {
+            $user = PartnerUser::findOne($user_code['id']);
+            $user->checked = 1;
+            $user->save();
             if (Yii::$app->user->login($user, 3600 * 24 * 30)) {
                 return $this->redirect('/');
             }
