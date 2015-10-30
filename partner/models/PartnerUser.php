@@ -72,6 +72,11 @@ class PartnerUser extends User
         return $this->hasOne(\common\models\BillingAccount::className(), ['partner_id' => 'id']);
     }
 
+    public function getAccount()
+    {
+        return $this->hasOne(\common\models\BillingAccount::className(), ['partner_id' => 'id']);
+    }
+
     public function getUser()
     {
         if ($this->_user === false) {
