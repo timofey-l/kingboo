@@ -54,4 +54,9 @@ class CallsStats extends \yii\db\ActiveRecord
             'contact_person' => Yii::t('page', 'Контактное лицо'),
         ];
     }
+
+    public function getPartner()
+    {
+        return $this->hasOne(PartnerUser::className(), ['email' => 'email']);
+    }
 }
