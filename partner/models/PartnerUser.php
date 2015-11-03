@@ -174,4 +174,22 @@ class PartnerUser extends User
             return false;
         }
     }
+    
+    /**
+     * Возвращает дату с которой начинать списывание денег с аккаунта 
+     * (максимум из конца тестового периода и даты первого платежа) 
+     * 
+     * @return DateTime
+     */
+    public function getActivationDate() {
+        $demoDate = \DateTime::createFromFormat('Y-m-d', $this->demo_expire);
+        $income = \common\models\BillingIncome::find(['account_id' => $this->accounts[0]->id])->orderBy('date ASC')->one();
+        $incomeDate = \DateTime::createFromFormat('Y-m-d H:i:s', $income->date);
+        if ($demoDate > $incomeDate) {
+            return $demoDate;
+        } else {
+            return $incomeDate;
+        }
+    }
+     
 }

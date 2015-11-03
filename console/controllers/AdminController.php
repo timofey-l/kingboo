@@ -22,8 +22,8 @@ class AdminController extends Controller
 {
 
     public function actionDo() {
-        $c = \common\models\Currency::find()->where(['code' => 'USD'])->one();
-        echo $c->convertTo('100.657345','EUR',5)."\n";
+        $partner = \partner\models\PartnerUser::findOne(5);
+        print_r($partner->getActivationDate());
     }
 
     public function actionChangeAdminPassword($id)

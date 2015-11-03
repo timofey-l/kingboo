@@ -269,7 +269,7 @@ class BillingExpense extends \yii\db\ActiveRecord
         $accountServices = $query->all();
 
         if (!$accountServices) {
-            $log .= "Поиск вернул пустой результат.\nЗавршение работы процедуры списания.";
+            $log .= "Поиск вернул пустой результат.\nЗавершение работы процедуры списания.";
             return $returnLog ? $log : false;
         }
 
@@ -339,7 +339,7 @@ class BillingExpense extends \yii\db\ActiveRecord
                     // создание календаря оплаты
                     // На каждый день должно быть определена сумма или флаг заморозки
                     $calendar_array = [];
-                    $dateStart = new \DateTime($account->partner->demo_expire);
+                    $dateStart = $account->partner->getActivationDate();//new \DateTime($account->partner->demo_expire);
                     $dateEnd = new \DateTime();
                     $log .= "Строим календарь с " . $dateStart->format('Y-m-d') . ' по ' . $dateEnd->format('Y-m-d') . "\n";
                     //$dateEnd->modify("+1 day");
