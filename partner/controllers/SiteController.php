@@ -2,6 +2,7 @@
 namespace partner\controllers;
 
 use common\components\PrimaApi;
+use common\models\DirectLoginTokens;
 use common\models\Hotel;
 use common\models\Order;
 use common\models\PayMethod;
@@ -37,7 +38,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'signup', 'request-password-reset', 'reset-password', 'confirm-email', 'resend-cofirm-email', 'test-login-qwertasdfg12345'],
+                        'actions' => ['login', 'error', 'signup', 'request-password-reset', 'reset-password', 'confirm-email', 'resend-cofirm-email', 'test-login-qwertasdfg12345', 'direct-login'],
                         'allow' => true,
                     ],
                     [
@@ -409,6 +410,45 @@ class SiteController extends Controller
             return $this->goHome();
         } else {
             return "error";
+        }
+    }
+
+    /**
+     * Возможность залогиниться в кабинет любого клиента, то токену, который генерируется в бэкенде
+     * небходимо наличие включенного параметра params['allowPartnerDirectLogin']
+     *
+     * @param $token
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Exception
+     */
+    public function actionDirectLogin($token)
+    {
+        if (!\Yii::$app->params['allowPartnerDirectLogin']) {
+            throw new NotFoundHttpException();
+        }
+
+        /** @var DirectLoginTokens $directLoginToken */
+        $directLoginToken = DirectLoginTokens::findOne(['token' => $token]);
+        if (!$directLoginToken) {
+            throw new NotFoundHttpException();
+        }
+        if ((new \DateTime($directLoginToken->expire_date)) < new \DateTime()) {
+            $directLoginToken->delete();
+            throw new NotFoundHttpException();
+        }
+        $partnerUser = PartnerUser::findOne($directLoginToken->user_id);
+        if (!$partnerUser) {
+            throw new NotFoundHttpException();
+        }
+        if (!\Yii::$app->user->isGuest) {
+            \Yii::$app->user->logout();
+        }
+        if (\Yii::$app->user->login($partnerUser, 0)) {
+            $directLoginToken->delete();
+            return $this->goHome();
+        } else {
+            throw new NotFoundHttpException();
         }
     }
 
