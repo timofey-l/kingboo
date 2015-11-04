@@ -212,45 +212,47 @@ class Order extends ActiveRecord
 
     public function sendEmailToPartner()
     {
+        $local = Lang::findOne(['url' => $this->hotel->partner->lang])->local;
         \Yii::$app->mailer->compose([
             'html' => 'orderCreatedToPartner-html',
             'text' => 'orderCreatedToPartner-text',
         ], [
             'order' => $this,
             'lang' => $this->hotel->partner->lang,
-            'local' => Lang::findOne(['url' => $this->hotel->partner->lang])->local,
+            'local' => $local,
         ])
             ->setFrom(\Yii::$app->params['email.from'])
             ->setTo($this->hotel->partner->email)
-            ->setSubject(\Yii::t('mails_order', 'New order on site king-boo.com'))
+            ->setSubject(\Yii::t('mails_order', 'New order on site king-boo.com', [], $local))
             ->send();
     }
 
     public function orderStatusChanged($params = [])
     {
-
+        $local = Lang::findOne(['url' => $this->lang])->local;
         // отправляем письмо клиенту
         \Yii::$app->mailer->compose('orderStatusChangedClient-html', [
             'oldStatus' => ArrayHelper::getValue($params, 'status'),
             'order' => $this,
             'lang' => $this->lang,
-            'local' => Lang::findOne(['url' => $this->lang])->local,
+            'local' => $local,
         ])
             ->setFrom(\Yii::$app->params['email.from'])
             ->setTo([$this->contact_email => $this->contact_name . ' ' . $this->contact_surname])
-            ->setSubject(\Yii::t('mails_order', 'Your order\'s #{n} status was changed', ['n' => $this->number]))
+            ->setSubject(\Yii::t('mails_order', 'Your order\'s #{n} status was changed', ['n' => $this->number], $local))
             ->send();
 
+        $local = Lang::findOne(['url' => $this->hotel->partner->lang])->local;
         // отправляем письмо партнёру
         \Yii::$app->mailer->compose('orderStatusChangedPartner-html', [
             'oldStatus' => ArrayHelper::getValue($params, 'status'),
             'order' => $this,
             'lang' => $this->hotel->partner->lang,
-            'local' => Lang::findOne(['url' => $this->hotel->partner->lang])->local,
+            'local' => $local,
         ])
             ->setFrom(\Yii::$app->params['email.from'])
             ->setTo([$this->hotel->partner->email])
-            ->setSubject(\Yii::t('mails_order', 'Order\'s #{n} status was changed', ['n' => $this->partner_number]))
+            ->setSubject(\Yii::t('mails_order', 'Order\'s #{n} status was changed', ['n' => $this->partner_number], $local))
             ->send();
     }
 
