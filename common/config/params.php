@@ -21,6 +21,11 @@ return [
 
     'partner.unfreeze_limit_days' => 30, //days
 
+    // если true, то при нахождении списания не входящего в диапазон дат для списания это списание будет удалено
+    'partner.expenses.undefined.delete' => false,
+    // отсылка письма при тех же условиях
+    'partner.expenses.undefined.sendEmail' => true,
+
     /*'yandex' => [
         'demo' => true,
         'shopId' => '49653',

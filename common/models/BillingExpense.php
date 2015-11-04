@@ -362,7 +362,19 @@ class BillingExpense extends \yii\db\ActiveRecord
                                 $calendar_array[$expDate] = $expense;
                             } else {
                                 $log .= "Найдено списание с датой не входящей в диапазон действия услуги!  [{$dateEnd->format('Y-m-d')}] [id:{$expense->id}]\n";
-                                MailerHelper::adminEmail( "Найдено списание с датой не входящей в диапазон действия услуги!  [{$dateEnd->format('Y-m-d')}] [id:{$expense->id}]", $log, 'error');
+                                if (\Yii::$app->params['partner.expenses.undefined.delete']) {
+                                    $log .= "Включено удаление неопределенных списаний! (partner.expenses.undefined.delete)\n";
+                                    $log .= "Пробуем удалить... ";
+                                    $deleted = $expense->delete();
+                                    if (!$deleted) {
+                                        $log .= "ошибка! Запись не удалена\n";
+                                    } else {
+                                        $log .= "успех! Строк затронуто: " . $deleted . "\n";
+                                    }
+                                }
+                                if (\Yii::$app->params['partner.expenses.undefined.sendEmail']) {
+                                    MailerHelper::adminEmail("Найдено списание с датой не входящей в диапазон действия услуги!  [{$dateEnd->format('Y-m-d')}] [id:{$expense->id}]" . ($deleted ? " Запись удалена." : ""), $log, 'error');
+                                }
                             }
                         }
                     }
