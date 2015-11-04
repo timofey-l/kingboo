@@ -103,6 +103,7 @@ class AdminController extends Controller
     public function actionPartnerBalanceInfo() {
         $report = MailerHelper::partnerBalanceInfo();
         MailerHelper::adminEmail('Balance mails to partners', '<pre>' . $report . '</pre>', 'report');
+        echo $report;
     }
 
     public function actionGenerateFake() {

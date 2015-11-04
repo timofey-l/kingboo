@@ -50,7 +50,7 @@ class MailerHelper extends Component {
 	    $lkURL = \Yii::$app->params['partnerProtocol'] . '://' . \Yii::$app->params['partnerDomain'];
 	    $formatter = clone \Yii::$app->formatter;
 	    $report = '';
-	    
+
 	    foreach ($partners as $partner) {
 	        // отсееваем тех, кто не подтвердился
 	        if (!$partner->checked) {
@@ -79,10 +79,10 @@ class MailerHelper extends Component {
 	        $sbj = \Yii::t('emails', 'Replenish the balance in the King-Boo system', [], $local);
             $msg = [];
             if ($partner->isBlocked()) {
-                $msg[] = \Yii::t('emails', 'The account is blocked. Your balance is {0}.', [$partner->billing->getBalanceString()], $local);
+                $msg[] = \Yii::t('emails', 'The account is blocked. Your balance is {0}.', [$partner->billing->getBalanceString('email')], $local);
                 $msg[] = \Yii::t('emails', 'To restore the account, please, <a href="{0}">replanish your balance</a>.', [$lkURL], $local);
             } elseif ($partner->billing->balance < 300) {
-                $msg[] = \Yii::t('emails', 'Your balance is {0}.', [$partner->billing->getBalanceString()], $local);
+                $msg[] = \Yii::t('emails', 'Your balance is {0}.', [$partner->billing->getBalanceString('email')], $local);
                 $msg[] = \Yii::t('emails', '<a href="{0}">Please, replanish your balance.</a>', [$lkURL], $local);
             }
             if ($msg) {

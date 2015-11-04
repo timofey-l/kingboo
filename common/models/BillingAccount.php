@@ -63,11 +63,11 @@ class BillingAccount extends \yii\db\ActiveRecord
         return $this->hasOne(\common\models\Currency::className(), ['id' => 'currency_id']);
     }
 
-    public function getBalanceString()
+    public function getBalanceString($type='')
     {
         $c = $this->currency;
         if (!is_null($c)) {
-            return $c->getFormatted($this->balance);
+            return $c->getFormatted($this->balance, $type);
         } else {
             return $this->balance;
         }

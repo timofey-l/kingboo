@@ -3,8 +3,9 @@
 /* @var $this yii\web\View */
 
 foreach ($message as $k=>$m) {
-    $message[$k] = str_replace(['<br>', '<br />'], "\n", $m);
-    $message[$k] = strip_tags($m);
+    $message[$k] = str_replace(['<br>', '<br />'], "\n", $message[$k]);
+    $message[$k] = str_replace('&nbsp;', ' ', $message[$k]);
+    $message[$k] = strip_tags($message[$k]);
 }
 ?>
 
