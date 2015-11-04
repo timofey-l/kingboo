@@ -49,6 +49,7 @@ class MailerHelper extends Component {
 	    $now = new \DateTime();
 	    $lkURL = \Yii::$app->params['partnerProtocol'] . '://' . \Yii::$app->params['partnerDomain'];
 	    $formatter = clone \Yii::$app->formatter;
+	    $report = '';
 	    
 	    foreach ($partners as $partner) {
 	        // отсееваем тех, кто не подтвердился
@@ -67,8 +68,7 @@ class MailerHelper extends Component {
 	                $msg = [];
                     $msg[] = \Yii::t('emails', 'The King-Boo system trial period is expired {0}', [$formatter->asDate($partner->demo_expire, 'long')], $local);
                     $msg[] = \Yii::t('emails', 'To continue work of the account, please, <a href="{0}">replanish your balance</a>.', [$lkURL], $local);
-	                echo "{$partner->id}: {$partner->email}\n";
-                    print_r($msg);
+	                $report .= "{$partner->id}: {$partner->email}\n$sbj\n" . print_r($msg,true) . "\n";
                     self::partnerEmail($partner->email, $sbj, $msg, $local);
 	            }
                 continue;
@@ -86,11 +86,11 @@ class MailerHelper extends Component {
                 $msg[] = \Yii::t('emails', '<a href="{0}">Please, replanish your balance.</a>', [$lkURL], $local);
             }
             if ($msg) {
-	            echo "{$partner->id}: {$partner->email}\n";
-                print_r($msg);
+	            $report .= "{$partner->id}: {$partner->email}\n$sbj\n" . print_r($msg,true) . "\n";
                 self::partnerEmail($partner->email, $sbj, $msg, $local);
             }
 	    }
+	    return $report;
 	}
 
 }

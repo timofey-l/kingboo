@@ -101,7 +101,8 @@ class AdminController extends Controller
      * Рассылка писем с предупреждениями о необходимости пополнения баланса 
      */
     public function actionPartnerBalanceInfo() {
-        MailerHelper::partnerBalanceInfo();
+        $report = MailerHelper::partnerBalanceInfo();
+        MailerHelper::adminEmail('Balance mails to partners', '<pre>' . $report . '</pre>', 'report');
     }
 
     public function actionGenerateFake() {
