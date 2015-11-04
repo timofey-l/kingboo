@@ -22,8 +22,7 @@ class AdminController extends Controller
 {
 
     public function actionDo() {
-        $partner = \partner\models\PartnerUser::findOne(5);
-        print_r($partner->getActivationDate());
+        MailerHelper::partnerBalanceInfo();
     }
 
     public function actionChangeAdminPassword($id)
@@ -96,6 +95,13 @@ class AdminController extends Controller
         if ($echo) {
             echo $res;
         }
+    }
+    
+    /**
+     * Рассылка писем с предупреждениями о необходимости пополнения баланса 
+     */
+    public function actionPartnerBalanceInfo() {
+        MailerHelper::partnerBalanceInfo();
     }
 
     public function actionGenerateFake() {

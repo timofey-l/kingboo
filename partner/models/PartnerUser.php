@@ -168,7 +168,12 @@ class PartnerUser extends User
      * @return boolean
      */
     public function isBlocked() {
-        if ($this->billing->balance < -\Yii::$app->params['partner.credit']) {
+        // учет ситуации, когда демо период закончен, а платеж не поступил
+        $demoDate = \DateTime::createFromFormat('Y-m-d', $this->demo_expire);
+        $now = new \DateTime();
+        $income = \common\models\BillingIncome::find(['account_id' => $this->accounts[0]->id])->orderBy('date ASC')->one();
+        
+        if ($this->billing->balance < -\Yii::$app->params['partner.credit'] || ($demoDate < $now && !$income)) {
             return true;
         } else {
             return false;
