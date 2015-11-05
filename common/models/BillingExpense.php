@@ -330,6 +330,13 @@ class BillingExpense extends \yii\db\ActiveRecord
                 continue;
             }
 
+            // проверка по первой оплате (если оплаты не было то списание не делаем)
+            $dateStart = $account->partner->getActivationDate();
+            if ($dateStart === false) {
+                $log .= "Записей оплаты не найдено. Переход к следующей записи.\n";
+                continue;
+            }
+    
             switch ($type) {
                 case "m":
                     $log .= "Услуга с ежемесячной ценой. Списание каждый день.\n";
@@ -339,7 +346,7 @@ class BillingExpense extends \yii\db\ActiveRecord
                     // создание календаря оплаты
                     // На каждый день должно быть определена сумма или флаг заморозки
                     $calendar_array = [];
-                    $dateStart = $account->partner->getActivationDate();//new \DateTime($account->partner->demo_expire);
+                    
                     $dateEnd = new \DateTime();
                     $log .= "Строим календарь с " . $dateStart->format('Y-m-d') . ' по ' . $dateEnd->format('Y-m-d') . "\n";
                     //$dateEnd->modify("+1 day");

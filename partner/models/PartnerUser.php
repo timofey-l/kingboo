@@ -188,7 +188,10 @@ class PartnerUser extends User
      */
     public function getActivationDate() {
         $demoDate = \DateTime::createFromFormat('Y-m-d', $this->demo_expire);
-        $income = \common\models\BillingIncome::find(['account_id' => $this->accounts[0]->id])->orderBy('date ASC')->one();
+        $income = \common\models\BillingIncome::find()->where(['account_id' => $this->accounts[0]->id])->orderBy('date ASC')->one();
+        if (!income) {
+            return false;
+        }
         $incomeDate = \DateTime::createFromFormat('Y-m-d H:i:s', $income->date);
         if ($demoDate > $incomeDate) {
             return $demoDate;
