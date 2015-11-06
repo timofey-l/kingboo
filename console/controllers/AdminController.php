@@ -23,12 +23,12 @@ class AdminController extends Controller
 
     public function actionDo() {
         $partner = \partner\models\PartnerUser::findOne(13);
-        echo $partner->getActivationDate()->format('d.m.Y')."\n";
-        $income = \common\models\BillingIncome::find()->where(['account_id' => 1000/*$partner->accounts[0]->id*/])->orderBy('date ASC')->one();
-        var_dump($income);
-        /*foreach ($income as $i) {
-            echo $i->date.': '.$i->sum."\n";
-        }*/
+        $d = $partner->getActivationDate();
+        if (!$d) {
+            var_dump($d);
+        } else {
+            echo $partner->getActivationDate()->format('d.m.Y')."\n";
+        }
     }
 
     public function actionChangeAdminPassword($id)
