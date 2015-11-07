@@ -96,11 +96,6 @@ class Hotel extends \yii\db\ActiveRecord
         }
 
         if ($insert) {
-            // Сигнал для системы сообщений
-        	if (isset(\Yii::$app->automaticSystemMessages)) {
-        		\Yii::$app->automaticSystemMessages->setDataUpdated();
-        	}
-
             // ищем тариф по умолчанию и добавляем его к отелю
             $partner = PartnerUser::findOne(\Yii::$app->user->id);
             $billingAccount = $partner->account;
@@ -115,6 +110,11 @@ class Hotel extends \yii\db\ActiveRecord
                 $accountService->end_date = date(\DateTime::ISO8601);
                 $accountService->save();
             }
+
+            // Сигнал для системы сообщений
+			if (isset(\Yii::$app->automaticSystemMessages)) {
+				\Yii::$app->automaticSystemMessages->setDataUpdated();
+			}
         }
     }
 
