@@ -28,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'account_id',
             'service_id',
+            'hotel_id',
             'add_date',
             'end_date',
             // 'active:boolean',
