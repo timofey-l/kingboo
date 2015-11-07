@@ -16,6 +16,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'service_id')->textInput() ?>
 
+    <?= $form->field($model, 'hotel_id')->textInput() ?>
+
     <?= $form->field($model, 'add_date')->textInput() ?>
 
     <?= $form->field($model, 'end_date')->textInput() ?>
