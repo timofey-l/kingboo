@@ -32,7 +32,7 @@ sed -i "s/#force_color_prompt/force_color_prompt/" /home/vagrant/.bashrc
 echo "cd /vagrant" >> /home/vagrant/.bashrc
 
 # Install basic tools
-apt-get -y install build-essential binutils-doc git curl
+apt-get -y install build-essential binutils-doc git curl zip unzip
 
 # install russian language pack
 apt-get install language-pack-ru

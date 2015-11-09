@@ -1180,16 +1180,16 @@
         },
         {
             "name": "rmrevin/yii2-fontawesome",
-            "version": "2.12.0",
+            "version": "2.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rmrevin/yii2-fontawesome.git",
-                "reference": "51d33ec9d1d7edab2166f1d42668c1bc8d28c068"
+                "reference": "6bfb628f5d93170bfe896866faac494c24783c2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rmrevin/yii2-fontawesome/zipball/51d33ec9d1d7edab2166f1d42668c1bc8d28c068",
-                "reference": "51d33ec9d1d7edab2166f1d42668c1bc8d28c068",
+                "url": "https://api.github.com/repos/rmrevin/yii2-fontawesome/zipball/6bfb628f5d93170bfe896866faac494c24783c2e",
+                "reference": "6bfb628f5d93170bfe896866faac494c24783c2e",
                 "shasum": ""
             },
             "require": {
@@ -1215,9 +1215,9 @@
             ],
             "authors": [
                 {
-                    "name": "Roman Revin",
-                    "email": "xgismox@gmail.com",
-                    "homepage": "http://rmrevin.ru/"
+                    "name": "Revin Roman",
+                    "email": "roman@rmrevin.com",
+                    "homepage": "https://rmrevin.com/"
                 }
             ],
             "description": "Asset Bundle for Yii2 with Font Awesome",
@@ -1228,7 +1228,7 @@
                 "font",
                 "yii"
             ],
-            "time": "2015-08-15 16:50:16"
+            "time": "2015-11-09 15:03:05"
         },
         {
             "name": "swiftmailer/swiftmailer",
