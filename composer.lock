@@ -712,16 +712,16 @@
         },
         {
             "name": "bower-asset/swiper",
-            "version": "v3.1.7",
+            "version": "v3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nolimits4web/Swiper.git",
-                "reference": "a0dcb5907cf74aa25f4d504d37bdac4eb1d5b2e2"
+                "reference": "c142b3f898372246aa0ef1a59401a67be95cf85d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nolimits4web/Swiper/zipball/a0dcb5907cf74aa25f4d504d37bdac4eb1d5b2e2",
-                "reference": "a0dcb5907cf74aa25f4d504d37bdac4eb1d5b2e2",
+                "url": "https://api.github.com/repos/nolimits4web/Swiper/zipball/c142b3f898372246aa0ef1a59401a67be95cf85d",
+                "reference": "c142b3f898372246aa0ef1a59401a67be95cf85d",
                 "shasum": ""
             },
             "type": "bower-asset-library",

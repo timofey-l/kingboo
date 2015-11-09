@@ -46,6 +46,7 @@ sed -i "s/display_startup_errors = Off/display_startup_errors = On/g" ${php_conf
 sed -i "s/display_errors = Off/display_errors = On/g" ${php_config_file}
 cp /vagrant/vagrant_setup/vhosts/* /etc/apache2/sites-available/
 a2ensite *.conf
+a2dissite 000-default.conf
 
 # xdebug
 cat << EOF > ${xdebug_config_file}
@@ -169,19 +170,20 @@ print_db_usage
 #echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect none" | debconf-set-selections
 #apt-get -y install mysql-server-5.5 phpmyadmin > /dev/null 2>&1
 
-curl -sS https://getcomposer.org/installer | php
+cd /home/vagrant
+su vagrant -c "curl -sS https://getcomposer.org/installer | php"
 mv composer.phar /usr/local/bin/composer
-composer global require "fxp/composer-asset-plugin:1.0.0"
+su vagrant -c "composer config -g github-oauth.github.com 29674255656af55f0c13d213498ac3190643db38"
+su vagrant -c "composer global require \"fxp/composer-asset-plugin:~1.0\""
 
 cd /vagrant
-composer update
-php ./init --env=Development --overwrite=All
+su vagrant -c "composer update"
+su vagrant -c "php ./init --env=Development --overwrite=All"
 sed -i -e 's/mysql/pgsql/g' /vagrant/common/config/main-local.php
 sed -i -e 's/\x27root\x27/\x27kingboo\x27/g' /vagrant/common/config/main-local.php
 sed -i -e 's/\x27\x27/\x27kingboo\x27/g' /vagrant/common/config/main-local.php
 sed -i -e 's/dbname=yii2advanced/dbname=kingboo/g' /vagrant/common/config/main-local.php
-php ./yii migrate/up --interactive=0
-php ./yii admin/generate-loceanica
+su vagrant -c "php ./yii migrate/up --interactive=0"
 
 cd /vagrant/frontend/web/
 ln -s '../../common/uploads' 'uploads'
