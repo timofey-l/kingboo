@@ -321,3 +321,6 @@ if (!$this->context->checkBookingPossibility($model)) {
     </div>
 </div>
 
+<?php if($model->widgetcall_enabled): ?>
+    <?= $model->widgetcall_text ?>
+<?php endif ?>

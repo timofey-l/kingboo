@@ -31,6 +31,8 @@ use yii\helpers\ArrayHelper;
  * @property string  $partial_pay_percent
  * @property boolean $frozen
  * @property string  $freeze_time
+ * @property string  $widgetcall_enabled
+ * @property string  $widgetcall_text
  */
 class Hotel extends \yii\db\ActiveRecord
 {
@@ -128,10 +130,14 @@ class Hotel extends \yii\db\ActiveRecord
 			[['partner_id', 'name', 'currency_id'], 'required'],
 			[['ru'], 'integer', 'min' => 1, 'when' => function ($model) {
 				return ($model->en == 0);
-			}],
+			}, 'whenClient' => "function (attribute, value) {
+                return !$('input#hotel-en').prop('checked');
+            }"],
 			[['en'], 'integer', 'min' => 1, 'when' => function ($model) {
 				return ($model->ru == 0);
-			}],
+			},'whenClient' => "function (attribute, value) {
+                return !$('input#hotel-ru').prop('checked');
+            }"],
 			[['title_ru', 'address_ru'], 'required', 'when' => function ($model) {
 				return $model->ru == 1;
 			}, 'whenClient' => "function (attribute, value) {
@@ -154,6 +160,8 @@ class Hotel extends \yii\db\ActiveRecord
             ['domain', 'unique'],
 			['frozen', 'default', 'value' => 0],
 //			['frozen', 'integer'],
+			['widgetcall_enabled', 'default', 'value' => 0],
+			['widgetcall_text', 'string'],
 			['name', 'in', 'not' => true, 'range' => ['partner', 'backend']],
 		];
 	}
@@ -196,6 +204,8 @@ class Hotel extends \yii\db\ActiveRecord
 			'domain'              => Yii::t('hotels', 'Domain name of your hotel'),
 			'contact_email'       => Yii::t('hotels', 'Contact email'),
 			'contact_phone'       => Yii::t('hotels', 'Contact phone'),
+            'widgetcall_enabled'  => Yii::t('hotels', 'Widgetcall enabled'),
+            'widgetcall_text'     => Yii::t('hotels', 'Widgetcall text'),
 		];
 	}
 

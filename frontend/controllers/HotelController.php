@@ -216,6 +216,7 @@ class HotelController extends \yii\web\Controller
 	 */
 	public function actionIndex($name = false)
 	{
+        /** @var Hotel $model */
         $model = Hotel::findOne(['name' => $name]);
 
         if (!$this->checkBookingPossibility($model)) {
@@ -269,7 +270,7 @@ class HotelController extends \yii\web\Controller
 			'kids'     => in_array($kids, range(1, 5)) ? $kids : 0,
 		]);
 
-		return $this->render('index', [
+        return $this->render('index', [
 			'model'      => $model,
 			'bookParams' => $bookParams,
 			'embedded'   => \Yii::$app->request->get('embedded', 0),

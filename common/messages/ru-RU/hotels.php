@@ -100,4 +100,7 @@ return [
     'The hotel can be unfreezed only a day later after freezing!' => 'Разморозить отель можно будет только спустя сутки с момента заморозки!',
     '<br><small class="text-muted">Freeze date:<br> {date}</small>' =>'<br><small class="text-muted">Дата заморозки:<br> {date}</small>',
     'If the hotel account is not active, its webpage is not displayed and money is not charged from the account balance.<br>Activation of the hotel account is possible after {n, plural, =0{# days} one{# day} few{# days} many{# days} other{# days}}' => 'Если отель заморожен, его страница не отображается и деньги с баланса не списываются.<br>Разморозить аккаунт отеля можно будет через {n, plural, =0{# дней} one{# день} few{# дня} many{# дней} other{# дня}}.',
+    'Widgetcall enabled' => 'Показывать Widgetcall',
+    'Widgetcall text' => 'Widgetcall текст',
 ];
+

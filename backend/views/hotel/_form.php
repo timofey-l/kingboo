@@ -6,7 +6,10 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Hotel */
 /* @var $form yii\widgets\ActiveForm */
+var_dump($model->errors);
 ?>
+
+
 
 <div class="hotel-form">
 
@@ -15,6 +18,10 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'partner_id')->textInput() ?>
 
     <?= $form->field($model, 'frozen')->checkbox() ?>
+
+    <?= $form->field($model, 'ru')->checkbox() ?>
+
+    <?= $form->field($model, 'en')->checkbox() ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
@@ -49,6 +56,10 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'contact_phone')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'contact_email')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'widgetcall_enabled')->checkbox() ?>
+
+    <?= $form->field($model, 'widgetcall_text')->textarea() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -49,6 +49,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'css:ntext',
             'contact_phone',
             'contact_email:email',
+            'en:boolean',
+            'ru:boolean',
+            'widgetcall_enabled:boolean',
+            'widgetcall_text:ntext',
         ],
     ]) ?>
 
