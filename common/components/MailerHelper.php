@@ -79,7 +79,7 @@ class MailerHelper extends Component {
 	        $sbj = \Yii::t('emails', 'Replenish the balance in the King-Boo system', [], $local);
             $msg = [];
             if ($partner->isBlocked()) {
-                $msg[] = \Yii::t('emails', 'The account is blocked. Your balance is {0}', [$partner->billing->getBalanceString('email')], $local);
+                $msg[] = \Yii::t('emails', 'The account is blocked. Your balance is {0}.', [$partner->billing->getBalanceString('email')], $local);
                 $msg[] = \Yii::t('emails', 'To restore the account, please, <a href="{0}">replanish your balance</a>.', [$lkURL], $local);
             } elseif ($partner->billing->balance < 300) {
                 $msg[] = \Yii::t('emails', 'Your balance is {0}', [$partner->billing->getBalanceString('email')], $local);
