@@ -53,6 +53,7 @@ $this->title = 'BooBooking';
 
                 <h3><?= Yii::t('backend_main', 'Statistics') ?></h3>
                 <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Calls statistics'), ['/calls-stats-admin/index'],['class'=>'btn btn-default']) ?>
+                <?= \yii\helpers\Html::a(Yii::t('backend_main', 'Manager calls statistics'), ['/calls/index'],['class'=>'btn btn-default', 'target'=>'_blank']) ?>
             </div>
 
         </div>

@@ -21,6 +21,8 @@ class CallsController extends \yii\web\Controller
                         return new PartnerUser([
                             'username' => 'callsUser',
                         ]);
+                    } elseif (!\yii::$app->user->isGuest) {
+                        return \yii::$app->user;
                     }
                 }
             ],
