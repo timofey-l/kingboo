@@ -11,6 +11,7 @@ use yii\web\BadRequestHttpException;
 use yii\filters\VerbFilter;
 use common\models\Currency;
 use common\models\BillingIncome;
+use yii\filters\AccessControl;
 
 /**
  * BillingInvoiceController implements the CRUD actions for BillingInvoice model.
@@ -20,6 +21,15 @@ class BillingInvoiceController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@']
+                    ]
+                ]
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

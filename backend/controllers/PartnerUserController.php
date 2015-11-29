@@ -8,6 +8,7 @@ use partner\models\PartnerUser;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -18,12 +19,21 @@ class PartnerUserController extends Controller
 	public function behaviors()
 	{
 		return [
-			'verbs' => [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@']
+                    ]
+                ]
+            ],
+            'verbs' => [
 				'class'   => VerbFilter::className(),
 				'actions' => [
 					'delete' => ['post'],
 				],
-			],
+				],
 		];
 	}
 

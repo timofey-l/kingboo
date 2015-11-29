@@ -17,12 +17,10 @@ class CallsController extends \yii\web\Controller
             'basicAuth' => [
                 'class' => \yii\filters\auth\HttpBasicAuth::className(),
                 'auth' => function ($username, $password) {
-                    if ($username == "callsUser" && $password == '~^-{}7}(#t5}\8K') {
+                    if (($username == "callsUser" && $password == '~^-{}7}(#t5}\8K') || !\yii::$app->user->isGuest) {
                         return new PartnerUser([
                             'username' => 'callsUser',
                         ]);
-                    } elseif (!\yii::$app->user->isGuest) {
-                        return \yii::$app->user;
                     }
                 }
             ],
