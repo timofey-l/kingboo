@@ -17,10 +17,30 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Best regards, team of king-boo.com' => 'С наилучшими пожеланиями, команда king-boo.com',
+    'Best regards, team of king-boo.com' => 'С наилучшими пожеланиями, команда King-Boo.',
     'Dear visitor!' => 'Дорогой посетитель',
     'You left registration request on partner.king-boo.com. To continue, please, follow the link below:' => 'Вы начали регистрацию на сайте partner.king-boo.com. Для продолжения, пожалуйста, перейдите по ссылке ниже:',
     'Please, use following data to login:' => 'Пожалуйста, для входа на сайт используйте следующие данные:',
-    'email: {email}' => 'email: {email}',
-    'password: {password}' => 'пароль: {password}',
+    'E-mail' => 'E-mail',
+    'password' => 'пароль',
+
+    'Your personal manager' => 'Ваш персональный менеджер',
+    'Svetlana' => 'Светлана',
+    'You can communicate to her any time.' => 'Вы можете обращаться к ней по любым возникающим вопросам.',
+    'Contact phone' => 'Контактный телефон',
+    'Contact email' => 'Контактный E-mail',
+
+    '<p>You can see all about King-Boo on <a href="{site}">website</a>.</p>' => '<p>Система King-Boo позволит вам:</p><ul>
+<li>Получить собственный профессиональный сайт отеля, если у вас его еще нет</li>
+<li>Подключить к сайту вашего отеля многофункциональную систему бронирования с широкими возможностями настройки</li>
+<li>Воспользоваться интегрированной системой ip телефонии для постоянного контакта с вашим отелем</li>
+</ul>
+<p>Более подробно о возможностях системы вы можете узнать на нашем вебсайте <a href="{site}">www.king-boo.com</a></p>',
+
+    'You can see all about King-Boo on website {site}.' => 'Система King-Boo позволит вам:
+Получить собственный профессиональный сайт отеля, если у вас его еще нет
+Подключить к сайту вашего отеля многофункциональную систему бронирования с широкими возможностями настройки
+Воспользоваться интегрированной системой ip телефонии для постоянного контакта с вашим отелем
+
+Более подробно о возможностях системы вы можете узнать на нашем вебсайте www.king-boo.com',
 ];

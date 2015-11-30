@@ -87,14 +87,20 @@ class SiteController extends Controller
 	   phpinfo();
     }
 
-    public function actionShowMail($id) {
+    public function actionShowMail(/*$id*/) {
 
-        $order = \common\models\Order::findOne($id);
-        return $this->render('@common/mail/orderCreatedToClient-html', [
+        //$order = \common\models\Order::findOne($id);
+        return $this->render('@common/mail/partnerConfirmEmailWithPassword-html', [
+            'link' => 'https://partner.king-boo.com/confirm-email?code=bc384t834gdfuwf',
+            'resendCode' => 'https://partner.king-boo.com/confirm-email?code=uycqg6ye3rdywegd',
+            'password' => '12345',
+            'email' => 'test@mail.ru',
+        ]);
+        /*return $this->render('@common/mail/orderCreatedToClient-html', [
             'order' => $order,
             'lang' => $order->lang,
             'local' => \common\models\Lang::findOne(['url' => $order->lang])->local,
-        ]);
+        ]);*/
     }
 
     public function actionShowEmailTemplates($name='', $local="ru-RU") {

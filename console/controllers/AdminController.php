@@ -314,4 +314,22 @@ class AdminController extends Controller
         $this->stdout("Done!\n");
     }
 
+    public function actionTestRegisterEmail() {
+        \Yii::$app->mailer->compose(
+            [
+                'html' => 'partnerConfirmEmailWithPassword-html.php',
+                'text' => 'partnerConfirmEmailWithPassword-text.php',
+            ], [
+                'link' => 'https://partner.king-boo.com/confirm-email?code=bv7eyt894qc4 8tc',
+                'resendCode' => 'https://partner.king-boo.com/confirm-email?code=bvfwyr4c894cyt4b89c',
+                'password' => '12345',
+                'email' => 'test@mail.ru',
+            ]
+        )
+            ->setFrom(\Yii::$app->params['email.from'])
+            ->setTo('mn@itdesign.ru')
+            ->setSubject(\Yii::t('partner_login', 'Email confirmation for site partner.king-boo.com'))
+            ->send();
+    }
+
 }
