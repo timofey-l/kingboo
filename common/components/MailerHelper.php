@@ -61,7 +61,7 @@ class MailerHelper extends Component {
 	        if (!$partner->getDemoExpired()) {
 	            $demo = new \DateTime($partner->demo_expire);
 	            $n = $demo->diff($now);
-	            if ($n->days < 5) {
+	            if ($n->days < \Yii::$app->params['partner.warning.daysBeforeDemoEnd']) {
 	                $local = \common\models\Lang::findOne(['url' => $partner->lang])->local;
 	                $formatter->locale = $local;
 	                $sbj = \Yii::t('emails', 'King-Boo trial period wiil be expired soon', [], $local);
@@ -81,7 +81,7 @@ class MailerHelper extends Component {
             if ($partner->isBlocked()) {
                 $msg[] = \Yii::t('emails', 'The account is blocked. Your balance is {0}.', [$partner->billing->getBalanceString('email')], $local);
                 $msg[] = \Yii::t('emails', 'To restore the account, please, <a href="{0}">replanish your balance</a>.', [$lkURL], $local);
-            } elseif ($partner->billing->balance < 300) {
+            } elseif ($partner->billing->balance < \Yii::$app->params['partner.warning.balanceShort']) {
                 $msg[] = \Yii::t('emails', 'Your balance is {0}.', [$partner->billing->getBalanceString('email')], $local);
                 $msg[] = \Yii::t('emails', '<a href="{0}">Please, replanish your balance.</a>', [$lkURL], $local);
             }

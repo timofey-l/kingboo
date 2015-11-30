@@ -18,6 +18,8 @@ return [
     'partner.demo' => 30, // продолжительность бесплатного периода в днях
     'partner.credit' => 100, // сумма в рублях, до которой партнер может уходить в кредит
     'partner.creditCurrency' => 'RUB',
+    'partner.warning.daysBeforeDemoEnd' => 5, // за сколько дней до окончания демо-периода предупреждать
+    'partner.warning.balanceShort' => 300, // предупреждать о низком балансе начиная с суммы
 
     'partner.unfreeze_limit_days' => 30, //days
 

@@ -7,10 +7,32 @@
 <?= \yii\grid\GridView::widget([
     'dataProvider' => $dataProvider,
     'columns' => [
-        'date:datetime',
+        [
+            'label' => 'Дата',
+            'format' => ['date', 'php:d.m.Y H:i'],
+            'attribute' => 'date',
+        ],
+        [
+            'label' => 'Демо',
+            'format' => 'raw',
+            'value' => function($model) {
+                $now = new DateTime();
+                $demo = new DateTime($model->partner->demo_expire);
+                $color = '#000';
+                if ($now >= $demo) {
+                    $color = '#ff0000';
+                } elseif ($now->add(date_interval_create_from_date_string(Yii::$app->params['partner.warning.daysBeforeDemoEnd'] . ' days')) >= $demo) {
+                    $color = 'orange';
+                }
+                $d = Yii::$app->formatter->asDatetime($model->partner->demo_expire, 'php:d.m.Y');
+                $out = "<span style=\"color:{$color}\">{$d}</span>";
+                return $out;
+            }
+        ],
         'email',
         'phone',
         'company_name',
+        'contact_person',
         array(
             'label' => 'Учетная запись клиента',
             'format' => 'raw',
