@@ -18,7 +18,7 @@
  */
 return [
     'Best regards, team of king-boo.com' => 'Команда King-Boo.',
-    'Dear visitor!' => 'Дорогой посетитель',
+    'Dear visitor!' => 'Уважаемый посетитель',
     'You left registration request on partner.king-boo.com. To continue, please, follow the link below:' => 'Вы начали регистрацию на сайте partner.king-boo.com. Для продолжения, пожалуйста, перейдите по ссылке ниже:',
     'Please, use following data to login:' => 'Для входа на сайт используйте следующие данные:',
     'E-mail' => 'e-mail',
@@ -26,9 +26,9 @@ return [
 
     'Your personal manager' => 'Ваш персональный менеджер',
     'Svetlana' => 'Светлана',
-    'You can communicate to her any time.' => 'Обращайтесь к ней по любым возникающим вопросам.',
-    'Contact phone' => 'Контактный телефон',
-    'Contact email' => 'Контактный e-mail',
+    'You can communicate to her any time.' => 'Обращайтесь к ней по любым вопросам:',
+    'Contact phone' => 'телефон',
+    'Contact email' => 'e-mail',
 
     '<p>You can see all about King-Boo on <a href="{site}">website</a>.</p>' => '<p>Система King-Boo позволит вам:</p><ul>
 <li>получить собственный профессиональный сайт отеля, если у вас его еще нет</li>
