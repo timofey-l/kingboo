@@ -22,13 +22,16 @@ class AdminController extends Controller
 {
 
     public function actionDo() {
-        $partner = \partner\models\PartnerUser::findOne(13);
+        $partner = \partner\models\PartnerUser::findOne(30);
         $d = $partner->getActivationDate();
+        $b = $partner->isBlocked() ? 'blocked' : 'free';
+        echo $partner->email . "\n";
         if (!$d) {
             var_dump($d);
         } else {
             echo $partner->getActivationDate()->format('d.m.Y')."\n";
         }
+        echo $b . "\n";
     }
 
     public function actionChangeAdminPassword($id)

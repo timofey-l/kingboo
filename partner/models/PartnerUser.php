@@ -171,8 +171,9 @@ class PartnerUser extends User
         // учет ситуации, когда демо период закончен, а платеж не поступил
         $demoDate = \DateTime::createFromFormat('Y-m-d', $this->demo_expire);
         $now = new \DateTime();
-        $income = \common\models\BillingIncome::find(['account_id' => $this->accounts[0]->id])->orderBy('date ASC')->one();
-        
+        $income = \common\models\BillingIncome::find()->where(['account_id' => $this->accounts[0]->id])->orderBy('date ASC')->one();
+
+        // Или баланс меньше кредита, или демо период закончен, а платеж не поступил
         if ($this->billing->balance < -\Yii::$app->params['partner.credit'] || ($demoDate < $now && !$income)) {
             return true;
         } else {
