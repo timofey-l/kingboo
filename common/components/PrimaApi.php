@@ -17,6 +17,7 @@ class PrimaApi extends Component
 
     public $apiLogin = '';
     public $apiPassword = '';
+    public $apiKey = '';
 
     public $apiUrl = 'http://tp-api.primatel.ru/';
     public $svcUrl = 'http://tp-svc.primatel.ru/';
@@ -38,11 +39,8 @@ class PrimaApi extends Component
      */
     public function init()
     {
-
         $this->connectToMemcached();
-
         $this->checkApiSession();
-
         parent::init();
     }
 
@@ -59,21 +57,6 @@ class PrimaApi extends Component
         return true;
     }
 
-    public function getSessionInfo()
-    {
-        $params = [
-            'svc' => 'getSessionInfo',
-            'api' => true,
-        ];
-
-        $result = $this->doRequest($params);
-        if (is_null($result) || is_object($result) && property_exists($result, 'result') && $result->result == 0) {
-            $this->loginAPI();
-        }
-
-        return $result;
-    }
-
     public function connectToMemcached()
     {
         $this->memcachedObject = new \Memcached;
@@ -82,6 +65,15 @@ class PrimaApi extends Component
 //        $this->memcachedObject->connect($this->memcached_host, $this->memcached_port);
     }
 
+    /**
+     * Выполняет запрос к API Primatel
+     * Все параметры кроме svc, lang, mode передаются в параметре data
+     * Обязательный параметр svc
+     * Дополнительные настройки (булевские): api (к какому адресу обращаться), sign (нужна ли подпись)
+     *
+     * @param $config
+     * @return mixed
+     */
     public function doRequest($config)
     {
         $default_config = [
@@ -89,7 +81,7 @@ class PrimaApi extends Component
             'data' => [
             ],
             'api' => false,
-            'sign' => false,
+            'sign' => true,
             'lang' => 'en',
         ];
         $config = ArrayHelper::merge($default_config, $config);
@@ -105,12 +97,17 @@ class PrimaApi extends Component
             'mode' => isset($config['mode'])?$config['mode']:$this->mode,
             'lang' => $config['lang'],
         ];
-        if ($config['svc'] != 'login' ) {
+        if ($config['svc'] != 'login') {
             $params_arr['sid'] = $this->sid;
             $config['data']['sid'] = $this->sid;
         }
-        $params = '?' . http_build_query($params_arr);
 
+        $params_arr = ArrayHelper::merge($params_arr, $config['data']);
+        if ($config['sign']) {
+            $params_arr['rsign'] = $this->makeSign($params_arr);
+        }
+
+        $params = '?' . http_build_query($params_arr);
 
         $curl_options = [
             CURLOPT_URL => $url.$params,
@@ -140,11 +137,49 @@ class PrimaApi extends Component
         return json_decode($res);
     }
 
+    private function makeSign($data) {
+        $keys = array();
+        foreach ($data as $k=>$v) {
+            if ($k !== 'lang' && $k !== 'svc' && $k !== 'mode') {
+                $keys[] = $k;
+            }
+        }
+        sort($keys);
+        $s = '';
+        foreach ($keys as $k) {
+            $s .= $data[$k] . ';';
+        }
+        $s .= $this->apiKey;     //echo "$s\n";
+
+        return md5($s);
+    }
+
+    /****************************************************************************/
+    /* Запросы к API
+    /****************************************************************************/
+
+    public function getSessionInfo()
+    {
+        $params = [
+            'svc' => 'getSessionInfo',
+            'api' => true,
+            'sign' => false,
+        ];
+
+        $result = $this->doRequest($params);
+        if (is_null($result) || is_object($result) && property_exists($result, 'result') && $result->result == 0) {
+            $this->loginAPI();
+        }
+
+        return $result;
+    }
+
     public function loginAPI()
     {
         $params = [
             'api' => true,
             'svc' => 'login',
+            'sign' => false,
             'data' => [
                 'login' => $this->apiLogin,
                 'password' => $this->apiPassword,
@@ -157,6 +192,32 @@ class PrimaApi extends Component
             $this->sid = $result->data->sid;
         }
         $this->memcachedObject->set('prima_api_sid', $this->sid, $this->cacheSidTimeout);
+
+        return $result;
+    }
+
+    /**
+     * Выполняет регистрацию нового пользователя
+     * Обязательные параметры:
+     * login
+     * name - название фирмы
+     * phone
+     * email
+     *
+     * @param $data
+     * @return mixed
+     */
+    public function userRegistration($data)
+    {
+        $data['type'] = 1;
+        $data['currency'] = 'RUR';
+
+        $params = [
+            'svc' => 'regRequest',
+            'api' => true,
+            'data' => $data
+        ];
+        $result = $this->doRequest($params);
 
         return $result;
     }

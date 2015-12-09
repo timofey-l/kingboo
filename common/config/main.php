@@ -10,7 +10,8 @@ return [
         'primaApi' => [
             'class' => PrimaApi::className(),
             'apiLogin' => 'king-boo',
-            'apiPassword' => 'VsY5fbjd5jM',
+            'apiPassword' => 'uD6wI7S2Hxu',
+            'apiKey' => 'edf3e898d53bc3aa5a1d7664c629ddc11168de13',
         ],
         'assetManager' => [
             'linkAssets' => true,

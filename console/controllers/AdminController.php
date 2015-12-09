@@ -22,16 +22,14 @@ class AdminController extends Controller
 {
 
     public function actionDo() {
-        $partner = \partner\models\PartnerUser::findOne(30);
-        $d = $partner->getActivationDate();
-        $b = $partner->isBlocked() ? 'blocked' : 'free';
-        echo $partner->email . "\n";
-        if (!$d) {
-            var_dump($d);
-        } else {
-            echo $partner->getActivationDate()->format('d.m.Y')."\n";
-        }
-        echo $b . "\n";
+        $data = [
+            'login' => 'tweedledum',
+            'name' => 'ИТ Дизайн',
+            'phone' => '79213125551',
+            'email' => 'office@itdesign.ru',
+        ];
+        $res = \Yii::$app->primaApi->userRegistration($data);
+        print_r($res); echo "\n";
     }
 
     public function actionChangeAdminPassword($id)
