@@ -21,17 +21,6 @@ use yii\helpers\Console;
 class AdminController extends Controller
 {
 
-    public function actionDo() {
-        $data = [
-            'login' => 'tweedledum',
-            'name' => 'ИТ Дизайн',
-            'phone' => '79213125551',
-            'email' => 'office@itdesign.ru',
-        ];
-        $res = \Yii::$app->primaApi->userRegistration($data);
-        print_r($res); echo "\n";
-    }
-
     public function actionChangeAdminPassword($id)
     {
         /** @var BackendUser $admin */
