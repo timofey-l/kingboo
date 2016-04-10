@@ -173,7 +173,7 @@ print_db_usage
 cd /home/vagrant
 su vagrant -c "curl -sS https://getcomposer.org/installer | php"
 mv composer.phar /usr/local/bin/composer
-su vagrant -c "composer config -g github-oauth.github.com 29674255656af55f0c13d213498ac3190643db38"
+su vagrant -c "composer config -g github-oauth.github.com "
 su vagrant -c "composer global require \"fxp/composer-asset-plugin:~1.0\""
 
 cd /vagrant
