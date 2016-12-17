@@ -31,17 +31,11 @@ return [
     // отсылка письма при тех же условиях
     'partner.expenses.undefined.sendEmail' => true,
 
-    /*'yandex' => [
-        'demo' => true,
-        'shopId' => '49653',
-        'scid' => '527060',
-        'shopPassword' => '85Xj2339XEv566S',
-    ]  */
     'yandex' => [
         'demo' => false,
-        'shopId' => '49653',
-        'scid' => '35070',
-        'shopPassword' => '85Xj2339XEv566S',
+        'shopId' => '***',
+        'scid' => '***',
+        'shopPassword' => '***',
         'actionURL' => 'https://money.yandex.ru/eshop.xml',
         'demoActionURL' => 'https://demomoney.yandex.ru/eshop.xml',
     ],
